@@ -10,6 +10,10 @@ const traineeSchema = new Schema({
       type: String,
       required: true
     },
+    Password: {
+      type:String,
+      required: true
+    },
     Age: {
       type: Number,
       required: true,

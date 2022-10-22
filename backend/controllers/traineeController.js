@@ -1,4 +1,5 @@
 const Trainee = require('../models/traineeModel')
+
 const mongoose = require('mongoose')
 
 const createTrainee = async (req,res) => {

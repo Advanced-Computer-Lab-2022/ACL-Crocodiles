@@ -1,15 +1,16 @@
 const express = require('express')
-const { use } = require('./routes/traineeRoute')
+
 require('dotenv').config()
 const app = express()
 const mongoose = require('mongoose')
 const traineeRoutes = require('./routes/traineeRoute')
+const adminRoutes = require('./routes/adminRoute')
 app.use(express.json())
 
 
 
 
-app.use('/api/trainee', traineeRoutes)
+
 
 mongoose.connect(process.env.MONGO_URI)
 .then(()=>{
@@ -21,5 +22,7 @@ app.listen(process.env.PORT, () => {
 })
 .catch(err => console.log(err));
 
+app.use('/api/trainee', traineeRoutes)
+app.use('/api/admin',adminRoutes)
 
 
