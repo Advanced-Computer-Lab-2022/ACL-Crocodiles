@@ -13,7 +13,7 @@ const createTrainee = async (req,res) => {
 
 
 const getTrainees = async (req,res) => {
-    const trainees = await Trainee.find({}).sort({createdAt:-1})
+    const trainees = await Trainee.find({}).sort({createdAt:-1}).select({Name:1})
     res.status(200).json(trainees)
 }
 

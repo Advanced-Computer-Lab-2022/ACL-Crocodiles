@@ -5,6 +5,7 @@ const app = express()
 const mongoose = require('mongoose')
 const traineeRoutes = require('./routes/traineeRoute')
 const adminRoutes = require('./routes/adminRoute')
+const instructorRoutes = require('./routes/instructorRoute')
 app.use(express.json())
 
 
@@ -24,5 +25,6 @@ app.listen(process.env.PORT, () => {
 
 app.use('/api/trainee', traineeRoutes)
 app.use('/api/admin',adminRoutes)
+app.use('/api/instructor',instructorRoutes)
 
 

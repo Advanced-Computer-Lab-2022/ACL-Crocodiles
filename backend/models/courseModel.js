@@ -35,10 +35,11 @@ const courseSchema = new Schema({
         type: Number,
         required: true
     },
-    Subtitle: [{
+    Subtitle: {
         type: String,
         //ref: 'subtitleSchema'
-    }],
+        required: false
+    },
 }, { timestamps: true })
 
 module.exports = mongoose.model('Course', courseSchema)
@@ -55,7 +56,7 @@ const subtitleSchema = new Schema({
     },
     CourseId: {
         type: Number,
-        required: true
+        required: false
     },
     // Exercise: {
     //     type: Schema.Types.ObjectId, 
