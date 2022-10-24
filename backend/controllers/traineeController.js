@@ -20,7 +20,7 @@ const getTrainees = async (req,res) => {
 const getTrainee = async (req,res) => {
     const{ id } = req.params
     if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'no such trainee'})
+        return res.status(404).json({error: 'no such trainee'})//error message should be invalid id input
     }
 
     const trainee = await Trainee.findById(id)
