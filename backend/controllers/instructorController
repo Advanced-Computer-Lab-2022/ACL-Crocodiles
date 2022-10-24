@@ -19,21 +19,8 @@ const getCourse = async (req,res) => {
         return res.status(404).json({error: 'invalid input'})
     }
     const myJSON = req.body
-    //const myObj = JSON.parse(myJSON)
-    let filter = ""
-    //const flag = Object.values(myJSON).includes("Title")
-    if (Object.values(myJSON).includes("Subject"))
-        filter = "Subject"
-    else if (Object.values(myJSON).includes("Price"))
-        filter = "Price"
-    else if (myJSON.hasOwnProperty('Title'))
-        filter = "Title"
-    
-    let key = Object.values(myJSON)[0]
-    console.log(filter)
-    console.log("" +key)
-
-    const course = await Course.find({Title:"CSEN202"})
+   
+    const course = await Course.find(myJSON)
     if(!course){
         return res.status(404).json({error: 'no such course'})
     }
