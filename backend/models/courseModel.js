@@ -17,7 +17,7 @@ const courseSchema = new Schema({
     },
     Discount: {
         type: Number,
-        required: true
+        required: false
     },
     Hours: {
         type: Number,
@@ -25,15 +25,15 @@ const courseSchema = new Schema({
     },
     Summary: {
         type: String,
-        required: true
+        required: false
     },
     InstructorId: {
         type: Object,
-        required: true
+        required: false
     },
     Rating: {
         type: Number,
-        required: true
+        required: false
     },
     Subtitle: {
         type: String,
