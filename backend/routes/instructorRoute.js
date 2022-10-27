@@ -10,7 +10,7 @@ const {
 
 const router = express.Router()
 
-router.post('/:id',createCourse)
+router.post('/',createCourse)
 //router.get('/filtersubjectprice/:id',getCourses1)
 /router.get('/filter/:id',filterCourse)
 router.get('/:id',searchCourse)

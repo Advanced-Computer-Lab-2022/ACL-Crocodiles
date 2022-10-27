@@ -58,16 +58,16 @@ const updateTrainee = async (req,res) => {
 }
 
 const viewAllCourses = async (req,res) => {
-   // try {
-        const courses = await Course.find({})
+    try {
+        const courses = await Course.find().select({Title:1,Subject:1,Hours:1,Price:1})
         if(!courses){
             return res.status(404).json({error: 'no courses found'})
         }
             res.status(200).json(courses)
         
-    // } catch (error) {
-    //     res.status(400).json({error: 'no courses found'})
-    // }
+     } catch (error) {
+       res.status(400).json({error: 'error'})
+     }
 }
 
 module.exports = {
