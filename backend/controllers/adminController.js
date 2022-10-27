@@ -1,22 +1,23 @@
 const Admin = require('../models/adminModel')
 const Trainee = require('../models/traineeModel')
 const Instructor = require('../models/instructorModel')
+const CorporateTrainee = require('../models/CorporatetraineeModel')
 
 const mongoose = require('mongoose')
 
 const createAdmin = async (req,res) => {
-    const {Email,Password} = req.body
+    const {Username,Password} = req.body
     try{
-        const admin = await Admin.create({Email,Password})
+        const admin = await Admin.create({Username,Password})
         res.status(200).json(admin)
   } catch (error) {
       res.status(400).json({error: error.message})
   }
 }
 const createTrainee = async (req,res) => {
-    const {Email,Password} = req.body
+    const {Username,Password} = req.body
     try{
-        const trainee = await Trainee.create({Email,Password})
+        const trainee = await Trainee.create({Username,Password})
         res.status(200).json(trainee)
   } catch (error) {
       res.status(400).json({error: error.message})
@@ -32,7 +33,7 @@ const createInstructor = async (req,res) => {
       res.status(400).json({error: error.message})
   }
 }
-/*
+
 const createCorporateTrainee = async (req,res) => {
     const {Email,Password} = req.body
     try{
@@ -42,11 +43,12 @@ const createCorporateTrainee = async (req,res) => {
       res.status(400).json({error: error.message})
   }
 }
-*/
+
 module.exports = {
     createAdmin,
     createTrainee,
-    createInstructor
+    createInstructor,
+    createCorporateTrainee
 }
 
 
