@@ -1,6 +1,11 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Home from './pages/Home';
+import Home from './pages/Home'
 import Navbar from './components/Navbar'
+import Course from './pages/Course'
+import Admin from './pages/Admin'
+import Instructor from './pages/Instructor'
+import Trainee from './pages/Trainee'
+
 function App() {
   return (
     <div className="App">
@@ -12,7 +17,25 @@ function App() {
             <Route
               path="/"
               element={<Home />}
-             />    
+             />
+             <Route
+              path="/instructor"
+              element={<Instructor />}
+             />
+             <Route
+              path="/admin"
+              element={<Admin />}
+             />
+             <Route
+              path="/course"
+              element={<Course />}
+             />
+             <Route
+              path="/trainee"
+              element={<Trainee />}
+             />
+             
+                 
           </Routes>
      </div>
      </BrowserRouter>

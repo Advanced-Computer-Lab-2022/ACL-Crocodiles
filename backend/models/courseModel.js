@@ -29,7 +29,7 @@ const courseSchema = new Schema({
     },
     InstructorId: {
         type: Object,
-        required: false
+        required: true
     },
     Rating: {
         type: Number,
