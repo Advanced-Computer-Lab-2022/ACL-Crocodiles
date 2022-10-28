@@ -19,10 +19,12 @@ const searchCourse = async (req,res) => {
     const {Title} = req.body
     const {Subject} = req.body
     var course
-    if (Title == null)
-    course = await Course.find({InstructorId}).find(Subject)
+    if (Title == null && Subject != null)
+        course = await Course.find({InstructorId}).find({Subject})
+    else if (Subject == null && Title != null)
+        course = await Course.find({InstructorId}).find({Title})
     else
-    course = await Course.find({InstructorId}).find(Title)
+        course = await Course.find({InstructorId})
     if(!course){
         return res.status(404).json({error: 'no such course'})
     }

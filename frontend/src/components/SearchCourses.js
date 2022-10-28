@@ -1,18 +1,24 @@
 import React, { useState } from "react";
-import Course from "../pages/Search";
+import SearchDetails from '../components/SearchDetails'
 
 const SearchCourses = () => {
 
-    const {search, setSearch} = useState('')
-    const {id, setID} = useState('')
-    const {courses, setcourses} = useState('')
+    const [Title, setTitle] = useState('')
+    const [Subject, setSubject] = useState('')
+    const [id, setID] = useState('')
+    const [courses, setCourses] = useState(null)
     const[error,setError] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const {InstructorId} = JSON.stringify(id)
-        const body = {search,InstructorId}
-        const response = await fetch('/api/instructor/getcoursebyid', {method:'GET',body:JSON.stringify(body), Headers:{
+        var body
+        if (Title.length == 0 && Subject.length != 0)
+            body = {Subject,"InstructorId":{id:id}}
+        else if (Subject.length == 0 && Title.length != 0)
+            body = {Title,"InstructorId":{id:id}}
+        else
+            body = {"InstructorId":{id:id}}
+        const response = await fetch('/api/instructor/getcoursebyid', {method:'POST',body:JSON.stringify(body), headers:{
             'content-type': 'application/json'
         }
         })
@@ -21,8 +27,9 @@ const SearchCourses = () => {
         setError(json.error)    
     }
     if (response.ok){
-        setcourses(json)
-        setSearch('')
+        setCourses(json)
+        setTitle('')
+        setSubject('')
         setID('')
         setError(null)
     }
@@ -33,9 +40,16 @@ const SearchCourses = () => {
             <h3>Search Courses</h3>
             <input
                 type = "text"
-                placeholder="Title or Subject"
-                onChange={(e) => setSearch(e.target.value)}
-                value = {search}
+                placeholder="Search by Title"
+                onChange={(e) => setTitle(e.target.value)}
+                value = {Title}
+            />
+            <h5>Or</h5>
+            <input
+                type = "text"
+                placeholder="Search by Subject"
+                onChange={(e) => setSubject(e.target.value)}
+                value = {Subject}
             />
              <input
                 type = "text"
@@ -45,6 +59,9 @@ const SearchCourses = () => {
             />
             <button>Search</button>
             {error && <div className="error">{error}</div>}
+            {courses && courses.map((course) =>(
+                    <SearchDetails key={course._id} course={course}/>
+                ))}
         </form>
     )
 }

@@ -1,26 +1,13 @@
-import {useEffect,useState} from 'react'
-import SearchDetails from '../components/SearchDetails'
+//import {useEffect,useState} from 'react'
+//import SearchDetails from '../components/SearchDetails'
+import SearchCourses from '../components/SearchCourses'
 
 const Course = () => {
-    const [courses,setCourses] = useState(null)
-
-    useEffect(() => {
-        const fetchCourses = async () => {
-            const response = await fetch('/api/instructor/getcoursesbyid')
-            const json = await response.json()
-            if(response.ok){
-                setCourses(json)
-            }
-        }
-        fetchCourses()
-    }, [])
 
     return (
         <div className="Course">
             <div className="courses">
-                {courses && courses.map((course) =>(
-                    <SearchDetails key={course._id} course={course}/>
-                ))}
+                <SearchCourses/>               
             </div>
         </div>
     )
