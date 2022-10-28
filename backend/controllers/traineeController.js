@@ -83,6 +83,19 @@ const filterCoursePrice = async (req,res) => {
 }
 }
 
+const filterCourseSubjectRating = async (req,res) => {
+    try {
+	    const courses = await Course.find(req.body)
+	    if(!courses){
+	        return res.status(404).json({error: 'no courses found'})
+	    }
+	    res.status(200).json(courses)
+} catch (error) {
+	res.status(400).json({error: 'error'})
+}
+
+}
+
 module.exports = {
     getTrainees,
     getTrainee,
@@ -90,5 +103,6 @@ module.exports = {
     deleteTrainee,
     updateTrainee,
     viewAllCourses,
-    filterCoursePrice
+    filterCoursePrice,
+    filterCourseSubjectRating
 }
