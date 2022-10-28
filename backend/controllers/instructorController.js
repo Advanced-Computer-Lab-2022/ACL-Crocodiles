@@ -49,7 +49,7 @@ const filterCourse = async (req, res) => {
 const filterCoursePrice = async (req, res) => {
     try {
         const { priceMin, priceMax } = req.body
-        const courses = await Course.find({ Price: { $gte: priceMin } && { $lte: priceMax } })
+        const courses = await (await Course.find({ Price: { $gte: priceMin}}).find({Price:{ $lte: priceMax } }))
         if (!courses) {
             return res.status(404).json({ error: 'no courses found' })
         }

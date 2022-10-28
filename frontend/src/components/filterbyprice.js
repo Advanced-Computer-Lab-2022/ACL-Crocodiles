@@ -36,15 +36,15 @@ const FilterCourses = () => {
 
     return (<form className="searchcourse" onSubmit={handleSubmit}>
         <h3>Filter Courses</h3>
+        <h5>Minimum Price</h5>
         <input
             type="number"
-            placeholder="Minimum Price"
             onChange={(e) => setMin(e.target.value)}
             value={priceMin}
         />
+         <h5>Maximum Price</h5>
         <input
             type="number"
-            placeholder="Maximum Price"
             onChange={(e) => setMax(e.target.value)}
             value={priceMax}
         />

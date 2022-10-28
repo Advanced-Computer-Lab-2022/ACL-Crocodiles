@@ -6,6 +6,7 @@ import Admin from './pages/Admin'
 import Instructor from './pages/Instructor'
 import Trainee from './pages/Trainee'
 import Search from './pages/Search'
+import FilterByPrice from './pages/FilterByPrice'
 
 function App() {
   return (
@@ -32,10 +33,6 @@ function App() {
               element={<Course />}
             />
             <Route
-              path="/api/trainee"
-              element={<TraineeHome />}
-            />
-            <Route
               path="/api/trainee/courses"
               element={<Trainee />}
             />
@@ -43,7 +40,10 @@ function App() {
               path="/search"
               element={<Search />}
             />
-
+            <Route
+              path="/filterbyprice"
+              element={<FilterByPrice/>}
+            />
           </Routes>
         </div>
       </BrowserRouter>
