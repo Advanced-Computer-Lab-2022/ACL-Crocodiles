@@ -5,7 +5,8 @@ const {
     getTrainees,
     deleteTrainee,
     updateTrainee,
-    viewAllCourses
+    viewAllCourses,
+    filterCoursePrice
 } = require('../controllers/traineeController')
 const router = express.Router()
 
@@ -21,6 +22,8 @@ router.delete('/:id',deleteTrainee)
 router.patch('/:id',updateTrainee)
 
 router.get('/page/viewAllCourses', viewAllCourses)
+
+router.get('/page/filterCourses',filterCoursePrice)
 
 
 
