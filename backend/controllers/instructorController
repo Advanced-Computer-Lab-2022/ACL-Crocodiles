@@ -19,9 +19,9 @@ const searchCourse = async (req,res) => {
     const {Title} = req.body
     const {Subject} = req.body
     var course
-    if (Title == null && Subject != null)
+    if (Title === null && Subject !== null)
         course = await Course.find({InstructorId}).find({Subject})
-    else if (Subject == null && Title != null)
+    else if (Subject === null && Title !== null)
         course = await Course.find({InstructorId}).find({Title})
     else
         course = await Course.find({InstructorId})

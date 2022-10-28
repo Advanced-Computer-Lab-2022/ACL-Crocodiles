@@ -12,9 +12,9 @@ const SearchCourses = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         var body
-        if (Title.length == 0 && Subject.length != 0)
+        if (Title.length === 0 && Subject.length !== 0)
             body = {Subject,"InstructorId":{id:id}}
-        else if (Subject.length == 0 && Title.length != 0)
+        else if (Subject.length === 0 && Title.length !== 0)
             body = {Title,"InstructorId":{id:id}}
         else
             body = {"InstructorId":{id:id}}
