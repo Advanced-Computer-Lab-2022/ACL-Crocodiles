@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react'
 import CourseDetails from '../components/CourseDetails'
-import NewCourseForm from '../components/NewCourseForm'
+//import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {
     const [courses,setCourses] = useState(null)
 
