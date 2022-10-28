@@ -5,6 +5,7 @@ import Course from './pages/Course'
 import Admin from './pages/Admin'
 import Instructor from './pages/Instructor'
 import Trainee from './pages/Trainee'
+import Search from './pages/Search'
 
 function App() {
   return (
@@ -34,7 +35,10 @@ function App() {
               path="/trainee"
               element={<Trainee />}
              />
-             
+             <Route
+              path="/search"
+              element={<Search />}
+             />
                  
           </Routes>
      </div>

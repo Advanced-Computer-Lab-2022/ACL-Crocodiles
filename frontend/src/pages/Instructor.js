@@ -1,4 +1,5 @@
 import NewCourseForm from "../components/NewCourseForm"
+//import SearchCourses from "../components/SearchCourses"
 
 const Instructor = () => {
     return(
@@ -6,9 +7,11 @@ const Instructor = () => {
         <div className="instructor">
             <h1>Instructor Page</h1>
         <div class="topnav">
-            <input type="text" placeholder="Search course by Title or Subject"/>
+            <a href="/search">
+            <input type="button" value="Search by instructorID" />
+            </a>
             <a href="/course">
-            <input type="button" value="viewAllCourses" />
+            <input type="button" value="View All Courses" />
             </a>
         </div>
             <NewCourseForm/>

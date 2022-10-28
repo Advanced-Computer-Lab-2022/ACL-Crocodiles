@@ -15,9 +15,14 @@ const createCourse = async (req,res) => {
 }
 
 const searchCourse = async (req,res) => {
-    const {id} = req.params
-   
-    const course = await Course.find({InstructorId:{id}}).find(req.body)
+    const {InstructorId} = req.body
+    const {Title} = req.body
+    const {Subject} = req.body
+    var course
+    if (Title == null)
+    course = await Course.find({InstructorId}).find(Subject)
+    else
+    course = await Course.find({InstructorId}).find(Title)
     if(!course){
         return res.status(404).json({error: 'no such course'})
     }

@@ -1,12 +1,12 @@
 import {useEffect,useState} from 'react'
-import CourseDetails from '../components/CourseDetails'
-//import NewCourseForm from '../components/NewCourseForm'
+import SearchDetails from '../components/SearchDetails'
+
 const Course = () => {
     const [courses,setCourses] = useState(null)
 
     useEffect(() => {
         const fetchCourses = async () => {
-            const response = await fetch('/api/trainee/page/viewAllCourses')
+            const response = await fetch('/api/instructor/getcoursesbyid')
             const json = await response.json()
             if(response.ok){
                 setCourses(json)
@@ -19,7 +19,7 @@ const Course = () => {
         <div className="Course">
             <div className="courses">
                 {courses && courses.map((course) =>(
-                    <CourseDetails key={course._id} course={course}/>
+                    <SearchDetails key={course._id} course={course}/>
                 ))}
             </div>
         </div>
