@@ -46,10 +46,24 @@ const filterCourse = async (req, res) => {
     res.status(200).json(course)
 }
 
+const filterCoursePrice = async (req, res) => {
+    try {
+        const { priceMin, priceMax } = req.body
+        const courses = await Course.find({ Price: { $gte: priceMin } && { $lte: priceMax } })
+        if (!courses) {
+            return res.status(404).json({ error: 'no courses found' })
+        }
+        res.status(200).json(courses)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
+
 
 
 module.exports = {
     searchCourse,
     createCourse,
-    filterCourse
+    filterCourse,
+    filterCoursePrice
 }
