@@ -1,13 +1,14 @@
 const Admin = require('../models/adminModel')
 const Trainee = require('../models/traineeModel')
 const Instructor = require('../models/instructorModel')
+const CorporateTrainee = require('../models/CorporatetraineeModel')
 
 const mongoose = require('mongoose')
 
 const createAdmin = async (req,res) => {
     const {Username,Password} = req.body
     try{
-        const admin = await Admin.create({Email,Password})
+        const admin = await Admin.create({Username,Password})
         res.status(200).json(admin)
   } catch (error) {
       res.status(400).json({error: error.message})
