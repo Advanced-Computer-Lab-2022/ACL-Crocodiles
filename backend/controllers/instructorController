@@ -1,4 +1,4 @@
-zconst Instructor = require('../models/instructorModel')
+const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel')
 const mongoose = require('mongoose')
 
