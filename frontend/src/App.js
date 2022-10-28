@@ -4,7 +4,9 @@ import Navbar from './components/Navbar'
 import Course from './pages/Course'
 import Admin from './pages/Admin'
 import Instructor from './pages/Instructor'
+import TraineeHome from './pages/traineeHome'
 import Trainee from './pages/Trainee'
+
 
 function App() {
   return (
@@ -31,10 +33,13 @@ function App() {
               element={<Course />}
              />
              <Route
-              path="/trainee"
+              path="/api/trainee"
+              element={<TraineeHome />}
+             />
+               <Route
+              path="/api/trainee/courses"
               element={<Trainee />}
              />
-             
                  
           </Routes>
      </div>

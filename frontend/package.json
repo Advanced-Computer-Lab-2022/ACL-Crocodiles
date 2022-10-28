@@ -11,6 +11,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-select": "^5.5.7",
+    "react-select-country-list": "^2.2.3",
+    "react-select-currency": "^1.0.7",
     "reactjs-popup": "^2.0.5",
     "web-vitals": "^2.1.4"
   },
