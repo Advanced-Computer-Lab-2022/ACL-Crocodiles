@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Course from './pages/Course'
@@ -10,39 +10,43 @@ import Search from './pages/Search'
 function App() {
   return (
     <div className="App">
-      
-     <BrowserRouter>
-     <Navbar />
-     <div className="pages">
+
+      <BrowserRouter>
+        <Navbar />
+        <div className="pages">
           <Routes>
             <Route
               path="/"
               element={<Home />}
-             />
-             <Route
+            />
+            <Route
               path="/instructor"
               element={<Instructor />}
-             />
-             <Route
+            />
+            <Route
               path="/admin"
               element={<Admin />}
-             />
-             <Route
+            />
+            <Route
               path="/course"
               element={<Course />}
-             />
-             <Route
-              path="/trainee"
+            />
+            <Route
+              path="/api/trainee"
+              element={<TraineeHome />}
+            />
+            <Route
+              path="/api/trainee/courses"
               element={<Trainee />}
-             />
-             <Route
+            />
+            <Route
               path="/search"
               element={<Search />}
-             />
-                 
+            />
+
           </Routes>
-     </div>
-     </BrowserRouter>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
