@@ -39,6 +39,10 @@ function App() {
               path="/api/trainee/courses"
               element={<Trainee />}
             />
+            <Route
+              path="/search"
+              element={<Search />}
+            />
 
           </Routes>
         </div>
