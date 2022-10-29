@@ -10,8 +10,8 @@ const Instructor = () => {
                 <a href="/search">
                     <input type="button" value="Search by instructorID" />
                 </a>
-                <a href="/filterbyprice">
-                    <input type="button" value="Filter by Price" />
+                <a href="/filter">
+                    <input type="button" value="Filter" />
                 </a>
                 <a href="/course">
                     <input type="button" value="View All Courses" />

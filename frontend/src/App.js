@@ -6,7 +6,7 @@ import Admin from './pages/Admin'
 import Instructor from './pages/Instructor'
 import Trainee from './pages/Trainee'
 import Search from './pages/Search'
-import FilterByPrice from './pages/FilterByPrice'
+import FilterByPrice from './pages/Filter'
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
               element={<Course />}
             />
             <Route
-              path="/api/trainee/courses"
+              path="/trainee"
               element={<Trainee />}
             />
             <Route

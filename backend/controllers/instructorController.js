@@ -32,18 +32,19 @@ const searchCourse = async (req,res) => {
 }
 
 const filterCourse = async (req, res) => {
-    const { id } = req.params
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'invalid input' })
-    }
-    const myJSON = req.body
+    try{
+    const {Subject,Rating} =req.body
+    
 
-
-    const course = await Course.find({ InstructorId: { id } }).find(myJSON)
+    const course = await Course.find({Subject}).find({ Rating:{ $gte: Rating}})
     if (!course) {
         return res.status(404).json({ error: 'no such course' })
     }
     res.status(200).json(course)
+    }catch (error) {
+    res.status(400).json({ error: 'error' })
+    }
+    
 }
 
 const filterCoursePrice = async (req, res) => {

@@ -13,7 +13,7 @@ const router = express.Router()
 
 router.post('/createcourse', createCourse)
 //router.get('/filtersubjectprice/:id',getCourses1)
-router.get('/filter/:id', filterCourse)
+router.post('/filter', filterCourse)
 router.post('/getcoursebyid', searchCourse)
 router.post('/filterbyprice', filterCoursePrice)
 //router.put('/:id',updateInstructor)
