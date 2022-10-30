@@ -28,7 +28,8 @@ const courseSchema = new Schema({
         required: false
     },
     InstructorId: {
-        type: Object,
+        type: mongoose.Schema.Types.ObjectId,   
+        ref:'Instructor',
         required: true
     },
     Rating: {

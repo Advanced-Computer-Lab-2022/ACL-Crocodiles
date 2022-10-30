@@ -4,7 +4,8 @@ const {
     createCourse,
     searchCourse,
     filterCourse,
-    filterCoursePrice
+    filterCoursePrice,
+    Search
     // updateInstructor
 
 } = require('../controllers/instructorController')
@@ -16,6 +17,7 @@ router.post('/createcourse', createCourse)
 router.post('/filter', filterCourse)
 router.post('/getcoursebyid', searchCourse)
 router.post('/filterbyprice', filterCoursePrice)
+router.post('/search', Search)
 //router.put('/:id',updateInstructor)
 
 module.exports = router
