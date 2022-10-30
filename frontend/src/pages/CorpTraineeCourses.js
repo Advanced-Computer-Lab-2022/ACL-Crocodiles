@@ -1,10 +1,9 @@
 import {useEffect,useState} from 'react'
-import CourseDetails from '../components/CourseDetails'
-import Country from '../components/CountryTest'
-let curr = '?'
+import CorpTraineeCourseDetails from '../components/CorpTraineeCourseDetails'
 //import NewCourseForm from '../components/NewCourseForm'
-const Course = () => {
+const CorpTraineeCourses = () => {
     const [courses,setCourses] = useState(null)
+
     useEffect(() => {
         const fetchCourses = async () => {
             const response = await fetch('/api/trainee/page/viewAllCourses')
@@ -16,18 +15,15 @@ const Course = () => {
         fetchCourses()
     }, [])
 
-    const getData = (Data)=>{
-        
-        curr=Data;
-        console.log(curr)
-
-    }
     return (
-    
         <div className="Course">
-              <Country onsubmit={getData} courses={courses}/> 
+            <div className="courses">
+                {courses && courses.map((course) =>(
+                    <CorpTraineeCourseDetails key={course._id} course={course}/>
+                ))}
+            </div>
         </div>
     )
 }
 
-export default Course
+export default CorpTraineeCourses

@@ -1,19 +1,26 @@
 import NewCourseForm from "../components/NewCourseForm"
+//import SearchCourses from "../components/SearchCourses"
 
 const Instructor = () => {
-    return(
+    return (
 
         <div className="instructor">
             <h1>Instructor Page</h1>
-        <div class="topnav">
-            <input type="text" placeholder="Search course by Title or Subject"/>
-            <a href="/course">
-            <input type="button" value="viewAllCourses" />
-            </a>
-        </div>
-            <NewCourseForm/>
+            <div class="topnav">
+                <a href="/search">
+                    <input type="button" value="Search by instructorID" />
+                </a>
+                <a href="/filter">
+                    <input type="button" value="Filter" />
+                </a>
+                <a href="/course">
+                    <input type="button" value="View All Courses" />
+                </a>
             </div>
-    
+            <NewCourseForm />
+        </div>
 
-)}
+
+    )
+}
 export default Instructor
