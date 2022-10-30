@@ -4,13 +4,14 @@ import Navbar from './components/Navbar'
 import Course from './pages/Course'
 import Admin from './pages/Admin'
 import Instructor from './pages/Instructor'
+import Trainee from './pages/Trainee'
+import CorpTrainee from './pages/CorpTrainee'
+import CorpTraineeCourse from './pages/CorpTraineeCourses'
+import CorpTraineeFilter from './pages/CorpTraineeFilter'
 import Guest from './pages/Guest'
-import IndvTrainee from './pages/IndvTrainee'
-import CorpTraineeCourses from './pages/CorpTraineeCourses'
-import CorpTraineeHome from './pages/CorpTraineeHome'
 import Search from './pages/Search'
 import Filter from './pages/Filter'
-import FilterCorpTrainee from './pages/FilterCorpTrainee'
+
 function App() {
   return (
     <div className="App">
@@ -35,37 +36,36 @@ function App() {
               path="/course"
               element={<Course />}
             />
-                <Route
+            <Route
+              path="/trainee"
+              element={<Trainee />}
+            />
+            <Route
+              path="/corpTrainee"
+              element={<CorpTrainee />}
+            />
+            <Route
+              path="/corpTraineeCourses"
+              element={<CorpTraineeCourse/>}
+            />
+            <Route
               path="/guest"
               element={<Guest />}
             />
             <Route
-              path="/indvTrainee"
-              element={<IndvTrainee />}
-            />
-            
-               <Route
-              path="/corpTrainee/courses"
-              element={<CorpTraineeCourses />}
-            />
-               <Route
-              path="/corpTrainee"
-              element={<CorpTraineeHome />}
+              path="/filter"
+              element={<Filter />}
             />
             <Route
               path="/search"
               element={<Search />}
             />
-            <Route
-              path="/Filter"
-              element={<Filter/>}
+               <Route
+              path="/corpTraineeFilter"
+              element={<CorpTraineeFilter />}
             />
-                <Route
-              path="/filterCorpTrainee"
-              element={<FilterCorpTrainee/>}
-            />
+            
           </Routes>
-      
         </div>
       </BrowserRouter>
     </div>

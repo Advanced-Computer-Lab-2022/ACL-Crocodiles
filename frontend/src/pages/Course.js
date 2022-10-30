@@ -1,10 +1,10 @@
 import {useEffect,useState} from 'react'
 import CourseDetails from '../components/CourseDetails'
-import Country from '../components/CountryTest'
-let curr = '?'
+import DropDown from '../components/CountryDropDown'
 //import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {
     const [courses,setCourses] = useState(null)
+
     useEffect(() => {
         const fetchCourses = async () => {
             const response = await fetch('/api/trainee/page/viewAllCourses')
@@ -16,16 +16,10 @@ const Course = () => {
         fetchCourses()
     }, [])
 
-    const getData = (Data)=>{
-        
-        curr=Data;
-        console.log(curr)
-
-    }
     return (
-    
         <div className="Course">
-              <Country onsubmit={getData} courses={courses}/> 
+            <DropDown courses={courses}/>
+          
         </div>
     )
 }

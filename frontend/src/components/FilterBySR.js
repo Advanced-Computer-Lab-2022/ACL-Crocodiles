@@ -3,7 +3,7 @@ import CourseDetails from './CourseDetails'
 
 
 const FilterBySR = () => {
-
+    
     const [Rating, setRating] = useState(0)
     const [Subject, setSubject] = useState("")
     const [courses, setCourses] = useState('')
@@ -51,7 +51,7 @@ const FilterBySR = () => {
             {courses && courses.map((course) =>(
                     <CourseDetails key={course._id} course={course}/>
                 ))}
-
+               
     </form>)
 
 
@@ -59,5 +59,8 @@ const FilterBySR = () => {
 
 }
 
+{
+   
+}
 
 export default FilterBySR

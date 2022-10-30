@@ -14,15 +14,16 @@ const Navbar = () => {
                 <Link to="/Instructor">
                     <h2>Instructor controlls</h2>
                 </Link>
-                <Link to="/indvTrainee">
-                    <h2>Individual Trainee</h2>
+                <Link to="/trainee">
+                    <h2>Trainee</h2>
                 </Link>
                 <Link to="/corpTrainee">
                     <h2>Corporate Trainee</h2>
                 </Link>
-                <Link to="/indvTrainee">
+                <Link to="/guest">
                     <h2>Guest</h2>
                 </Link>
+                
 
             </div>
         </header>

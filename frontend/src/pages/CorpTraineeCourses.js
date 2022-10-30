@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react'
-import CorpTraineeCourseDetails from '../components/CorpTraineeCourseDetails'
+import CorpCourseDetails from '../components/CorpTraineeCourseDetails'
 //import NewCourseForm from '../components/NewCourseForm'
-const CorpTraineeCourses = () => {
+const CorpTraineeCourse = () => {
     const [courses,setCourses] = useState(null)
 
     useEffect(() => {
@@ -19,11 +19,11 @@ const CorpTraineeCourses = () => {
         <div className="Course">
             <div className="courses">
                 {courses && courses.map((course) =>(
-                    <CorpTraineeCourseDetails key={course._id} course={course}/>
+                    <CorpCourseDetails key={course._id} course={course}/>
                 ))}
             </div>
         </div>
     )
 }
 
-export default CorpTraineeCourses
+export default CorpTraineeCourse

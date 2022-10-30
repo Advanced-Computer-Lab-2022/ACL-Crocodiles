@@ -5,19 +5,13 @@ const SearchCourses = () => {
 
     const [Title, setTitle] = useState('')
     const [Subject, setSubject] = useState('')
-    const [id, setID] = useState('')
     const [courses, setCourses] = useState(null)
     const[error,setError] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        var body
-        if (Title.length === 0 && Subject.length !== 0)
-            body = {Subject,"InstructorId":{id:id}}
-        else if (Subject.length === 0 && Title.length !== 0)
-            body = {Title,"InstructorId":{id:id}}
-        else
-            body = {"InstructorId":{id:id}}
+        const body = {Title, Subject}
+        console.log(body)
         const response = await fetch('/api/instructor/getcoursebyid', {method:'POST',body:JSON.stringify(body), headers:{
             'content-type': 'application/json'
         }
@@ -30,7 +24,6 @@ const SearchCourses = () => {
         setCourses(json)
         setTitle('')
         setSubject('')
-        setID('')
         setError(null)
     }
     }
@@ -40,22 +33,9 @@ const SearchCourses = () => {
             <h3>Search Courses</h3>
             <input
                 type = "text"
-                placeholder="Search by Title"
-                onChange={(e) => setTitle(e.target.value)}
-                value = {Title}
-            />
-            <h5>Or</h5>
-            <input
-                type = "text"
-                placeholder="Search by Subject"
-                onChange={(e) => setSubject(e.target.value)}
-                value = {Subject}
-            />
-             <input
-                type = "text"
-                placeholder="Instructor ID"
-                onChange={(e) => setID(e.target.value)}
-                value = {id}
+                placeholder="Search by Title or Subject"
+                onChange={(e) => setTitle(e.target.value) || setSubject(e.target.value) }
+                value = {Title || Subject}
             />
             <button>Search</button>
             {error && <div className="error">{error}</div>}

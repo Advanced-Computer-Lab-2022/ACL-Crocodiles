@@ -1,4 +1,4 @@
-const Guest = () => {
+const Trainee = () => {
     return(
 
         <div className="trainee">
@@ -17,4 +17,4 @@ const Guest = () => {
         
         )
 }
- export default Guest
+ export default Trainee

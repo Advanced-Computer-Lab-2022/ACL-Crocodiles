@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "country-to-currency": "^1.0.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "iso-country-currency": "^0.6.0",

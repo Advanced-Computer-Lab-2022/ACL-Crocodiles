@@ -1,14 +1,15 @@
-
+import FilterByPrice from '../components/filterbyprice'
 import FilterBySR from '../components/FilterBySR'
-const FilterCorpTrainee = () => {
+const  CorpTraineeFilter  = () => {
 
     return (
         <div className="filter">
-            <div className="filterSR">
+            <div className="filterprice">
                 <FilterBySR />
+
             </div>
         </div>
     )
 }
 
-export default FilterCorpTrainee
+export default CorpTraineeFilter
