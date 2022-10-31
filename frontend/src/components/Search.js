@@ -10,7 +10,12 @@ var Curr =""
 for (let i = 0; i < CountryJSONArray.length; i++) {
     Countries.push(CountryJSONArray[i].country)
   }
-  
+  const x= async function(){
+    const response = await fetch('https://v6.exchangerate-api.com/v6/fe81d930e9dce92c10f75c0c/latest/USD')
+    const json = await response.json()
+    return Object.entries(json.conversion_rates)
+ }
+
 
 const Search = () => {
     
@@ -21,14 +26,24 @@ const Search = () => {
     const [error, setError] = useState(null)
     const [Country, setCountry] = useState('');
     const [Currency, setCurrency] = useState('');
-  
+    const [Rate, setRate] = useState(1);
+
         const handleCountry = async (e) => {
+            const  rates = await x()
+
         for(let i=0; i< CountryJSONArray.length; i++){
             if( CountryJSONArray[i].country==e.value){
                 Curr = CountryJSONArray[i].currency_code
                 setCurrency(CountryJSONArray[i].currency_code);
                 console.log(Curr);
-                return;
+            
+            }
+        }
+        for(let i=0;i<rates.length;i++){
+            console.log(rates[i][0])
+            if(rates[i][0]==Curr){
+                console.log('gi')
+                setRate(rates[i][1])
             }
         }
         }
@@ -62,6 +77,7 @@ const Search = () => {
     return(
         <div className="search" >
             <h3>Search Courses</h3>
+           
             <Dropdown options={Countries}  onChange={handleCountry}   value={Country} placeholder="Select a country"/>
             <input
                 type = "text"
@@ -72,7 +88,7 @@ const Search = () => {
                 <button onClick={handleSubmit}>Search</button>
             {error && <div className="error">{error}</div>}
             {courses && courses.map((course) =>(
-                    <SearchDetails key={course._id} course={course} currency={Curr}/>
+                    <SearchDetails key={course._id} course={course} currency={Curr} rate={Rate}/>
                 ))}
                 </div>
         )}
