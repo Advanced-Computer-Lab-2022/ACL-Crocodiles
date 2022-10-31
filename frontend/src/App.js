@@ -11,7 +11,7 @@ import CorpTraineeFilter from './pages/CorpTraineeFilter'
 import Guest from './pages/Guest'
 import Search from './pages/Search'
 import Filter from './pages/Filter'
-
+import InstructorCourses from './pages/InstructorCourses'
 function App() {
   return (
     <div className="App">
@@ -64,6 +64,11 @@ function App() {
               path="/corpTraineeFilter"
               element={<CorpTraineeFilter />}
             />
+            <Route
+              path="/InstructorCourses"
+              element={<InstructorCourses />}
+            />
+       
             
           </Routes>
         </div>

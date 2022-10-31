@@ -5,13 +5,14 @@ const {
     searchCourse,
     filterCourse,
     filterCoursePrice,
-    Search
+    Search,
+    viewAllCourses
     // updateInstructor
 
 } = require('../controllers/instructorController')
 
 const router = express.Router()
-
+router.get('/viewAllCourses',viewAllCourses)
 router.post('/createcourse', createCourse)
 //router.get('/filtersubjectprice/:id',getCourses1)
 router.post('/filter', filterCourse)

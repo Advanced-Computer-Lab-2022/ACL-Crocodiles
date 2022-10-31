@@ -1,4 +1,4 @@
-const CourseDetails = ({ course }) => {
+const CorpCourseDetails = ({ course }) => {
     return(
         <div className="course-details">
             <h4>{course.Title}</h4>
@@ -10,4 +10,4 @@ const CourseDetails = ({ course }) => {
     )
 }
 
-export default CourseDetails
+export default CorpCourseDetails

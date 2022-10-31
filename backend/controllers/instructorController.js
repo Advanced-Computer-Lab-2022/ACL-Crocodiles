@@ -1,5 +1,5 @@
 const Instructor = require('../models/instructorModel')
-const Course = require('../models/courseModel')
+const Course = require('../models/courseModel').course
 const mongoose = require('mongoose')
 
 
@@ -83,6 +83,26 @@ const Search = async(req,res)=>{
 }
 
 
+const viewAllCourses = async (req,res) => {
+   
+    try {
+
+        const InstructorId  = mongoose.Types.ObjectId("63571220ae3847e24aceec21")
+        if(!mongoose.Types.ObjectId.isValid(InstructorId)){ 
+            return res.status(404).json({error: 'no such id'})
+        }
+        
+        const courses = await Course.find({InstructorId: InstructorId})
+        if(!courses){
+            return res.status(404).json({error: 'no courses found'})
+        }
+            res.status(200).json(courses)
+        
+     } catch (error) {
+       res.status(400).json({error: 'error'})
+     }
+}
+
 
 
 
@@ -91,5 +111,6 @@ module.exports = {
     createCourse,
     filterCourse,
     filterCoursePrice,
-    Search
+    Search,
+    viewAllCourses
 }
