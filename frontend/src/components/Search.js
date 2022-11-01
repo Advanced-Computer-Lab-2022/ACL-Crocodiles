@@ -13,7 +13,7 @@ const Search = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const body = { Title,Subject,Username }
-        console.log(body)
+        t
         const response = await fetch('/api/instructor/search', {
             method: 'POST', body: JSON.stringify(body), headers: {
                 'content-type': 'application/json'
