@@ -12,6 +12,8 @@ import Guest from './pages/Guest'
 import Search from './pages/Search'
 import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
+import Signin from './pages/Signin'
+import Signup from './pages/Signup'
 function App() {
   return (
     <div className="App">
@@ -31,6 +33,14 @@ function App() {
             <Route
               path="/admin"
               element={<Admin />}
+            />
+             <Route
+              path="/signin"
+              element={<Signin />}
+            />
+             <Route
+              path="/signup"
+              element={<Signup />}
             />
             <Route
               path="/course"

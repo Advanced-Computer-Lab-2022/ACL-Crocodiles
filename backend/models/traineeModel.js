@@ -2,13 +2,19 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const traineeSchema = new Schema({
+    _id:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'User',
+      required:true
+    },
     Name: {
       type: String,
       required: true,
     },
     Email: {
       type: String,
-      required: true
+      required: true,
+      unique:true
     },
     Password: {
       type:String,
@@ -37,7 +43,7 @@ const traineeSchema = new Schema({
     Job: {
       type: String,
       required: false
-    }
+    },
   }, { timestamps: true });
   
   module.exports = mongoose.model('Trainee', traineeSchema);

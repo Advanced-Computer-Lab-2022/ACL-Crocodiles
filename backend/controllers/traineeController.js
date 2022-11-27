@@ -3,6 +3,8 @@ const Trainee = require('../models/traineeModel')
 const mongoose = require('mongoose')
 const Course = require('../models/courseModel').course
 const Subtitle = require('../models/courseModel').sub
+
+
 const createTrainee = async (req,res) => {
     const {Name,Email,Age} = req.body
     try{
