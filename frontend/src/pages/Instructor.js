@@ -16,6 +16,9 @@ const Instructor = () => {
                 <a href="/course">
                     <input type="button" value="View All Courses" />
                 </a>
+                <a href="/InstructorCourses">
+                    <input type="button" value="View My Courses" />
+                </a>
             </div>
             <NewCourseForm />
         </div>

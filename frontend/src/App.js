@@ -5,9 +5,13 @@ import Course from './pages/Course'
 import Admin from './pages/Admin'
 import Instructor from './pages/Instructor'
 import Trainee from './pages/Trainee'
+import CorpTrainee from './pages/CorpTrainee'
+import CorpTraineeCourse from './pages/CorpTraineeCourses'
+import CorpTraineeFilter from './pages/CorpTraineeFilter'
+import Guest from './pages/Guest'
 import Search from './pages/Search'
 import Filter from './pages/Filter'
-
+import InstructorCourses from './pages/InstructorCourses'
 function App() {
   return (
     <div className="App">
@@ -37,13 +41,35 @@ function App() {
               element={<Trainee />}
             />
             <Route
-              path="/search"
-              element={<Search />}
+              path="/corpTrainee"
+              element={<CorpTrainee />}
+            />
+            <Route
+              path="/corpTraineeCourses"
+              element={<CorpTraineeCourse/>}
+            />
+            <Route
+              path="/guest"
+              element={<Guest />}
             />
             <Route
               path="/filter"
-              element={<Filter/>}
+              element={<Filter />}
             />
+            <Route
+              path="/search"
+              element={<Search />}
+            />
+               <Route
+              path="/corpTraineeFilter"
+              element={<CorpTraineeFilter />}
+            />
+            <Route
+              path="/InstructorCourses"
+              element={<InstructorCourses />}
+            />
+       
+            
           </Routes>
         </div>
       </BrowserRouter>

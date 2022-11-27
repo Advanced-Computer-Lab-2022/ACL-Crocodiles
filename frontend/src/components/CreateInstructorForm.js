@@ -11,6 +11,7 @@ const CreateInstructorForm = () => {
     const handleSubmit = async (e) =>{
         e.preventDefault()
         const instructor = {Username,Password}
+        console.log(Username)
         console.log(JSON.stringify(instructor))
         const response =  await fetch('/api/admin/createinstructor',{method:'POST',body:JSON.stringify(instructor),headers: {
             'content-type':'application/json'

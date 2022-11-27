@@ -1,5 +1,4 @@
 import {useEffect,useState} from 'react'
-import CourseDetails from '../components/CourseDetails'
 import DropDown from '../components/CountryDropDown'
 //import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {
@@ -7,7 +6,7 @@ const Course = () => {
 
     useEffect(() => {
         const fetchCourses = async () => {
-            const response = await fetch('/api/trainee/page/viewAllCourses')
+            const response = await fetch('/api/Instructor/viewAllCourses')
             const json = await response.json()
             if(response.ok){
                 setCourses(json)

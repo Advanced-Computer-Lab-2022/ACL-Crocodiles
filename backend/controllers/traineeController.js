@@ -1,8 +1,8 @@
 const Trainee = require('../models/traineeModel')
 
 const mongoose = require('mongoose')
-const Course = require('../models/courseModel')
-
+const Course = require('../models/courseModel').course
+const Subtitle = require('../models/courseModel').sub
 const createTrainee = async (req,res) => {
     const {Name,Email,Age} = req.body
     try{
@@ -78,6 +78,22 @@ const filterCoursePrice = async (req,res) => {
     }
     res.status(200).json(courses)
 }
+const getSubtitles = async(req,res) => {
+    const {IDs} = req.body
+    const subtitles = []
+    for(let i=0;i<IDs.length;i++){
+        if(!mongoose.Types.ObjectId.isValid(IDs[i])){ 
+            return res.status(404).json({error: 'Invalid subtitle ID'})
+        }
+        const subtitle = await Subtitle.findById(IDs[i])
+        if(subtitle)
+        subtitles.push(subtitle)
+    else
+    res.status(500).json(error)
+    }
+    res.json(subtitles)
+    console.log(subtitles)
+}
 
 module.exports = {
     getTrainees,
@@ -85,5 +101,6 @@ module.exports = {
     createTrainee,
     deleteTrainee,
     updateTrainee,
-    viewAllCourses
+    viewAllCourses,
+    getSubtitles
 }

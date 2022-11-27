@@ -1,5 +1,5 @@
 const Guest = require('../models/guestModel.js');
-const Course = require('../models/courseModel.js').courseModel;
+const Course = require('../models/courseModel.js').course;
 const mongoose = require('mongoose');
 
 const createGuest = async (req, res) =>{

@@ -65,6 +65,35 @@ header a {
   border-radius: 50%;
   color: #333;
 }
+/* subtitle-details */
+.subtitle-details {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.subtitle-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1em;
+  color:  rgb(77, 195, 170);
+}
+.subtitle-details p {
+  margin: 0;
+  font-size: 0.7em;
+  color: #555;
+}
+.subtitle-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
 
 /* new workout form */
 label, input {
@@ -133,4 +162,7 @@ div.error {
   border-radius: 50%;
   color: #333;
 }
-.viewmore {display: none;}
+
+.same {
+  display:inline-block;
+}

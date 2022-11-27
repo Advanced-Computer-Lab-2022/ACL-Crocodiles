@@ -29,7 +29,7 @@ const SearchCourses = () => {
     }
 
     return (
-        <form className="searchcourse" onSubmit={handleSubmit}>
+        <div className="searchcourse" >
             <h3>Search Courses</h3>
             <input
                 type = "text"
@@ -37,12 +37,12 @@ const SearchCourses = () => {
                 onChange={(e) => setTitle(e.target.value) || setSubject(e.target.value) }
                 value = {Title || Subject}
             />
-            <button>Search</button>
+            <button onClick={handleSubmit}>Search</button>
             {error && <div className="error">{error}</div>}
             {courses && courses.map((course) =>(
                     <SearchDetails key={course._id} course={course}/>
                 ))}
-        </form>
+        </div>
     )
 }
 
