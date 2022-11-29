@@ -54,7 +54,7 @@ const filterCourse = async (req, res) => {
 const filterCoursePrice = async (req, res) => {
     try {
         const { priceMin, priceMax } = req.body
-        const courses = await (await Course.find({ Price: { $gte: priceMin}}).find({Price:{ $lte: priceMax } }))
+        const courses = await Course.find({ Price: { $gte: priceMin}}).find({Price:{ $lte: priceMax } })
         if (!courses) {
             return res.status(404).json({ error: 'no courses found' })
         }
@@ -82,7 +82,41 @@ const Search = async(req,res)=>{
 
 }
 
+const definePromotion = async (req, res) => {
+    const { Title, Discount } = req.body
+    try {
+        const course = await Course.findOneAndUpdate({ Title }, { Discount })
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
+        }
+        res.status(200).json(course)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
 
+//replicate definePromotion with a time limit
+const definePromotionTime = async (req, res) => {
+    const { Title, Discount, Date } = req.body
+    try {
+        const course = await Course.findOneAndUpdate({ Title }, { Discount})
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
+        }
+        res.status(200).json(course)
+        //discount will be removed after time
+        setTimeout(() => {
+            const course = Course.findOneAndUpdate({ Title }, { Discount: 0 })
+            if (!course) {
+                return res.status(404).json({ error: 'no such course' })
+            }
+            res.status(200).json(course)
+        }, Time);
+        
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
 
 
 
@@ -91,5 +125,7 @@ module.exports = {
     createCourse,
     filterCourse,
     filterCoursePrice,
-    Search
+    Search,
+    definePromotion,
+    definePromotionTime
 }
