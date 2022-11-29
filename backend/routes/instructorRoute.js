@@ -4,16 +4,25 @@ const {
     createCourse,
     searchCourse,
     filterCourse,
-   // updateInstructor
+    filterCoursePrice,
+    Search,
+    definePromotion,
+    definePromotionTime,
+    // updateInstructor
 
 } = require('../controllers/instructorController')
 
 const router = express.Router()
 
-router.post('/createcourse/',createCourse)
+router.post('/createcourse', createCourse)
 //router.get('/filtersubjectprice/:id',getCourses1)
-router.get('/filter/:id',filterCourse)
-router.get('/:id',searchCourse)
+router.post('/filter', filterCourse)
+router.post('/getcoursebyid', searchCourse)
+router.post('/filterbyprice', filterCoursePrice)
+router.post('/search', Search)
+router.post('/definepromotion', definePromotion)
+router.post('/definepromotiontime', definePromotionTime)
 //router.put('/:id',updateInstructor)
+
 
 module.exports = router

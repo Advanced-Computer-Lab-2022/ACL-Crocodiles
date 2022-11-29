@@ -3,40 +3,119 @@ const Course = require('../models/courseModel')
 const mongoose = require('mongoose')
 
 
-const createCourse = async (req,res) => {
-  //  const{ InstructorId } = req.params
-    const {Title,Subject,Hours,Price,InstructorId} = req.body
-    try{
-        const course = await Course.create({Title,Subject,Hours,Price,InstructorId})
+const createCourse = async (req, res) => {
+    const InstructorId  = mongoose.Types.ObjectId("63571220ae3847e24aceec21")
+
+    const { Title, Subject, Hours, Price } = req.body
+    if(!mongoose.Types.ObjectId.isValid(InstructorId)){ 
+        return res.status(404).json({error: 'no such id'})
+    }
+    try {
+        const course = await Course.create({ Title, Subject, Hours, Price, InstructorId })
         res.status(200).json(course)
-  } catch (error) {
-      res.status(400).json({error: error.message})
-  }
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 const searchCourse = async (req,res) => {
-    const {id} = req.params
-   
-    const course = await Course.find({InstructorId:{id}}).find(req.body)
+    const InstructorId  = mongoose.Types.ObjectId("63571220ae3847e24aceec21")
+    const {Title,Subject} = req.body
+    if(!mongoose.Types.ObjectId.isValid(InstructorId)){ 
+        return res.status(404).json({error: 'no such id'})
+    }
+    try{
+    const course = await Course.find().or([{Title:Title},{Subject:Subject}]).and([{InstructorId:InstructorId}])
     if(!course){
         return res.status(404).json({error: 'no such course'})
     }
     res.status(200).json(course)
-}
-
-const filterCourse = async (req,res) => {
-    const{ id } = req.params
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'invalid input'})
+    }catch(error){
+    res.status(400).json({ error: error.message })
     }
-    const myJSON = req.body
+    }
+
+const filterCourse = async (req, res) => {
+    try{
+    const {Subject,Rating} =req.body
     
 
-    const course = await Course.find({InstructorId:{id}}).find(myJSON)
-    if(!course){
-        return res.status(404).json({error: 'no such course'})
+    const course = await Course.find({Subject}).find({ Rating:{ $gte: Rating}})
+    if (!course) {
+        return res.status(404).json({ error: 'no such course' })
     }
     res.status(200).json(course)
+    }catch (error) {
+    res.status(400).json({ error: 'error' })
+    }
+    
+}
+
+const filterCoursePrice = async (req, res) => {
+    try {
+        const { priceMin, priceMax } = req.body
+        const courses = await Course.find({ Price: { $gte: priceMin}}).find({Price:{ $lte: priceMax } })
+        if (!courses) {
+            return res.status(404).json({ error: 'no courses found' })
+        }
+        res.status(200).json(courses)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
+const Search = async(req,res)=>{
+   const {Username,Title,Subject} = req.body
+
+    try{
+        const instructor = await Instructor.find({Username}).select({id:1})
+        if (!instructor) {
+            return res.status(404).json({ error: 'Couldnt find instructor' })
+        }
+        const courses = await Course.find().or([{InstructorId:instructor},{Title:Title},{Subject:Subject}])
+        if (!courses) {
+            return res.status(404).json({ error: 'no courses found' })
+        }
+        res.status(200).json(courses)
+    }catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+
+}
+
+const definePromotion = async (req, res) => {
+    const { Title, Discount } = req.body
+    try {
+        const course = await Course.findOneAndUpdate({ Title }, { Discount })
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
+        }
+        res.status(200).json(course)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
+
+//replicate definePromotion with a time limit
+const definePromotionTime = async (req, res) => {
+    const { Title, Discount, Date } = req.body
+    try {
+        const course = await Course.findOneAndUpdate({ Title }, { Discount})
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
+        }
+        res.status(200).json(course)
+        //discount will be removed after time
+        setTimeout(() => {
+            const course = Course.findOneAndUpdate({ Title }, { Discount: 0 })
+            if (!course) {
+                return res.status(404).json({ error: 'no such course' })
+            }
+            res.status(200).json(course)
+        }, Time);
+        
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
 }
 
 
@@ -44,5 +123,9 @@ const filterCourse = async (req,res) => {
 module.exports = {
     searchCourse,
     createCourse,
-    filterCourse
+    filterCourse,
+    filterCoursePrice,
+    Search,
+    definePromotion,
+    definePromotionTime
 }

@@ -17,18 +17,20 @@ const Trainee = () => {
     }, [])
 
     return(
-        <div className="Trainee">
-            <h2>Trainee Page</h2>
-            <div class="A">
-            <CountrySelector/>
-            <div className='courses'>
-            {Course && Course.map((course) => (
-                <TraineeCourseDetails key={course._id} course={course}/>
-            ))}
-                   </div>
+
+        <div className="trainee">
+           <div class="topnav">
+                <a href="/filter">
+                    <input type="button" value="Filter" />
+                </a>
+                <a href="/course">
+                    <input type="button" value="View All Courses" />
+                </a>
+            </div>
+            
         </div>
-        </div>
-        
+
+                
         
         )
 }
