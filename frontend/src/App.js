@@ -14,6 +14,8 @@ import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
+import Contract from './pages/Contract'
+import ForgotPassword from './pages/ForgotPassword'
 function App() {
   return (
     <div className="App">
@@ -25,6 +27,15 @@ function App() {
             <Route
               path="/"
               element={<Home />}
+            />
+             <Route
+              path="/forgotpassword"
+              element={<ForgotPassword />}
+            />
+            
+              <Route
+              path="/contract"
+              element={<Contract />}
             />
             <Route
               path="/instructor"

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const NewCourseForm = () => {
+    const {user} = useAuthContext()
     const[Title,setTitle] = useState('')
     const[Subject,setSubject] = useState('')
     const[Hours,setHours] = useState('')
@@ -12,11 +13,15 @@ const NewCourseForm = () => {
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
-
+        if(!user){
+            setError('You must be logged in')
+            return
+        }
         const course = {Title,Subject,Hours,Price}
         console.log(JSON.stringify(course))
         const response =  await fetch('/api/instructor/createcourse',{method:'POST',body:JSON.stringify(course),headers: {
-            'content-type':'application/json'
+            'content-type':'application/json',
+            'Authorization': `Bearer ${user.token}`
             
         }
       })

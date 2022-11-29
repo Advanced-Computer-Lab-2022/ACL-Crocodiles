@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import SearchDetails from '../components/SearchDetails'
-
+import { useAuthContext } from "../hooks/useAuthContext";
 const SearchCourses = () => {
 
     const [Title, setTitle] = useState('')
     const [Subject, setSubject] = useState('')
     const [courses, setCourses] = useState(null)
     const[error,setError] = useState(null)
-
+    const{user} = useAuthContext()
     const handleSubmit = async (e) => {
         e.preventDefault()
         const body = {Title, Subject}
         console.log(body)
         const response = await fetch('/api/instructor/getcoursebyid', {method:'POST',body:JSON.stringify(body), headers:{
+            'Authorization': `Bearer ${user.token}`,
             'content-type': 'application/json'
         }
         })

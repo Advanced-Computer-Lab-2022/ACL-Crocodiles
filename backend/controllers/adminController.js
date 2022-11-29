@@ -25,7 +25,8 @@ const createAdmin = async (req,res) => {
 
 
 const createInstructor = async (req,res) => {
-    const {Email,Password} = req.body
+    
+    const {Username,Email,Password} = req.body
     const Type = 'Instructor'
         
     try{
@@ -34,7 +35,7 @@ const createInstructor = async (req,res) => {
             res.status(400).json({error:'User Already exists'})
         else{
             user = await User.create({Email,Password,Type})
-            const instructor =  await Instructor.create({_id:user._id})
+            const instructor =  await Instructor.create({_id:user._id,Username,})
             res.status(200).json(instructor)
         }
   } catch (error) {

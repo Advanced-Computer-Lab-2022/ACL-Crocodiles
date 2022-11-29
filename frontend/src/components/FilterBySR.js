@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CourseDetails from './CourseDetails'
+import { useAuthContext } from "../hooks/useAuthContext";
 
 
 const FilterBySR = () => {
@@ -8,6 +9,7 @@ const FilterBySR = () => {
     const [Subject, setSubject] = useState("")
     const [courses, setCourses] = useState('')
     const [error, setError] = useState(null)
+    const {user} = useAuthContext()
 
     const handleSubmit = async (e) => {
         e.preventDefault()

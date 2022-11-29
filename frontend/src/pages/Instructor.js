@@ -1,5 +1,5 @@
 import NewCourseForm from "../components/NewCourseForm"
-//import SearchCourses from "../components/SearchCourses"
+import EditForm from "../components/EditInstructor"
 
 const Instructor = () => {
     return (
@@ -19,8 +19,12 @@ const Instructor = () => {
                 <a href="/InstructorCourses">
                     <input type="button" value="View My Courses" />
                 </a>
+                <a href="/contract">
+                    <input type="button" value="View Contract" />
+                </a>
             </div>
             <NewCourseForm />
+            <EditForm/>
         </div>
 
 

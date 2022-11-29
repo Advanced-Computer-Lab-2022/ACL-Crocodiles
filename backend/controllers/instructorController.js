@@ -1,10 +1,10 @@
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
 const mongoose = require('mongoose')
-
-
+const User = require('../models/userModel')
+const Validator = require('validator')
 const createCourse = async (req, res) => {
-    const InstructorId  = mongoose.Types.ObjectId("63571220ae3847e24aceec21")
+    const InstructorId  = req.user
 
     const { Title, Subject, Hours, Price } = req.body
     if(!mongoose.Types.ObjectId.isValid(InstructorId)){ 
@@ -19,7 +19,7 @@ const createCourse = async (req, res) => {
 }
 
 const searchCourse = async (req,res) => {
-    const InstructorId  = mongoose.Types.ObjectId("63571220ae3847e24aceec21")
+    const InstructorId  = req.user
     const {Title,Subject} = req.body
     if(!mongoose.Types.ObjectId.isValid(InstructorId)){ 
         return res.status(404).json({error: 'no such id'})
@@ -81,18 +81,40 @@ const Search = async(req,res)=>{
     }
 
 }
+const editBiographyorEmail = async (req,res) => {
+    const {Email,Biography} = req.body
+    if(!Validator.isEmail(Email))
+        res.status(400).json({error:'incorrect email format'})
+    const id  = req.user
+    const userupdated = await User.findByIdAndUpdate(id,{Email:Email})
+    const updated = await Instructor.findByIdAndUpdate(id,{Biography:Biography})
+    res.status(200).json({updated,userupdated})
+}
 
 
-const viewAllCourses = async (req,res) => {
+
+const viewAllInsCourses = async (req,res) => {
    
     try {
 
-        const InstructorId  = mongoose.Types.ObjectId("63571220ae3847e24aceec21")
+        const InstructorId  = req.user
         if(!mongoose.Types.ObjectId.isValid(InstructorId)){ 
             return res.status(404).json({error: 'no such id'})
         }
         
         const courses = await Course.find({InstructorId: InstructorId})
+        if(!courses){
+            return res.status(404).json({error: 'no courses found'})
+        }
+            res.status(200).json(courses)
+        
+     } catch (error) {
+       res.status(400).json({error: 'error'})
+     }
+}
+const viewAllCourses = async (req,res) => {
+    try {
+        const courses = await Course.find()
         if(!courses){
             return res.status(404).json({error: 'no courses found'})
         }
@@ -112,5 +134,7 @@ module.exports = {
     filterCourse,
     filterCoursePrice,
     Search,
-    viewAllCourses
+    viewAllInsCourses,
+    viewAllCourses,
+    editBiographyorEmail
 }

@@ -7,6 +7,6 @@ const {
 const router = express.Router()
 
 router.post('/trainee', RegisterTrainee)
-router.post('/instructor', RegisterInstructor)
+
 
 module.exports = router

@@ -1,24 +1,34 @@
 import {useEffect,useState} from 'react'
 import DropDown from '../components/CountryDropDown'
+import { useAuthContext } from "../hooks/useAuthContext"
+import { useCoursesContext } from '../hooks/useCoursescontext'
 //import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {
     const [courses,setCourses] = useState(null)
-
-    useEffect(() => {
-        const fetchCourses = async () => {
-            const response = await fetch('/api/Instructor/viewAllCourses')
+    const[error,setError] = useState(null)
+    const{user} = useAuthContext()
+    useEffect(() => {     
+        const fetchCourses = async () => {            
+            const response = await fetch('/api/Instructor/viewAllinsCourses',{headers: {
+                'Authorization': `Bearer ${user.token}`
+                    }
+                }
+            )
+            
             const json = await response.json()
+           
             if(response.ok){
                 setCourses(json)
             }
         }
-        fetchCourses()
-    }, [])
+        if(user)
+            fetchCourses() 
+    })
 
     return (
         <div className="Course">
             <DropDown courses={courses}/>
-          
+            {error && <div className='error'>{error}</div>}
         </div>
     )
 }
