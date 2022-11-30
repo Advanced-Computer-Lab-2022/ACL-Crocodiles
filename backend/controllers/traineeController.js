@@ -1,7 +1,9 @@
 const Trainee = require('../models/traineeModel')
 
 const mongoose = require('mongoose')
-const Course = require('../models/courseModel')
+const Course = require('../models/courseModel').course
+const Subtitle = require('../models/courseModel').sub
+
 
 const createTrainee = async (req,res) => {
     const {Name,Email,Age} = req.body
@@ -20,7 +22,7 @@ const getTrainees = async (req,res) => {
 
 const getTrainee = async (req,res) => {
     const{ id } = req.params
-    if(!mongoose.Types.ObjectId.isValid(id)){
+   if(!mongoose.Types.ObjectId.isValid(id)){ 
         return res.status(404).json({error: 'no such trainee'})
     }
 
@@ -59,7 +61,7 @@ const updateTrainee = async (req,res) => {
 
 const viewAllCourses = async (req,res) => {
     try {
-        const courses = await Course.find().select({Title:1,Subject:1,Hours:1,Price:1,InstructorId:1})
+        const courses = await Course.find()
         if(!courses){
             return res.status(404).json({error: 'no courses found'})
         }
@@ -78,6 +80,22 @@ const filterCoursePrice = async (req,res) => {
     }
     res.status(200).json(courses)
 }
+const getSubtitles = async(req,res) => {
+    const {IDs} = req.body
+    const subtitles = []
+    for(let i=0;i<IDs.length;i++){
+        if(!mongoose.Types.ObjectId.isValid(IDs[i])){ 
+            return res.status(404).json({error: 'Invalid subtitle ID'})
+        }
+        const subtitle = await Subtitle.findById(IDs[i])
+        if(subtitle)
+        subtitles.push(subtitle)
+    else
+    res.status(500).json(error)
+    }
+    res.json(subtitles)
+    console.log(subtitles)
+}
 
 module.exports = {
     getTrainees,
@@ -85,5 +103,6 @@ module.exports = {
     createTrainee,
     deleteTrainee,
     updateTrainee,
-    viewAllCourses
+    viewAllCourses,
+    getSubtitles
 }

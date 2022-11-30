@@ -1,4 +1,4 @@
-const Course = require('../models/courseModel')
+const Course = require('../models/courseModel').course
 const mongoose = require('mongoose')
 
 const viewAllCourses = async (req,res) => {

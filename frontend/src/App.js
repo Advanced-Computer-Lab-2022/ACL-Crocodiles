@@ -5,11 +5,13 @@ import Course from './pages/Course'
 import Admin from './pages/Admin'
 import Instructor from './pages/Instructor'
 import Trainee from './pages/Trainee'
+import CorpTrainee from './pages/CorpTrainee'
+import CorpTraineeCourse from './pages/CorpTraineeCourses'
+import CorpTraineeFilter from './pages/CorpTraineeFilter'
+import Guest from './pages/Guest'
 import Search from './pages/Search'
-<<<<<<< Updated upstream
 import FilterByPrice from './pages/FilterByPrice'
 
-=======
 import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
 import Signin from './pages/Signin'
@@ -18,7 +20,6 @@ import Profile from './pages/Profile'
 import Contract from './pages/Contract'
 import ForgotPassword from './pages/ForgotPassword'
 import ChangePassword from './pages/ChangePassword'
->>>>>>> Stashed changes
 function App() {
   return (
     <div className="App">
@@ -31,6 +32,15 @@ function App() {
               path="/"
               element={<Home />}
             />
+             <Route
+              path="/forgotpassword"
+              element={<ForgotPassword />}
+            />
+            
+              <Route
+              path="/contract"
+              element={<Contract />}
+            />
             <Route
               path="/instructor"
               element={<Instructor />}
@@ -39,24 +49,46 @@ function App() {
               path="/admin"
               element={<Admin />}
             />
+             <Route
+              path="/signin"
+              element={<Signin />}
+            />
+             <Route
+              path="/signup"
+              element={<Signup />}
+            />
             <Route
               path="/course"
               element={<Course />}
             />
             <Route
-              path="/api/trainee/courses"
+              path="/trainee"
               element={<Trainee />}
+            />
+            <Route
+              path="/corpTrainee"
+              element={<CorpTrainee />}
+            />
+            <Route
+              path="/corpTraineeCourses"
+              element={<CorpTraineeCourse/>}
+            />
+            <Route
+              path="/guest"
+              element={<Guest />}
+            />
+            <Route
+              path="/filter"
+              element={<Filter />}
             />
             <Route
               path="/search"
               element={<Search />}
             />
-            <Route
-              path="/filterbyprice"
-              element={<FilterByPrice/>}
+               <Route
+              path="/corpTraineeFilter"
+              element={<CorpTraineeFilter />}
             />
-<<<<<<< Updated upstream
-=======
             <Route
               path="/profile"
               element={<Profile />}
@@ -67,7 +99,12 @@ function App() {
             />
        
             
->>>>>>> Stashed changes
+            <Route
+              path="/InstructorCourses"
+              element={<InstructorCourses />}
+            />
+       
+            
           </Routes>
         </div>
       </BrowserRouter>

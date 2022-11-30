@@ -5,8 +5,8 @@ import SearchCourses from '../components/SearchCourses'
 const Course = () => {
 
     return (
-        <div className="Course">
-            <div className="courses">
+        <div className="search">
+            <div className="searchcoures">
                 <SearchCourses/>               
             </div>
         </div>

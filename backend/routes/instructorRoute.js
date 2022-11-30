@@ -1,21 +1,29 @@
 const express = require('express')
-
+const requireAuthInstructor = require('../middleware/requireAuthInstructor') 
 const {
     createCourse,
     searchCourse,
     filterCourse,
-    filterCoursePrice
-    // updateInstructor
+    filterCoursePrice,
+    Search,
+    viewAllCourses,
+    viewAllInsCourses,
+    editBiographyorEmail
 
 } = require('../controllers/instructorController')
 
+
 const router = express.Router()
 
+router.use(requireAuthInstructor)
+router.get('/viewAllinsCourses',viewAllInsCourses)
+router.get('/viewAllCourses',viewAllCourses)
 router.post('/createcourse', createCourse)
 //router.get('/filtersubjectprice/:id',getCourses1)
-router.get('/filter/:id', filterCourse)
+router.post('/filter', filterCourse)
 router.post('/getcoursebyid', searchCourse)
 router.post('/filterbyprice', filterCoursePrice)
-//router.put('/:id',updateInstructor)
+router.post('/search', Search)
+router.put('/editbiographyoremail',editBiographyorEmail)
 
 module.exports = router

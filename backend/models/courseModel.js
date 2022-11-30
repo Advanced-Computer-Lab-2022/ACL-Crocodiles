@@ -28,7 +28,8 @@ const courseSchema = new Schema({
         required: false
     },
     InstructorId: {
-        type: Object,
+        type: mongoose.Schema.Types.ObjectId,   
+        ref:'Instructor',
         required: true
     },
     Rating: {
@@ -36,15 +37,15 @@ const courseSchema = new Schema({
         required: false
     },
     Subtitle: {
-        type: String,
+        type: [String],
         //ref: 'subtitleSchema'
         required: false
     },
 }, { timestamps: true })
 
-module.exports = mongoose.model('Course', courseSchema)
 
-/*//SUBTITLES SCHEMA
+
+//SUBTITLES SCHEMA
 const subtitleSchema = new Schema({
     Title: {
         type: String,
@@ -54,17 +55,22 @@ const subtitleSchema = new Schema({
         type: Number,
         required: true
     },
-    CourseId: {
-        type: Number,
-        required: false
-    },
-    // Exercise: {
-    //     type: Schema.Types.ObjectId, 
-    //     ref: 'Exercise'
+    
+    // CourseId: {
+    //     type: Number,
+    //     required: false
     // },
+     Exercise: {
+        type: String
+    //     type: Schema.Types.ObjectId, 
+       //  ref: 'Exercise'
+    },
 }, { timestamps: true })
-*/
-//module.exports = mongoose.model('Subtitle', subtitleSchema)
+
+const course = mongoose.model('Course', courseSchema)
+const sub = mongoose.model('Subtitle', subtitleSchema)
+module.exports = {course, sub}
+
 
 
 //EXERCISE SCHEMA

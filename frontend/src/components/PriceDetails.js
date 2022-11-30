@@ -5,7 +5,7 @@ const PriceDetails = ({ course }) => {
             <p><strong>Subject:</strong>{course.Subject}</p>
             <p><strong>Hours:</strong>{course.Hours}</p>
             <p><strong>Price:</strong>{course.Price}</p>
-            <p><strong>Rating:</strong>{course.rating}</p>
+            <p><strong>Rating:</strong>{course.Rating}</p>
         </div>
     )
 }
