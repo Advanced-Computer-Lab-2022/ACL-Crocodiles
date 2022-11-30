@@ -16,6 +16,7 @@ import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 import Contract from './pages/Contract'
 import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 function App() {
   return (
     <div className="App">
@@ -24,6 +25,10 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
+          <Route
+              path="/resetpassword"
+              element={<ResetPassword />}
+            />
             <Route
               path="/"
               element={<Home />}

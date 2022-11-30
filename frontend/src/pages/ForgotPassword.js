@@ -1,5 +1,6 @@
 import { useState } from "react"
 
+
 const ForgotPassword = () =>{
     const[Email,setEmail] = useState('')
     const[error,setError] = useState(null)
@@ -14,7 +15,8 @@ const ForgotPassword = () =>{
             }
         if (response.ok){
             setEmail('')
-            setError(null)
+            setError('')
+            
                
     }
 }
