@@ -23,31 +23,6 @@ const Navbar = () => {
                 <Link to="/trainee">
                     <h2>Trainee</h2>
                 </Link>
-<<<<<<< Updated upstream
-=======
-                <Link to="/corpTrainee">
-                    <h2>Corporate Trainee</h2>
-                </Link>
-                <Link to="/guest">
-                    <h2>Guest</h2>
-                </Link>
-                <Link to="/profile">
-                    <h2>Profile</h2>
-                </Link>
-                <nav>
-                   {user && (
-                   <div>
-                    <span>{user.Email}</span>
-                    <button onClick={handleClick}>logout</button>
-                    </div>)}
-                    {!user && (<div>     
-                    <Link to="/signin">Signin</Link>
-                    <Link to="/signup">Signup</Link>
-                    </div>)}
-                    
-                </nav>
-                
->>>>>>> Stashed changes
 
             </div>
         </header>
