@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { useAuthContext } from "../hooks/useAuthContext";
-import jwt from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 
 const ChangePassword = () => {
 
@@ -12,23 +12,21 @@ const ChangePassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const verify = jwt.verify(user.token,process.env.SECRET);
-        if (!verify)
-        setError({error:'Invalid Secret'})
-        const {Email} = jwt.decode(user.token);
-        const changeFunc = async (Email,OldPassword,NewPassword1,NewPassword2) => {
-            setError(null)
+        const {Email} = jwt_decode(user.token);
+        await changePass(Email,OldPassword,NewPassword1,NewPassword2)
+    }
+    const changePass = async (Email,OldPassword,NewPassword1,NewPassword2)  => {
+        setError(null)
 
-            const response = await fetch('/api/auth/changepassword',{method:'PUT',headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({Email,OldPassword,NewPassword1,NewPassword2})
-            })
-            const json = await response.json();
-            if(!response.ok){
-                setError(json.error)
-            }
-            if(response.ok){
-                console.log('Password Changed');
-            }
+        const response = await fetch('/api/auth/changepassword',{method:'PUT',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({Email,OldPassword,NewPassword1,NewPassword2})
+        })
+        const json = await response.json();
+        if(!response){
+            setError(json.error)
+        }
+        if(response){
+            alert("Password Changed")
         }
     }
 

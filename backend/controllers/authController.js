@@ -6,7 +6,7 @@ const Signin = async (req,res) => {
         
     try{
         const user = await User.Login(Email,Password)
-        const token = jwt.sign({_id:user._id},process.env.SECRET,{expiresIn:'3d'})
+        const token = jwt.sign({_id:user._id,Email:user.Email},process.env.SECRET,{expiresIn:'3d'})
         res.status(200).json({Email,token})
     }
     catch(error){
