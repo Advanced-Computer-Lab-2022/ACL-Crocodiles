@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const corporatetraineeSchema = new Schema({
-    Email: {
+    Username: {
       type: String,
       required: true
     },

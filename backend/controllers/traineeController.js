@@ -95,6 +95,51 @@ const getSubtitles = async(req,res) => {
     console.log(subtitles)
 }
 
+const getMyCourses = async(req, res)=>{
+    const ID = '6382800b8f82693736ff2e23';
+    const courses = [];
+    if(!mongoose.Types.ObjectId.isValid(ID)){
+        return res.status(404).json({error: 'Invalid trainee ID'});
+    }
+    const trainee = await Trainee.findById(ID);
+    const course_ids = trainee.My_Courses;
+    for(let i=0;i<course_ids.length;i++){
+        const course_id = course_ids[i];
+        if(!mongoose.Types.ObjectId.isValid(course_id))
+            return res.status(404).json({error: 'Invalid course id'});
+        const course  = await Course.findById(course_id)
+        if(!course)
+            res.status(500).json({error : "course not found"});
+        courses.push(course);
+    }
+    res.json(courses);
+
+}
+const findCourse = async(req,res)=>{
+   const course_id = req.params.id;
+
+   if(!mongoose.Types.ObjectId.isValid(course_id))
+       return res.status(404).json({error: 'Invalid course id'});
+    const course  = await Course.findById(course_id)
+                                .populate({path:'Subtitle', populate: {path:'Exercises' } })
+                                .populate({path:'Subtitle', populate: {path:'Videos' } });
+    if(!course)
+       res.status(500).json(error);
+    res.json(course);
+
+}
+const findSub = async(req,res)=>{
+    const sub_id = req.params.id;
+ 
+    if(!mongoose.Types.ObjectId.isValid(sub_id))
+        return res.status(404).json({error: 'Invalid course id'});
+     const sub  = await Subtitle.findById(sub_id).populate('Exercises').populate('Videos');
+     if(!sub)
+        res.status(500).json({error: 'Subtitle not found'});
+     res.json(sub);
+ 
+ }
+
 module.exports = {
     getTrainees,
     getTrainee,
@@ -102,5 +147,8 @@ module.exports = {
     deleteTrainee,
     updateTrainee,
     viewAllCourses,
-    getSubtitles
+    getSubtitles,
+    getMyCourses,
+    findCourse,
+    findSub
 }

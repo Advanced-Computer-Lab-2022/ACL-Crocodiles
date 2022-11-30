@@ -35,9 +35,9 @@ const createInstructor = async (req,res) => {
 }
 
 const createCorporateTrainee = async (req,res) => {
-    const {Email,Password} = req.body
+    const {Username,Password} = req.body
     try{
-        const corporatetrainee = await CorporateTrainee.create({Email,Password})
+        const corporatetrainee = await CorporateTrainee.create({Username,Password})
         res.status(200).json(corporatetrainee)
   } catch (error) {
       res.status(400).json({error: error.message})

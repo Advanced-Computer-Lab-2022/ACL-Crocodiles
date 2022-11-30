@@ -12,6 +12,8 @@ import Guest from './pages/Guest'
 import Search from './pages/Search'
 import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
+import TraineeCourses from './pages/TraineeCourses'
+import TraineeCoursePage from './pages/TraineeCoursePage'
 function App() {
   return (
     <div className="App">
@@ -36,9 +38,17 @@ function App() {
               path="/course"
               element={<Course />}
             />
+              <Route
+              path="/Mycourses"
+              element={<TraineeCourses />}
+            />
             <Route
               path="/trainee"
               element={<Trainee />}
+              />
+              <Route
+              path="/Mycourses/course"
+              element={<TraineeCoursePage />}
             />
             <Route
               path="/corpTrainee"

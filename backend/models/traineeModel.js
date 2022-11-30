@@ -37,6 +37,11 @@ const traineeSchema = new Schema({
     Job: {
       type: String,
       required: false
+    },
+    My_Courses: {
+      type: [mongoose.Types.ObjectId],
+        ref:'Course',
+      required: false
     }
   }, { timestamps: true });
   

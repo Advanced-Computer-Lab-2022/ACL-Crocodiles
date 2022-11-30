@@ -3,7 +3,7 @@ import Subtitle from './Subtitle'
 
 const CourseDetails = ({ course,currency,rate }) => {
     var newPrice= course.Price
-    console.log(rate)
+ 
     if(rate)
     var newPrice = Math.round(course.Price*rate* 100) / 100
 
