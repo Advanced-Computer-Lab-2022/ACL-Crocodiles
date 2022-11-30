@@ -101,6 +101,14 @@ function App() {
               path="/InstructorCourses"
               element={<InstructorCourses />}
             />
+            <Route
+              path="/profile"
+              element={<Profile />}
+            />
+            <Route
+              path="/changePassword"
+              element={<ChangePassword />}
+            />
        
             
           </Routes>
