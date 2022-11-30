@@ -6,8 +6,19 @@ import Admin from './pages/Admin'
 import Instructor from './pages/Instructor'
 import Trainee from './pages/Trainee'
 import Search from './pages/Search'
+<<<<<<< Updated upstream
 import FilterByPrice from './pages/FilterByPrice'
 
+=======
+import Filter from './pages/Filter'
+import InstructorCourses from './pages/InstructorCourses'
+import Signin from './pages/Signin'
+import Signup from './pages/Signup'
+import Profile from './pages/Profile'
+import Contract from './pages/Contract'
+import ForgotPassword from './pages/ForgotPassword'
+import ChangePassword from './pages/ChangePassword'
+>>>>>>> Stashed changes
 function App() {
   return (
     <div className="App">
@@ -44,6 +55,19 @@ function App() {
               path="/filterbyprice"
               element={<FilterByPrice/>}
             />
+<<<<<<< Updated upstream
+=======
+            <Route
+              path="/profile"
+              element={<Profile />}
+            />
+            <Route
+              path="/changePassword"
+              element={<ChangePassword />}
+            />
+       
+            
+>>>>>>> Stashed changes
           </Routes>
         </div>
       </BrowserRouter>
