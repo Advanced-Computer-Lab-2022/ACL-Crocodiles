@@ -10,8 +10,6 @@ import CorpTraineeCourse from './pages/CorpTraineeCourses'
 import CorpTraineeFilter from './pages/CorpTraineeFilter'
 import Guest from './pages/Guest'
 import Search from './pages/Search'
-import FilterByPrice from './pages/FilterByPrice'
-
 import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
 import Signin from './pages/Signin'
