@@ -1,5 +1,6 @@
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
+const Discount = require('../models/courseModel').discount
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
@@ -54,7 +55,7 @@ const filterCourse = async (req, res) => {
 const filterCoursePrice = async (req, res) => {
     try {
         const { priceMin, priceMax } = req.body
-        const courses = await (await Course.find({ Price: { $gte: priceMin}}).find({Price:{ $lte: priceMax } }))
+        const courses =  await Course.find({ Price: { $gte: priceMin}}).find({Price:{ $lte: priceMax } })
         if (!courses) {
             return res.status(404).json({ error: 'no courses found' })
         }
@@ -125,7 +126,23 @@ const viewAllCourses = async (req,res) => {
      }
 }
 
-
+const defineDiscount = async (req,res) => {
+    const {CourseID, NewDiscount, EndDate } = req.body
+    try {
+    const newdiscount = await Discount.create({CourseID,NewDiscount,EndDate})
+    if(!newdiscount){
+        return res.status(404).json({error: 'error newdiscount'})
+    }
+    res.status(200).json(newdiscount)
+    const course = await Course.findByIdAndUpdate(CourseID,{Discount:newdiscount._id})
+    if (!course) {
+        return res.status(404).json({ error: 'no such course' })
+    }
+    res.status(200).json(course)}
+    catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
 
 
 module.exports = {
@@ -136,5 +153,6 @@ module.exports = {
     Search,
     viewAllInsCourses,
     viewAllCourses,
-    editBiographyorEmail
+    editBiographyorEmail,
+    defineDiscount
 }

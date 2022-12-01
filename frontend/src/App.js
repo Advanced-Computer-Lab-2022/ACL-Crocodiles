@@ -17,6 +17,7 @@ import Signup from './pages/Signup'
 import Contract from './pages/Contract'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
+import DefineDiscount from './pages/DefineDiscount'
 function App() {
   return (
     <div className="App">
@@ -94,7 +95,10 @@ function App() {
               path="/InstructorCourses"
               element={<InstructorCourses />}
             />
-       
+            <Route
+              path="/definediscount"
+              element={<DefineDiscount />}
+            />
             
           </Routes>
         </div>

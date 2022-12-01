@@ -1,3 +1,4 @@
+
 const express = require('express')
 
 require('dotenv').config()
@@ -32,3 +33,8 @@ app.use('/api/users',usersRoutes)
 app.use('/api/auth',authRoutes)
 
 
+const Discount = require('./models/courseModel').discount
+const schedule = require('node-schedule')
+const checkDiscountsAtMidnight = schedule.scheduleJob('0 0 * * *', function () {
+  Discount.deleteDiscounts()
+})
