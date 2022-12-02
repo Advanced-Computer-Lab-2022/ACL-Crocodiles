@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom"
 
 const DefineDiscount = () => {
     const {user} = useAuthContext()
-    const [discount,setDiscount] = useState(null)
-    const [endDate,setEndDate]=useState(null)
+    const [discount,setDiscount] = useState('')
+    const [endDate,setEndDate]=useState('')
+    const [status,setStatus] = useState('')
     const [error,setError]=useState(null)
     const {courseid} = useParams()
 
@@ -30,9 +31,14 @@ const DefineDiscount = () => {
         const json = await response.json()
         if(!response.ok){
             setError(json.error)
+            setStatus('Error happened')
         }
-        else{
+        if(response.ok){
             console.log("success "+json)
+            setDiscount('')
+            setEndDate('')
+            setStatus('Promotion defined sucessfully ')
+            setError(null)
         }
     }
 
@@ -55,6 +61,7 @@ return(
         value={endDate}
         />
         <button onClick={handleSubmit}>Submit</button>
+        <p>{status}</p>
     </div>
 )
 }
