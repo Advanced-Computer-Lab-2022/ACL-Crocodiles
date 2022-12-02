@@ -1,6 +1,5 @@
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
-const Discount = require('../models/courseModel').discount
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
@@ -127,17 +126,24 @@ const viewAllCourses = async (req,res) => {
 }
 
 const defineDiscount = async (req,res) => {
-    const {CourseID, NewDiscount, EndDate } = req.body
+    const NewDiscount = req.body.discountint
+    const EndDate = req.body.enddate
+    const CourseID = req.params.courseid
+    console.log('CourseID'+CourseID)
+    console.log('reqpa '+ JSON.stringify(req.params) )
+    console.log('reqbody '+ JSON.stringify(req.body) )
+    console.log('NewDiscount '+ NewDiscount)
+    console.log('EndDate '+ EndDate)
+    if(!mongoose.Types.ObjectId.isValid(CourseID)){ 
+        return res.status(404).json({error: 'no such course id'})
+    }
     try {
-    const newdiscount = await Discount.create({CourseID,NewDiscount,EndDate})
-    if(!newdiscount){
-        return res.status(404).json({error: 'error newdiscount'})
-    }
-    res.status(200).json(newdiscount)
-    const course = await Course.findByIdAndUpdate(CourseID,{Discount:newdiscount._id})
-    if (!course) {
-        return res.status(404).json({ error: 'no such course' })
-    }
+        //find the course and update it with the new values instead of the null values
+        const course = await Course.findByIdAndUpdate(CourseID,{$set:{Discount:NewDiscount,DiscountEndDate:EndDate}},{new:true})
+        console.log('course title: '+course.Title)
+        if(!course){
+            return res.status(404).json({error: 'no such course'})
+        }
     res.status(200).json(course)}
     catch (error) {
         res.status(400).json({ error: 'error' })

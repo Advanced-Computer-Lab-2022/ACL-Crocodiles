@@ -96,7 +96,7 @@ function App() {
               element={<InstructorCourses />}
             />
             <Route
-              path="/definediscount"
+              path="/definediscount/:courseid"
               element={<DefineDiscount />}
             />
             

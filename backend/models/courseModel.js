@@ -16,8 +16,11 @@ const courseSchema = new Schema({
         required: true
     },
     Discount: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Discount',
+        type: Number,
+        required: false
+    },
+    DiscountEndDate: {
+        type: Date,
         required: false
     },
     Hours: {
@@ -68,38 +71,35 @@ const subtitleSchema = new Schema({
     },
 }, { timestamps: true })
 
-const discountSchema = new Schema({
-    DiscountPercentage: {
-        type: Number,
-        required: true
-    },
-    EndDate: {
-        type: Date,
-        required: true
-    },
-    CourseId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
-        required: true
-    }
-}, { timestamps: true })
+// const discountSchema = new Schema({
+//     DiscountPercentage: {
+//         type: Number,
+//         required: true
+//     },
+//     EndDate: {
+//         type: Date,
+//         required: true
+//     },
+//     CourseId: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: 'Course',
+//         required: true
+//     }
+// }, { timestamps: true })
 
-discountSchema.statics.deleteDiscounts = async function () {
-    const discounts = await this.find()
-    discounts.forEach(async discount => {
-        if(discount.EndDate >= getTodayDate()){
-            //make the value of discount field in course schema null
-            await course.updateOne({_id:discount.CourseId},{$set:{Discount:null}})
-            await discount.delete()
-        }
-    })
+courseSchema.statics.deleteDiscounts = async function () {
+    const courses = await this.find()
+    courses.forEach(async (course) => {
+        if (course.DiscountEndDate < Date.now()) {
+        course.Discount = undefined
+        course.DiscountEndDate = undefined
+        await course.save()
+        }})
 }
 
 const course = mongoose.model('Course', courseSchema)
 const sub = mongoose.model('Subtitle', subtitleSchema)
-const discount = mongoose.model('Discount', discountSchema)
-
-module.exports = {course, sub, discount}
+module.exports = {course, sub}
 
 
 

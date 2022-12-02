@@ -9,7 +9,7 @@ const InstrCourseDetails = ({ course,currency,rate }) => {
     var navigate=useNavigate()
 
 const Click = () =>{
-    navigate('/definediscount')
+    navigate('/definediscount/'+course._id)
 }
 
     return(
@@ -18,9 +18,10 @@ const Click = () =>{
             
             <p><strong>Hours: </strong>{course.Hours}</p>
             <p><strong>Rating: </strong>{course.Rating}</p>
+            <p><strong>Discount: </strong>{course.Discount}</p>
             {course.Price!=0?<p><strong>Price: </strong>{newPrice} {currency}</p>: null }
             {course.Price==0? <><p class="same"><strong>Price: </strong></p><p style={{ color: 'green' }} class="same"> FREE</p></>: null }
-            <button onClick={Click}>Define Discount</button>
+            <button onClick={Click}>Define Promotion</button>
            
         </div>
     )

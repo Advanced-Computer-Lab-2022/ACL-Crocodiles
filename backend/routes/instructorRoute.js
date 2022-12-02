@@ -26,6 +26,6 @@ router.post('/getcoursebyid', searchCourse)
 router.post('/filterbyprice', filterCoursePrice)
 router.post('/search', Search)
 router.put('/editbiographyoremail',editBiographyorEmail)
-router.post('/definediscount',defineDiscount)
+router.post('/definediscount/:courseid',defineDiscount)
 
 module.exports = router
