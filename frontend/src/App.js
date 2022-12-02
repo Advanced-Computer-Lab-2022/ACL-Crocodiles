@@ -14,6 +14,8 @@ import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
+import ExamForm from './components/ExamForm'
+
 function App() {
   return (
     <div className="App">
@@ -34,11 +36,11 @@ function App() {
               path="/admin"
               element={<Admin />}
             />
-             <Route
+            <Route
               path="/signin"
               element={<Signin />}
             />
-             <Route
+            <Route
               path="/signup"
               element={<Signup />}
             />
@@ -56,7 +58,7 @@ function App() {
             />
             <Route
               path="/corpTraineeCourses"
-              element={<CorpTraineeCourse/>}
+              element={<CorpTraineeCourse />}
             />
             <Route
               path="/guest"
@@ -70,7 +72,7 @@ function App() {
               path="/search"
               element={<Search />}
             />
-               <Route
+            <Route
               path="/corpTraineeFilter"
               element={<CorpTraineeFilter />}
             />
@@ -78,8 +80,13 @@ function App() {
               path="/InstructorCourses"
               element={<InstructorCourses />}
             />
-       
-            
+            <Route
+              path="/createExam"
+              element={<ExamForm />}
+            />
+
+
+
           </Routes>
         </div>
       </BrowserRouter>

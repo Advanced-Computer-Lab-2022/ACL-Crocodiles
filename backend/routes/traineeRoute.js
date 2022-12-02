@@ -6,22 +6,28 @@ const {
     deleteTrainee,
     updateTrainee,
     viewAllCourses,
-    getSubtitles
+    getSubtitles,
+    viewExams,
+    viewExam
 } = require('../controllers/traineeController')
 const router = express.Router()
 
 
 router.get('/', getTrainees)
 
-router.get('/:id',getTrainee)
+router.get('/:id', getTrainee)
 
 router.post('/', createTrainee)
 
-router.delete('/:id',deleteTrainee)
+router.delete('/:id', deleteTrainee)
 
-router.patch('/:id',updateTrainee)
+router.patch('/:id', updateTrainee)
 
 router.get('/page/viewAllCourses', viewAllCourses)
+
+router.get('/page/viewExams', viewExams)
+
+router.get('/page/viewExam', viewExam)
 
 router.post('/subtitles', getSubtitles)
 
