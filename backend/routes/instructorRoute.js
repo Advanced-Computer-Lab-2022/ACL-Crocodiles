@@ -9,8 +9,8 @@ const {
     viewAllCourses,
     viewAllInsCourses,
     editBiographyorEmail,
-    defineDiscount
-
+    defineDiscount,
+    getRating
 } = require('../controllers/instructorController')
 
 
@@ -26,6 +26,7 @@ router.post('/getcoursebyid', searchCourse)
 router.post('/filterbyprice', filterCoursePrice)
 router.post('/search', Search)
 router.put('/editbiographyoremail',editBiographyorEmail)
-router.post('/definediscount/:courseid',defineDiscount)
+router.post('/definediscount/:courseid',defineDiscount),
+router.get('/getrating',getRating)
 
 module.exports = router

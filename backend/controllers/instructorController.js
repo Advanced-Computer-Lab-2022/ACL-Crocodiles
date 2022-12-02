@@ -149,6 +149,18 @@ const defineDiscount = async (req,res) => {
         res.status(400).json({ error: 'error' })
     }
 }
+const getRating = async (req,res) => {
+    const id = req.user
+    try {
+        const rating = await Instructor.findById(id).select({Rating:1})
+        if(!rating){
+            return res.status(404).json({error: 'rating is null'})
+        }
+        res.status(200).json(rating)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
 
 
 module.exports = {
@@ -160,5 +172,6 @@ module.exports = {
     viewAllInsCourses,
     viewAllCourses,
     editBiographyorEmail,
-    defineDiscount
+    defineDiscount,
+    getRating
 }
