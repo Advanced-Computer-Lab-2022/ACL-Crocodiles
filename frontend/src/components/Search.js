@@ -6,6 +6,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import CourseDetails from '../components/CourseDetails'
 import { chooseCountry } from "../Features/country";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 
 const Countries = [];
@@ -31,6 +32,7 @@ const Search = () => {
     const [Country, setCountry] = useState('');
     const [Currency, setCurrency] = useState('');
     const [Rate, setRate] = useState(1);
+    const{user} = useAuthContext()
 
         const handleCountry = async (e) => {
             const  rates = await x()
@@ -58,11 +60,11 @@ const Search = () => {
 
 
     const handleSubmit = async () => {
-       
         const body = { Title,Subject,Username }
         console.log(body)
         const response = await fetch('/api/instructor/search', {
             method: 'POST', body: JSON.stringify(body), headers: {
+                'Authorization': `Bearer ${user.token}`,
                 'content-type': 'application/json'
             }
         })

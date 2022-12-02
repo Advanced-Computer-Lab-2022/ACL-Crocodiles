@@ -12,7 +12,7 @@ const Navbar = () => {
         <header>
             <div className="container">
                 <Link to="/">
-                    <h1>Coursera</h1>
+                    <h1>Msh Coursera</h1>
                 </Link>
                 <Link to="/admin">
                     <h2>Admin controlls</h2>
