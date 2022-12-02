@@ -3,7 +3,8 @@ const {
     Signin,
     ForgotPassword,
     Resetpassword,
-    ChangePassword
+    ChangePassword,
+    Resetpasswordput
 
 } = require('../controllers/authController')
 const router = express.Router()
@@ -14,5 +15,6 @@ router.post('/forgotpassword',ForgotPassword)
 
 router.put('/changepassword',ChangePassword)
 
-router.put('/resetpassword/:id/:token',Resetpassword)
+router.get('/resetpassword/:id/:token',Resetpassword)
+router.post('/resetpassword/',Resetpasswordput)
 module.exports = router

@@ -96,7 +96,7 @@ const editBiographyorEmail = async (req,res) => {
 const viewAllInsCourses = async (req,res) => {
    
     try {
-
+        console.log(req.user)
         const InstructorId  = req.user
         if(!mongoose.Types.ObjectId.isValid(InstructorId)){ 
             return res.status(404).json({error: 'no such id'})

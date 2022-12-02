@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import SearchDetails from './SearchDetails'
 import CountryJSONArray from "../Country.json"
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import CourseDetails from '../components/CourseDetails'
+import { chooseCountry } from "../Features/country";
+
+
 const Countries = [];
 var Curr =""
 
@@ -18,7 +22,7 @@ for (let i = 0; i < CountryJSONArray.length; i++) {
 
 
 const Search = () => {
-    
+    const dispatch = useDispatch();
     const [Title, setTitle] = useState('')
     const [Subject, setSubject] = useState('')
     const [Username, setUsername] = useState('')
@@ -44,10 +48,12 @@ const Search = () => {
             if(rates[i][0]==Curr){
                 console.log('gi')
                 setRate(rates[i][1])
+                dispatch(chooseCountry({countryName: Country, rate:rates[i][1], code:Curr}))
             }
         }
+  
         }
-    
+
 
 
 

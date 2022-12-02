@@ -1,4 +1,4 @@
-const Trainee = () => {
+const CorpTrainee = () => {
     return(
 
         <div className="trainee">
@@ -9,6 +9,10 @@ const Trainee = () => {
                 <a href="/corpTraineeCourses">
                     <input type="button" value="View All Courses" />
                 </a>
+               
+                <a href="/CorpTraineeMyCourses">
+                    <input type="button" value="My Courses" />
+                </a>
             </div>
             
         </div>
@@ -17,4 +21,4 @@ const Trainee = () => {
         
         )
 }
- export default Trainee
+ export default CorpTrainee

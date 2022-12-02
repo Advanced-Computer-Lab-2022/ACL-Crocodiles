@@ -17,6 +17,11 @@ import Signup from './pages/Signup'
 import Profile from './pages/Profile'
 import Contract from './pages/Contract'
 import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+import TraineeCourses from './pages/TraineeCourses'
+import TraineeCoursePage from './pages/TraineeCoursePage'
+import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
+import CorpTraineeCoursePage from './pages/CorpTraineeMyCoursePage'
 import ChangePassword from './pages/ChangePassword'
 function App() {
   return (
@@ -26,6 +31,10 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
+          <Route
+              path="/resetpassword"
+              element={<ResetPassword />}
+            />
             <Route
               path="/"
               element={<Home />}
@@ -59,17 +68,29 @@ function App() {
               path="/course"
               element={<Course />}
             />
+              <Route
+              path="/Mycourses"
+              element={<TraineeCourses />}
+            />
             <Route
               path="/trainee"
               element={<Trainee />}
+              />
+              <Route
+              path="/Mycourses/course"
+              element={<TraineeCoursePage />}
             />
             <Route
-              path="/corpTrainee"
+              path="/CorpTrainee"
               element={<CorpTrainee />}
             />
             <Route
               path="/corpTraineeCourses"
               element={<CorpTraineeCourse/>}
+            />
+                <Route
+              path="/CorpTraineeMyCourses/course"
+              element={<CorpTraineeCoursePage />}
             />
             <Route
               path="/guest"
@@ -100,6 +121,10 @@ function App() {
             <Route
               path="/InstructorCourses"
               element={<InstructorCourses />}
+            />
+               <Route
+              path="/CorpTraineeMyCourses"
+              element={<CorpTraineeMyCourses />}
             />
             <Route
               path="/profile"

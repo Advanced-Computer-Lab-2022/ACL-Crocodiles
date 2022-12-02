@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Popup from 'reactjs-popup';
+
 
 const CreateInstructorForm = () => {
-    const[Username,setUsername] = useState('')
+    const[Email,setEmail] = useState('')
     const[Password,setPassword] = useState('')
     const[error,setError] = useState(null)
  
@@ -10,9 +10,7 @@ const CreateInstructorForm = () => {
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
-        const instructor = {Username,Password}
-        console.log(Username)
-        console.log(JSON.stringify(instructor))
+        const instructor = {Email,Password}
         const response =  await fetch('/api/admin/createinstructor',{method:'POST',body:JSON.stringify(instructor),headers: {
             'content-type':'application/json'
             
@@ -23,7 +21,7 @@ const CreateInstructorForm = () => {
         setError(json.error)    
     }
     if (response.ok){
-        setUsername('')
+        setEmail('')
         setPassword('')
     
        // setId('')
@@ -37,15 +35,15 @@ const CreateInstructorForm = () => {
     return(
         <form  className="createinstructor" onSubmit={handleSubmit}>
             <h3>Create new Instructor</h3>
-            <label>Username:</label>
+            <label>Email:</label>
             <input
                 type="text"
-                onChange={(e) => setUsername(e.target.value)}
-                value={Username}
+                onChange={(e) => setEmail(e.target.value)}
+                value={Email}
             />
             <label>Password:</label>
             <input
-                type="text"
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={Password}
             />
