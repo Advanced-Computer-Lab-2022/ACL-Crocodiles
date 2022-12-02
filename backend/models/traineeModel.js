@@ -7,43 +7,24 @@ const traineeSchema = new Schema({
       ref:'User',
       required:true
     },
-    Name: {
+    Firstname: {
       type: String,
       required: true,
     },
-    Email: {
+    Lastname: {
       type: String,
       required: true,
-      unique:true
     },
-    Password: {
+    Gender:{
       type:String,
-      required: true
+      required:false
     },
     Age: {
       type: Number,
-      required: true,
+      required: false,
+    
     },
-    BornIn: {
-      type: String,
-      required: false
-    },
-    LivesIn: {
-      type: String,
-      required: false
-    },
-    MartialStatus: {
-      type: String,
-      required: false
-    },
-    PhoneNumber: {
-      type: String,
-      required: false
-    },
-    Job: {
-      type: String,
-      required: false
-    },
+   
   }, { timestamps: true });
   
   module.exports = mongoose.model('Trainee', traineeSchema);

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { useAuthContext } from "../hooks/useAuthContext";
 
+const Exam = () => {
 
-const ExamForm = () => {
     const [QuestionHeader, setQuestionHeader] = useState('')
     const [Answer1, setAnswer1] = useState('')
     const [Answer2, setAnswer2] = useState('')
@@ -10,6 +12,11 @@ const ExamForm = () => {
     const [Answer4, setAnswer4] = useState('')
     const [correctAnswer, setcorrectAnswer] = useState('')
     const [error, setError] = useState(null)
+    const { user } = useAuthContext()
+
+
+
+
 
 
     const addQuestion = async (e) => {
@@ -19,7 +26,8 @@ const ExamForm = () => {
         console.log(JSON.stringify(question))
         const response = await fetch('/api/instructor/createquestion', {
             method: 'POST', body: JSON.stringify(question), headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
 
             }
         })
@@ -41,13 +49,10 @@ const ExamForm = () => {
 
     }
 
-
     let navigate = useNavigate()
     async function handleSubmit() {
         navigate('/instructor')
     }
-
-
 
     return (
         <form className="createexam" >
@@ -102,4 +107,7 @@ const ExamForm = () => {
     )
 }
 
-export default ExamForm 
+export default Exam
+
+
+

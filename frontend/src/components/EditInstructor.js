@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
 
-const CreateInstructorForm = () => {
+const EditInstructor = () => {
     const[Email,setEmail] = useState('')
-    const[Password,setPassword] = useState('')
+    const[Biography,setBiography] = useState('')
     const[error,setError] = useState(null)
- 
    // const[InstructorID,setId] = useState('')
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
-        const instructor = {Email,Password}
-        const response =  await fetch('/api/admin/createinstructor',{method:'POST',body:JSON.stringify(instructor),headers: {
+        const updated = {Email,Biography}
+        console.log(JSON.stringify(updated))
+        const response =  await fetch('/api/instructor/editbiographyoremail',{method:'PUT',body:JSON.stringify(updated),headers: {
             'content-type':'application/json'
             
         }
@@ -22,36 +22,34 @@ const CreateInstructorForm = () => {
     }
     if (response.ok){
         setEmail('')
-        setPassword('')
+        setBiography('')
     
        // setId('')
         setError(null)
-       
-        console.log('Created new instructor', json)
     }
     }
     
 
     return(
-        <form  className="createinstructor" onSubmit={handleSubmit}>
-            <h3>Create new Instructor</h3>
-            <label>Email:</label>
+        <form  className="editinfo" onSubmit={handleSubmit}>
+            <h3>Edit info</h3>
+            <label>Edit Email</label>
             <input
                 type="text"
                 onChange={(e) => setEmail(e.target.value)}
                 value={Email}
             />
-            <label>Password:</label>
+            <label>Edit Biography</label>
             <input
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={Password}
+                type="text"
+                onChange={(e) => setBiography(e.target.value)}
+                value={Biography}
             />
-            <button>Create new instructor</button>
+            <button>edit</button>
             {error && <div className="error">{error}</div>}
         </form>
 
     )
 }
 
-export default CreateInstructorForm 
+export default EditInstructor

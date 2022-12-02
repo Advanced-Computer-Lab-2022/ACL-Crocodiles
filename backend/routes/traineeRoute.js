@@ -1,4 +1,5 @@
 const express = require('express')
+const requireAuthTrainee = require('../middleware/requireAuthTrainee')
 const {
     createTrainee,
     getTrainee,
@@ -10,8 +11,10 @@ const {
     viewExams,
     viewExam
 } = require('../controllers/traineeController')
+
 const router = express.Router()
 
+//router.use(requireAuthTrainee)
 
 router.get('/', getTrainees)
 

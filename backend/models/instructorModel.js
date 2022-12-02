@@ -7,6 +7,7 @@ const instructorSchema = new Schema({
       ref:'User',
       required:true
     },
+    
     Username: {
       type: String,
       required: false
@@ -31,6 +32,10 @@ const instructorSchema = new Schema({
         type: [String],
         required: false,
     },
+    Biography:{
+        type: String,
+        required: false
+    }
     
 
   }, { timestamps: true });

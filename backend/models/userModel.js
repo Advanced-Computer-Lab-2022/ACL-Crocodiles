@@ -60,6 +60,8 @@ const userSchema = new Schema({
     let hash = await bcrypt.hash(Password,salt)
     user = await this.create({Email,Password:hash,Type})
     const trainee =  await Trainee.create({_id:user._id,Firstname:Firstname,Lastname:Lastname})
+    if(!trainee)
+      await this.delete({_id:user._id})
     return trainee
   }
 
@@ -77,5 +79,7 @@ const userSchema = new Schema({
       
       return user
     }
+    
+
 
     module.exports = mongoose.model('User', userSchema);

@@ -14,7 +14,11 @@ import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
-import ExamForm from './components/ExamForm'
+import Contract from './pages/Contract'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+import DefineDiscount from './pages/DefineDiscount'
+import Exam from './components/Exam'
 
 function App() {
   return (
@@ -25,8 +29,21 @@ function App() {
         <div className="pages">
           <Routes>
             <Route
+              path="/resetpassword"
+              element={<ResetPassword />}
+            />
+            <Route
               path="/"
               element={<Home />}
+            />
+            <Route
+              path="/forgotpassword"
+              element={<ForgotPassword />}
+            />
+
+            <Route
+              path="/contract"
+              element={<Contract />}
             />
             <Route
               path="/instructor"
@@ -81,11 +98,14 @@ function App() {
               element={<InstructorCourses />}
             />
             <Route
-              path="/createExam"
-              element={<ExamForm />}
+              path="/createexam/:courseid"
+              element={<Exam />}
             />
 
-
+            <Route
+              path="/definediscount/:courseid"
+              element={<DefineDiscount />}
+            />
 
           </Routes>
         </div>

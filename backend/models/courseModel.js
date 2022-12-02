@@ -19,6 +19,10 @@ const courseSchema = new Schema({
         type: Number,
         required: false
     },
+    DiscountEndDate: {
+        type: Date,
+        required: false
+    },
     Hours: {
         type: Number,
         required: true
@@ -66,6 +70,32 @@ const subtitleSchema = new Schema({
        //  ref: 'Exercise'
     },
 }, { timestamps: true })
+
+// const discountSchema = new Schema({
+//     DiscountPercentage: {
+//         type: Number,
+//         required: true
+//     },
+//     EndDate: {
+//         type: Date,
+//         required: true
+//     },
+//     CourseId: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: 'Course',
+//         required: true
+//     }
+// }, { timestamps: true })
+
+courseSchema.statics.deleteDiscounts = async function () {
+    const courses = await this.find()
+    courses.forEach(async (course) => {
+        if (course.DiscountEndDate < Date.now()) {
+        course.Discount = undefined
+        course.DiscountEndDate = undefined
+        await course.save()
+        }})
+}
 
 const course = mongoose.model('Course', courseSchema)
 const sub = mongoose.model('Subtitle', subtitleSchema)

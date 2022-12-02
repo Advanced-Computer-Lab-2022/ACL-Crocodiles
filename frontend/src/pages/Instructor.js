@@ -2,19 +2,11 @@ import NewCourseForm from "../components/NewCourseForm"
 import { useNavigate } from 'react-router-dom'
 
 //import ExamForm from "./ExamForm"
-//import SearchCourses from "../components/SearchCourses"
+import EditForm from "../components/EditInstructor"
+import Exam from "../components/Exam"
 
 const Instructor = () => {
-    let navigate = useNavigate()
-    async function CreateExam() {
 
-        await fetch('/api/instructor/createexam', {
-            method: 'POST'
-        })
-
-
-        navigate('/createExam')
-    }
     return (
 
         <div className="instructor">
@@ -33,13 +25,13 @@ const Instructor = () => {
                     <input type="button" value="View My Courses" />
                 </a>
 
+                <a href="/contract">
+                    <input type="button" value="View Contract" />
+                </a>
             </div>
             <NewCourseForm />
 
-
-            <button onClick={CreateExam}>Create Exam</button>
-
-
+            <EditForm />
         </div>
 
 
