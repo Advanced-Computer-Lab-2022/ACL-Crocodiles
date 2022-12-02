@@ -109,16 +109,6 @@ function App() {
               element={<CorpTraineeFilter />}
             />
             <Route
-              path="/profile"
-              element={<Profile />}
-            />
-            <Route
-              path="/changePassword"
-              element={<ChangePassword />}
-            />
-       
-            
-            <Route
               path="/InstructorCourses"
               element={<InstructorCourses />}
             />
