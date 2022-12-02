@@ -18,7 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
   }));
 
-const TraineeCourses = () => {
+const CorpTraineeMyCourses = () => {
   const{user} = useAuthContext()
   console.log(user)
     const [courses,setCourses] = useState(null)
@@ -26,11 +26,7 @@ const TraineeCourses = () => {
     useEffect(() => {
         console.log(clicked)
         const fetchCourses = async () => {
-            const response = await fetch('/api/trainee/page/MyCourses',{
-              headers: {
-              'Authorization': `Bearer ${user.token}`
-                  }
-              })
+            const response = await fetch('/api/corpTrainee/page/MyCourses')
             const json = await response.json()
             if(response.ok){
                 setCourses(json)
@@ -49,7 +45,7 @@ const TraineeCourses = () => {
     item spacing={4}>
         {courses && courses.map(course => (
             <Grid item xs={6} >
-            <CourseCard Course={course} redirect={`/Mycourses/course?courseId=${course._id}`}/>
+            <CourseCard Course={course} redirect={`/CorpTraineeMyCourses/course?courseId=${course._id}`} />
           </Grid>
         ))}
         
@@ -61,4 +57,4 @@ const TraineeCourses = () => {
     )
 }
 
-export default TraineeCourses
+export default CorpTraineeMyCourses

@@ -3,6 +3,8 @@ const Trainee = require('../models/traineeModel')
 const mongoose = require('mongoose')
 const Course = require('../models/courseModel').course
 const Subtitle = require('../models/courseModel').sub
+
+
 const createTrainee = async (req,res) => {
     const {Name,Email,Age} = req.body
     try{
@@ -96,13 +98,19 @@ const getSubtitles = async(req,res) => {
 }
 
 const getMyCourses = async(req, res)=>{
-    const ID = '6382800b8f82693736ff2e23';
+    const ID  = req.user
     const courses = [];
     if(!mongoose.Types.ObjectId.isValid(ID)){
+      
         return res.status(404).json({error: 'Invalid trainee ID'});
     }
     const trainee = await Trainee.findById(ID);
-    const course_ids = trainee.My_Courses;
+    if(!trainee)
+        return res.status(400).json({error: 'trainee not found'});
+
+ 
+    const course_ids = trainee.My_courses;
+
     for(let i=0;i<course_ids.length;i++){
         const course_id = course_ids[i];
         if(!mongoose.Types.ObjectId.isValid(course_id))
@@ -128,6 +136,52 @@ const findCourse = async(req,res)=>{
     res.json(course);
 
 }
+
+const getMyTraineehelper = async(req,res)=>{
+    const user_id = "6388125dee64b3e1ceaa7a0c";
+
+    if(!mongoose.Types.ObjectId.isValid(user_id))
+        return res.status(404).json({error: 'Invalid user id'});
+    
+     const trainee  = await Trainee.findById(user_id)
+                                   .populate({path:'My_courses', populate: {path:'course_id' } })
+                                    .populate({path:'My_courses', populate: {path:'Assignments', populate: {path:"exercise_id"} } });
+
+         if(!trainee)
+         res.status(500).json({error:"failed"});
+      return(trainee);
+ 
+
+ }
+ 
+ const getMyTrainee = async(req,res)=>{
+    const trainee = await getMyTraineehelper(req,res);
+         res.json(trainee);;
+ 
+
+ }
+
+ 
+ const getMyCourse = async(req,res)=>{
+    
+const trainee = await getMyTraineehelper(req,res);
+console.log(trainee)
+ const course_id =  req.params.id
+ if(!mongoose.Types.ObjectId.isValid(course_id))
+ return res.status(404).json({error: 'Invalid course id'}); 
+ const course  = await Course.findById(course_id)
+ for(let i=0;i<trainee.My_courses.length;i++){
+   console.log(trainee.My_courses[i].course_id)
+   console.log(course._id)
+   if(trainee.My_courses[i].course_id.equals(course._id)){
+       const t= await trainee.populate({path:`My_courses.${i}.course_id`, populate:{path:'Subtitle', populate:["Exercises","Videos"]}})
+    
+       res.json(t.My_courses[i])
+   }
+ }
+}
+
+
 const findSub = async(req,res)=>{
     const sub_id = req.params.id;
  
@@ -150,5 +204,7 @@ module.exports = {
     getSubtitles,
     getMyCourses,
     findCourse,
-    findSub
+    findSub,
+    getMyTrainee,
+    getMyCourse
 }

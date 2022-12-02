@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 
 const CreateAdminForm = () => {
-    const[Username,setUsername] = useState('')
+    const[Email,setEmail] = useState('')
     const[Password,setPassword] = useState('')
     const[error,setError] = useState(null)
    // const[InstructorID,setId] = useState('')
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
-        const admin = {Username,Password}
+        const admin = {Email,Password}
         console.log(JSON.stringify(admin))
         const response =  await fetch('/api/admin/createadmin',{method:'POST',body:JSON.stringify(admin),headers: {
             'content-type':'application/json'
@@ -21,7 +21,7 @@ const CreateAdminForm = () => {
         setError(json.error)    
     }
     if (response.ok){
-        setUsername('')
+        setEmail('')
         setPassword('')
     
        // setId('')
@@ -34,15 +34,15 @@ const CreateAdminForm = () => {
     return(
         <form  className="createadmin" onSubmit={handleSubmit}>
             <h3>Create new Admin</h3>
-            <label>Username:</label>
+            <label>Email:</label>
             <input
                 type="text"
-                onChange={(e) => setUsername(e.target.value)}
-                value={Username}
+                onChange={(e) => setEmail(e.target.value)}
+                value={Email}
             />
             <label>Password:</label>
             <input
-                type="text"
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={Password}
             />

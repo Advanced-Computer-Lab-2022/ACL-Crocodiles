@@ -2,48 +2,89 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const traineeSchema = new Schema({
-    Name: {
+    _id:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'User',
+      required:true
+    },
+    Firstname: {
       type: String,
       required: true,
     },
-    Email: {
+    Lastname: {
       type: String,
-      required: true
+      required: true,
     },
-    Password: {
+    Gender:{
       type:String,
-      required: true
+      required:false
     },
     Age: {
       type: Number,
-      required: true,
+      required: false,
+    
     },
-    BornIn: {
-      type: String,
-      required: false
-    },
-    LivesIn: {
-      type: String,
-      required: false
-    },
-    MartialStatus: {
-      type: String,
-      required: false
-    },
-    PhoneNumber: {
-      type: String,
-      required: false
-    },
-    Job: {
-      type: String,
-      required: false
-    },
-    My_Courses: {
-      type: [mongoose.Types.ObjectId],
-        ref:'Course',
+    My_courses: {
+      type: [mongoose.Schema.Types.ObjectId],
       required: false
     }
+   
   }, { timestamps: true });
   
+  
+//new schema
+
+  // const traineeSchema = new Schema({
+  //   _id:{
+  //     type:mongoose.Schema.Types.ObjectId,
+  //     ref:'User',
+  //     required:true
+  //   },
+  //   Firstname: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   Lastname: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   Gender:{
+  //     type:String,
+  //     required:false
+  //   },
+  //   Age: {
+  //     type: Number,
+  //     required: false,
+    
+  //   },
+  //   My_courses: {
+  //     type: [{
+  //       course_id:{
+  //         type: mongoose.Schema.Types.ObjectId,
+  //         ref:'Course',
+  //         required: true
+  //       },
+  //       Assignments:{
+  //         type: [{
+  //           exercise_id:{
+  //             type: [mongoose.Schema.Types.ObjectId],
+  //             ref:'Exercise',
+  //             required:true
+  //           },
+  //           Answers:{
+  //             type: [Number],
+  //             required:true
+  //           }
+  //         }],
+  //         required:false
+  //       } 
+  //     }],
+  //     required: false
+  //   } 
+   
+  // }, { timestamps: true });
+
+
+
   module.exports = mongoose.model('Trainee', traineeSchema);
  

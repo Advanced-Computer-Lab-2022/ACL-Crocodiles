@@ -12,8 +12,15 @@ import Guest from './pages/Guest'
 import Search from './pages/Search'
 import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
+import Signin from './pages/Signin'
+import Signup from './pages/Signup'
+import Contract from './pages/Contract'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import TraineeCourses from './pages/TraineeCourses'
 import TraineeCoursePage from './pages/TraineeCoursePage'
+import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
+import CorpTraineeCoursePage from './pages/CorpTraineeMyCoursePage'
 function App() {
   return (
     <div className="App">
@@ -22,9 +29,22 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
+          <Route
+              path="/resetpassword"
+              element={<ResetPassword />}
+            />
             <Route
               path="/"
               element={<Home />}
+            />
+             <Route
+              path="/forgotpassword"
+              element={<ForgotPassword />}
+            />
+            
+              <Route
+              path="/contract"
+              element={<Contract />}
             />
             <Route
               path="/instructor"
@@ -33,6 +53,14 @@ function App() {
             <Route
               path="/admin"
               element={<Admin />}
+            />
+             <Route
+              path="/signin"
+              element={<Signin />}
+            />
+             <Route
+              path="/signup"
+              element={<Signup />}
             />
             <Route
               path="/course"
@@ -51,12 +79,16 @@ function App() {
               element={<TraineeCoursePage />}
             />
             <Route
-              path="/corpTrainee"
+              path="/CorpTrainee"
               element={<CorpTrainee />}
             />
             <Route
               path="/corpTraineeCourses"
               element={<CorpTraineeCourse/>}
+            />
+                <Route
+              path="/CorpTraineeMyCourses/course"
+              element={<CorpTraineeCoursePage />}
             />
             <Route
               path="/guest"
@@ -77,6 +109,10 @@ function App() {
             <Route
               path="/InstructorCourses"
               element={<InstructorCourses />}
+            />
+               <Route
+              path="/CorpTraineeMyCourses"
+              element={<CorpTraineeMyCourses />}
             />
        
             

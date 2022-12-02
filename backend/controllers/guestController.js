@@ -42,12 +42,26 @@ const getPrice = async(req, res) => {
         return res.status(404).json("course not found");
     res.json(course.Price);
 }
-const test =0;
+const viewAllCourses = async (req,res) => {
+    try {
+        const courses = await Course.find()
+        if(!courses){
+            return res.status(404).json({error: 'no courses found'})
+        }
+            res.status(200).json(courses)
+        
+     } catch (error) {
+       res.status(400).json({error: 'error'})
+     }
+}
+
+
 
 module.exports = { 
     createGuest,
     getCourses,
     getGuest,
-    getPrice
+    getPrice,
+    viewAllCourses
  };
  

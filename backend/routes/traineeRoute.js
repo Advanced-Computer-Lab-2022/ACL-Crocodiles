@@ -1,4 +1,5 @@
 const express = require('express')
+const requireAuthTrainee = require('../middleware/requireAuthTrainee')
 const {
     createTrainee,
     getTrainee,
@@ -9,10 +10,14 @@ const {
     getSubtitles,
     getMyCourses,
     findCourse,
-    findSub
+    findSub,
+    getMyTrainee,
+    getMyCourse
 } = require('../controllers/traineeController')
+
 const router = express.Router()
 
+router.use(requireAuthTrainee)
 
 router.get('/', getTrainees)
 
@@ -29,7 +34,8 @@ router.get('/page/viewAllCourses', viewAllCourses)
 router.get('/page/MyCourses',getMyCourses)
 router.get('/page/MyCourses/:id',findCourse)
 router.get('/page/findSub/:id',findSub)
-
+router.get('/page/getMyTrainee/',getMyTrainee)
+router.get('/page/getMyCourse/:id',getMyCourse)
 router.post('/subtitles', getSubtitles)
 
 

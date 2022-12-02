@@ -9,13 +9,13 @@ import Grid from '@mui/material/Grid';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {useSelector} from 'react-redux'
 // import ButtonBase from '@material-ui/core/ButtonBase';
-export default function CourseCard({Course, click}) {
+export default function CourseCard({Course,redirect}) {
   const country = useSelector((state) => state.country.value);
   return (
     <React.Fragment>
         <Card  sx={{ maxWidth: 600 }} >
     
-        <CardActionArea  onClick = {() => {window.location.href=`/Mycourses/course?courseId=${Course._id}`}}>
+        <CardActionArea  onClick = {() => {window.location.href=redirect}}>
         <CardHeader
         title={Course.Title}
         subheader={<Grid container><Grid item ><AccessTimeIcon fontSize="medium"/></Grid><Grid item >{Course.Hours+ ' hrs'}</Grid></Grid> }

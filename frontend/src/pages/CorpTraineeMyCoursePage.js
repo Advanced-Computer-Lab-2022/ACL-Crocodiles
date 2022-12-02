@@ -37,9 +37,8 @@ import TakeTestWidget from '../components/TakeTestWidget'
 
 // import rgba from "../functions/rgba";
 
-const  TraineeCoursePage= ()=> {
+const  CorpTraineeMyCoursePage= ()=> {
   const{user} = useAuthContext()
-  console.log(user)
     const [course,setCourse] = useState("");
     const [Subtitles,setSubtitles] = useState([]);
     const [open,setOpen] = useState(false);
@@ -68,15 +67,10 @@ const  TraineeCoursePage= ()=> {
      useEffect(() => {
     
          const fetchCourse = async () => {
-          console.log(user+"hi")
              const params = new URLSearchParams(window.location.search);
              const courseId = params.get('courseId');
          
-                const response = await fetch(`/api/trainee/page/MyCourses/${courseId}`,{
-                  headers: {
-                  'Authorization': `Bearer ${user.token}`
-                      }
-                  })
+                const response = await fetch(`/api/corpTrainee/page/MyCourses/${courseId}`)
                  const json = await response.json()
                  if(response.ok){
                   setCourse(json)
@@ -245,4 +239,4 @@ const  TraineeCoursePage= ()=> {
   )
 }
 
-  export default TraineeCoursePage
+  export default CorpTraineeMyCoursePage
