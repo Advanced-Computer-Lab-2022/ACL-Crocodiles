@@ -35,7 +35,17 @@ const instructorSchema = new Schema({
     Biography:{
         type: String,
         required: false
-    }
+    },
+    Rating:{
+        type: Number,
+        required: false,
+        default : 0  
+    },
+    RatingCount: {
+      type: Number,
+      required: false,
+      default : 0 
+    },
     
 
   }, { timestamps: true });

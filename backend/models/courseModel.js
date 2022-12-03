@@ -34,7 +34,13 @@ const courseSchema = new Schema({
     },
     Rating: {
         type: Number,
-        required: false
+        required: false,
+        default: 0
+    },
+    RatingCount: {
+        type: Number,
+        required: false,
+        default : 0 
     },
     Subtitle: {
         type: [mongoose.Schema.Types.ObjectId],
@@ -114,6 +120,7 @@ const videoSchema = new Schema({
         required: false
     },
 }, { timestamps: true })
+
 
 const course = mongoose.model('Course', courseSchema)
 const sub = mongoose.model('Subtitle', subtitleSchema)

@@ -12,7 +12,9 @@ const {
     findCourse,
     findSub,
     getMyTrainee,
-    getMyCourse
+    getMyCourse,
+    rateCourse,
+    rateInstructor
 } = require('../controllers/traineeController')
 
 const router = express.Router()
@@ -37,6 +39,8 @@ router.get('/page/findSub/:id',findSub)
 router.get('/page/getMyTrainee/',getMyTrainee)
 router.get('/page/getMyCourse/:id',getMyCourse)
 router.post('/subtitles', getSubtitles)
+router.put('/page/rateCourse/:id', rateCourse)
+router.put('/rateInstructor/:id', rateInstructor)
 
 
 
