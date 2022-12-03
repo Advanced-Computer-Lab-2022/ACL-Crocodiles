@@ -10,7 +10,7 @@ const Course = () => {
 
     useEffect(() => {
         const fetchCourses = async () => {
-            const response = await fetch('/api/trainee/page/viewAllCourses')
+            const response = await fetch('/api/guest/viewAllCourses')
             const json = await response.json()
             if(response.ok){
                 setCourses(json)
