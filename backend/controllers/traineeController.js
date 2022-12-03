@@ -102,7 +102,7 @@ const getSubtitles = async (req, res) => {
 
 const viewExams = async (req, res) => {
     try {
-        const courseId = "6388eb87192b3ca0a2c2b5fc"
+        const courseId = "638a79fc24959250578fe0ab"
         const exams = await Exam.find({ courseId: courseId }).populate('Questions')
         if (!exams) {
             return res.status(404).json({ error: 'no exams found' })
@@ -121,6 +121,7 @@ const viewExam = async (req, res) => {
         if (!exams) {
             return res.status(404).json({ error: 'no exams found' })
         }
+
         res.status(200).json(exams)
 
     } catch (error) {

@@ -9,6 +9,7 @@ const traineeRoutes = require('./routes/traineeRoute')
 const adminRoutes = require('./routes/adminRoute')
 const authRoutes = require('./routes/authRoute')
 const instructorRoutes = require('./routes/instructorRoute')
+const guestRoutes = require('./routes/guestRoute')
 app.use(express.json())
 
 
@@ -29,6 +30,7 @@ app.listen(process.env.PORT, () => {
 app.use('/api/trainee', traineeRoutes)
 app.use('/api/admin',adminRoutes)
 app.use('/api/instructor',instructorRoutes)
+app.use('/api/guest',guestRoutes)
 app.use('/api/users',usersRoutes)
 app.use('/api/auth',authRoutes)
 

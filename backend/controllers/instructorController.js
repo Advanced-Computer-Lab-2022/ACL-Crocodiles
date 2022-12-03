@@ -40,52 +40,6 @@ const searchCourse = async (req, res) => {
     }
 }
 
-const filterCourse = async (req, res) => {
-    try {
-        const { Subject, Rating } = req.body
-
-
-        const course = await Course.find({ Subject }).find({ Rating: { $gte: Rating } })
-        if (!course) {
-            return res.status(404).json({ error: 'no such course' })
-        }
-        res.status(200).json(course)
-    } catch (error) {
-        res.status(400).json({ error: 'error' })
-    }
-
-}
-
-const filterCoursePrice = async (req, res) => {
-    try {
-        const { priceMin, priceMax } = req.body
-        const courses = await Course.find({ Price: { $gte: priceMin } }).find({ Price: { $lte: priceMax } })
-        if (!courses) {
-            return res.status(404).json({ error: 'no courses found' })
-        }
-        res.status(200).json(courses)
-    } catch (error) {
-        res.status(400).json({ error: 'error' })
-    }
-}
-const Search = async (req, res) => {
-    const { Username, Title, Subject } = req.body
-
-    try {
-        const instructor = await Instructor.find({ Username }).select({ id: 1 })
-        if (!instructor) {
-            return res.status(404).json({ error: 'Couldnt find instructor' })
-        }
-        const courses = await Course.find().or([{ InstructorId: instructor }, { Title: Title }, { Subject: Subject }])
-        if (!courses) {
-            return res.status(404).json({ error: 'no courses found' })
-        }
-        res.status(200).json(courses)
-    } catch (error) {
-        res.status(400).json({ error: 'error' })
-    }
-
-}
 const editBiographyorEmail = async (req, res) => {
     const { Email, Biography } = req.body
     if (!Validator.isEmail(Email))
@@ -108,18 +62,6 @@ const viewAllInsCourses = async (req, res) => {
         }
 
         const courses = await Course.find({ InstructorId: InstructorId })
-        if (!courses) {
-            return res.status(404).json({ error: 'no courses found' })
-        }
-        res.status(200).json(courses)
-
-    } catch (error) {
-        res.status(400).json({ error: 'error' })
-    }
-}
-const viewAllCourses = async (req, res) => {
-    try {
-        const courses = await Course.find()
         if (!courses) {
             return res.status(404).json({ error: 'no courses found' })
         }
@@ -198,15 +140,10 @@ const viewExams = async (req, res) => {
     res.status(200).json(f)
 }
 
-
 module.exports = {
     searchCourse,
     createCourse,
-    filterCourse,
-    filterCoursePrice,
-    Search,
     viewAllInsCourses,
-    viewAllCourses,
     editBiographyorEmail,
     defineDiscount,
     createExam,
