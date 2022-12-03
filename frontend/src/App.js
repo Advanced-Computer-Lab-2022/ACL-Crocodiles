@@ -19,6 +19,7 @@ import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import DefineDiscount from './pages/DefineDiscount'
 import Exam from './components/Exam'
+import TraineeCourseDetails from './components/TraineeCourseDetails'
 
 function App() {
   return (
@@ -105,6 +106,10 @@ function App() {
             <Route
               path="/definediscount/:courseid"
               element={<DefineDiscount />}
+            />
+            <Route
+              path="/traineeCourses"
+              element={<TraineeCourseDetails />}
             />
 
           </Routes>

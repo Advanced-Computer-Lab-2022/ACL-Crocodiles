@@ -1,8 +1,8 @@
 const Trainee = () => {
-    return(
+    return (
 
         <div className="trainee">
-           <div class="topnav">
+            <div class="topnav">
                 <a href="/filter">
                     <input type="button" value="Filter" />
                 </a>
@@ -10,11 +10,11 @@ const Trainee = () => {
                     <input type="button" value="View All Courses" />
                 </a>
             </div>
-            
+
         </div>
 
-                
-        
-        )
+
+
+    )
 }
- export default Trainee
+export default Trainee

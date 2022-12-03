@@ -14,7 +14,7 @@ const {
 
 const router = express.Router()
 
-router.use(requireAuthTrainee)
+//router.use(requireAuthTrainee)
 
 router.get('/', getTrainees)
 
@@ -28,7 +28,7 @@ router.patch('/:id', updateTrainee)
 
 router.get('/page/viewAllCourses', viewAllCourses)
 
-router.get('/page/viewExams', viewExams)
+router.get('/page/viewExams/:courseid', viewExams)
 
 router.get('/page/viewExam', viewExam)
 
