@@ -12,7 +12,7 @@ const {
 
 const router = express.Router()
 
-//router.use(requireAuthTrainee)
+router.use(requireAuthTrainee)
 
 router.get('/', getTrainees)
 
