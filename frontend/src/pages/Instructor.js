@@ -1,12 +1,42 @@
 import NewCourseForm from "../components/NewCourseForm"
 import EditForm from "../components/EditInstructor"
+import { useAuthContext } from "../hooks/useAuthContext"
+import {useEffect,useState} from 'react'
 
 const Instructor = () => {
+    const [rating,setRating] = useState(null)
+    const[error,setError] = useState(null)
+    const {user} = useAuthContext()
+    const getMyRating = async () => {
+        if(!user){
+            console.log('You must be logged in')
+            return
+        }
+        const response = await fetch('/api/instructor/getrating', {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+        const json = await response.json()
+        if (!response.ok) {
+            console.log(json.error)
+            setError(json.error)
+        }
+        if (response.ok) {
+            console.log('rating', json)
+            setRating(json)
+            setError(null)
+        }
+    }
+
     return (
 
         <div className="instructor">
             <h1>Instructor Page</h1>
             <div class="topnav">
+            <p><strong>My Rating: </strong> {rating!==null? rating+' / 5': 'not rated yet' }</p>
                 <a href="/search">
                     <input type="button" value="Search by instructorID" />
                 </a>
