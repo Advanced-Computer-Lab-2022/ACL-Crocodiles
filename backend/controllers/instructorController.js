@@ -1,17 +1,21 @@
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
+const Sub = require('../models/courseModel').sub
+const Video = require('../models/courseModel').video
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
 const createCourse = async (req, res) => {
     const InstructorId  = req.user
 
-    const { Title, Subject, Hours, Price } = req.body
+    const { Title, Subject, Hours, Price, subtitle, subHours, videoTitle, videoDesc, videoURL } = req.body
     if(!mongoose.Types.ObjectId.isValid(InstructorId)){ 
         return res.status(404).json({error: 'no such id'})
     }
     try {
-        const course = await Course.create({ Title, Subject, Hours, Price, InstructorId })
+        const video = await Video.create({Title:videoTitle, Description:videoDesc, url:videoURL})
+        const sub = await Sub.create({Title:subtitle, Hours:subHours, Videos:video})
+        const course = await Course.create({ Title, Subject, Hours, Price, InstructorId, Subtitle:sub })
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({ error: error.message })

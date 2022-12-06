@@ -7,9 +7,12 @@ const NewCourseForm = () => {
     const[Subject,setSubject] = useState('')
     const[Hours,setHours] = useState('')
     const[Price,setPrice] = useState('')
-   // const [id, setID] = useState('')
+    const[subtitle, setSubtitle] = useState('')
     const[error,setError] = useState(null)
-   // const[InstructorID,setId] = useState('')
+    const[subHours,setSubHours] = useState('')
+    const[videoTitle,setVideoTitle] = useState('')
+    const[videoURL,setVideoURL] = useState('')
+    const[videoDesc,setVideoDesc] = useState('')
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
@@ -17,7 +20,7 @@ const NewCourseForm = () => {
             setError('You must be logged in')
             return
         }
-        const course = {Title,Subject,Hours,Price}
+        const course = {Title,Subject,Hours,Price,subtitle,subHours,videoTitle,videoDesc,videoURL}
         console.log(JSON.stringify(course))
         const response =  await fetch('/api/instructor/createcourse',{method:'POST',body:JSON.stringify(course),headers: {
             'content-type':'application/json',
@@ -69,12 +72,35 @@ const NewCourseForm = () => {
                 onChange={(e) => setPrice(e.target.value)}
                 value={Price}
             />
-            {/* <label>Instructor ID:</label>
+            <label>Subtitle Title:</label>
             <input
                 type="text"
-                onChange={(e) => setID(e.target.value)}
-                value={id}
-            /> */}
+                onChange={(e) => setSubtitle(e.target.value)}
+                value={subtitle}
+            />
+            <label>Subtitle Hours:</label>
+            <input
+                type="text"
+                onChange={(e) => setSubHours(e.target.value)}
+                value={subHours}
+            />
+            <label>Subtitle Video Title:</label>
+            <input
+                type="text"
+                onChange={(e) => setVideoTitle(e.target.value)}
+                value={videoTitle}
+            />
+            <label>Subtitle Video URL:</label>
+            <input
+                type="text"
+                onChange={(e) => setVideoURL(e.target.value)}
+                value={videoURL}
+            /><label>Subtitle Video Description:</label>
+            <input
+                type="text"
+                onChange={(e) => setVideoDesc(e.target.value)}
+                value={videoDesc}
+            />
             <button>Create Course</button>
             {error && <div className="error">{error}</div>}
         </form>
