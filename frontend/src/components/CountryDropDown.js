@@ -1,9 +1,11 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux";
 import CountryJSONArray from "../Country.json"
 import CountryJSON2 from "../countries.json"
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import CourseDetails from '../components/CourseDetails'
+import { chooseCountry } from "../Features/country";
 const Countries = [];
 var Curr =""
 
@@ -19,7 +21,7 @@ for (let i = 0; i < CountryJSONArray.length; i++) {
   
 const DropDown = (props)=>{
 
-
+    const dispatch = useDispatch();
     const [Country, setCountry] = useState('');
     const [Currency, setCurrency] = useState('');
     const [Rate, setRate] = useState(1);
@@ -33,14 +35,18 @@ const DropDown = (props)=>{
                 
             }
         }
+        let r = 0;
         console.log(rates.length)
         for(let i=0;i<rates.length;i++){
             console.log(rates[i][0])
             if(rates[i][0]==Curr){
+                
                 setRate(rates[i][1])
+                r=rates[i][1]
             }
         }
         console.log(rates)
+        dispatch(chooseCountry({countryName: Country, rate:r, code:Curr}))
     }
   
 return (

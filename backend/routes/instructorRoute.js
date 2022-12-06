@@ -10,7 +10,9 @@ const {
     viewAllInsCourses,
     editBiographyorEmail,
     defineDiscount,
-    getRating
+    getRating,
+    createSubtitle,
+    createVideo
 } = require('../controllers/instructorController')
 
 
@@ -28,5 +30,8 @@ router.post('/search', Search)
 router.put('/editbiographyoremail',editBiographyorEmail)
 router.post('/definediscount/:courseid',defineDiscount),
 router.get('/getrating',getRating)
+router.post('/createsubtitle/:courseid',createSubtitle)
+router.post('/createvideo',createVideo)
+
 
 module.exports = router

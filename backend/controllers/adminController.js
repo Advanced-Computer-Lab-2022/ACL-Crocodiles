@@ -1,6 +1,6 @@
 
 const Instructor = require('../models/instructorModel')
-const CorporateTrainee = require('../models/CorporatetraineeModel')
+const CorporateTrainee = require('../models/corporatetraineeModel')
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
@@ -51,6 +51,7 @@ const createCorporateTrainee = async (req,res) => {
     const {Email,Password} = req.body
     const Type = 'Corporate'
         
+
     try{
         let user = await User.findOne({Email})
         if (user)

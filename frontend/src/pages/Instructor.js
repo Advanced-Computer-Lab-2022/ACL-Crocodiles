@@ -26,10 +26,15 @@ const Instructor = () => {
         }
         if (response.ok) {
             console.log('rating', json)
-            setRating(json)
+            setRating(json.Rating)
             setError(null)
         }
     }
+
+    useEffect(() => {
+        getMyRating()
+    }, [])
+
 
     return (
 

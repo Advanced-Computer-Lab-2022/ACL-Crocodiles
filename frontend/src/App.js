@@ -14,10 +14,18 @@ import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
+import Profile from './pages/Profile'
 import Contract from './pages/Contract'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import DefineDiscount from './pages/DefineDiscount'
+import TraineeCourses from './pages/TraineeCourses'
+import TraineeCoursePage from './pages/TraineeCoursePage'
+import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
+import CorpTraineeCoursePage from './pages/CorpTraineeMyCoursePage'
+import ChangePassword from './pages/ChangePassword'
+import AddSubtitle from './pages/AddSubtitle'
+
 function App() {
   return (
     <div className="App">
@@ -63,17 +71,29 @@ function App() {
               path="/course"
               element={<Course />}
             />
+              <Route
+              path="/Mycourses"
+              element={<TraineeCourses />}
+            />
             <Route
               path="/trainee"
               element={<Trainee />}
+              />
+              <Route
+              path="/Mycourses/course"
+              element={<TraineeCoursePage />}
             />
             <Route
-              path="/corpTrainee"
+              path="/CorpTrainee"
               element={<CorpTrainee />}
             />
             <Route
               path="/corpTraineeCourses"
               element={<CorpTraineeCourse/>}
+            />
+                <Route
+              path="/CorpTraineeMyCourses/course"
+              element={<CorpTraineeCoursePage />}
             />
             <Route
               path="/guest"
@@ -99,7 +119,23 @@ function App() {
               path="/definediscount/:courseid"
               element={<DefineDiscount />}
             />
-            
+               <Route
+              path="/CorpTraineeMyCourses"
+              element={<CorpTraineeMyCourses />}
+            />
+            <Route
+              path="/profile"
+              element={<Profile />}
+            />
+            <Route
+              path="/changePassword"
+              element={<ChangePassword />}
+            />
+            <Route
+              path="/addsubtitle/:courseid"
+              element={<AddSubtitle />}
+            />
+
           </Routes>
         </div>
       </BrowserRouter>

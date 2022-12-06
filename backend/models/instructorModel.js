@@ -38,7 +38,13 @@ const instructorSchema = new Schema({
     },
     Rating:{
         type: Number,
-        required: false
+        required: false,
+        default : 0  
+    },
+    RatingCount: {
+      type: Number,
+      required: false,
+      default : 0 
     },
     
 

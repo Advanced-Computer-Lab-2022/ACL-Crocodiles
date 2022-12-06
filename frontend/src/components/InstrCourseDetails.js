@@ -18,6 +18,10 @@ const Click = () =>{
     navigate('/definediscount/'+course._id)
 }
 
+const Click2 = () =>{
+    navigate('/addsubtitle/'+course._id)
+}
+
     return(
         <div className="course-details">
             <h4>{course.Title}</h4>
@@ -29,7 +33,7 @@ const Click = () =>{
             {course.Discount!==undefined? <p>{course.Discount}% discount valid until {course.DiscountEndDate}</p> :null}
             
             <button onClick={Click}>Define Promotion</button>
-           
+            <button onClick={Click2}>Add Subtitles and videos</button>
         </div>
     )
 }

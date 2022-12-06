@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import SearchDetails from './SearchDetails'
 import CountryJSONArray from "../Country.json"
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import CourseDetails from '../components/CourseDetails'
+import { chooseCountry } from "../Features/country";
+import { useAuthContext } from "../hooks/useAuthContext";
+
+
 const Countries = [];
 var Curr =""
 
@@ -18,7 +23,7 @@ for (let i = 0; i < CountryJSONArray.length; i++) {
 
 
 const Search = () => {
-    
+    const dispatch = useDispatch();
     const [Title, setTitle] = useState('')
     const [Subject, setSubject] = useState('')
     const [Username, setUsername] = useState('')
@@ -27,6 +32,7 @@ const Search = () => {
     const [Country, setCountry] = useState('');
     const [Currency, setCurrency] = useState('');
     const [Rate, setRate] = useState(1);
+    const{user} = useAuthContext()
 
         const handleCountry = async (e) => {
             const  rates = await x()
@@ -44,19 +50,21 @@ const Search = () => {
             if(rates[i][0]==Curr){
                 console.log('gi')
                 setRate(rates[i][1])
+                dispatch(chooseCountry({countryName: Country, rate:rates[i][1], code:Curr}))
             }
         }
+  
         }
-    
+
 
 
 
     const handleSubmit = async () => {
-       
         const body = { Title,Subject,Username }
         console.log(body)
         const response = await fetch('/api/instructor/search', {
             method: 'POST', body: JSON.stringify(body), headers: {
+                'Authorization': `Bearer ${user.token}`,
                 'content-type': 'application/json'
             }
         })

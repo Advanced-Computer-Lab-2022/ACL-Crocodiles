@@ -12,7 +12,7 @@ const Navbar = () => {
         <header>
             <div className="container">
                 <Link to="/">
-                    <h1>Coursera</h1>
+                    <h1>Msh Coursera</h1>
                 </Link>
                 <Link to="/admin">
                     <h2>Admin controlls</h2>
@@ -23,11 +23,14 @@ const Navbar = () => {
                 <Link to="/trainee">
                     <h2>Trainee</h2>
                 </Link>
-                <Link to="/corpTrainee">
+                <Link to="/CorpTrainee">
                     <h2>Corporate Trainee</h2>
                 </Link>
                 <Link to="/guest">
                     <h2>Guest</h2>
+                </Link>
+                <Link to="/profile">
+                    <h2>Profile</h2>
                 </Link>
                 <nav>
                    {user && (
