@@ -8,7 +8,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 export default function TakeTestWidget() {
 
   return (
-    <ButtonBase >
+    <ButtonBase onClick={() => console.log('hi')}>
      <Box
       sx={{
         width: "200px",

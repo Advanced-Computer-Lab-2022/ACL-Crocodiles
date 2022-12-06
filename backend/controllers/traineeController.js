@@ -119,6 +119,7 @@ const getMyCourses = async(req, res)=>{
         if(!course)
             res.status(500).json({error : "course not found"});
         courses.push(course);
+  
     }
     res.json(courses);
 

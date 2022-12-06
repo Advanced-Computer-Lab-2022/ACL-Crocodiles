@@ -48,6 +48,7 @@ const getMyCourses = async(req, res)=>{
         if(!course)
             res.status(500).json({error : "course not found"});
         courses.push(course);
+     
     }
     res.json(courses);
 
@@ -62,6 +63,7 @@ const findCourse = async(req,res)=>{
                                  .populate({path:'Subtitle', populate: {path:'Videos' } });
      if(!course)
         res.status(500).json(error);
+        console.log(course)
      res.json(course);
  
  }
