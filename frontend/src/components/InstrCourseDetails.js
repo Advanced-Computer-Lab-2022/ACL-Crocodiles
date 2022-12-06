@@ -26,7 +26,8 @@ const InstrCourseDetails = ({ course, currency, rate }) => {
 
     const Click1 = () => {
         const fetchExam = async () => {
-            const response = await fetch('/api/instructor/createexam/' + course._id, {
+            //const response = await fetch('/api/instructor/createexam/' + course._id, {
+            const response = await fetch('/api/instructor/createexam', {
                 method: 'POST', headers: {
                     'content-type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
@@ -35,7 +36,8 @@ const InstrCourseDetails = ({ course, currency, rate }) => {
             })
         }
         fetchExam();
-        navigate('/createExam/' + course._id)
+        //navigate('/createExam/' + course._id)
+        navigate('/createexam')
     }
 
 

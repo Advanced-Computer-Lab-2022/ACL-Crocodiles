@@ -100,24 +100,121 @@ const getSubtitles = async (req, res) => {
     console.log(subtitles)
 }
 
-const viewExams = async (req, res) => {
-    try {
-        const courseId = req.params.courseid
-        const exams = await Exam.find({ courseId: courseId }).populate('Questions')
-        if (!exams) {
-            return res.status(404).json({ error: 'no exams found' })
-        }
-        res.status(200).json(exams)
+const getMyCourses = async (req, res) => {
+    const ID = req.user
+    const courses = [];
+    if (!mongoose.Types.ObjectId.isValid(ID)) {
 
-    } catch (error) {
-        res.status(400).json({ error: 'error' })
+        return res.status(404).json({ error: 'Invalid trainee ID' });
+    }
+    const trainee = await Trainee.findById(ID);
+    if (!trainee)
+        return res.status(400).json({ error: 'trainee not found' });
+
+
+    const course_ids = trainee.My_courses;
+
+    for (let i = 0; i < course_ids.length; i++) {
+        const course_id = course_ids[i];
+        if (!mongoose.Types.ObjectId.isValid(course_id))
+            return res.status(404).json({ error: 'Invalid course id' });
+        const course = await Course.findById(course_id)
+        if (!course)
+            res.status(500).json({ error: "course not found" });
+        courses.push(course);
+    }
+    res.json(courses);
+
+}
+const findCourse = async (req, res) => {
+    const course_id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(course_id))
+        return res.status(404).json({ error: 'Invalid course id' });
+    const course = await Course.findById(course_id)
+        .populate({ path: 'Subtitle', populate: { path: 'Exercises' } })
+        .populate({ path: 'Subtitle', populate: { path: 'Videos' } });
+    if (!course)
+        res.status(500).json(error);
+    res.json(course);
+
+}
+
+const getMyTraineehelper = async (req, res) => {
+    const user_id = "638b7b17bd450326695f11ea";
+
+    if (!mongoose.Types.ObjectId.isValid(user_id))
+        return res.status(404).json({ error: 'Invalid user id' });
+
+    const trainee = await Trainee.findById(user_id)
+        .populate({ path: 'My_courses', populate: { path: 'course_id' } })
+        .populate({ path: 'My_courses', populate: { path: 'Assignments', populate: { path: "exercise_id" } } });
+
+    if (!trainee)
+        res.status(500).json({ error: "failed" });
+    return (trainee);
+
+
+}
+
+const getMyTrainee = async (req, res) => {
+    const trainee = await getMyTraineehelper(req, res);
+    res.json(trainee);;
+
+
+}
+
+
+const getMyCourse = async (req, res) => {
+
+    const trainee = await getMyTraineehelper(req, res);
+    console.log(trainee)
+    const course_id = req.params.id
+    if (!mongoose.Types.ObjectId.isValid(course_id))
+        return res.status(404).json({ error: 'Invalid course id' });
+    const course = await Course.findById(course_id)
+    for (let i = 0; i < trainee.My_courses.length; i++) {
+        console.log(trainee.My_courses[i].course_id)
+        console.log(course._id)
+        if (trainee.My_courses[i].course_id.equals(course._id)) {
+            console.log(trainee)
+            const t = await trainee.populate({ path: `My_courses.${i}.course_id`, populate: { path: 'Subtitle', populate: ['Exercises', 'Videos'] } })
+
+            res.json(t.My_courses[i])
+        }
     }
 }
 
+
+const findSub = async (req, res) => {
+    const sub_id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(sub_id))
+        return res.status(404).json({ error: 'Invalid course id' });
+    const sub = await Subtitle.findById(sub_id).populate('Exercises').populate('Videos');
+    if (!sub)
+        res.status(500).json({ error: 'Subtitle not found' });
+    res.json(sub);
+
+}
+const findSub2 = async (req, res) => {
+    //const sub_id = req.params.id;
+    const sub_id = "638bb8348553b938065a1588"
+    if (!mongoose.Types.ObjectId.isValid(sub_id))
+        return res.status(404).json({ error: 'Invalid course id' });
+    const sub = await Subtitle.findById(sub_id).populate('Exercises');
+    if (!sub)
+        res.status(500).json({ error: 'Subtitle not found' });
+    res.json(sub);
+
+}
+
+
 const viewExam = async (req, res) => {
     try {
-        const examId = "6388eb87192b3ca0a2c2b5fc"
-        const exams = await Exam.find({ _id: examId })
+        const examId = req.params.examid
+        //const examId = "638bbc29a833c6dd287a66e4"
+        const exams = await Exam.findById(examId).populate('Questions')
         if (!exams) {
             return res.status(404).json({ error: 'no exams found' })
         }
@@ -139,6 +236,11 @@ module.exports = {
     updateTrainee,
     viewAllCourses,
     getSubtitles,
-    viewExams,
-    viewExam
+    viewExam,
+    getMyCourses,
+    findCourse,
+    findSub,
+    getMyTrainee,
+    getMyCourse,
+    findSub2
 }

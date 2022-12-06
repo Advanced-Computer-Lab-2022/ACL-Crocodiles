@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+
 //COURSES SCHEMA
 const courseSchema = new Schema({
     Title: {
@@ -32,8 +33,8 @@ const courseSchema = new Schema({
         required: false
     },
     InstructorId: {
-        type: mongoose.Schema.Types.ObjectId,   
-        ref:'Instructor',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Instructor',
         required: true
     },
     Rating: {
@@ -41,7 +42,8 @@ const courseSchema = new Schema({
         required: false
     },
     Subtitle: {
-        type: [String],
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Subtitle',
         //ref: 'subtitleSchema'
         required: false
     },
@@ -59,48 +61,76 @@ const subtitleSchema = new Schema({
         type: Number,
         required: true
     },
-    
-    // CourseId: {
-    //     type: Number,
-    //     required: false
-    // },
-     Exercise: {
-        type: String
-    //     type: Schema.Types.ObjectId, 
-       //  ref: 'Exercise'
+
+    Exercises: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exam',
+        required: true
+    }],
+    Videos: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Video',
+        required: false
+    }
+}, { timestamps: true })
+
+
+//Exercise SCHEMA
+// const exerciseSchema = new Schema({
+//     Title:{
+//         type:String,
+//         required:true
+//     },
+
+//     Questions: {
+//         type: [String],
+//         required: true
+//     },
+//     Options: {
+//         type: [[String]],
+//         required: true
+//     },
+//     Answers: {
+//         type: [Number],
+//         required: true
+//     },
+// }, { timestamps: true })
+
+//Video Schema
+
+const videoSchema = new Schema({
+    Title: {
+        type: String,
+        required: true
+    },
+
+    url: {
+        type: String,
+        required: true
+    },
+    Description: {
+        type: String,
+        required: false
     },
 }, { timestamps: true })
 
-// const discountSchema = new Schema({
-//     DiscountPercentage: {
-//         type: Number,
-//         required: true
-//     },
-//     EndDate: {
-//         type: Date,
-//         required: true
-//     },
-//     CourseId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'Course',
-//         required: true
-//     }
-// }, { timestamps: true })
 
 courseSchema.statics.deleteDiscounts = async function () {
     const courses = await this.find()
     courses.forEach(async (course) => {
         if (course.DiscountEndDate < Date.now()) {
-        course.Discount = undefined
-        course.DiscountEndDate = undefined
-        await course.save()
-        }})
+            course.Discount = undefined
+            course.DiscountEndDate = undefined
+            await course.save()
+        }
+    })
 }
 
 const course = mongoose.model('Course', courseSchema)
 const sub = mongoose.model('Subtitle', subtitleSchema)
-module.exports = {course, sub}
+//const ex = mongoose.model('Exercise', exerciseSchema)
+const video = mongoose.model('Video', videoSchema)
+module.exports = { course, sub, video }
 
 
 
-//EXERCISE SCHEMA

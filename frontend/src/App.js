@@ -19,8 +19,13 @@ import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import DefineDiscount from './pages/DefineDiscount'
 import Exam from './components/Exam'
-import TraineeCourseDetails from './components/TraineeCourseDetails'
+import ExamTrainee from './components/ExamTrainee'
 
+
+import TraineeCourses from './pages/TraineeCourses'
+import TraineeCoursePage from './pages/TraineeCoursePage'
+import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
+import CorpTraineeCoursePage from './pages/CorpTraineeMyCoursePage'
 function App() {
   return (
     <div className="App">
@@ -67,16 +72,32 @@ function App() {
               element={<Course />}
             />
             <Route
+              path="/Mycourses"
+              element={<TraineeCourses />}
+            />
+            <Route
               path="/trainee"
               element={<Trainee />}
             />
             <Route
-              path="/corpTrainee"
+              path="/Mycourses/course"
+              element={<TraineeCoursePage />}
+            />
+            <Route
+              path="/CorpTrainee"
               element={<CorpTrainee />}
             />
             <Route
               path="/corpTraineeCourses"
               element={<CorpTraineeCourse />}
+            />
+            <Route
+              path="/CorpTraineeMyCourses/course"
+              element={<CorpTraineeCoursePage />}
+            />
+            <Route
+              path="/CorpTraineeMyCourses/course"
+              element={<CorpTraineeCoursePage />}
             />
             <Route
               path="/guest"
@@ -98,9 +119,17 @@ function App() {
               path="/InstructorCourses"
               element={<InstructorCourses />}
             />
-            <Route
+            {/* <Route
               path="/createexam/:courseid"
               element={<Exam />}
+            /> */}
+            <Route
+              path="/createexam"
+              element={<Exam />}
+            />
+            <Route
+              path="/CorpTraineeMyCourses"
+              element={<CorpTraineeMyCourses />}
             />
 
             <Route
@@ -108,9 +137,10 @@ function App() {
               element={<DefineDiscount />}
             />
             <Route
-              path="/traineeCourses"
-              element={<TraineeCourseDetails />}
+              path="/viewExam/:examid"
+              element={<ExamTrainee />}
             />
+
 
           </Routes>
         </div>

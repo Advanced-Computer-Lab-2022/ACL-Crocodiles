@@ -14,9 +14,13 @@ const corporatetraineeSchema = new Schema({
     Password: {
       type:String,
       required: true
+    },
+ 
+    My_courses: {
+      type: [mongoose.Schema.Types.ObjectId],
+      required: false
     }
-    }, { timestamps: true })
 
-  
+  }, { timestamps: true })
   module.exports = mongoose.model('CorporateTrainee', corporatetraineeSchema);
  

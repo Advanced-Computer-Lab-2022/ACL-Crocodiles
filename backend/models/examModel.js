@@ -4,9 +4,14 @@ const Schema = mongoose.Schema
 //EXAM SCHEMA
 const examSchema = new Schema({
 
-    courseId: {
+    Title: {
+        type: String,
+        required: false
+    },
+
+    subtitleId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
+        ref: 'Subtitle',
         required: true
     },
 

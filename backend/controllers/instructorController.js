@@ -1,10 +1,12 @@
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
 const Question = require('../models/examModel').question
+const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
+
 
 var Questions = [{}]
 
@@ -105,7 +107,6 @@ const createQuestion = async (req, res) => {
 
 
     try {
-
         const examQuestion = await Question.create({ QuestionHeader, Answer1, Answer2, Answer3, Answer4, correctAnswer })
         const qid = await Question.find({}, { _id: 1 }).sort({ _id: -1 }).limit(1).select('_id')
         const examm = await Exam.updateOne({ _id: examID }, { $push: { Questions: qid } })
@@ -118,7 +119,9 @@ const createQuestion = async (req, res) => {
 const createExam = async (req, res) => {
 
     const InstructorId = req.user
-    const courseId = req.params.courseid
+    //const courseId = req.params.courseid
+    const subtitleId = "638bb8348553b938065a1588"
+
 
 
 
@@ -127,7 +130,10 @@ const createExam = async (req, res) => {
     }
     try {
         Questions = []
-        const exam = await Exam.create({ courseId, Questions, InstructorId })
+        const exam = await Exam.create({ subtitleId, Questions, InstructorId })
+        const eid = await Exam.find({}, { _id: 1 }).sort({ _id: -1 }).limit(1).select('_id')
+        console.log(eid)
+        const examm = await Subtitle.updateOne({ _id: subtitleId }, { $push: { Exercises: eid } })
         res.status(200).json(exam)
     } catch (error) {
         res.status(400).json({ error: error.message })
