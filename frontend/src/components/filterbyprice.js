@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PriceDetails from '../components/PriceDetails'
-
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const FilterCourses = () => {
 
@@ -8,13 +8,15 @@ const FilterCourses = () => {
     const [priceMax, setMax] = useState(0)
     const [courses, setCourses] = useState('')
     const [error, setError] = useState(null)
+    const {user} = useAuthContext()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const body = { priceMin, priceMax }
         const response = await fetch('/api/instructor/filterbyprice', {
             method: 'POST', body: JSON.stringify(body), headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()
