@@ -34,16 +34,19 @@ import CircularProgressWithLabel from '../components/CircularProgressWithLabel'
 import GradeWidget from '../components/GradeWidget'
 import CheckAnswersWidget from '../components/CheckAnswersWidget'
 import TakeTestWidget from '../components/TakeTestWidget'
+import Rating from '@mui/material/Rating';
 
 // import rgba from "../functions/rgba";
 
 const  CorpTraineeMyCoursePage= ()=> {
-  const{user} = useAuthContext()
+    const{user} = useAuthContext()
     const [course,setCourse] = useState("");
     const [Subtitles,setSubtitles] = useState([]);
     const [open,setOpen] = useState(false);
     const [video,setVideo] = useState(null);
     const [exercise,setExercise] = useState(null);
+    const [value, setValue] = useState(null);
+    const [value1, setValue1] = useState(null);
 
     const menuHandler = () =>{
       setOpen(true);
@@ -84,6 +87,46 @@ const  CorpTraineeMyCoursePage= ()=> {
 
 
  }, [user])
+
+    useEffect(()=>{
+      const updateRating = async (value) =>{
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('courseId');
+        const Rating = {value}
+        const response = await fetch(`/api/trainee/page/rateCourse/${courseId}`,{method:'PUT',body:JSON.stringify(Rating),headers: {
+          'content-type':'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }})
+        const json = await response.json()
+        if(response.ok){
+          alert('bueno')
+        }
+        else
+          alert('no bueno')
+      }
+
+      updateRating(value)
+    },[value])
+
+    useEffect(()=>{
+      const updateRating1 = async (value1) =>{
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('courseId');
+        const Rating = {value1}
+        const response = await fetch(`/api/trainee/rateInstructor/${courseId}`,{method:'PUT',body:JSON.stringify(Rating),headers: {
+          'content-type':'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }})
+        const json = await response.json()
+        if(response.ok){
+          alert('bueno')
+        }
+        else
+          alert('no bueno')
+      }
+
+      updateRating1(value1)
+    },[value1])
 
 
   return (
@@ -156,7 +199,22 @@ const  CorpTraineeMyCoursePage= ()=> {
              {/* {(video && video.Title) || (exercise && exercise.Title)} */}
           {course.Title}
             </Typography>
-          
+            <Typography component="legend">Rate Course:</Typography>
+            <Rating
+              name="meowmeow"
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+            />
+            <Typography component="legend">Rate Instructor:</Typography>
+            <Rating
+              name="hawhaw"
+              value={value1}
+              onChange={(event, newValue) => {
+                setValue1(newValue);
+              }}
+            />
             </Grid>
             </Container>
 

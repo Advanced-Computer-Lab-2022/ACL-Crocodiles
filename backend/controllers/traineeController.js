@@ -1,6 +1,7 @@
 const Trainee = require('../models/traineeModel')
 
 const mongoose = require('mongoose')
+const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
@@ -209,6 +210,46 @@ const findSub2 = async (req, res) => {
 
 }
 
+const rateCourse = async (req, res) => {
+    const courseID = req.params.id;
+    const value = req.body.value;
+    if (!mongoose.Types.ObjectId.isValid(courseID)) {
+        return res.status(404).json({ error: 'no such course id' })
+    }
+    try {
+        let course1 = await Course.findById(courseID);
+        const newRating = (course1.Rating * course1.RatingCount + value) / (course1.RatingCount + 1)
+        course1 = await course1.update({ Rating: newRating, RatingCount: course1.RatingCount + 1 })
+        res.status(200)
+    }
+    catch (error) {
+        console.log(error)
+        res.status(400).json(error)
+    }
+}
+
+const rateInstructor = async (req, res) => {
+    const courseID = req.params.id;
+    const { value1 } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(courseID)) {
+        return res.status(404).json({ error: 'no such course id' })
+    }
+    try {
+        const course1 = await Course.findById(courseID);
+        const instructorID = course1.InstructorId
+        let instructor = await Instructor.findById(instructorID)
+        if (!instructor)
+            res.status(404).json({ error: 'no such instructor id' })
+        const newRating = (instructor.Rating * instructor.RatingCount + value1) / (instructor.RatingCount + 1)
+        instructor = await instructor.update({ Rating: newRating, RatingCount: (instructor.RatingCount + 1) })
+        res.status(200)
+    }
+    catch (error) {
+        console.log(error)
+        res.status(400).json(error)
+    }
+}
+
 
 const viewExam = async (req, res) => {
     try {
@@ -242,5 +283,7 @@ module.exports = {
     findSub,
     getMyTrainee,
     getMyCourse,
-    findSub2
+    findSub2,
+    rateCourse,
+    rateInstructor
 }

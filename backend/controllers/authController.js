@@ -10,7 +10,7 @@ const Signin = async (req,res) => {
         
     try{
         const user = await User.Login(Email,Password)
-        const token = jwt.sign({_id:user._id},process.env.SECRET,{expiresIn:'3d'})
+        const token = jwt.sign({_id:user._id,Email:user.Email},process.env.SECRET,{expiresIn:'3d'})
         res.status(200).json({Email,token})
     }
     catch(error){
@@ -53,7 +53,7 @@ const ForgotPassword = async(req,res) => {
       });
    }
 
-const Resetpassword = async(req,res) => {
+   const Resetpassword = async(req,res) => {
     const{id,token} =req.params
     const {Password} = req.body
     const user = await User.findOne({_id:id})
@@ -88,11 +88,25 @@ const Resetpasswordput = async(req,res) => {
 
         
 }
+const ChangePassword = async (req,res) => {
+    const{Email,OldPassword,NewPassword1,NewPassword2} = req.body;
+    try {
+        const user = await User.ChangePass(Email,OldPassword,NewPassword1,NewPassword2);
+        if (user)
+            res.status(200)
+        else
+            throw Error('Failed')
+    }
+    catch(error){
+        res.status(400).json({error:error.message})
+    }
+}
 
         
 module.exports = {
    Signin,
    ForgotPassword,
    Resetpassword,
-   Resetpasswordput
+   Resetpasswordput,
+   ChangePassword
 }

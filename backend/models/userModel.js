@@ -13,6 +13,11 @@ const userSchema = new Schema({
       required: true,
       unique:true
     },
+    Username:{
+      type: String,
+      require: false,
+      unique: true
+    },
     Password: {
       type:String,
       required: true
@@ -78,6 +83,25 @@ const userSchema = new Schema({
         throw Error('incorrect email or password')
       
       return user
+    }
+
+    userSchema.statics.ChangePass = async function(Email,OldPassword,NewPassword1,NewPassword2){
+      const user = await this.findOne({Email})
+      if (!user)
+        throw Error ('no such user')
+      const validpass = await bcrypt.compare(OldPassword,user.Password)
+      if(!validpass)
+          throw Error('Old Password is incorrect')
+      else {
+        if (NewPassword1 === NewPassword2){
+          const salt = await bcrypt.genSalt(10)
+          let hash = await bcrypt.hash(NewPassword1,salt)
+          user = await this.update({Password:hash})
+        }
+        else
+          throw Error('New Password doesnt match')
+      }
+      return true;
     }
     
 
