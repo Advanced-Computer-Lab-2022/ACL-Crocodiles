@@ -31,7 +31,7 @@ import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import TraineeDrawer from '../components/TraineeDrawer'
 import CircularProgressWithLabel from '../components/CircularProgressWithLabel'
-import GradeWidget from '../components/GradeWidget'
+import GradeWidgetHelper from '../components/GradeWidgetHelper'
 import CheckAnswersWidget from '../components/CheckAnswersWidget'
 import TakeTestWidget from '../components/TakeTestWidget'
 
@@ -218,13 +218,13 @@ const  CorpTraineeMyCoursePage= ()=> {
        <Grid container justifyContent="center" alignItems="center" spacing={2}>
      
         <Grid item>
-        < TakeTestWidget/>
+        < TakeTestWidget  examid={exercise._id} type={"corpTrainee"} />
         </Grid>
         <Grid item>
-        < CheckAnswersWidget/>
+        < CheckAnswersWidget  examid={exercise._id} type={"corpTrainee"}/>
         </Grid>
         <Grid item>
-        <GradeWidget per={80}/>
+        <GradeWidgetHelper ExamId={exercise._id} type={"corpTrainee"}/>
         </Grid>
      
 

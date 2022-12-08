@@ -1,5 +1,6 @@
 import {useEffect,useState} from 'react'
 import DropDown from '../components/CountryDropDown'
+import InstrDropDown from '../components/InstrDropDown'
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useCoursesContext } from '../hooks/useCoursescontext'
 //import NewCourseForm from '../components/NewCourseForm'
@@ -27,7 +28,7 @@ const Course = () => {
 
     return (
         <div className="Course">
-            <DropDown courses={courses}/>
+            <InstrDropDown courses={courses}/>
             {error && <div className='error'>{error}</div>}
         </div>
     )

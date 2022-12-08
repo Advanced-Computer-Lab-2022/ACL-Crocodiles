@@ -61,7 +61,7 @@ const Search = () => {
        
         const body = { Title,Subject,Username }
         console.log(body)
-        const response = await fetch('/api/instructor/search', {
+        const response = await fetch('/api/guest/search', {
             method: 'POST', body: JSON.stringify(body), headers: {
                 'content-type': 'application/json'
             }

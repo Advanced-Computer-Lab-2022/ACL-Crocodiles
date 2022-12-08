@@ -17,6 +17,12 @@ import Signup from './pages/Signup'
 import Contract from './pages/Contract'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
+import DefineDiscount from './pages/DefineDiscount'
+import Exam from './components/Exam'
+import ExamTrainee from './components/ExamTrainee'
+import ExamSolutionTrainee from './components/ExamSolutionTrainee'
+import ExamCorpTrainee from './components/ExamCorpTrainee'
+import ExamSolutionCorpTrainee from './components/ExamSolutionCorpTrainee'
 import TraineeCourses from './pages/TraineeCourses'
 import TraineeCoursePage from './pages/TraineeCoursePage'
 import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
@@ -29,7 +35,7 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-          <Route
+            <Route
               path="/resetpassword"
               element={<ResetPassword />}
             />
@@ -37,12 +43,12 @@ function App() {
               path="/"
               element={<Home />}
             />
-             <Route
+            <Route
               path="/forgotpassword"
               element={<ForgotPassword />}
             />
-            
-              <Route
+
+            <Route
               path="/contract"
               element={<Contract />}
             />
@@ -54,11 +60,11 @@ function App() {
               path="/admin"
               element={<Admin />}
             />
-             <Route
+            <Route
               path="/signin"
               element={<Signin />}
             />
-             <Route
+            <Route
               path="/signup"
               element={<Signup />}
             />
@@ -66,15 +72,15 @@ function App() {
               path="/course"
               element={<Course />}
             />
-              <Route
+            <Route
               path="/Mycourses"
               element={<TraineeCourses />}
             />
             <Route
               path="/trainee"
               element={<Trainee />}
-              />
-              <Route
+            />
+            <Route
               path="/Mycourses/course"
               element={<TraineeCoursePage />}
             />
@@ -84,9 +90,13 @@ function App() {
             />
             <Route
               path="/corpTraineeCourses"
-              element={<CorpTraineeCourse/>}
+              element={<CorpTraineeCourse />}
             />
-                <Route
+            <Route
+              path="/CorpTraineeMyCourses/course"
+              element={<CorpTraineeCoursePage />}
+            />
+            <Route
               path="/CorpTraineeMyCourses/course"
               element={<CorpTraineeCoursePage />}
             />
@@ -102,7 +112,7 @@ function App() {
               path="/search"
               element={<Search />}
             />
-               <Route
+            <Route
               path="/corpTraineeFilter"
               element={<CorpTraineeFilter />}
             />
@@ -110,12 +120,44 @@ function App() {
               path="/InstructorCourses"
               element={<InstructorCourses />}
             />
-               <Route
+            {/* <Route
+              path="/createexam/:courseid"
+              element={<Exam />}
+            /> */}
+            <Route
+              path="/createexam"
+              element={<Exam />}
+            />
+            <Route
               path="/CorpTraineeMyCourses"
               element={<CorpTraineeMyCourses />}
             />
-       
+               <Route
+              path="/viewExamCorp/:examid"
+              element={<ExamCorpTrainee />}
+            />
+              <Route
+              path="/viewSolutionCorp/:examid"
+              element={<ExamSolutionCorpTrainee />}
+            />
+
+            <Route
+              path="/definediscount/:courseid"
+              element={<DefineDiscount />}
+            />
+            <Route
+              path="/viewExam/:examid"
+              element={<ExamTrainee />}
+            />
             
+          
+            <Route
+              path="/viewSolution/:examid"
+              element={<ExamSolutionTrainee />}
+            />
+
+
+
           </Routes>
         </div>
       </BrowserRouter>

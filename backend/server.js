@@ -1,3 +1,4 @@
+
 const express = require('express')
 
 require('dotenv').config()
@@ -9,6 +10,7 @@ const corpTraineeRoutes = require('./routes/corporatetraineeRoute')
 const adminRoutes = require('./routes/adminRoute')
 const authRoutes = require('./routes/authRoute')
 const instructorRoutes = require('./routes/instructorRoute')
+const guestRoutes = require('./routes/guestRoute')
 app.use(express.json())
 
 
@@ -31,7 +33,13 @@ app.use('/api/trainee', traineeRoutes)
 app.use('/api/corpTrainee', corpTraineeRoutes)
 app.use('/api/admin',adminRoutes)
 app.use('/api/instructor',instructorRoutes)
+app.use('/api/guest',guestRoutes)
 app.use('/api/users',usersRoutes)
 app.use('/api/auth',authRoutes)
 
 
+const courses = require('./models/courseModel').course
+const schedule = require('node-schedule')
+const checkDiscountsAtMidnight = schedule.scheduleJob('0 0 * * *', function () {
+  courses.deleteDiscounts()
+})

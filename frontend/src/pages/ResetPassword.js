@@ -6,6 +6,7 @@ const ResetPassword = () =>{
     const[Confirm,setConfirm] = useState('')
     const[error,setError] = useState(null)
     const navigate = useNavigate()
+
     const handleClick = async (e) => {
         e.preventDefault()
         const user = {Password,Confirm}
