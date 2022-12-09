@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+
 //COURSES SCHEMA
 const courseSchema = new Schema({
     Title: {
@@ -32,8 +33,8 @@ const courseSchema = new Schema({
         required: false
     },
     InstructorId: {
-        type: mongoose.Schema.Types.ObjectId,   
-        ref:'Instructor',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Instructor',
         required: true
     },
     Rating: {
@@ -48,7 +49,7 @@ const courseSchema = new Schema({
     },
     Subtitle: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref:'Subtitle',
+        ref: 'Subtitle',
         //ref: 'subtitleSchema'
         required: false
     },
@@ -66,21 +67,15 @@ const subtitleSchema = new Schema({
         type: Number,
         required: true
     },
-    
-    // CourseId: {
-    //     type: Number,
-    //     required: false
-    // },
-     Exercises: {
-        type: [{ type: Schema.Types.ObjectId, ref: 'Exercise' }],
-        required: false,
-   
-    //     type: Schema.Types.ObjectId, 
-       //  ref: 'Exercise'
-    },
-    Videos:{
+
+    Exercises: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exam',
+        required: true
+    }],
+    Videos: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref:'Video',
+        ref: 'Video',
         required: false
     }
 }, { timestamps: true })
@@ -96,32 +91,32 @@ courseSchema.statics.deleteDiscounts = async function () {
 }
 
 //Exercise SCHEMA
-const exerciseSchema = new Schema({
-    Title:{
-        type:String,
-        required:true
-    },
+// const exerciseSchema = new Schema({
+//     Title:{
+//         type:String,
+//         required:true
+//     },
 
-    Questions: {
-        type: [String],
-        required: true
-    },
-    Options: {
-        type: [[String]],
-        required: true
-    },
-    Answers: {
-        type: [Number],
-        required: true
-    },
-}, { timestamps: true })
+//     Questions: {
+//         type: [String],
+//         required: true
+//     },
+//     Options: {
+//         type: [[String]],
+//         required: true
+//     },
+//     Answers: {
+//         type: [Number],
+//         required: true
+//     },
+// }, { timestamps: true })
 
 //Video Schema
 
 const videoSchema = new Schema({
-    Title:{
-        type:String,
-        required:true
+    Title: {
+        type: String,
+        required: true
     },
 
     url: {
@@ -137,9 +132,9 @@ const videoSchema = new Schema({
 
 const course = mongoose.model('Course', courseSchema)
 const sub = mongoose.model('Subtitle', subtitleSchema)
-const ex = mongoose.model('Exercise', exerciseSchema)
+//const ex = mongoose.model('Exercise', exerciseSchema)
 const video = mongoose.model('Video', videoSchema)
-module.exports = {course, sub,ex,video}
+module.exports = { course, sub, video }
 
 
 

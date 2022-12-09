@@ -4,11 +4,24 @@ import Stack from '@mui/material/Stack';
 import { Typography } from '@mui/material';
 import GradingOutlinedIcon from '@mui/icons-material/GradingOutlined';
 import ButtonBase from '@mui/material/ButtonBase';
+import { useNavigate } from "react-router-dom"
+  
+  
+export default function CheckAnswersWidget({ examid, type }) {
 
-export default function CheckAnswersWidget() {
+  
+    let navigate = useNavigate()
+     function handleSubmit() {
+      if(type=="Trainee")
+      navigate('/viewSolution/' + examid)
+    
+    else{
+      navigate('/viewSolutionCorp/' + examid)
+    }
+  }
 
   return (
-    <ButtonBase >
+    <ButtonBase onClick={handleSubmit}>
      <Box
       sx={{
         width: "200px",

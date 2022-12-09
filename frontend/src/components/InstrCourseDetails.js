@@ -1,28 +1,53 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import Subtitle from './Subtitle'
 import { useNavigate } from 'react-router-dom'
+import { useAuthContext } from "../hooks/useAuthContext";
+const InstrCourseDetails = ({ course, currency, rate }) => {
 
-const InstrCourseDetails = ({ course,currency,rate }) => {
-    if(course.Discount!= null)
-        var discountRate = 1-(course.Discount/100)
+    const courseid = course._id
+    const { user } = useAuthContext()
+    console.log(courseid)
+
+    if (course.Discount != null)
+        var discountRate = 1 - (course.Discount / 100)
     else
         var discountRate = 1
-    var newPrice= course.Price*discountRate
-    console.log(rate)
-    if(rate)
-        var newPrice = Math.round(course.Price*rate*discountRate*100) / 100
-    var oldPrice = Math.round(course.Price*rate* 100) / 100
-    var navigate=useNavigate()
-    
-const Click = () =>{
-    navigate('/definediscount/'+course._id)
-}
+    var newPrice = course.Price * discountRate
 
 const Click2 = () =>{
     navigate('/addsubtitle/'+course._id)
 }
 
-    return(
+    if (rate)
+        var newPrice = Math.round(course.Price * rate * discountRate * 100) / 100
+    var oldPrice = Math.round(course.Price * rate * 100) / 100
+    var navigate = useNavigate()
+
+    const Click = () => {
+        navigate('/definediscount/' + course._id)
+    }
+
+
+    const Click1 = () => {
+        const fetchExam = async () => {
+            //const response = await fetch('/api/instructor/createexam/' + course._id, {
+            const response = await fetch('/api/instructor/createexam', {
+                method: 'POST', headers: {
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+
+                }
+            })
+        }
+        fetchExam();
+        //navigate('/createExam/' + course._id)
+        navigate('/createexam')
+    }
+
+
+
+
+    return (
         <div className="course-details">
             <h4>{course.Title}</h4>
 
@@ -34,8 +59,10 @@ const Click2 = () =>{
             
             <button onClick={Click}>Define Promotion</button>
             <button onClick={Click2}>Add Subtitles and videos</button>
+            <button onClick={Click1}>Create Exam</button>
+
         </div>
     )
 }
-    
+
 export default InstrCourseDetails

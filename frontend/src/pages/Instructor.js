@@ -1,4 +1,7 @@
 import NewCourseForm from "../components/NewCourseForm"
+import { useNavigate } from 'react-router-dom'
+
+//import ExamForm from "./ExamForm"
 import EditForm from "../components/EditInstructor"
 import { useAuthContext } from "../hooks/useAuthContext"
 import {useEffect,useState} from 'react'
@@ -36,6 +39,7 @@ const Instructor = () => {
     }, [])
 
 
+
     return (
 
         <div className="instructor">
@@ -54,13 +58,16 @@ const Instructor = () => {
                 <a href="/InstructorCourses">
                     <input type="button" value="View My Courses" />
                 </a>
+
                 <a href="/contract">
                     <input type="button" value="View Contract" />
                 </a>
             </div>
             <NewCourseForm />
-            <EditForm/>
+
+            <EditForm />
         </div>
+
 
 
     )

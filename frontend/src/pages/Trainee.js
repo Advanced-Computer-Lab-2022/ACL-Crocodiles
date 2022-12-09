@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom" 
+import { Link } from "react-router-dom"
 const Trainee = () => {
-    return(
+    return (
 
         <div className="trainee">
-           <div class="topnav">
+            <div class="topnav">
                 <Link to="/filter">
                     <input type="button" value="Filter" />
                 </Link>
@@ -14,11 +14,11 @@ const Trainee = () => {
                     <input type="button" value="View My Courses" />
                 </Link>
             </div>
-            
+
         </div>
 
-                
-        
-        )
+
+
+    )
 }
- export default Trainee
+export default Trainee
