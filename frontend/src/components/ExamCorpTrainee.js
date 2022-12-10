@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 
-const ExamTrainee = () => {
+const ExamCorpTrainee = () => {
     const [Exam, setExam] = useState(null)
     const [Questions, setQuestions] = useState([])
     const [error, setError] = useState(null)
@@ -43,10 +43,10 @@ const ExamTrainee = () => {
         setErrorSubmit([...notSelected])
         if(canSubmit==true){
             const addAssignment = async () => {
-                const response = await fetch('/api/trainee/page/addAssignment/', {
+                const response = await fetch('/api/corptrainee/page/addAssignment/', {
                     method: 'PATCH', headers: {
                         'content-type': 'application/json',
-                        'Authorization': `Bearer ${user.token}`
+                
     
                     },
                     body:  JSON.stringify({
@@ -67,11 +67,11 @@ const ExamTrainee = () => {
       
       
         const fetchExam = async () => {
-            //const response = await fetch('/api/trainee/page/viewExams/' + course._id, {
-            const response = await fetch('/api/trainee/page/viewExam/' + examid, {
+            
+            const response = await fetch('/api/corptrainee/page/viewExam/' + examid, {
                 method: 'GET', headers: {
                     'content-type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+            
 
                 }
             })
@@ -146,4 +146,4 @@ const ExamTrainee = () => {
     )
 }
 
-export default ExamTrainee
+export default ExamCorpTrainee

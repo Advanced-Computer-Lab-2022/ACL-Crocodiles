@@ -34,6 +34,8 @@ import CircularProgressWithLabel from '../components/CircularProgressWithLabel'
 import GradeWidget from '../components/GradeWidget'
 import CheckAnswersWidget from '../components/CheckAnswersWidget'
 import TakeTestWidget from '../components/TakeTestWidget'
+import GradeWidgetHelper from '../components/GradeWidgetHelper'
+
 
 // import rgba from "../functions/rgba";
 
@@ -85,9 +87,37 @@ const TraineeCoursePage = () => {
 
 
       }
-    }
-    fetchCourse()
+     }
+    // const fetchAnswer= async () => {
+    //   const response = await fetch('/api/trainee/page/getAssignment/' , {
+    //       method: 'POST', headers: {
+    //           'content-type': 'application/json',
+    //           'Authorization': `Bearer ${user.token}`
 
+    //       },
+    //       body:  JSON.stringify({
+    //           Examid: exercise._id})
+    //   })
+
+
+    //   const json = await response.json()
+    //   let grade = 0;
+     
+    //   if (response.ok) {
+    //     const answer = json.Answer;
+    //     for(let i=0; i<answer.length;i++){
+    //       if(answer[i]==exercise.Questions.correctAnswer){
+    //         grade+=1;
+    //       }
+    //     }
+    //     grade=(grade/answer.length)*100
+   
+    //   }
+    //   console.log(exercise)
+    // }
+  
+    fetchCourse()
+    // fetchAnswer()
 
   }, [user])
 
@@ -190,7 +220,6 @@ const TraineeCoursePage = () => {
                  
               </div>
                 ))}
-
 </Paper> */}
 
               </Stack>
@@ -224,13 +253,13 @@ const TraineeCoursePage = () => {
                 <Grid container justifyContent="center" alignItems="center" spacing={2}>
 
                   <Grid item>
-                    < TakeTestWidget examid={exercise._id} />
+                    < TakeTestWidget examid={exercise._id} type={"Trainee"}/>
                   </Grid>
                   <Grid item>
-                    < CheckAnswersWidget />
+                    < CheckAnswersWidget  examid={exercise._id} type={"Trainee"} />
                   </Grid>
                   <Grid item>
-                    <GradeWidget per={80} />
+                    <GradeWidgetHelper ExamId={exercise._id} type={"Trainee"}/>
                   </Grid>
 
 

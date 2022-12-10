@@ -26,6 +26,7 @@ const TraineeCourses = () => {
   useEffect(() => {
     console.log(clicked)
     const fetchCourses = async () => {
+      console.log(user.token)
       const response = await fetch('/api/trainee/page/MyCourses', {
         headers: {
           'Authorization': `Bearer ${user.token}`

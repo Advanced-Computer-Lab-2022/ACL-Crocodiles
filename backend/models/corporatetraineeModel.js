@@ -19,6 +19,24 @@ const corporatetraineeSchema = new Schema({
     My_courses: {
       type: [mongoose.Schema.Types.ObjectId],
       required: false
+    },
+    
+    My_assignments:{
+      type: [{
+        quiz_id: {     
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Exam',
+          required: true
+        },
+        Answer:
+        {
+          type: [String],
+          required: true
+        }
+        
+
+      }],
+      required: false
     }
 
   }, { timestamps: true })

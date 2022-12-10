@@ -21,8 +21,9 @@ import ResetPassword from './pages/ResetPassword'
 import DefineDiscount from './pages/DefineDiscount'
 import Exam from './components/Exam'
 import ExamTrainee from './components/ExamTrainee'
-
-
+import ExamSolutionTrainee from './components/ExamSolutionTrainee'
+import ExamCorpTrainee from './components/ExamCorpTrainee'
+import ExamSolutionCorpTrainee from './components/ExamSolutionCorpTrainee'
 import TraineeCourses from './pages/TraineeCourses'
 import TraineeCoursePage from './pages/TraineeCoursePage'
 import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
@@ -142,7 +143,15 @@ function App() {
             <Route
               path="/changePassword"
               element={<ChangePassword />}
+            />               <Route
+              path="/viewExamCorp/:examid"
+              element={<ExamCorpTrainee />}
             />
+            <Route
+              path="/viewSolutionCorp/:examid"
+              element={<ExamSolutionCorpTrainee />}
+            />
+
             <Route
               path="/addsubtitle/:courseid"
               element={<AddSubtitle />}
@@ -151,6 +160,13 @@ function App() {
               path="/viewExam/:examid"
               element={<ExamTrainee />}
             />
+
+
+            <Route
+              path="/viewSolution/:examid"
+              element={<ExamSolutionTrainee />}
+            />
+
 
 
           </Routes>

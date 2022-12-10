@@ -7,12 +7,17 @@ import ButtonBase from '@mui/material/ButtonBase';
 import { useNavigate } from "react-router-dom"
 
 
-export default function TakeTestWidget({ examid }) {
+export default function TakeTestWidget({ examid, type }) {
 
   let navigate = useNavigate()
   async function handleSubmit() {
+    if(type=="Trainee")
     navigate('/viewExam/' + examid)
+    else
+      navigate('/viewExamCorp/' + examid)
+    
   }
+
 
 
   return (
