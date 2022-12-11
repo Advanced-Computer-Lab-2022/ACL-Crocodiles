@@ -9,7 +9,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 
 const ExamCorpTrainee = () => {
-    console.log('up')
+
     const [Exam, setExam] = useState(null)
     const [Questions, setQuestions] = useState([])
     const [Answer, setAnswer] = useState([])
@@ -24,109 +24,95 @@ const ExamCorpTrainee = () => {
     const t = [];
     let Q=null;
     useEffect( () => {
-        console.log('effect')
-      
+    
         const fetchExam = async () => {
 
-            const response = await fetch('/api/corptrainee/page/viewExam/' + examid, {
+            await fetch('/api/corptrainee/page/viewExam/' + examid, {
                 method: 'GET', headers: {
                     'content-type': 'application/json',
                    
 
                 }
-            })
-
-            const json = await response.json()
-            if (!response.ok) {
-                setError(json.error)
+            }).then((res) => {
+               return res.json()
+           }).then(data => {
+            setExam(data)
+            Q=[...data.Questions]
+            setQuestions([...data.Questions])
+            setError(null)
+            const temp0 = [];
+            const temp1 = [];
+            for(let i=0;i<data.Questions.length;i++){
+                temp0.push(true);
+                temp1.push(false);
             }
-            if (response.ok) {
-                setExam(json)
-                Q=[...json.Questions]
-                setQuestions([...json.Questions])
-                setError(null)
-                const temp0 = [];
-                const temp1 = [];
-                for(let i=0;i<json.Questions.length;i++){
-                    temp0.push(true);
-                    temp1.push(false);
+            setNotSelected(temp0)
+            setErrorSubmit(temp1)
+            fetchAnswer();
+           })
+      
+       }
+       fetchExam();
+
+       const fetchAnswer = async () => {
+
+        await fetch('/api/corptrainee/page/getAssignment/' , {
+            method: 'POST', headers: {
+                'content-type': 'application/json',
+            
+
+            },
+            body:  JSON.stringify({
+                Examid: examid})
+        }).then((res) => {
+           return res.json()
+       }).then(data => {
+        setAnswer(data.Answer)
+        setError(null)
+
+        const a = data.Answer;
+        const t = [];
+        for(let i=0; i<a.length;i++){
+            if(Q[i].correctAnswer==a[i]){
+                for(let j=1; j<=4; j++){
+                    if((j+"")==a[i]){
+                        t.push({color:"success",  colorsx:"",checked:true})
+                    }
+                    else
+                        t.push({color:"default",colorsx:"", checked:false})
+
                 }
-                setNotSelected(temp0)
-                setErrorSubmit(temp1)
             }
-
-
-
-        }
-        const fetchAnswer= async () => {
-            const response = await fetch('/api/corptrainee/page/getAssignment/' , {
-                method: 'POST', headers: {
-                    'content-type': 'application/json',
-                
-
-                },
-                body:  JSON.stringify({
-                    Examid: examid})
-            })
-
-
-            const json = await response.json()
-            if (!response.ok) {
-                setError(json.error)
-            }
-            if (response.ok) {
-                setAnswer(json.Answer)
-                console.log(json.Answer)
-                setError(null)
-
-                const a = json.Answer;
-                const t = [];
-                console.log(Questions)
-                console.log(Q)
-                for(let i=0; i<a.length;i++){
-                    if(Questions[i].correctAnswer==a[i]){
-                        for(let j=1; j<=4; j++){
-                            if((j+"")==a[i]){
-                                t.push({color:"success",  colorsx:"",checked:true})
-                            }
-                            else
-                                t.push({color:"default",colorsx:"", checked:false})
-
-                        }
+            else{
+                for(let j=1; j<=4; j++){
+                    if((j+"")==Q[i].correctAnswer){
+                        t.push({color:"success",colorsx:"", checked:true})
                     }
                     else{
-                        for(let j=1; j<=4; j++){
-                            if((j+"")==Questions[i].correctAnswer){
-                                t.push({color:"success",colorsx:"", checked:true})
-                            }
-                            else{
-                                if((j+"")==a[i]){
-                                    t.push({color:"default", colorsx:"red", checked:true})
-                                }
-                                else
-                                t.push({color:"default",colorsx:"",checked:false});
-                            }
-                                
-
+                        if((j+"")==a[i]){
+                            t.push({color:"default", colorsx:"red", checked:true})
                         }
+                        else
+                        t.push({color:"default",colorsx:"",checked:false});
                     }
+                        
+
                 }
-                console.log(t)
-                setControl([...t]);
-
-
             }
-
-
-
         }
-        fetchExam()
-        fetchAnswer();
-        setValue('2')
-        
+        setControl([...t]);
+
+     
+       })
+  
+   }
+
+
+       
+      
     
   
-    }, )
+    },[user] )
 
 
 
