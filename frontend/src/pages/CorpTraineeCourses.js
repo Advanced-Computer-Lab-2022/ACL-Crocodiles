@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import CorpCourseDetails from '../components/CorpTraineeCourseDetails'
 //import NewCourseForm from '../components/NewCourseForm'
+import { useAuthContext } from "../hooks/useAuthContext";
+
 const CorpTraineeCourse = () => {
     const [courses, setCourses] = useState(null)
 

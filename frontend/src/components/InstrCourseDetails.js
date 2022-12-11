@@ -40,20 +40,22 @@ const InstrCourseDetails = ({ course, currency, rate }) => {
         navigate('/createexam')
     }
 
-
-
+    const Click2 = () => {
+        navigate('/addsubtitle/' + course._id)
+    }
 
     return (
         <div className="course-details">
             <h4>{course.Title}</h4>
 
             <p><strong>Hours: </strong>{course.Hours}</p>
-            <p><strong>Rating: </strong>{course.Rating}</p>
-            <p><strong>Discount: </strong>{course.Discount}</p>
+            <p><strong>Rating: </strong>  {course.Rating !== undefined ? course.Rating + ' / 5' : 'no rating yet'} </p>
             {newPrice != 0 ? <p><strong>Price: </strong>{discountRate != 1 ? <s>{oldPrice} </s> : null} {newPrice} {currency}</p> : null}
-            <p>{newPrice == 0 ? <><p class="same"><strong>Price: </strong></p> {discountRate != 1 ? <s> {oldPrice} {currency}</s> : null} <p style={{ color: 'green' }} class="same"> FREE</p></> : null}</p>
-            <button onClick={Click}>Define Promotion</button>
+            {newPrice == 0 ? <><p class="same"><strong>Price: </strong></p> {discountRate != 1 ? <s> {oldPrice} {currency}</s> : null} <p style={{ color: 'green' }} class="same"> FREE</p></> : null}
+            {course.Discount !== undefined ? <p>{course.Discount}% discount valid until {course.DiscountEndDate}</p> : null}
 
+            <button onClick={Click}>Define Promotion</button>
+            <button onClick={Click2}>Add Subtitles and videos</button>
             <button onClick={Click1}>Create Exam</button>
 
         </div>

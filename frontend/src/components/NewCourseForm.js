@@ -7,9 +7,12 @@ const NewCourseForm = () => {
     const[Subject,setSubject] = useState('')
     const[Hours,setHours] = useState('')
     const[Price,setPrice] = useState('')
-   // const [id, setID] = useState('')
+    const[subtitle, setSubtitle] = useState('')
     const[error,setError] = useState(null)
-   // const[InstructorID,setId] = useState('')
+    const[subHours,setSubHours] = useState('')
+    const[videoTitle,setVideoTitle] = useState('')
+    const[videoURL,setVideoURL] = useState('')
+    const[videoDesc,setVideoDesc] = useState('')
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
@@ -69,17 +72,42 @@ const NewCourseForm = () => {
                 onChange={(e) => setPrice(e.target.value)}
                 value={Price}
             />
-            {/* <label>Instructor ID:</label>
-            <input
-                type="text"
-                onChange={(e) => setID(e.target.value)}
-                value={id}
-            /> */}
+            
             <button>Create Course</button>
             {error && <div className="error">{error}</div>}
         </form>
 
     )
 }
+
+{/* <label>Subtitle Title:</label>
+            <input
+                type="text"
+                onChange={(e) => setSubtitle(e.target.value)}
+                value={subtitle}
+            />
+            <label>Subtitle Hours:</label>
+            <input
+                type="text"
+                onChange={(e) => setSubHours(e.target.value)}
+                value={subHours}
+            />
+            <label>Subtitle Video Title:</label>
+            <input
+                type="text"
+                onChange={(e) => setVideoTitle(e.target.value)}
+                value={videoTitle}
+            />
+            <label>Subtitle Video URL:</label>
+            <input
+                type="text"
+                onChange={(e) => setVideoURL(e.target.value)}
+                value={videoURL}
+            /><label>Subtitle Video Description:</label>
+            <input
+                type="text"
+                onChange={(e) => setVideoDesc(e.target.value)}
+                value={videoDesc}
+            /> */}
 
 export default NewCourseForm 

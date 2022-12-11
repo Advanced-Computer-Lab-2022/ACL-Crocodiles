@@ -14,6 +14,7 @@ import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
+import Profile from './pages/Profile'
 import Contract from './pages/Contract'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
@@ -27,6 +28,9 @@ import TraineeCourses from './pages/TraineeCourses'
 import TraineeCoursePage from './pages/TraineeCoursePage'
 import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
 import CorpTraineeCoursePage from './pages/CorpTraineeMyCoursePage'
+import ChangePassword from './pages/ChangePassword'
+import AddSubtitle from './pages/AddSubtitle'
+
 function App() {
   return (
     <div className="App">
@@ -120,37 +124,44 @@ function App() {
               path="/InstructorCourses"
               element={<InstructorCourses />}
             />
-            {/* <Route
-              path="/createexam/:courseid"
-              element={<Exam />}
-            /> */}
-            <Route
-              path="/createexam"
-              element={<Exam />}
-            />
-            <Route
-              path="/CorpTraineeMyCourses"
-              element={<CorpTraineeMyCourses />}
-            />
-               <Route
-              path="/viewExamCorp/:examid"
-              element={<ExamCorpTrainee />}
-            />
-              <Route
-              path="/viewSolutionCorp/:examid"
-              element={<ExamSolutionCorpTrainee />}
-            />
-
             <Route
               path="/definediscount/:courseid"
               element={<DefineDiscount />}
             />
             <Route
+              path="/CorpTraineeMyCourses"
+              element={<CorpTraineeMyCourses />}
+            />
+            <Route
+              path="/createexam"
+              element={<Exam />}
+            />
+            <Route
+              path="/profile"
+              element={<Profile />}
+            />
+            <Route
+              path="/changePassword"
+              element={<ChangePassword />}
+            />               <Route
+              path="/viewExamCorp/:examid"
+              element={<ExamCorpTrainee />}
+            />
+            <Route
+              path="/viewSolutionCorp/:examid"
+              element={<ExamSolutionCorpTrainee />}
+            />
+
+            <Route
+              path="/addsubtitle/:courseid"
+              element={<AddSubtitle />}
+            />
+            <Route
               path="/viewExam/:examid"
               element={<ExamTrainee />}
             />
-            
-          
+
+
             <Route
               path="/viewSolution/:examid"
               element={<ExamSolutionTrainee />}

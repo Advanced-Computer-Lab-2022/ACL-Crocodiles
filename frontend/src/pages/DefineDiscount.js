@@ -9,7 +9,7 @@ const DefineDiscount = () => {
     const [status,setStatus] = useState('')
     const [error,setError]=useState(null)
     const {courseid} = useParams()
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(!user){
@@ -17,7 +17,7 @@ const DefineDiscount = () => {
             return
         }
         const discountint = parseInt(discount)
-        const enddate = endDate+'T00:00:00.000'
+        const enddate = endDate+'T00:00:00.000Z'
         const promo = {discountint,enddate}
         console.log(JSON.stringify(promo))
         const response =  await fetch('/api/instructor/definediscount/'+ courseid,{method:'POST',body:JSON.stringify(promo),
@@ -62,6 +62,7 @@ return(
         />
         <button onClick={handleSubmit}>Submit</button>
         <p>{status}</p>
+        <a href="/InstructorCourses">Back to My Courses</a>
     </div>
 )
 }
