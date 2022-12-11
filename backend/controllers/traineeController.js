@@ -5,6 +5,8 @@ const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
+const courseRatingModel = require('../models/ratingAndReviewModel').courseRatingModel
+const instructorRatingModel = require('../models/ratingAndReviewModel').instructorRatingModel
 
 
 
@@ -339,14 +341,19 @@ const calculateGrade = async (req, res) => {
 
  const rateCourse = async(req,res)=>{
     const courseID = req.params.id;
-    const value = req.body.value;
+    const {value, review} = req.body;
+    const user = req.user;
     if(!mongoose.Types.ObjectId.isValid(courseID)){ 
         return res.status(404).json({error: 'no such course id'})
     }
     try {
         let course1 = await Course.findById(courseID);
+        if(!course1){
+            return res.status(404).json({error: 'no such course id'})
+        }
         const newRating = (course1.Rating*course1.RatingCount + value) / (course1.RatingCount + 1)
         course1 = await course1.update({Rating:newRating,RatingCount:course1.RatingCount+1})
+        const ratrev = await courseRatingModel.create({CourseId:courseID,UserId:user._id,Rating:value,Review:review})
         res.status(200)
     }
     catch(error){
@@ -357,7 +364,8 @@ const calculateGrade = async (req, res) => {
 
 const rateInstructor = async(req,res)=>{
     const courseID = req.params.id;
-    const {value1} = req.body;
+    const {value1,review1} = req.body;
+    const user = req.user;
     if(!mongoose.Types.ObjectId.isValid(courseID)){ 
         return res.status(404).json({error: 'no such course id'})
     }
@@ -369,6 +377,7 @@ const rateInstructor = async(req,res)=>{
             res.status(404).json({error: 'no such instructor id'})
         const newRating = (instructor.Rating*instructor.RatingCount + value1) / (instructor.RatingCount + 1)
         instructor = await instructor.update({Rating:newRating,RatingCount:(instructor.RatingCount+1)})
+        const ratrev = await instructorRatingModel.create({InstructorId:instructorID,UserId:user._id,Rating:value1,Review:review1})
         res.status(200)
     }
     catch(error){
