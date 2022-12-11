@@ -15,7 +15,7 @@ const userSchema = new Schema({
     },
     Username:{
       type: String,
-      require: false,
+      require: true,
       unique: true
     },
     Password: {
@@ -28,65 +28,49 @@ const userSchema = new Schema({
     }}, { timestamps: true });
 
 
-  userSchema.statics.RegInstructor = async function(Email,Password,Firstname,Lastname){
-    const Type = 'Instructor'
-    if(!Email || !Password)
-        throw Error('Must type email or password')
-    if(!Validator.isEmail(Email))
-        throw Error('incorrect email format')
-    if(!Validator.isStrongPassword(Password))
-        throw Error('weak pasword')
-
-    let user = await this.findOne({Email})
-        if (user)
-           throw Error('Email already in use')
-           
-    const salt = await bcrypt.genSalt(10)
-    let hash = await bcrypt.hash(Password,salt)
-    user = await this.create({Email,Password:hash,Type})
-    const instructor =  await Instructor.create({_id:user._id,Firstname:Firstname,Lastname:Lastname})
-    return instructor
-  }
-
-  userSchema.statics.RegTrainee = async function(Email,Password,Firstname,Lastname){
+  userSchema.statics.RegTrainee = async function(Username,Email,Password,Firstname,Lastname){
     const Type = 'Trainee'
-    if(!Email || !Password)
-        throw Error('Must type email or password')
+    if(!Email || !Password || !Username)
+        throw Error('Must type email or password or username')
     if(!Validator.isEmail(Email))
         throw Error('incorrect email format')
     if(!Validator.isStrongPassword(Password))
         throw Error('weak pasword')
 
-    let user = await this.findOne({Email})
-        if (user)
+    let useru = await this.findOne({Username})
+        if (useru)
+            throw Error('username already in use')
+    let usere = await this.findOne({Email})
+        if (usere)
            throw Error('Email already in use')
+  
 
     const salt = await bcrypt.genSalt(10)
     let hash = await bcrypt.hash(Password,salt)
-    user = await this.create({Email,Password:hash,Type})
+    const user = await this.create({Username,Email,Password:hash,Type})
     const trainee =  await Trainee.create({_id:user._id,Firstname:Firstname,Lastname:Lastname})
     if(!trainee)
       await this.delete({_id:user._id})
     return trainee
   }
 
-  userSchema.statics.Login = async function(Email,Password){
-    if(!Email || !Password)
-        throw Error('Must type email or password')
+  userSchema.statics.Login = async function(Username,Password){
+    if(!Username || !Password)
+        throw Error('Must type username or password')
 
-    const user = await this.findOne({Email})
+    const user = await this.findOne({Username})
       if (!user)
-        throw Error ('Incorrect email or password')
+        throw Error ('Incorrect username or password')
 
       const validpass = await bcrypt.compare(Password,user.Password)
       if(!validpass)
-        throw Error('incorrect email or password')
+        throw Error('incorrect username or password')
       
       return user
     }
 
-    userSchema.statics.ChangePass = async function(Email,OldPassword,NewPassword1,NewPassword2){
-      const user = await this.findOne({Email})
+    userSchema.statics.ChangePass = async function(Username,OldPassword,NewPassword1,NewPassword2){
+      const user = await this.findOne({Username})
       if (!user)
         throw Error ('no such user')
       const validpass = await bcrypt.compare(OldPassword,user.Password)

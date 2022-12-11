@@ -88,38 +88,30 @@ const searchCourse = async (req, res) => {
     }
 }
 
-const filterCourse = async (req, res) => {
-    try {
-        const { Subject, Rating } = req.body
 
-
-        const course = await Course.find({ Subject }).find({ Rating: { $gte: Rating } })
-        if (!course) {
-            return res.status(404).json({ error: 'no such course' })
-        }
-        res.status(200).json(course)
-    } catch (error) {
-        res.status(400).json({ error: 'error' })
-    }
-    try {
-        const course = await Course.find().or([{ Title: Title }, { Subject: Subject }]).and([{ InstructorId: InstructorId }])
-        if (!course) {
-            return res.status(404).json({ error: 'no such course' })
-        }
-        res.status(200).json(course)
-    } catch (error) {
-        res.status(400).json({ error: error.message })
-    }
-}
 
 const editBiographyorEmail = async (req, res) => {
+    try{
     const { Email, Biography } = req.body
-    if (!Validator.isEmail(Email))
-        res.status(400).json({ error: 'incorrect email format' })
     const id = req.user
+
+    if (!Validator.isEmail(Email)){
+        return res.status(400).json({ error: 'incorrect Email format' })
+    }
+    console.log(Email)
+    let user = await User.findOne({Email})
+    console.log(user)
+    if( user ) {
+        return res.status(400).json({ error: 'Email already in use' })
+    }
+   
     const userupdated = await User.findByIdAndUpdate(id, { Email: Email })
     const updated = await Instructor.findByIdAndUpdate(id, { Biography: Biography })
-    res.status(200).json({ updated, userupdated })
+    return res.status(200).json({ updated, userupdated })
+    }
+    catch(error){
+        res.status(400).json({ error: error.message })
+    }
 }
 
 
@@ -230,6 +222,7 @@ const viewExams = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 }
+
 
 
 

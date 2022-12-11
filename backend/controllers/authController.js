@@ -6,12 +6,12 @@ const nodemailer = require('nodemailer')
 var cid = null
 
 const Signin = async (req, res) => {
-    const { Email, Password } = req.body
+    const { Username, Password } = req.body
 
     try {
-        const user = await User.Login(Email, Password)
-        const token = jwt.sign({ _id: user._id, Email: user.Email }, process.env.SECRET, { expiresIn: '3d' })
-        res.status(200).json({ Email, token })
+        const user = await User.Login( Username, Password)
+        const token = jwt.sign({ _id: user._id, Username: user.Username }, process.env.SECRET, { expiresIn: '3d' })
+        res.status(200).json({ Username, token })
     }
     catch (error) {
         res.status(400).json({ error: error.message })
@@ -30,15 +30,15 @@ const ForgotPassword = async (req, res) => {
     const token = jwt.sign({ _id: user._id, }, secret, { expiresIn: '5m' })
     const link = `http://localhost:4000/api/auth/resetpassword/${user._id}/${token}`
     var transporter = nodemailer.createTransport({
-        service: 'outlook',
+        service: 'gmail',
         auth: {
-            user: 'youssef.abdelatty@student.guc.edu.eg',
-            pass: 'Oasis30011'
+            user: 'karimouf20@gmail.com',
+            pass: '@Rmymen12'
         }
     });
 
     var mailOptions = {
-        from: 'youssef.abdelatty@student.guc.edu.eg',
+        from: 'karimouf20@gmail.com',
         to: 'youssefbahei1@gmail.com',
         subject: 'Changing password',
         text: link
@@ -55,7 +55,7 @@ const ForgotPassword = async (req, res) => {
 
 const Resetpassword = async (req, res) => {
     const { id, token } = req.params
-    const { Password } = req.body
+    
     const user = await User.findOne({ _id: id })
     if (!user)
         return res.status(400).json({ error: 'No existing user' })
@@ -85,13 +85,12 @@ const Resetpasswordput = async (req, res) => {
         res.status(200).json(user)
 
 
-
-
 }
 const ChangePassword = async (req, res) => {
-    const { Email, OldPassword, NewPassword1, NewPassword2 } = req.body;
+    const {Username} = req.username
+    const { OldPassword, NewPassword1, NewPassword2 } = req.body;
     try {
-        const user = await User.ChangePass(Email, OldPassword, NewPassword1, NewPassword2);
+        const user = await User.ChangePass(Username, OldPassword, NewPassword1, NewPassword2);
         if (user)
             res.status(200)
         else
@@ -101,6 +100,8 @@ const ChangePassword = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 }
+
+
 
 
 module.exports = {

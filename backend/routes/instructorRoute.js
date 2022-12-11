@@ -15,7 +15,8 @@ const {
     defineDiscount,
     getRating,
     createSubtitle,
-    createVideo
+    createVideo,
+  
 } = require('../controllers/instructorController')
 
 
@@ -37,7 +38,7 @@ router.post('/getcoursebyid', searchCourse)
 router.post('/viewExam', viewExams)
 router.put('/editbiographyoremail', editBiographyorEmail)
 router.post('/definediscount/:courseid', defineDiscount),
-    router.get('/getrating', getRating)
+router.get('/getrating', getRating)
 router.post('/createsubtitle/:courseid', createSubtitle)
 router.post('/createvideo', createVideo)
 
