@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom"
 
 const ExamCorpTrainee = () => {
 
@@ -23,6 +24,11 @@ const ExamCorpTrainee = () => {
     const [control,setControl]= useState([{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false},{color:"default",colorsx:"", checked:false}])
     const t = [];
     let Q=null;
+    let navigate = useNavigate()
+
+    const handleClick = () =>{
+        navigate('/CorpTraineeMyCourses/course?courseId='+Exam.courseId)
+    }
     useEffect( () => {
     
         const fetchExam = async () => {
@@ -139,6 +145,9 @@ const ExamCorpTrainee = () => {
                 </div>)}
           
      {error&& <div className="error">{error}</div>}
+     <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined" size="large"  onClick={handleClick}>
+                Back to Course
+        </Button>
         </div>
     )
 }

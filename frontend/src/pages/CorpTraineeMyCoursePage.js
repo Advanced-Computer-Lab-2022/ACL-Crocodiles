@@ -131,7 +131,7 @@ const  CorpTraineeMyCoursePage= ()=> {
 
   return (
 <Box sx={{ margin:"-20px"}}>
-  <Grid container  sx={{ height: "110vh"}} alignItems="center">
+  <Grid container  sx={{ height: "110vh"}} alignItems="flex-start">
   
  {open? 
  <Grid item xs={1.9} >
@@ -150,7 +150,7 @@ const  CorpTraineeMyCoursePage= ()=> {
         backgroundSize:"cover",
         backgroundRepeat: "no-repeat",
         display: "grid",
-        placeItems: "center",
+        placeItems: "flex-start",
         minHeight: "75vh",
         width:"100%",
       }}

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
-
+import { useNavigate } from "react-router-dom"
+  
 const ExamTrainee = () => {
     const [Exam, setExam] = useState(null)
     const [Questions, setQuestions] = useState([])
@@ -16,9 +17,11 @@ const ExamTrainee = () => {
     const { examid } = useParams()
     const [value, setValue] = useState('');
     const [answers, setAnswers] = useState(['','','','']);
+    const [text, setText] = useState("Submit");
     const [notSelected,setNotSelected] = useState([]);
     const [errorSubmit,setErrorSubmit] = useState([]);
-  
+    let navigate = useNavigate()
+
     const handleChange = (event) =>{
         const arr = event.target.value.split(",");
         const questionIndex = arr[0];
@@ -57,7 +60,10 @@ const ExamTrainee = () => {
                 })
                 const json = await response.json()
                 if(!response.ok)
-                     setError(json.error)    
+                     setError(json.error) 
+                setText("view Solution")
+                if(text=="view Solution")
+                  navigate('/viewSolution/' + examid)   
       
         }
         addAssignment();
@@ -139,7 +145,7 @@ const ExamTrainee = () => {
                 </div>)}
                 {error&& <div className="error">{error}</div>}
                 <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined" size="large"  onClick={handleClick}>
-          Submit
+                {text}
         </Button>
 
         </div>
