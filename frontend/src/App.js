@@ -30,7 +30,7 @@ import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
 import CorpTraineeCoursePage from './pages/CorpTraineeMyCoursePage'
 import ChangePassword from './pages/ChangePassword'
 import AddSubtitle from './pages/AddSubtitle'
-
+import TM from './pages/TM'
 function App() {
   return (
     <div className="App">
@@ -42,6 +42,10 @@ function App() {
             <Route
               path="/resetpassword"
               element={<ResetPassword />}
+            />
+             <Route
+              path="/termsandconditions"
+              element={<TM />}
             />
             <Route
               path="/"
