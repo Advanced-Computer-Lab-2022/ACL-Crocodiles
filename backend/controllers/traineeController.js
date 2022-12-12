@@ -36,6 +36,18 @@ const getTrainee = async (req, res) => {
     }
     res.status(200).json(trainee)
 }
+const isTrainee = async (req, res) => {
+    const { id } = req.user
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(200).json({isTrainee:false})
+    }
+
+    const trainee = await Trainee.findById(id)
+    if (!trainee) {
+        return res.status(200).json({isTrainee:false})
+    }
+    return res.status(200).json({isTrainee:true})
+}
 const deleteTrainee = async (req, res) => {
     const { id } = req.params
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -396,5 +408,6 @@ module.exports = {
     rateInstructor,
     addAssignment,
     getAssignment,
-    calculateGrade
+    calculateGrade,
+    isTrainee
 }

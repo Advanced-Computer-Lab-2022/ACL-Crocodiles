@@ -30,13 +30,15 @@ import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
 import CorpTraineeCoursePage from './pages/CorpTraineeMyCoursePage'
 import ChangePassword from './pages/ChangePassword'
 import AddSubtitle from './pages/AddSubtitle'
+import TraineeNavBar from './components/TraineeNavBar'
+import NavAssign from './components/NavAssign'
 
 function App() {
   return (
     <div className="App">
 
       <BrowserRouter>
-        <Navbar />
+        <NavAssign />
         <div className="pages">
           <Routes>
             <Route
