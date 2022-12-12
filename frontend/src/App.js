@@ -32,7 +32,7 @@ import ChangePassword from './pages/ChangePassword'
 import AddSubtitle from './pages/AddSubtitle'
 import TraineeNavBar from './components/TraineeNavBar'
 import NavAssign from './components/NavAssign'
-
+import TM from './pages/TM'
 function App() {
   return (
     <div className="App">
@@ -44,6 +44,10 @@ function App() {
             <Route
               path="/resetpassword"
               element={<ResetPassword />}
+            />
+             <Route
+              path="/termsandconditions"
+              element={<TM />}
             />
             <Route
               path="/"
