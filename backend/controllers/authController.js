@@ -30,16 +30,16 @@ const ForgotPassword = async (req, res) => {
     const token = jwt.sign({ _id: user._id, }, secret, { expiresIn: '5m' })
     const link = `http://localhost:4000/api/auth/resetpassword/${user._id}/${token}`
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: 'outlook',
         auth: {
-            user: 'karimouf20@gmail.com',
+            user: 'aclcrocodiles@outlook.com',
             pass: '@Rmymen12'
         }
     });
 
     var mailOptions = {
-        from: 'karimouf20@gmail.com',
-        to: 'youssefbahei1@gmail.com',
+        from: 'aclcrocodiles@outlook.com',
+        to: 'karimouf00@gmail.com',
         subject: 'Changing password',
         text: link
     };

@@ -1,33 +1,34 @@
 import {useState} from 'react'
 import { useSignup } from '../hooks/useSignup'
-
+import Button from '@mui/material/Button';
+import { Grid } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import PersonIcon from '@mui/icons-material/Person';
+import Paper from '@mui/material/Paper';
 
 const Signup = () => {
+    const[Username,setUsername] = useState('')
     const[Email,setEmail] = useState('')
     const[Firstname,setFirstname] = useState('')
     const[Lastname,setLastname] = useState('')
     const[Password,setPassword] = useState('')
     const {signup,error,isLoading} = useSignup()
+    let checkbox = true
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        await signup(Email,Password,Firstname,Lastname)
+       
+        await signup(Username,Email,Password,Firstname,Lastname)
     }
+    
+    const PaperStyle={height:'100vh' ,width:500, margin:'20px auto',padding:10}
+        return(
+       <Grid>
+        <Paper  elevation={10} style={PaperStyle}>
 
-    return(
-        <form className="signup" onSubmit={handleSubmit}>
-            <h3>Sign Up</h3>
-            <label>Firstname:</label>
-            <input type="text" onChange={(e) => setFirstname(e.target.value)} value={Firstname}/>
-            <label>Lastname:</label>
-            <input type="text" onChange={(e) => setLastname(e.target.value)} value={Lastname}/>
-            <label>Email:</label>
-            <input type="email" onChange={(e) => setEmail(e.target.value)} value={Email}/>
-            <label>Password:</label>
-            <input type="password" onChange={(e) => setPassword(e.target.value)} value={Password}/>
-            <button disabled = {isLoading}>Signup</button>
-            {error && <div className='error'>{error}</div>}
-        </form>
+        </Paper>
+       </Grid>
     )
 }
 export default Signup
