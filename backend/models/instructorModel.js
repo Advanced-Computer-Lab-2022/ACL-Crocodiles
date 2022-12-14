@@ -29,7 +29,7 @@ const instructorSchema = new Schema({
       required: false
     },
     Gender: {
-        type: [String],
+        type: String,
         required: false,
     },
     Biography:{

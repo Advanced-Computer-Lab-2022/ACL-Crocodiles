@@ -1,23 +1,162 @@
 import { useAuthContext } from "../hooks/useAuthContext";
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react'
+import {
+    autocompleteClasses,
+    Avatar,
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    Divider,
+    Typography,
+    Stack,
+    TextField
+} from '@mui/material';
+
+
+
+
 
 const Profile = () => {
-    const {user} = useAuthContext()
-    const[error,setError] = useState(null)
+    const { user } = useAuthContext()
+    const [Instructors, setInstructors] = useState([])
+    const [error, setError] = useState(null)
 
-    const handleLogin = async (e) => {
-        e.preventDefault()
-        if(!user){
-            setError('You must be logged in')
-            return
+    useEffect(() => {
+        const fetchIns = async () => {
+            const response = await fetch('/api/instructor/insdetails',{headers: {
+                'Authorization': `Bearer ${user.token}`,
+                'content-type': 'application/json'
+                    }
+                })
+            const json = await response.json()
+            if (response.ok) {
+                setInstructors(json)
+                console.log(json)
+                
+            }
+            if (!response.ok) {
+                setError(error)
+            }
         }
-    }
-     
+        fetchIns()
+    },[])
+    const cardstyle = { width: 400, margin: '20px auto' }
+    // const buttonstyle = { maxWidth: '150px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '8px' }
+
+
+
     return (
-        <div className="Profile">
-            <a href="/changePassword" class="button">Change Password</a>
-        </div>
+
         
+        <div>
+          
+            {Instructors && Instructors.map((Instructor) => (<div> <p key={Instructor._id}>{Instructor.Firstname}</p>  </div>))}
+            <Card style={cardstyle}>
+                <CardContent>
+                    <Box
+                        sx={{
+                            alignItems: 'center',
+                            display: 'flex',
+                            flexDirection: 'column'
+                        }}
+                    >
+                        <Avatar
+                            // src={user.avatar}
+                            sx={{
+                                height: 64,
+                                mb: 2,
+                                width: 64
+                            }}
+                        />
+                        <Typography
+                            color="textPrimary"
+                            gutterBottom
+                            variant="h5"
+                        >
+                        
+                        </Typography>
+                        <Typography
+                            color="textSecondary"
+                            variant="body2"
+                        >
+                            Instructor
+                        </Typography>
+                        <Typography
+                            color="textSecondary"
+                            variant="h6"
+                        >
+                           
+                        </Typography>
+                    </Box>
+                </CardContent>
+                <Divider />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        '& button': { m: 2 }
+
+                    }}
+                >
+
+                    <Stack direction="column" >
+                        <Stack direction="row"  >
+                            <TextField
+    
+                   
+                                id="outlined-password-input"
+                                label="Email"
+                                type="email"
+
+                            // autoComplete="current-password"
+                            />
+                            <Button
+                                // style={buttonstyle}
+                                color="primary"
+                                variant="contained"
+
+
+                            >
+                                Change Email
+                            </Button>
+
+                        </Stack>
+
+                        <Stack direction="row">
+
+                            <TextField
+                                disabled
+                                defualtvalue="Hellasdfghjklsasdfghjklsdfghjkl"
+                                id="outlined-password-input"
+                                label="Password"
+                                type="password"
+
+                            // autoComplete="current-password"
+                            />
+
+                            <Button
+                                color="primary"
+                                variant="contained"
+                            >
+                                Change Password
+                            </Button>
+
+                        </Stack>
+
+                    </Stack>
+
+                </Box>
+            </Card>
+          
+            </div>
+
+            /*<div className="Profile">
+                <a href="/changePassword" class="button">Change Password</a>
+            </div>*/
+
     )
 }
 export default Profile
