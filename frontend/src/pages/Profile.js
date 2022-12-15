@@ -21,7 +21,7 @@ import {
 
 const Profile = () => {
     const { user } = useAuthContext()
-    const [Instructors, setInstructors] = useState([])
+    const [Instructor, setInstructor] = useState(null)
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const Profile = () => {
                 })
             const json = await response.json()
             if (response.ok) {
-                setInstructors(json)
+                setInstructor(json)
                 console.log(json)
                 
             }
@@ -53,7 +53,7 @@ const Profile = () => {
         
         <div>
           
-            {Instructors && Instructors.map((Instructor) => (<div> <p key={Instructor._id}>{Instructor.Firstname}</p>  </div>))}
+            
             <Card style={cardstyle}>
                 <CardContent>
                     <Box
@@ -64,7 +64,7 @@ const Profile = () => {
                         }}
                     >
                         <Avatar
-                            // src={user.avatar}
+                          
                             sx={{
                                 height: 64,
                                 mb: 2,
@@ -82,7 +82,7 @@ const Profile = () => {
                             color="textSecondary"
                             variant="body2"
                         >
-                            Instructor
+                        {Instructor && Instructor.instructorDetails.Firstname} {Instructor && Instructor.instructorDetails.Lastname}
                         </Typography>
                         <Typography
                             color="textSecondary"
@@ -106,10 +106,9 @@ const Profile = () => {
                         <Stack direction="row"  >
                             <TextField
     
-                   
-                                id="outlined-password-input"
-                                label="Email"
-                                type="email"
+                                value={Instructor && Instructor.user.Email}
+                                id="outlined-password-input|"
+                                type= "email"
 
                             // autoComplete="current-password"
                             />
