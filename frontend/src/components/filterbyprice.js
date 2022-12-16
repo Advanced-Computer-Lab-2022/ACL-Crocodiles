@@ -8,15 +8,14 @@ const FilterCourses = () => {
     const [priceMax, setMax] = useState(0)
     const [courses, setCourses] = useState('')
     const [error, setError] = useState(null)
-    const {user} = useAuthContext()
-
+    const { user } = useAuthContext()
     const handleSubmit = async (e) => {
         e.preventDefault()
         const body = { priceMin, priceMax }
-        const response = await fetch('/api/instructor/filterbyprice', {
+        const response = await fetch('/api/guest/filterbyprice', {
             method: 'POST', body: JSON.stringify(body), headers: {
-                'content-type': 'application/json',
-                'Authorization': `Bearer ${user.token}`
+
+                'content-type': 'application/json'
             }
         })
         const json = await response.json()
@@ -44,7 +43,7 @@ const FilterCourses = () => {
             onChange={(e) => setMin(e.target.value)}
             value={priceMin}
         />
-         <h5>Maximum Price</h5>
+        <h5>Maximum Price</h5>
         <input
             type="number"
             onChange={(e) => setMax(e.target.value)}
@@ -58,7 +57,7 @@ const FilterCourses = () => {
         ))}
     </form>)
 
- 
+
 
 
 }

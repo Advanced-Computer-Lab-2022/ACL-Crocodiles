@@ -156,7 +156,7 @@ const TraineeDrawer = ({ subtitles, arrowHandler,open,vidHandler,exerciseHandler
             <List component="div" disablePadding>
             {subtitle.Exercises && subtitle.Exercises.map((exercise) => (
               <ListItemButton  onClick={()=> exerciseHandler(exercise)} sx={{ pl: 8 }}>
-                <ListItemText primary={exercise.Title} />
+                <ListItemText primary={exercise._id} />
               </ListItemButton>
                 ))}
               </List>

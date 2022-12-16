@@ -15,7 +15,7 @@ const FilterBySR = () => {
         e.preventDefault()
         const body = { Subject,Rating }
         console.log(body)
-        const response = await fetch('/api/instructor/filter', {
+        const response = await fetch('/api/guest/filterbysr', {
             method: 'POST', body: JSON.stringify(body), headers: {
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${user.token}`

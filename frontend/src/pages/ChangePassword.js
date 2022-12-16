@@ -12,14 +12,14 @@ const ChangePassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const {Email} = jwt_decode(user.token);
-        await changePass(Email,OldPassword,NewPassword1,NewPassword2)
+        const {Username} = jwt_decode(user.token);
+        await changePass(Username,OldPassword,NewPassword1,NewPassword2)
     }
-    const changePass = async (Email,OldPassword,NewPassword1,NewPassword2)  => {
+    const changePass = async (Username,OldPassword,NewPassword1,NewPassword2)  => {
         setError(null)
 
-        const response = await fetch('/api/auth/changepassword',{method:'PUT',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({Email,OldPassword,NewPassword1,NewPassword2})
+        const response = await fetch('/api/auth/changepassword',{method:'PUT',headers:{'Content-Type':'application/json',},
+        body:JSON.stringify({Username,OldPassword,NewPassword1,NewPassword2})
         })
         const json = await response.json();
         if(!response){

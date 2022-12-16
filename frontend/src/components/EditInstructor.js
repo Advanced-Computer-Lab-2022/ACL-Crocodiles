@@ -1,24 +1,29 @@
 import React, { useState } from "react";
-
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const EditInstructor = () => {
     const[Email,setEmail] = useState('')
     const[Biography,setBiography] = useState('')
     const[error,setError] = useState(null)
+    const {user} = useAuthContext()
    // const[InstructorID,setId] = useState('')
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
         const updated = {Email,Biography}
+
         console.log(JSON.stringify(updated))
-        const response =  await fetch('/api/instructor/editbiographyoremail',{method:'PUT',body:JSON.stringify(updated),headers: {
-            'content-type':'application/json'
+        const response =  await fetch('/api/instructor/editbiographyoremail',{method:'put',body:JSON.stringify(updated),headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'content-type':'application/json',
             
         }
       })
       const json = await response.json()
     if(!response.ok){
-        setError(json.error)    
+        setError(json.error)
+        setEmail('')
+        setBiography('')    
     }
     if (response.ok){
         setEmail('')
@@ -35,7 +40,7 @@ const EditInstructor = () => {
             <h3>Edit info</h3>
             <label>Edit Email</label>
             <input
-                type="text"
+                type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={Email}
             />
@@ -53,3 +58,4 @@ const EditInstructor = () => {
 }
 
 export default EditInstructor
+

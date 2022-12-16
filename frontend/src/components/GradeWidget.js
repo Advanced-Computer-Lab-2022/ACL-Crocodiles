@@ -27,7 +27,7 @@ export default function GradeWidget({per}) {
             justifyContent: "center"
           }}
         >
-        <CircularProgressWithLabel per={per}/>
+       {per && <CircularProgressWithLabel per={per}/>}
         </Box>
         <Typography variant="h4" sx={{ color: "white" }} textAlign="center">
           {" "}

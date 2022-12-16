@@ -20,7 +20,7 @@ const NewCourseForm = () => {
             setError('You must be logged in')
             return
         }
-        const course = {Title,Subject,Hours,Price,subtitle,subHours,videoTitle,videoDesc,videoURL}
+        const course = {Title,Subject,Hours,Price}
         console.log(JSON.stringify(course))
         const response =  await fetch('/api/instructor/createcourse',{method:'POST',body:JSON.stringify(course),headers: {
             'content-type':'application/json',
@@ -72,7 +72,15 @@ const NewCourseForm = () => {
                 onChange={(e) => setPrice(e.target.value)}
                 value={Price}
             />
-            <label>Subtitle Title:</label>
+            
+            <button>Create Course</button>
+            {error && <div className="error">{error}</div>}
+        </form>
+
+    )
+}
+
+{/* <label>Subtitle Title:</label>
             <input
                 type="text"
                 onChange={(e) => setSubtitle(e.target.value)}
@@ -100,12 +108,6 @@ const NewCourseForm = () => {
                 type="text"
                 onChange={(e) => setVideoDesc(e.target.value)}
                 value={videoDesc}
-            />
-            <button>Create Course</button>
-            {error && <div className="error">{error}</div>}
-        </form>
-
-    )
-}
+            /> */}
 
 export default NewCourseForm 
