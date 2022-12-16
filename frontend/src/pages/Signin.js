@@ -1,30 +1,75 @@
 import {useState} from 'react'
 import { useLogin } from '../hooks/useLogin'
-
+import Box from '@mui/material/Box';
+import { TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import PersonIcon from '@mui/icons-material/Person';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Signin = () => {
-    const [Username,setUsername] = useState('')
+    const[Username,setUsername] = useState('')
     const[Password,setPassword] = useState('')
+
     const {login,error,isLoading}= useLogin()
+  
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(Username,Password)
         await login(Username,Password)
     }
-
-
+    const PaperStyle = {padding:20 ,height:'65vh',width:280,margin:'20px auto'}
+    const btnstyle = { margin:'8px '}
     return(
-        <form className="signin" onSubmit={handleSubmit}>
-            <h3>Sign In</h3>
-            <label>Username:</label>
-            <input onChange={(e) => setUsername(e.target.value)} value={Username}/>
-            <label>Password:</label>
-            <input type="password" onChange={(e) => setPassword(e.target.value)} value={Password}/>
+      
+        <Grid>
+            <Paper elevation={10} style={PaperStyle} >
+        <Stack direction="column" spacing={2} >
+        <Grid  align = "center">
+        <Avatar >
+            <PersonIcon></PersonIcon>
+         </Avatar>
+        <h2 >Sign in</h2>
+        </Grid>
+        <TextField
+          required
+          id="outlined-required"
+          label="Username"
+          defaultValue="Hello World"
+          onChange={(e) => setUsername(e.target.value)}
+          value={Username}
+          fullWidth 
+        />
+        <TextField
+          id="outlined-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={Password}
+          fullWidth
+        />
+        <Button variant="contained"  disabled = {isLoading} onClick={handleSubmit} style={btnstyle}>
+         Login
+         </Button>
+         </Stack>
          
-            <button disabled={isLoading}>Signin</button>
-            <a href="/forgotpassword">Forgot Password?</a>
-            {error && <div className='error'>{error}</div>}
-        </form>
+         <Typography >
+         <Link href= '/forgotpassword'> Forgot Password?</Link>
+         </Typography>
+
+         <Typography>Do you have an acount?
+         <Link href= '/signup'>Sign up </Link>
+         </Typography> 
+        </Paper>
+       
+     </Grid>
     )
 }
 export default Signin

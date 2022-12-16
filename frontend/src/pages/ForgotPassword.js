@@ -11,14 +11,15 @@ const ForgotPassword = () =>{
             'content-type':'application/json'}})
         const json = await response.json()
         if(!response.ok){
-            setError(json.error)    
+            setError(json.error)
+            setEmail('')
+
             }
         if (response.ok){
             setEmail('')
-            setError('')
+            setError('')            
+            }
             
-               
-    }
 }
     return(
         <div>

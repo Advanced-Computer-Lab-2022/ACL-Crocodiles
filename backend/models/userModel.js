@@ -25,10 +25,15 @@ const userSchema = new Schema({
     Type :{
       type:String,
       required:true
-    }}, { timestamps: true });
+    },
+    Flag:{
+      type:String,
+      default:"true"
+    },
+    }, { timestamps: true });
 
 
-  userSchema.statics.RegTrainee = async function(Username,Email,Password,Firstname,Lastname){
+  userSchema.statics.RegTrainee = async function(Username,Email,Password,Firstname,Lastname,Gender){
     const Type = 'Trainee'
     if(!Email || !Password || !Username)
         throw Error('Must type email or password or username')
@@ -48,7 +53,7 @@ const userSchema = new Schema({
     const salt = await bcrypt.genSalt(10)
     let hash = await bcrypt.hash(Password,salt)
     const user = await this.create({Username,Email,Password:hash,Type})
-    const trainee =  await Trainee.create({_id:user._id,Firstname:Firstname,Lastname:Lastname})
+    const trainee =  await Trainee.create({_id:user._id,Firstname:Firstname,Lastname:Lastname,Gender:Gender})
     if(!trainee)
       await this.delete({_id:user._id})
     return trainee
@@ -61,7 +66,7 @@ const userSchema = new Schema({
     const user = await this.findOne({Username})
       if (!user)
         throw Error ('Incorrect username or password')
-
+    
       const validpass = await bcrypt.compare(Password,user.Password)
       if(!validpass)
         throw Error('incorrect username or password')

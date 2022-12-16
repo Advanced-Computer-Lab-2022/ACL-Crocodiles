@@ -7,11 +7,10 @@ var cid = null
 
 const Signin = async (req, res) => {
     const { Username, Password } = req.body
-
     try {
         const user = await User.Login( Username, Password)
         const token = jwt.sign({ _id: user._id, Username: user.Username }, process.env.SECRET, { expiresIn: '3d' })
-        res.status(200).json({ Username, token })
+        res.status(200).json({ flag:user.Flag ,Type:user.Type, Username, token })
     }
     catch (error) {
         res.status(400).json({ error: error.message })
@@ -30,16 +29,16 @@ const ForgotPassword = async (req, res) => {
     const token = jwt.sign({ _id: user._id, }, secret, { expiresIn: '5m' })
     const link = `http://localhost:4000/api/auth/resetpassword/${user._id}/${token}`
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: 'outlook',
         auth: {
-            user: 'karimouf20@gmail.com',
+            user: 'aclcrocodiles@outlook.com',
             pass: '@Rmymen12'
         }
     });
 
     var mailOptions = {
-        from: 'karimouf20@gmail.com',
-        to: 'youssefbahei1@gmail.com',
+        from: 'aclcrocodiles@outlook.com',
+        to: 'karimouf00@gmail.com',
         subject: 'Changing password',
         text: link
     };

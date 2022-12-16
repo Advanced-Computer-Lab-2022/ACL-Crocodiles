@@ -2,6 +2,7 @@ const express = require('express')
 const requireAuthInstructor = require('../middleware/requireAuthInstructor')
 const {
     createCourse,
+    searchCourse,
     createExam,
     createQuestion,
     viewExams,
@@ -11,7 +12,12 @@ const {
     getRating,
     createSubtitle,
     createVideo,
-    searchCourse
+    getInsDetails,
+    setFlag,
+    EditInstructorinfo
+    
+
+  
 } = require('../controllers/instructorController')
 
 
@@ -24,11 +30,11 @@ router.post('/createcourse', createCourse)
 //router.post('/createexam/:courseid', createExam)
 router.post('/createexam', createExam)
 router.post('/createquestion', createQuestion)
-
+router.get('/insdetails',getInsDetails)
 //router.get('/filtersubjectprice/:id',getCourses1)
-
+router.post('/editinsinfo', EditInstructorinfo)
 router.post('/getcoursebyid', searchCourse)
-
+router.post('/setflag', setFlag)
 //router.post('/search', Search)
 router.post('/viewExam', viewExams)
 router.put('/editbiographyoremail', editBiographyorEmail)

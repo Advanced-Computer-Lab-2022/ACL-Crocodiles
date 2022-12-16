@@ -2,15 +2,15 @@ import React, { useState } from "react";
 
 
 const CreateInstructorForm = () => {
-    const[Email,setEmail] = useState('')
+    const[Username,setUsername] = useState('')
     const[Password,setPassword] = useState('')
     const[error,setError] = useState(null)
- 
+    const[Email,setEmail] = useState('')
    // const[InstructorID,setId] = useState('')
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
-        const instructor = {Email,Password}
+        const instructor = {Username,Email,Password}
         const response =  await fetch('/api/admin/createinstructor',{method:'POST',body:JSON.stringify(instructor),headers: {
             'content-type':'application/json'
             
@@ -21,8 +21,9 @@ const CreateInstructorForm = () => {
         setError(json.error)    
     }
     if (response.ok){
-        setEmail('')
+        setUsername('')
         setPassword('')
+        setEmail('')
     
        // setId('')
         setError(null)
@@ -35,9 +36,15 @@ const CreateInstructorForm = () => {
     return(
         <form  className="createinstructor" onSubmit={handleSubmit}>
             <h3>Create new Instructor</h3>
-            <label>Email:</label>
+            <label>Username:</label>
             <input
                 type="text"
+                onChange={(e) => setUsername(e.target.value)}
+                value={Username}
+            />
+             <label>Email:</label>
+            <input
+                type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={Email}
             />
