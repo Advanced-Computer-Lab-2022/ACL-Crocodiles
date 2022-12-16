@@ -45,7 +45,7 @@ const courseSchema = new Schema({
     RatingCount: {
         type: Number,
         required: false,
-        default : 0 
+        default: 0
     },
     Subtitle: {
         type: [mongoose.Schema.Types.ObjectId],
@@ -84,10 +84,11 @@ courseSchema.statics.deleteDiscounts = async function () {
     const courses = await this.find()
     courses.forEach(async (course) => {
         if (course.DiscountEndDate < Date.now()) {
-        course.Discount = undefined
-        course.DiscountEndDate = undefined
-        await course.save()
-        }})
+            course.Discount = undefined
+            course.DiscountEndDate = undefined
+            await course.save()
+        }
+    })
 }
 
 //Exercise SCHEMA

@@ -10,7 +10,8 @@ const {
     defineDiscount,
     getRating,
     createSubtitle,
-    createVideo
+    createVideo,
+    searchCourse
 } = require('../controllers/instructorController')
 
 
@@ -26,12 +27,15 @@ router.post('/createquestion', createQuestion)
 
 //router.get('/filtersubjectprice/:id',getCourses1)
 
-router.put('/editbiographyoremail',editBiographyorEmail)
-router.post('/definediscount/:courseid',defineDiscount),
-router.get('/getrating',getRating)
-router.post('/createsubtitle/:courseid',createSubtitle)
-router.post('/createvideo',createVideo)
+router.post('/getcoursebyid', searchCourse)
+
+//router.post('/search', Search)
 router.post('/viewExam', viewExams)
+router.put('/editbiographyoremail', editBiographyorEmail)
+router.post('/definediscount/:courseid', defineDiscount),
+router.get('/getrating', getRating)
+router.post('/createsubtitle/:courseid', createSubtitle)
+router.post('/createvideo', createVideo)
 
 
 module.exports = router

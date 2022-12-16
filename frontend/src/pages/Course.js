@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
-
+import { useAuthContext } from "../hooks/useAuthContext";
 import DropDown from '../components/CountryDropDown'
+
 
 //import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {
+    const { user } = useAuthContext();
     const [courses, setCourses] = useState(null)
     const [error, setError] = useState(null)
 

@@ -124,36 +124,11 @@ function App() {
               path="/InstructorCourses"
               element={<InstructorCourses />}
             />
-            {/* <Route
-              path="/createexam/:courseid"
-              element={<Exam />}
-            /> */}
             <Route
               path="/createexam"
               element={<Exam />}
             />
             <Route
-              path="/definediscount/:courseid"
-              element={<DefineDiscount />}
-            />
-               <Route
-              path="/CorpTraineeMyCourses"
-              element={<CorpTraineeMyCourses />}
-            />
-               <Route
-              path="/viewExamCorp/:examid"
-              element={<ExamCorpTrainee />}
-            />
-              <Route
-              path="/viewSolutionCorp/:examid"
-              element={<ExamSolutionCorpTrainee />}
-            />
-
-            <Route
-              path="/addsubtitle/:courseid"
-              element={<AddSubtitle />}
-            />
-               <Route
               path="/CorpTraineeMyCourses"
               element={<CorpTraineeMyCourses />}
             />
@@ -164,14 +139,26 @@ function App() {
             <Route
               path="/changePassword"
               element={<ChangePassword />}
+            />               
+            <Route
+              path="/viewExamCorp/:examid"
+              element={<ExamCorpTrainee />}
+            />
+            <Route
+              path="/viewSolutionCorp/:examid"
+              element={<ExamSolutionCorpTrainee />}
             />
 
+            <Route
+              path="/addsubtitle/:courseid"
+              element={<AddSubtitle />}
+            />
             <Route
               path="/viewExam/:examid"
               element={<ExamTrainee />}
             />
-            
-          
+
+
             <Route
               path="/viewSolution/:examid"
               element={<ExamSolutionTrainee />}

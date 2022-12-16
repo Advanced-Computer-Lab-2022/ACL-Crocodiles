@@ -125,7 +125,7 @@ const getMyCourses = async (req, res) => {
         if (!course)
             res.status(500).json({ error: "course not found" });
         courses.push(course);
-  
+
     }
     res.json(courses);
 
@@ -213,7 +213,6 @@ const findSub2 = async (req, res) => {
 
 }
 
-
 const viewExam = async (req, res) => {
     try {
         const examId = req.params.examid
@@ -236,105 +235,105 @@ const addAssignment = async (req, res) => {
         const examId = req.body.Examid
         const answers = req.body.Answers
         const exam = await Exam.findById(examId)
-    
+
         if (!exam) {
             return res.status(404).json({ error: 'not a valid exam id' })
         }
-     
+
         const t = await Trainee.findById(traineeID);
 
-        for(let i=0; i<t.My_assignments.length;i++){
-            if(t.My_assignments[i].quiz_id.equals(examId))
-                return res.status(400).json({error:"test already taken"}) 
+        for (let i = 0; i < t.My_assignments.length; i++) {
+            if (t.My_assignments[i].quiz_id.equals(examId))
+                return res.status(400).json({ error: "test already taken" })
         }
 
-        const trainee = await Trainee.updateOne({_id: traineeID}, { $push: { My_assignments: {quiz_id:examId,Answer:answers}  }})
-    
+        const trainee = await Trainee.updateOne({ _id: traineeID }, { $push: { My_assignments: { quiz_id: examId, Answer: answers } } })
+
         if (!trainee) {
             return res.status(404).json({ error: 'trainee not found' })
         }
 
-   
-        
-          res.json(trainee)
+
+
+        res.json(trainee)
 
     } catch (error) {
-       
+
         res.status(400).json({ error: 'error' })
     }
 }
 
 
-const getAssignment = async (req,res)=>{
+const getAssignment = async (req, res) => {
     try {
-    
-    const traineeID = req.user;
-    const examId = req.body.Examid;
-  
-    const trainee = await Trainee.findById(traineeID)
 
-    const Assignment = trainee.My_assignments.find(a => a.quiz_id.equals(examId))
-    if(Assignment)
-    return res.status(200).json(Assignment)
-    
-    return res.status(400).json({error: "you did not take this exam"})
+        const traineeID = req.user;
+        const examId = req.body.Examid;
+
+        const trainee = await Trainee.findById(traineeID)
+
+        const Assignment = trainee.My_assignments.find(a => a.quiz_id.equals(examId))
+        if (Assignment)
+            return res.status(200).json(Assignment)
+
+        return res.status(400).json({ error: "you did not take this exam" })
 
 
-} catch (error) {
-    return res.status(400).json({ error: 'error' })
-}
+    } catch (error) {
+        return res.status(400).json({ error: 'error' })
+    }
 }
 
 const calculateGrade = async (req, res) => {
     try {
-       
+
         const traineeID = req.user;
-        const examId = req.body.Examid;   
+        const examId = req.body.Examid;
         const trainee = await Trainee.findById(traineeID)
         const exam = await Exam.findById(examId).populate('Questions')
-   
+
         if (!exam) {
             return res.status(404).json({ error: 'not a valid exam id' })
         }
 
 
-        
-       
+
+
         if (!trainee) {
             return res.status(404).json({ error: 'trainee not found' })
         }
-    
+
         const assignments = trainee.My_assignments;
-    
+
         const Questions_solution = exam.Questions;
         let answer = null;
-     
-         for(let i=0; i<assignments.length;i++){
-        
-            if(assignments[i].quiz_id.equals(examId)){
-              
+
+        for (let i = 0; i < assignments.length; i++) {
+
+            if (assignments[i].quiz_id.equals(examId)) {
+
                 answer = assignments[i].Answer;
-             
+
             }
-        
-               
-         }
-      
-         if(!answer)
-            return  res.status(400).json({ error: 'trainee did not take this test' })
-        
-         let grade = 0;
-    
-         for(let i=0;i<Questions_solution.length;i++){
-             if(answer[i]==Questions_solution[i].correctAnswer)
-                 grade+=1;
-         }
-       
-         const percentage = (grade/answer.length)*100
-           res.json({Grade:grade, Percentage:percentage})
+
+
+        }
+
+        if (!answer)
+            return res.status(400).json({ error: 'trainee did not take this test' })
+
+        let grade = 0;
+
+        for (let i = 0; i < Questions_solution.length; i++) {
+            if (answer[i] == Questions_solution[i].correctAnswer)
+                grade += 1;
+        }
+
+        const percentage = (grade / answer.length) * 100
+        res.json({ Grade: grade, Percentage: percentage })
 
     } catch (error) {
-       
+
         res.status(400).json({ error: 'error' })
     }
 }

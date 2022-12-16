@@ -20,28 +20,8 @@ const createCourse = async (req, res) => {
         return res.status(404).json({ error: 'no such id' })
     }
     try {
-        const course = await Course.create({ Title, Subject, Hours, Price, InstructorId})
+        const course = await Course.create({ Title, Subject, Hours, Price, InstructorId })
         res.status(200).json(course)
-    } catch (error) {
-        res.status(400).json({ error: error.message })
-    }
-}
-
-const createVideo = async (req, res) => {
-    const InstructorId  = req.user
-    const {videoTitle, videoDesc, videoURL, subId} = req.body
-    if(!mongoose.Types.ObjectId.isValid(InstructorId)){
-        return res.status(404).json({error: 'no such id'})
-    }
-    try {
-        const sub = await Sub.findById(subId)
-        if(!sub){
-            return res.status(404).json({error: 'no such subtitle'})
-        }
-        const video = await Video.create({videoTitle, videoDesc, videoURL})
-        sub.Videos.push(video)
-        await sub.save()
-        res.status(200).json(sub)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -71,16 +51,67 @@ const createSubtitle = async (req, res) => {
     }
 }
 
+const createVideo = async (req, res) => {
+    const InstructorId = req.user
+    const { videoTitle, videoDesc, videoURL, subId } = req.body
+    if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        const sub = await Subtitle.findById(subId)
+        if (!sub) {
+            return res.status(404).json({ error: 'no such subtitle' })
+        }
+        const video = await Video.create({ videoTitle, videoDesc, videoURL })
+        sub.Videos.push(video)
+        await sub.save()
+        res.status(200).json(sub)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const searchCourse = async (req, res) => {
+    const InstructorId = req.user
+    const { Title, Subject } = req.body
+    if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        const course = await Course.find().or([{ Title: Title }, { Subject: Subject }]).and([{ InstructorId: InstructorId }])
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
+        }
+        res.status(200).json(course)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 
 
 const editBiographyorEmail = async (req, res) => {
+    try{
     const { Email, Biography } = req.body
-    if (!Validator.isEmail(Email))
-        res.status(400).json({ error: 'incorrect email format' })
     const id = req.user
+
+    if (!Validator.isEmail(Email)){
+        return res.status(400).json({ error: 'incorrect Email format' })
+    }
+    console.log(Email)
+    let user = await User.findOne({Email})
+    console.log(user)
+    if( user ) {
+        return res.status(400).json({ error: 'Email already in use' })
+    }
+   
     const userupdated = await User.findByIdAndUpdate(id, { Email: Email })
     const updated = await Instructor.findByIdAndUpdate(id, { Biography: Biography })
-    res.status(200).json({ updated, userupdated })
+    return res.status(200).json({ updated, userupdated })
+    }
+    catch(error){
+        res.status(400).json({ error: error.message })
+    }
 }
 
 
@@ -130,18 +161,6 @@ const defineDiscount = async (req, res) => {
         res.status(400).json({ error: 'error' })
     }
 }
-const getRating = async (req,res) => {
-    const id = req.user
-    try {
-        const rating = await Instructor.findById(id).select({Rating:1})
-        if(!rating){
-            return res.status(404).json({error: 'rating is null'})
-        }
-        res.status(200).json(rating)
-    } catch (error) {
-        res.status(400).json({ error: 'error' })
-    }
-}
 
 const createQuestion = async (req, res) => {
 
@@ -163,7 +182,7 @@ const createExam = async (req, res) => {
 
     const InstructorId = req.user
     //const courseId = req.params.courseid
-    const subtitleId = "638bb8348553b938065a1588"
+    const subtitleId = "638fbef1b01d216ab283c812"
 
 
 
@@ -187,6 +206,38 @@ const viewExams = async (req, res) => {
 
     const f = await Exam.find().populate('Questions')
     res.status(200).json(f)
+
+
+    if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        Questions = []
+        const exam = await Exam.create({ subtitleId, Questions, InstructorId })
+        const eid = await Exam.find({}, { _id: 1 }).sort({ _id: -1 }).limit(1).select('_id')
+        console.log(eid)
+        const examm = await Subtitle.updateOne({ _id: subtitleId }, { $push: { Exercises: eid } })
+        res.status(200).json(exam)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+
+
+
+
+const getRating = async (req, res) => {
+    const id = req.user
+    try {
+        const rating = await Instructor.findById(id).select({ Rating: 1 })
+        if (!rating) {
+            return res.status(404).json({ error: 'rating is null' })
+        }
+        res.status(200).json(rating)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
 }
 
 module.exports = {
@@ -194,10 +245,11 @@ module.exports = {
     viewAllInsCourses,
     editBiographyorEmail,
     defineDiscount,
+    getRating,
+    createSubtitle,
+    createVideo,
     createExam,
     createQuestion,
     viewExams,
-    getRating,
-    createSubtitle,
-    createVideo
+    searchCourse
 }

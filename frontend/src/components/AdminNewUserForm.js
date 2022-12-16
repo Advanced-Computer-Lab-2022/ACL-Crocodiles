@@ -10,18 +10,83 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { useAuthContext } from "../hooks/useAuthContext";
+
 
 const AdminNewUserForm = () => {
+    const {user} = useAuthContext()
     const [Username, setUsername] = useState('')
     const [Password, setPassword] = useState('')
+    const [Email, setEmail] = useState('')
     const [userType, setUserType] = useState('')
     const [error, setError] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const user = { Username, Password, userType }
-        console.log(JSON.stringify(user))
+        const userjs = { Username, Email, Password}
+        console.log(JSON.stringify(userjs))
+        if(userType === 'admin'){
+            const response = await fetch('/api/admin/createadmin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(userjs)
+            })
+            const json = await response.json()
+            console.log(json)
+            if (!response.ok) {
+                setError(json.error)
+            }
+            if (response.ok) {
+                setUsername('')
+                setEmail('')
+                setPassword('')
+                setUserType('')
+                setError(null)
+                console.log('Created new admin', json)
+            }
+        }
+        else if(userType === 'instructor'){
+            const response = await fetch('/api/admin/createinstructor', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(userjs)
+            })
+            const json = await response.json()
+            console.log(json)
+            if (!response.ok) {
+                setError(json.error)
+            }
+            if (response.ok) {
+                setUsername('')
+                setEmail('')
+                setPassword('')
+                setUserType('')
+                setError(null)
+                console.log('Created new instructor', json)
+            }
+        }
+        else if(userType==='corporate trainee'){
+            const response = await fetch('/api/admin/createcorporatetrainee', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(userjs)
+            })
+            const json = await response.json()
+            console.log(json)
+            if (!response.ok) {
+                setError(json.error)
+            }
+            if (response.ok) {
+                setUsername('')
+                setEmail('')
+                setPassword('')
+                setUserType('')
+                setError(null)
+                console.log('Created new corporate trainee', json)
+            }
+        }
     }
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '400px',m:2}}>
         <Typography variant="h5" component="div" gutterBottom >
@@ -34,6 +99,13 @@ const AdminNewUserForm = () => {
             value={Username}
             onChange={(e) => setUsername(e.target.value)}
             sx={{ m: 1, width: '25ch' }}
+        />
+        <TextField
+            required
+            label="Email"
+            value={Email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={{ m: 1, width: '25ch'}}
         />
         <TextField
             required

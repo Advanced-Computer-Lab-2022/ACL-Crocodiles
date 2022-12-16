@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom'
 
 //import ExamForm from "./ExamForm"
 import EditForm from "../components/EditInstructor"
+import Exam from "../components/Exam"
 import { useAuthContext } from "../hooks/useAuthContext"
-import {useEffect,useState} from 'react'
+import { useEffect, useState } from 'react'
 
 const Instructor = () => {
-    const [rating,setRating] = useState(null)
-    const[error,setError] = useState(null)
-    const {user} = useAuthContext()
+    const [rating, setRating] = useState(null)
+    const [error, setError] = useState(null)
+    const { user } = useAuthContext()
     const getMyRating = async () => {
-        if(!user){
+        if (!user) {
             console.log('You must be logged in')
             return
         }
@@ -39,13 +40,12 @@ const Instructor = () => {
     }, [])
 
 
-
     return (
 
         <div className="instructor">
             <h1>Instructor Page</h1>
             <div class="topnav">
-            <p><strong>My Rating: </strong> {rating!==null? rating+' / 5': 'not rated yet' }</p>
+                <p><strong>My Rating: </strong> {rating !== null ? rating + ' / 5' : 'not rated yet'}</p>
                 <a href="/search">
                     <input type="button" value="Search by instructorID" />
                 </a>
