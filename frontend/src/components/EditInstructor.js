@@ -22,12 +22,11 @@ const EditInstructor = () => {
       const json = await response.json()
     if(!response.ok){
         setError(json.error)
+        alert(error)
         setEmail('')
         setBiography('')    
     }
     if (response.ok){
-        setEmail('')
-        setBiography('')
     
        // setId('')
         setError(null)

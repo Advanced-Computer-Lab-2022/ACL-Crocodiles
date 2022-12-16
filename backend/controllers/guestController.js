@@ -6,7 +6,7 @@ const Search = async (req, res) => {
     const { Username, Title, Subject } = req.body
 
     try {
-        const instructor = await Instructor.find({ Username }).select({ id: 1 })
+        const instructor = await User.find({ Username }).select({ id: 1 })
         if (!instructor) {
             return res.status(404).json({ error: 'Couldnt find instructor' })
         }

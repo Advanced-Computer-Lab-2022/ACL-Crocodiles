@@ -8,7 +8,7 @@ const Video = require('../models/courseModel').video
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
-const { create } = require('../models/userModel')
+
 
 
 
@@ -107,12 +107,10 @@ const editBiographyorEmail = async (req, res) => {
     const { Email, Biography } = req.body
     const id = req.user
 
-    if (!Validator.isEmail(Email)){
+    if (Email && !Validator.isEmail(Email)){
         return res.status(400).json({ error: 'incorrect Email format' })
     }
-    console.log(Email)
     let user = await User.findOne({Email})
-    console.log(user)
     if( user ) {
         return res.status(400).json({ error: 'Email already in use' })
     }
