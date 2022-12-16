@@ -11,6 +11,9 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { useAuthContext } from "../hooks/useAuthContext";
+import Stack from "@mui/material/Stack";
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper';
 
 
 const AdminNewUserForm = () => {
@@ -20,6 +23,7 @@ const AdminNewUserForm = () => {
     const [Email, setEmail] = useState('')
     const [userType, setUserType] = useState('')
     const [error, setError] = useState(null)
+    const PaperStyle = {padding:20 ,height:'65vh',width:280,margin:'20px auto'}
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -88,24 +92,25 @@ const AdminNewUserForm = () => {
     }
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '400px',m:2}}>
+        <Grid>
+            <Paper elevation={10} style={PaperStyle} >
         <Typography variant="h5" component="div" gutterBottom >
             Create new user
         </Typography>
-            <div>
+        <Stack direction="column" spacing={2} >
         <TextField
           required
           label="Username"
             value={Username}
             onChange={(e) => setUsername(e.target.value)}
-            sx={{ m: 1, width: '25ch' }}
+            fullWidth
         />
         <TextField
             required
             label="Email"
             value={Email}
             onChange={(e) => setEmail(e.target.value)}
-            sx={{ m: 1, width: '25ch'}}
+            fullWidth
         />
         <TextField
             required
@@ -113,7 +118,6 @@ const AdminNewUserForm = () => {
             type="password"
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
-            sx={{ m: 1, width: '25ch', alignContent: 'center'}}
         />
         <FormControl sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-label">User Type</InputLabel>
@@ -122,6 +126,7 @@ const AdminNewUserForm = () => {
             id="demo-simple-select"
             value={userType}
             label="User Type"
+            required
             onChange={(e) => setUserType(e.target.value)}
         >
             <MenuItem value={'admin'}>Admin</MenuItem>
@@ -129,9 +134,10 @@ const AdminNewUserForm = () => {
             <MenuItem value={'corporate trainee'}>Corporate Trainee</MenuItem>
         </Select>
         </FormControl>
-        </div>
-        <Button variant="contained" onClick={handleSubmit} sx={{maxWidth:'200px' }}>Create User</Button>
-        </Box>
+        <Button variant="contained" onClick={handleSubmit} >Create User</Button>
+        </Stack>
+        </Paper>
+     </Grid>
 
     )
 }

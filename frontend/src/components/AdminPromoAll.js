@@ -1,10 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Stack from "@mui/material/Stack";
 
 const AdminPromoAll = () => {
+    const todayDate = Date.now();
     const [Discount, setDiscount] = useState('');
-    const [EndDate, setEndDate] = useState('');
+    const [EndDate, setEndDate] = useState(''+todayDate);
     const [Status, setStatus] = useState('');
     const [Error, setError] = useState(null);
 
@@ -34,13 +40,26 @@ const AdminPromoAll = () => {
     }
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <Typography variant="h3">Define Promotion On All Courses</Typography>
+        <div>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography variant="h4">Define Promotion on all courses</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+        <Stack spacing={2}>
             <TextField label="Discount Percentage" type="number" min="0" max="100" onChange={(e) => setDiscount(e.target.value)} value={Discount} />
-            <br />
-            <TextField label="Discount Expiry Date" type="date" onChange={(e) => setEndDate(e.target.value)} value={EndDate} />
+            <TextField label="Discount Expiry Date" type="date" onChange={(e) => setEndDate(e.target.value)} value={EndDate}/>
             <Button variant="contained" onClick={handleSubmit}>Submit</Button>
-        </Box>
+        </Stack>
+        </AccordionDetails>
+      </Accordion>
+      
+    </div>
+        
     )
 }
 

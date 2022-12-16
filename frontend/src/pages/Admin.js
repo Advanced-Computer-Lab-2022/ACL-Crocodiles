@@ -10,9 +10,6 @@ const Admin = () => {
             <h1>Admin Page</h1>
             <AdminPromoAll/>
             <AdminNewUserForm/>
-            <AdminForm/>
-            <InstructorForm/>
-            <CorporateTraineeForm/>
         </div>
     )
 }

@@ -64,8 +64,8 @@ const Signin = () => {
          <Link href= '/forgotpassword'> Forgot Password?</Link>
          </Typography>
 
-         <Typography>Do you have an acount?
-         <Link href= '/signup'>Sign up </Link>
+         <Typography>Don't have an account? 
+         <Link href= '/signup'> Sign up </Link>
          </Typography> 
         </Paper>
        
