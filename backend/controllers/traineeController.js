@@ -36,6 +36,18 @@ const getTrainee = async (req, res) => {
     }
     res.status(200).json(trainee)
 }
+const isTrainee = async (req, res) => {
+    const { id } = req.user
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(200).json({isTrainee:false})
+    }
+
+    const trainee = await Trainee.findById(id)
+    if (!trainee) {
+        return res.status(200).json({isTrainee:false})
+    }
+    return res.status(200).json({isTrainee:true})
+}
 const deleteTrainee = async (req, res) => {
     const { id } = req.params
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -221,11 +233,11 @@ const rateCourse = async (req, res) => {
         let course1 = await Course.findById(courseID);
         const newRating = (course1.Rating * course1.RatingCount + value) / (course1.RatingCount + 1)
         course1 = await course1.update({ Rating: newRating, RatingCount: course1.RatingCount + 1 })
-        res.status(200)
+     return   res.status(200)
     }
     catch (error) {
         console.log(error)
-        res.status(400).json(error)
+       return res.status(400).json(error)
     }
 }
 
@@ -240,14 +252,14 @@ const rateInstructor = async (req, res) => {
         const instructorID = course1.InstructorId
         let instructor = await Instructor.findById(instructorID)
         if (!instructor)
-            res.status(404).json({ error: 'no such instructor id' })
+          return  res.status(404).json({ error: 'no such instructor id' })
         const newRating = (instructor.Rating * instructor.RatingCount + value1) / (instructor.RatingCount + 1)
         instructor = await instructor.update({ Rating: newRating, RatingCount: (instructor.RatingCount + 1) })
-        res.status(200)
+       return res.status(200)
     }
     catch (error) {
         console.log(error)
-        res.status(400).json(error)
+        return res.status(400).json(error)
     }
 }
 
@@ -369,11 +381,11 @@ const calculateGrade = async (req, res) => {
         }
 
         const percentage = (grade / answer.length) * 100
-        res.json({ Grade: grade, Percentage: percentage })
+       return res.json({ Grade: grade, Percentage: percentage })
 
     } catch (error) {
 
-        res.status(400).json({ error: 'error' })
+       return res.status(400).json({ error: 'error' })
     }
 }
 
@@ -396,5 +408,6 @@ module.exports = {
     rateInstructor,
     addAssignment,
     getAssignment,
-    calculateGrade
+    calculateGrade,
+    isTrainee
 }

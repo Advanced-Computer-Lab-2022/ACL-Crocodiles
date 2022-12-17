@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom"
 
 const ExamCorpTrainee = () => {
     const [Exam, setExam] = useState(null)
@@ -16,9 +17,11 @@ const ExamCorpTrainee = () => {
     const { examid } = useParams()
     const [value, setValue] = useState('');
     const [answers, setAnswers] = useState(['','','','']);
+    const [text, setText] = useState("Submit");
     const [notSelected,setNotSelected] = useState([]);
     const [errorSubmit,setErrorSubmit] = useState([]);
-  
+    let navigate = useNavigate()
+
     const handleChange = (event) =>{
         const arr = event.target.value.split(",");
         const questionIndex = arr[0];
@@ -58,7 +61,9 @@ const ExamCorpTrainee = () => {
                 const json = await response.json()
                 if(!response.ok)
                      setError(json.error)    
-      
+                setText("view Solution")
+                if(text=="view Solution")
+                    navigate('/viewSolutionCorp/' + examid)   
         }
         addAssignment();
     }
@@ -139,8 +144,9 @@ const ExamCorpTrainee = () => {
                 </div>)}
                 {error&& <div className="error">{error}</div>}
                 <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined" size="large"  onClick={handleClick}>
-          Submit
+                {text}
         </Button>
+
 
         </div>
     )

@@ -131,7 +131,7 @@ const  CorpTraineeMyCoursePage= ()=> {
 
   return (
 <Box sx={{ margin:"-20px"}}>
-  <Grid container  sx={{ height: "110vh"}} alignItems="center">
+  <Grid container  sx={{ height: "110vh"}} alignItems="flex-start">
   
  {open? 
  <Grid item xs={1.9} >
@@ -150,7 +150,7 @@ const  CorpTraineeMyCoursePage= ()=> {
         backgroundSize:"cover",
         backgroundRepeat: "no-repeat",
         display: "grid",
-        placeItems: "center",
+        placeItems: "flex-start",
         minHeight: "75vh",
         width:"100%",
       }}
@@ -261,7 +261,7 @@ const  CorpTraineeMyCoursePage= ()=> {
         <Box   alignItems="top" sx={{minHeight:"fit-content", display:"grid"} }>
           {/* {video?<iframe frameborder="0" scrolling="no" marginheight="30" marginwidth="0"width="80%" height="600" type="text/html" src={video && video.url} ></iframe>:<></>} */}
           <div style={{position: "relative", height: 0, overflow: "hidden", paddingBottom: "56.25%", /* 16/9 ratio */ borderStyle: "none"  ,objectFit:"cover"}}>
-          {video?<iframe style={{position: "absolute", top:0, left: 0, width: "100%", height: "100%",borderRadius: '16px' ,objectFit:"cover"}} src="https://www.youtube.com/embed/j942wKiXFu8"></iframe>:<></>}
+          {video?<iframe style={{position: "absolute", top:0, left: 0, width: "100%", height: "100%",borderRadius: '16px' ,objectFit:"cover"}} src={video.url}></iframe>:<></>}
          </div>
          </Box>
          </Grid>
