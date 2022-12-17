@@ -30,13 +30,15 @@ import CorpTraineeMyCourses from './pages/CorpTraineeMyCourses'
 import CorpTraineeCoursePage from './pages/CorpTraineeMyCoursePage'
 import ChangePassword from './pages/ChangePassword'
 import AddSubtitle from './pages/AddSubtitle'
+import TraineeNavBar from './components/TraineeNavBar'
+import NavAssign from './components/NavAssign'
 import TM from './pages/TM'
 function App() {
   return (
     <div className="App">
 
       <BrowserRouter>
-        <Navbar />
+        <NavAssign />
         <div className="pages">
           <Routes>
             <Route
@@ -129,16 +131,12 @@ function App() {
               element={<InstructorCourses />}
             />
             <Route
-              path="/definediscount/:courseid"
-              element={<DefineDiscount />}
+              path="/createexam"
+              element={<Exam />}
             />
             <Route
               path="/CorpTraineeMyCourses"
               element={<CorpTraineeMyCourses />}
-            />
-            <Route
-              path="/createexam"
-              element={<Exam />}
             />
             <Route
               path="/profile"
@@ -147,7 +145,8 @@ function App() {
             <Route
               path="/changePassword"
               element={<ChangePassword />}
-            />               <Route
+            />               
+            <Route
               path="/viewExamCorp/:examid"
               element={<ExamCorpTrainee />}
             />

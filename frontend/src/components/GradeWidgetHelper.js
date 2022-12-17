@@ -7,7 +7,8 @@ import GradeWidget from '../components/GradeWidget'
 const GradeWidgetHelper = ({ExamId, type}) => {
     const { user } = useAuthContext()
     const [grade,setGrade] = useState(0)
-    const [percentage,setPercentage] = useState(0)
+    const [percentage,setPercentage] = useState(null)
+    
   useEffect(() => {
     if(type=="Trainee"){
     const fetchGrade = async () => {
@@ -54,7 +55,7 @@ const GradeWidgetHelper = ({ExamId, type}) => {
  }
  fetchGrade();
   }
-  }, )
+  },[user] )
 
 
   return (

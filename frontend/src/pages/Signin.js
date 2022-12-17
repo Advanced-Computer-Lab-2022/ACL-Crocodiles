@@ -21,11 +21,8 @@ const Signin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
+        console.log(Username,Password)
         await login(Username,Password)
-
-      
-        
     }
     const PaperStyle = {padding:20 ,height:'65vh',width:280,margin:'20px auto'}
     const btnstyle = { margin:'8px '}
@@ -67,8 +64,8 @@ const Signin = () => {
          <Link href= '/forgotpassword'> Forgot Password?</Link>
          </Typography>
 
-         <Typography>Do you have an acount?
-         <Link href= '/signup'>Sign up </Link>
+         <Typography>Don't have an account? 
+         <Link href= '/signup'> Sign up </Link>
          </Typography> 
         </Paper>
        

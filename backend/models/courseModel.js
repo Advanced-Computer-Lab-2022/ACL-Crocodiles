@@ -131,17 +131,6 @@ const videoSchema = new Schema({
 }, { timestamps: true })
 
 
-courseSchema.statics.deleteDiscounts = async function () {
-    const courses = await this.find()
-    courses.forEach(async (course) => {
-        if (course.DiscountEndDate < Date.now()) {
-            course.Discount = undefined
-            course.DiscountEndDate = undefined
-            await course.save()
-        }
-    })
-}
-
 const course = mongoose.model('Course', courseSchema)
 const sub = mongoose.model('Subtitle', subtitleSchema)
 //const ex = mongoose.model('Exercise', exerciseSchema)

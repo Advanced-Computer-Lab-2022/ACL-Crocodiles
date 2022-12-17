@@ -1,2006 +1,2003 @@
-{
-    "countries": {
-        "country": [
+ [
             {
                 "countryCode": "AD",
-                "countryName": "Andorra",
-                "currencyCode": "EUR",
+                "country": "Andorra",
+                "currency_code": "EUR",
                 "population": "84000",
                 "capital": "Andorra la Vella",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "AE",
-                "countryName": "United Arab Emirates",
-                "currencyCode": "AED",
+                "country": "United Arab Emirates",
+                "currency_code": "AED",
                 "population": "4975593",
                 "capital": "Abu Dhabi",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "AF",
-                "countryName": "Afghanistan",
-                "currencyCode": "AFN",
+                "country": "Afghanistan",
+                "currency_code": "AFN",
                 "population": "29121286",
                 "capital": "Kabul",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "AG",
-                "countryName": "Antigua and Barbuda",
-                "currencyCode": "XCD",
+                "country": "Antigua and Barbuda",
+                "currency_code": "XCD",
                 "population": "86754",
                 "capital": "St. John's",
                 "continentName": "North America"
             },
             {
                 "countryCode": "AI",
-                "countryName": "Anguilla",
-                "currencyCode": "XCD",
+                "country": "Anguilla",
+                "currency_code": "XCD",
                 "population": "13254",
                 "capital": "The Valley",
                 "continentName": "North America"
             },
             {
                 "countryCode": "AL",
-                "countryName": "Albania",
-                "currencyCode": "ALL",
+                "country": "Albania",
+                "currency_code": "ALL",
                 "population": "2986952",
                 "capital": "Tirana",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "AM",
-                "countryName": "Armenia",
-                "currencyCode": "AMD",
+                "country": "Armenia",
+                "currency_code": "AMD",
                 "population": "2968000",
                 "capital": "Yerevan",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "AO",
-                "countryName": "Angola",
-                "currencyCode": "AOA",
+                "country": "Angola",
+                "currency_code": "AOA",
                 "population": "13068161",
                 "capital": "Luanda",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "AQ",
-                "countryName": "Antarctica",
-                "currencyCode": "",
+                "country": "Antarctica",
+                "currency_code": "",
                 "population": "0",
                 "capital": "",
                 "continentName": "Antarctica"
             },
             {
                 "countryCode": "AR",
-                "countryName": "Argentina",
-                "currencyCode": "ARS",
+                "country": "Argentina",
+                "currency_code": "ARS",
                 "population": "41343201",
                 "capital": "Buenos Aires",
                 "continentName": "South America"
             },
             {
                 "countryCode": "AS",
-                "countryName": "American Samoa",
-                "currencyCode": "USD",
+                "country": "American Samoa",
+                "currency_code": "USD",
                 "population": "57881",
                 "capital": "Pago Pago",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "AT",
-                "countryName": "Austria",
-                "currencyCode": "EUR",
+                "country": "Austria",
+                "currency_code": "EUR",
                 "population": "8205000",
                 "capital": "Vienna",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "AU",
-                "countryName": "Australia",
-                "currencyCode": "AUD",
+                "country": "Australia",
+                "currency_code": "AUD",
                 "population": "21515754",
                 "capital": "Canberra",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "AW",
-                "countryName": "Aruba",
-                "currencyCode": "AWG",
+                "country": "Aruba",
+                "currency_code": "AWG",
                 "population": "71566",
                 "capital": "Oranjestad",
                 "continentName": "North America"
             },
             {
                 "countryCode": "AX",
-                "countryName": "Åland",
-                "currencyCode": "EUR",
+                "country": "Åland",
+                "currency_code": "EUR",
                 "population": "26711",
                 "capital": "Mariehamn",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "AZ",
-                "countryName": "Azerbaijan",
-                "currencyCode": "AZN",
+                "country": "Azerbaijan",
+                "currency_code": "AZN",
                 "population": "8303512",
                 "capital": "Baku",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "BA",
-                "countryName": "Bosnia and Herzegovina",
-                "currencyCode": "BAM",
+                "country": "Bosnia and Herzegovina",
+                "currency_code": "BAM",
                 "population": "4590000",
                 "capital": "Sarajevo",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "BB",
-                "countryName": "Barbados",
-                "currencyCode": "BBD",
+                "country": "Barbados",
+                "currency_code": "BBD",
                 "population": "285653",
                 "capital": "Bridgetown",
                 "continentName": "North America"
             },
             {
                 "countryCode": "BD",
-                "countryName": "Bangladesh",
-                "currencyCode": "BDT",
+                "country": "Bangladesh",
+                "currency_code": "BDT",
                 "population": "156118464",
                 "capital": "Dhaka",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "BE",
-                "countryName": "Belgium",
-                "currencyCode": "EUR",
+                "country": "Belgium",
+                "currency_code": "EUR",
                 "population": "10403000",
                 "capital": "Brussels",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "BF",
-                "countryName": "Burkina Faso",
-                "currencyCode": "XOF",
+                "country": "Burkina Faso",
+                "currency_code": "XOF",
                 "population": "16241811",
                 "capital": "Ouagadougou",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "BG",
-                "countryName": "Bulgaria",
-                "currencyCode": "BGN",
+                "country": "Bulgaria",
+                "currency_code": "BGN",
                 "population": "7148785",
                 "capital": "Sofia",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "BH",
-                "countryName": "Bahrain",
-                "currencyCode": "BHD",
+                "country": "Bahrain",
+                "currency_code": "BHD",
                 "population": "738004",
                 "capital": "Manama",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "BI",
-                "countryName": "Burundi",
-                "currencyCode": "BIF",
+                "country": "Burundi",
+                "currency_code": "BIF",
                 "population": "9863117",
                 "capital": "Bujumbura",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "BJ",
-                "countryName": "Benin",
-                "currencyCode": "XOF",
+                "country": "Benin",
+                "currency_code": "XOF",
                 "population": "9056010",
                 "capital": "Porto-Novo",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "BL",
-                "countryName": "Saint Barthélemy",
-                "currencyCode": "EUR",
+                "country": "Saint Barthélemy",
+                "currency_code": "EUR",
                 "population": "8450",
                 "capital": "Gustavia",
                 "continentName": "North America"
             },
             {
                 "countryCode": "BM",
-                "countryName": "Bermuda",
-                "currencyCode": "BMD",
+                "country": "Bermuda",
+                "currency_code": "BMD",
                 "population": "65365",
                 "capital": "Hamilton",
                 "continentName": "North America"
             },
             {
                 "countryCode": "BN",
-                "countryName": "Brunei",
-                "currencyCode": "BND",
+                "country": "Brunei",
+                "currency_code": "BND",
                 "population": "395027",
                 "capital": "Bandar Seri Begawan",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "BO",
-                "countryName": "Bolivia",
-                "currencyCode": "BOB",
+                "country": "Bolivia",
+                "currency_code": "BOB",
                 "population": "9947418",
                 "capital": "Sucre",
                 "continentName": "South America"
             },
             {
                 "countryCode": "BQ",
-                "countryName": "Bonaire",
-                "currencyCode": "USD",
+                "country": "Bonaire",
+                "currency_code": "USD",
                 "population": "18012",
                 "capital": "Kralendijk",
                 "continentName": "North America"
             },
             {
                 "countryCode": "BR",
-                "countryName": "Brazil",
-                "currencyCode": "BRL",
+                "country": "Brazil",
+                "currency_code": "BRL",
                 "population": "201103330",
                 "capital": "Brasília",
                 "continentName": "South America"
             },
             {
                 "countryCode": "BS",
-                "countryName": "Bahamas",
-                "currencyCode": "BSD",
+                "country": "Bahamas",
+                "currency_code": "BSD",
                 "population": "301790",
                 "capital": "Nassau",
                 "continentName": "North America"
             },
             {
                 "countryCode": "BT",
-                "countryName": "Bhutan",
-                "currencyCode": "BTN",
+                "country": "Bhutan",
+                "currency_code": "BTN",
                 "population": "699847",
                 "capital": "Thimphu",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "BV",
-                "countryName": "Bouvet Island",
-                "currencyCode": "NOK",
+                "country": "Bouvet Island",
+                "currency_code": "NOK",
                 "population": "0",
                 "capital": "",
                 "continentName": "Antarctica"
             },
             {
                 "countryCode": "BW",
-                "countryName": "Botswana",
-                "currencyCode": "BWP",
+                "country": "Botswana",
+                "currency_code": "BWP",
                 "population": "2029307",
                 "capital": "Gaborone",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "BY",
-                "countryName": "Belarus",
-                "currencyCode": "BYR",
+                "country": "Belarus",
+                "currency_code": "BYR",
                 "population": "9685000",
                 "capital": "Minsk",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "BZ",
-                "countryName": "Belize",
-                "currencyCode": "BZD",
+                "country": "Belize",
+                "currency_code": "BZD",
                 "population": "314522",
                 "capital": "Belmopan",
                 "continentName": "North America"
             },
             {
                 "countryCode": "CA",
-                "countryName": "Canada",
-                "currencyCode": "CAD",
+                "country": "Canada",
+                "currency_code": "CAD",
                 "population": "33679000",
                 "capital": "Ottawa",
                 "continentName": "North America"
             },
             {
                 "countryCode": "CC",
-                "countryName": "Cocos [Keeling] Islands",
-                "currencyCode": "AUD",
+                "country": "Cocos [Keeling] Islands",
+                "currency_code": "AUD",
                 "population": "628",
                 "capital": "West Island",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "CD",
-                "countryName": "Democratic Republic of the Congo",
-                "currencyCode": "CDF",
+                "country": "Democratic Republic of the Congo",
+                "currency_code": "CDF",
                 "population": "70916439",
                 "capital": "Kinshasa",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "CF",
-                "countryName": "Central African Republic",
-                "currencyCode": "XAF",
+                "country": "Central African Republic",
+                "currency_code": "XAF",
                 "population": "4844927",
                 "capital": "Bangui",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "CG",
-                "countryName": "Republic of the Congo",
-                "currencyCode": "XAF",
+                "country": "Republic of the Congo",
+                "currency_code": "XAF",
                 "population": "3039126",
                 "capital": "Brazzaville",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "CH",
-                "countryName": "Switzerland",
-                "currencyCode": "CHF",
+                "country": "Switzerland",
+                "currency_code": "CHF",
                 "population": "7581000",
                 "capital": "Bern",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "CI",
-                "countryName": "Ivory Coast",
-                "currencyCode": "XOF",
+                "country": "Ivory Coast",
+                "currency_code": "XOF",
                 "population": "21058798",
                 "capital": "Yamoussoukro",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "CK",
-                "countryName": "Cook Islands",
-                "currencyCode": "NZD",
+                "country": "Cook Islands",
+                "currency_code": "NZD",
                 "population": "21388",
                 "capital": "Avarua",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "CL",
-                "countryName": "Chile",
-                "currencyCode": "CLP",
+                "country": "Chile",
+                "currency_code": "CLP",
                 "population": "16746491",
                 "capital": "Santiago",
                 "continentName": "South America"
             },
             {
                 "countryCode": "CM",
-                "countryName": "Cameroon",
-                "currencyCode": "XAF",
+                "country": "Cameroon",
+                "currency_code": "XAF",
                 "population": "19294149",
                 "capital": "Yaoundé",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "CN",
-                "countryName": "China",
-                "currencyCode": "CNY",
+                "country": "China",
+                "currency_code": "CNY",
                 "population": "1330044000",
                 "capital": "Beijing",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "CO",
-                "countryName": "Colombia",
-                "currencyCode": "COP",
+                "country": "Colombia",
+                "currency_code": "COP",
                 "population": "47790000",
                 "capital": "Bogotá",
                 "continentName": "South America"
             },
             {
                 "countryCode": "CR",
-                "countryName": "Costa Rica",
-                "currencyCode": "CRC",
+                "country": "Costa Rica",
+                "currency_code": "CRC",
                 "population": "4516220",
                 "capital": "San José",
                 "continentName": "North America"
             },
             {
                 "countryCode": "CU",
-                "countryName": "Cuba",
-                "currencyCode": "CUP",
+                "country": "Cuba",
+                "currency_code": "CUP",
                 "population": "11423000",
                 "capital": "Havana",
                 "continentName": "North America"
             },
             {
                 "countryCode": "CV",
-                "countryName": "Cape Verde",
-                "currencyCode": "CVE",
+                "country": "Cape Verde",
+                "currency_code": "CVE",
                 "population": "508659",
                 "capital": "Praia",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "CW",
-                "countryName": "Curacao",
-                "currencyCode": "ANG",
+                "country": "Curacao",
+                "currency_code": "ANG",
                 "population": "141766",
                 "capital": "Willemstad",
                 "continentName": "North America"
             },
             {
                 "countryCode": "CX",
-                "countryName": "Christmas Island",
-                "currencyCode": "AUD",
+                "country": "Christmas Island",
+                "currency_code": "AUD",
                 "population": "1500",
                 "capital": "Flying Fish Cove",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "CY",
-                "countryName": "Cyprus",
-                "currencyCode": "EUR",
+                "country": "Cyprus",
+                "currency_code": "EUR",
                 "population": "1102677",
                 "capital": "Nicosia",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "CZ",
-                "countryName": "Czechia",
-                "currencyCode": "CZK",
+                "country": "Czechia",
+                "currency_code": "CZK",
                 "population": "10476000",
                 "capital": "Prague",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "DE",
-                "countryName": "Germany",
-                "currencyCode": "EUR",
+                "country": "Germany",
+                "currency_code": "EUR",
                 "population": "81802257",
                 "capital": "Berlin",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "DJ",
-                "countryName": "Djibouti",
-                "currencyCode": "DJF",
+                "country": "Djibouti",
+                "currency_code": "DJF",
                 "population": "740528",
                 "capital": "Djibouti",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "DK",
-                "countryName": "Denmark",
-                "currencyCode": "DKK",
+                "country": "Denmark",
+                "currency_code": "DKK",
                 "population": "5484000",
                 "capital": "Copenhagen",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "DM",
-                "countryName": "Dominica",
-                "currencyCode": "XCD",
+                "country": "Dominica",
+                "currency_code": "XCD",
                 "population": "72813",
                 "capital": "Roseau",
                 "continentName": "North America"
             },
             {
                 "countryCode": "DO",
-                "countryName": "Dominican Republic",
-                "currencyCode": "DOP",
+                "country": "Dominican Republic",
+                "currency_code": "DOP",
                 "population": "9823821",
                 "capital": "Santo Domingo",
                 "continentName": "North America"
             },
             {
                 "countryCode": "DZ",
-                "countryName": "Algeria",
-                "currencyCode": "DZD",
+                "country": "Algeria",
+                "currency_code": "DZD",
                 "population": "34586184",
                 "capital": "Algiers",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "EC",
-                "countryName": "Ecuador",
-                "currencyCode": "USD",
+                "country": "Ecuador",
+                "currency_code": "USD",
                 "population": "14790608",
                 "capital": "Quito",
                 "continentName": "South America"
             },
             {
                 "countryCode": "EE",
-                "countryName": "Estonia",
-                "currencyCode": "EUR",
+                "country": "Estonia",
+                "currency_code": "EUR",
                 "population": "1291170",
                 "capital": "Tallinn",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "EG",
-                "countryName": "Egypt",
-                "currencyCode": "EGP",
+                "country": "Egypt",
+                "currency_code": "EGP",
                 "population": "80471869",
                 "capital": "Cairo",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "EH",
-                "countryName": "Western Sahara",
-                "currencyCode": "MAD",
+                "country": "Western Sahara",
+                "currency_code": "MAD",
                 "population": "273008",
                 "capital": "Laâyoune / El Aaiún",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "ER",
-                "countryName": "Eritrea",
-                "currencyCode": "ERN",
+                "country": "Eritrea",
+                "currency_code": "ERN",
                 "population": "5792984",
                 "capital": "Asmara",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "ES",
-                "countryName": "Spain",
-                "currencyCode": "EUR",
+                "country": "Spain",
+                "currency_code": "EUR",
                 "population": "46505963",
                 "capital": "Madrid",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "ET",
-                "countryName": "Ethiopia",
-                "currencyCode": "ETB",
+                "country": "Ethiopia",
+                "currency_code": "ETB",
                 "population": "88013491",
                 "capital": "Addis Ababa",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "FI",
-                "countryName": "Finland",
-                "currencyCode": "EUR",
+                "country": "Finland",
+                "currency_code": "EUR",
                 "population": "5244000",
                 "capital": "Helsinki",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "FJ",
-                "countryName": "Fiji",
-                "currencyCode": "FJD",
+                "country": "Fiji",
+                "currency_code": "FJD",
                 "population": "875983",
                 "capital": "Suva",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "FK",
-                "countryName": "Falkland Islands",
-                "currencyCode": "FKP",
+                "country": "Falkland Islands",
+                "currency_code": "FKP",
                 "population": "2638",
                 "capital": "Stanley",
                 "continentName": "South America"
             },
             {
                 "countryCode": "FM",
-                "countryName": "Micronesia",
-                "currencyCode": "USD",
+                "country": "Micronesia",
+                "currency_code": "USD",
                 "population": "107708",
                 "capital": "Palikir",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "FO",
-                "countryName": "Faroe Islands",
-                "currencyCode": "DKK",
+                "country": "Faroe Islands",
+                "currency_code": "DKK",
                 "population": "48228",
                 "capital": "Tórshavn",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "FR",
-                "countryName": "France",
-                "currencyCode": "EUR",
+                "country": "France",
+                "currency_code": "EUR",
                 "population": "64768389",
                 "capital": "Paris",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "GA",
-                "countryName": "Gabon",
-                "currencyCode": "XAF",
+                "country": "Gabon",
+                "currency_code": "XAF",
                 "population": "1545255",
                 "capital": "Libreville",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "GB",
-                "countryName": "United Kingdom",
-                "currencyCode": "GBP",
+                "country": "United Kingdom",
+                "currency_code": "GBP",
                 "population": "62348447",
                 "capital": "London",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "GD",
-                "countryName": "Grenada",
-                "currencyCode": "XCD",
+                "country": "Grenada",
+                "currency_code": "XCD",
                 "population": "107818",
                 "capital": "St. George's",
                 "continentName": "North America"
             },
             {
                 "countryCode": "GE",
-                "countryName": "Georgia",
-                "currencyCode": "GEL",
+                "country": "Georgia",
+                "currency_code": "GEL",
                 "population": "4630000",
                 "capital": "Tbilisi",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "GF",
-                "countryName": "French Guiana",
-                "currencyCode": "EUR",
+                "country": "French Guiana",
+                "currency_code": "EUR",
                 "population": "195506",
                 "capital": "Cayenne",
                 "continentName": "South America"
             },
             {
                 "countryCode": "GG",
-                "countryName": "Guernsey",
-                "currencyCode": "GBP",
+                "country": "Guernsey",
+                "currency_code": "GBP",
                 "population": "65228",
                 "capital": "St Peter Port",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "GH",
-                "countryName": "Ghana",
-                "currencyCode": "GHS",
+                "country": "Ghana",
+                "currency_code": "GHS",
                 "population": "24339838",
                 "capital": "Accra",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "GI",
-                "countryName": "Gibraltar",
-                "currencyCode": "GIP",
+                "country": "Gibraltar",
+                "currency_code": "GIP",
                 "population": "27884",
                 "capital": "Gibraltar",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "GL",
-                "countryName": "Greenland",
-                "currencyCode": "DKK",
+                "country": "Greenland",
+                "currency_code": "DKK",
                 "population": "56375",
                 "capital": "Nuuk",
                 "continentName": "North America"
             },
             {
                 "countryCode": "GM",
-                "countryName": "Gambia",
-                "currencyCode": "GMD",
+                "country": "Gambia",
+                "currency_code": "GMD",
                 "population": "1593256",
                 "capital": "Bathurst",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "GN",
-                "countryName": "Guinea",
-                "currencyCode": "GNF",
+                "country": "Guinea",
+                "currency_code": "GNF",
                 "population": "10324025",
                 "capital": "Conakry",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "GP",
-                "countryName": "Guadeloupe",
-                "currencyCode": "EUR",
+                "country": "Guadeloupe",
+                "currency_code": "EUR",
                 "population": "443000",
                 "capital": "Basse-Terre",
                 "continentName": "North America"
             },
             {
                 "countryCode": "GQ",
-                "countryName": "Equatorial Guinea",
-                "currencyCode": "XAF",
+                "country": "Equatorial Guinea",
+                "currency_code": "XAF",
                 "population": "1014999",
                 "capital": "Malabo",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "GR",
-                "countryName": "Greece",
-                "currencyCode": "EUR",
+                "country": "Greece",
+                "currency_code": "EUR",
                 "population": "11000000",
                 "capital": "Athens",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "GS",
-                "countryName": "South Georgia and the South Sandwich Islands",
-                "currencyCode": "GBP",
+                "country": "South Georgia and the South Sandwich Islands",
+                "currency_code": "GBP",
                 "population": "30",
                 "capital": "Grytviken",
                 "continentName": "Antarctica"
             },
             {
                 "countryCode": "GT",
-                "countryName": "Guatemala",
-                "currencyCode": "GTQ",
+                "country": "Guatemala",
+                "currency_code": "GTQ",
                 "population": "13550440",
                 "capital": "Guatemala City",
                 "continentName": "North America"
             },
             {
                 "countryCode": "GU",
-                "countryName": "Guam",
-                "currencyCode": "USD",
+                "country": "Guam",
+                "currency_code": "USD",
                 "population": "159358",
                 "capital": "Hagåtña",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "GW",
-                "countryName": "Guinea-Bissau",
-                "currencyCode": "XOF",
+                "country": "Guinea-Bissau",
+                "currency_code": "XOF",
                 "population": "1565126",
                 "capital": "Bissau",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "GY",
-                "countryName": "Guyana",
-                "currencyCode": "GYD",
+                "country": "Guyana",
+                "currency_code": "GYD",
                 "population": "748486",
                 "capital": "Georgetown",
                 "continentName": "South America"
             },
             {
                 "countryCode": "HK",
-                "countryName": "Hong Kong",
-                "currencyCode": "HKD",
+                "country": "Hong Kong",
+                "currency_code": "HKD",
                 "population": "6898686",
                 "capital": "Hong Kong",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "HM",
-                "countryName": "Heard Island and McDonald Islands",
-                "currencyCode": "AUD",
+                "country": "Heard Island and McDonald Islands",
+                "currency_code": "AUD",
                 "population": "0",
                 "capital": "",
                 "continentName": "Antarctica"
             },
             {
                 "countryCode": "HN",
-                "countryName": "Honduras",
-                "currencyCode": "HNL",
+                "country": "Honduras",
+                "currency_code": "HNL",
                 "population": "7989415",
                 "capital": "Tegucigalpa",
                 "continentName": "North America"
             },
             {
                 "countryCode": "HR",
-                "countryName": "Croatia",
-                "currencyCode": "HRK",
+                "country": "Croatia",
+                "currency_code": "HRK",
                 "population": "4284889",
                 "capital": "Zagreb",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "HT",
-                "countryName": "Haiti",
-                "currencyCode": "HTG",
+                "country": "Haiti",
+                "currency_code": "HTG",
                 "population": "9648924",
                 "capital": "Port-au-Prince",
                 "continentName": "North America"
             },
             {
                 "countryCode": "HU",
-                "countryName": "Hungary",
-                "currencyCode": "HUF",
+                "country": "Hungary",
+                "currency_code": "HUF",
                 "population": "9982000",
                 "capital": "Budapest",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "ID",
-                "countryName": "Indonesia",
-                "currencyCode": "IDR",
+                "country": "Indonesia",
+                "currency_code": "IDR",
                 "population": "242968342",
                 "capital": "Jakarta",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "IE",
-                "countryName": "Ireland",
-                "currencyCode": "EUR",
+                "country": "Ireland",
+                "currency_code": "EUR",
                 "population": "4622917",
                 "capital": "Dublin",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "IL",
-                "countryName": "Israel",
-                "currencyCode": "ILS",
+                "country": "Israel",
+                "currency_code": "ILS",
                 "population": "7353985",
                 "capital": "",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "IM",
-                "countryName": "Isle of Man",
-                "currencyCode": "GBP",
+                "country": "Isle of Man",
+                "currency_code": "GBP",
                 "population": "75049",
                 "capital": "Douglas",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "IN",
-                "countryName": "India",
-                "currencyCode": "INR",
+                "country": "India",
+                "currency_code": "INR",
                 "population": "1173108018",
                 "capital": "New Delhi",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "IO",
-                "countryName": "British Indian Ocean Territory",
-                "currencyCode": "USD",
+                "country": "British Indian Ocean Territory",
+                "currency_code": "USD",
                 "population": "4000",
                 "capital": "",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "IQ",
-                "countryName": "Iraq",
-                "currencyCode": "IQD",
+                "country": "Iraq",
+                "currency_code": "IQD",
                 "population": "29671605",
                 "capital": "Baghdad",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "IR",
-                "countryName": "Iran",
-                "currencyCode": "IRR",
+                "country": "Iran",
+                "currency_code": "IRR",
                 "population": "76923300",
                 "capital": "Tehran",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "IS",
-                "countryName": "Iceland",
-                "currencyCode": "ISK",
+                "country": "Iceland",
+                "currency_code": "ISK",
                 "population": "308910",
                 "capital": "Reykjavik",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "IT",
-                "countryName": "Italy",
-                "currencyCode": "EUR",
+                "country": "Italy",
+                "currency_code": "EUR",
                 "population": "60340328",
                 "capital": "Rome",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "JE",
-                "countryName": "Jersey",
-                "currencyCode": "GBP",
+                "country": "Jersey",
+                "currency_code": "GBP",
                 "population": "90812",
                 "capital": "Saint Helier",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "JM",
-                "countryName": "Jamaica",
-                "currencyCode": "JMD",
+                "country": "Jamaica",
+                "currency_code": "JMD",
                 "population": "2847232",
                 "capital": "Kingston",
                 "continentName": "North America"
             },
             {
                 "countryCode": "JO",
-                "countryName": "Jordan",
-                "currencyCode": "JOD",
+                "country": "Jordan",
+                "currency_code": "JOD",
                 "population": "6407085",
                 "capital": "Amman",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "JP",
-                "countryName": "Japan",
-                "currencyCode": "JPY",
+                "country": "Japan",
+                "currency_code": "JPY",
                 "population": "127288000",
                 "capital": "Tokyo",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "KE",
-                "countryName": "Kenya",
-                "currencyCode": "KES",
+                "country": "Kenya",
+                "currency_code": "KES",
                 "population": "40046566",
                 "capital": "Nairobi",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "KG",
-                "countryName": "Kyrgyzstan",
-                "currencyCode": "KGS",
+                "country": "Kyrgyzstan",
+                "currency_code": "KGS",
                 "population": "5776500",
                 "capital": "Bishkek",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "KH",
-                "countryName": "Cambodia",
-                "currencyCode": "KHR",
+                "country": "Cambodia",
+                "currency_code": "KHR",
                 "population": "14453680",
                 "capital": "Phnom Penh",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "KI",
-                "countryName": "Kiribati",
-                "currencyCode": "AUD",
+                "country": "Kiribati",
+                "currency_code": "AUD",
                 "population": "92533",
                 "capital": "Tarawa",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "KM",
-                "countryName": "Comoros",
-                "currencyCode": "KMF",
+                "country": "Comoros",
+                "currency_code": "KMF",
                 "population": "773407",
                 "capital": "Moroni",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "KN",
-                "countryName": "Saint Kitts and Nevis",
-                "currencyCode": "XCD",
+                "country": "Saint Kitts and Nevis",
+                "currency_code": "XCD",
                 "population": "51134",
                 "capital": "Basseterre",
                 "continentName": "North America"
             },
             {
                 "countryCode": "KP",
-                "countryName": "North Korea",
-                "currencyCode": "KPW",
+                "country": "North Korea",
+                "currency_code": "KPW",
                 "population": "22912177",
                 "capital": "Pyongyang",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "KR",
-                "countryName": "South Korea",
-                "currencyCode": "KRW",
+                "country": "South Korea",
+                "currency_code": "KRW",
                 "population": "48422644",
                 "capital": "Seoul",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "KW",
-                "countryName": "Kuwait",
-                "currencyCode": "KWD",
+                "country": "Kuwait",
+                "currency_code": "KWD",
                 "population": "2789132",
                 "capital": "Kuwait City",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "KY",
-                "countryName": "Cayman Islands",
-                "currencyCode": "KYD",
+                "country": "Cayman Islands",
+                "currency_code": "KYD",
                 "population": "44270",
                 "capital": "George Town",
                 "continentName": "North America"
             },
             {
                 "countryCode": "KZ",
-                "countryName": "Kazakhstan",
-                "currencyCode": "KZT",
+                "country": "Kazakhstan",
+                "currency_code": "KZT",
                 "population": "15340000",
                 "capital": "Astana",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "LA",
-                "countryName": "Laos",
-                "currencyCode": "LAK",
+                "country": "Laos",
+                "currency_code": "LAK",
                 "population": "6368162",
                 "capital": "Vientiane",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "LB",
-                "countryName": "Lebanon",
-                "currencyCode": "LBP",
+                "country": "Lebanon",
+                "currency_code": "LBP",
                 "population": "4125247",
                 "capital": "Beirut",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "LC",
-                "countryName": "Saint Lucia",
-                "currencyCode": "XCD",
+                "country": "Saint Lucia",
+                "currency_code": "XCD",
                 "population": "160922",
                 "capital": "Castries",
                 "continentName": "North America"
             },
             {
                 "countryCode": "LI",
-                "countryName": "Liechtenstein",
-                "currencyCode": "CHF",
+                "country": "Liechtenstein",
+                "currency_code": "CHF",
                 "population": "35000",
                 "capital": "Vaduz",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "LK",
-                "countryName": "Sri Lanka",
-                "currencyCode": "LKR",
+                "country": "Sri Lanka",
+                "currency_code": "LKR",
                 "population": "21513990",
                 "capital": "Colombo",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "LR",
-                "countryName": "Liberia",
-                "currencyCode": "LRD",
+                "country": "Liberia",
+                "currency_code": "LRD",
                 "population": "3685076",
                 "capital": "Monrovia",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "LS",
-                "countryName": "Lesotho",
-                "currencyCode": "LSL",
+                "country": "Lesotho",
+                "currency_code": "LSL",
                 "population": "1919552",
                 "capital": "Maseru",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "LT",
-                "countryName": "Lithuania",
-                "currencyCode": "EUR",
+                "country": "Lithuania",
+                "currency_code": "EUR",
                 "population": "2944459",
                 "capital": "Vilnius",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "LU",
-                "countryName": "Luxembourg",
-                "currencyCode": "EUR",
+                "country": "Luxembourg",
+                "currency_code": "EUR",
                 "population": "497538",
                 "capital": "Luxembourg",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "LV",
-                "countryName": "Latvia",
-                "currencyCode": "EUR",
+                "country": "Latvia",
+                "currency_code": "EUR",
                 "population": "2217969",
                 "capital": "Riga",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "LY",
-                "countryName": "Libya",
-                "currencyCode": "LYD",
+                "country": "Libya",
+                "currency_code": "LYD",
                 "population": "6461454",
                 "capital": "Tripoli",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "MA",
-                "countryName": "Morocco",
-                "currencyCode": "MAD",
+                "country": "Morocco",
+                "currency_code": "MAD",
                 "population": "33848242",
                 "capital": "Rabat",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "MC",
-                "countryName": "Monaco",
-                "currencyCode": "EUR",
+                "country": "Monaco",
+                "currency_code": "EUR",
                 "population": "32965",
                 "capital": "Monaco",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "MD",
-                "countryName": "Moldova",
-                "currencyCode": "MDL",
+                "country": "Moldova",
+                "currency_code": "MDL",
                 "population": "4324000",
                 "capital": "Chişinău",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "ME",
-                "countryName": "Montenegro",
-                "currencyCode": "EUR",
+                "country": "Montenegro",
+                "currency_code": "EUR",
                 "population": "666730",
                 "capital": "Podgorica",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "MF",
-                "countryName": "Saint Martin",
-                "currencyCode": "EUR",
+                "country": "Saint Martin",
+                "currency_code": "EUR",
                 "population": "35925",
                 "capital": "Marigot",
                 "continentName": "North America"
             },
             {
                 "countryCode": "MG",
-                "countryName": "Madagascar",
-                "currencyCode": "MGA",
+                "country": "Madagascar",
+                "currency_code": "MGA",
                 "population": "21281844",
                 "capital": "Antananarivo",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "MH",
-                "countryName": "Marshall Islands",
-                "currencyCode": "USD",
+                "country": "Marshall Islands",
+                "currency_code": "USD",
                 "population": "65859",
                 "capital": "Majuro",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "MK",
-                "countryName": "Macedonia",
-                "currencyCode": "MKD",
+                "country": "Macedonia",
+                "currency_code": "MKD",
                 "population": "2062294",
                 "capital": "Skopje",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "ML",
-                "countryName": "Mali",
-                "currencyCode": "XOF",
+                "country": "Mali",
+                "currency_code": "XOF",
                 "population": "13796354",
                 "capital": "Bamako",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "MM",
-                "countryName": "Myanmar [Burma]",
-                "currencyCode": "MMK",
+                "country": "Myanmar [Burma]",
+                "currency_code": "MMK",
                 "population": "53414374",
                 "capital": "Naypyitaw",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "MN",
-                "countryName": "Mongolia",
-                "currencyCode": "MNT",
+                "country": "Mongolia",
+                "currency_code": "MNT",
                 "population": "3086918",
                 "capital": "Ulan Bator",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "MO",
-                "countryName": "Macao",
-                "currencyCode": "MOP",
+                "country": "Macao",
+                "currency_code": "MOP",
                 "population": "449198",
                 "capital": "Macao",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "MP",
-                "countryName": "Northern Mariana Islands",
-                "currencyCode": "USD",
+                "country": "Northern Mariana Islands",
+                "currency_code": "USD",
                 "population": "53883",
                 "capital": "Saipan",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "MQ",
-                "countryName": "Martinique",
-                "currencyCode": "EUR",
+                "country": "Martinique",
+                "currency_code": "EUR",
                 "population": "432900",
                 "capital": "Fort-de-France",
                 "continentName": "North America"
             },
             {
                 "countryCode": "MR",
-                "countryName": "Mauritania",
-                "currencyCode": "MRO",
+                "country": "Mauritania",
+                "currency_code": "MRO",
                 "population": "3205060",
                 "capital": "Nouakchott",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "MS",
-                "countryName": "Montserrat",
-                "currencyCode": "XCD",
+                "country": "Montserrat",
+                "currency_code": "XCD",
                 "population": "9341",
                 "capital": "Plymouth",
                 "continentName": "North America"
             },
             {
                 "countryCode": "MT",
-                "countryName": "Malta",
-                "currencyCode": "EUR",
+                "country": "Malta",
+                "currency_code": "EUR",
                 "population": "403000",
                 "capital": "Valletta",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "MU",
-                "countryName": "Mauritius",
-                "currencyCode": "MUR",
+                "country": "Mauritius",
+                "currency_code": "MUR",
                 "population": "1294104",
                 "capital": "Port Louis",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "MV",
-                "countryName": "Maldives",
-                "currencyCode": "MVR",
+                "country": "Maldives",
+                "currency_code": "MVR",
                 "population": "395650",
                 "capital": "Malé",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "MW",
-                "countryName": "Malawi",
-                "currencyCode": "MWK",
+                "country": "Malawi",
+                "currency_code": "MWK",
                 "population": "15447500",
                 "capital": "Lilongwe",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "MX",
-                "countryName": "Mexico",
-                "currencyCode": "MXN",
+                "country": "Mexico",
+                "currency_code": "MXN",
                 "population": "112468855",
                 "capital": "Mexico City",
                 "continentName": "North America"
             },
             {
                 "countryCode": "MY",
-                "countryName": "Malaysia",
-                "currencyCode": "MYR",
+                "country": "Malaysia",
+                "currency_code": "MYR",
                 "population": "28274729",
                 "capital": "Kuala Lumpur",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "MZ",
-                "countryName": "Mozambique",
-                "currencyCode": "MZN",
+                "country": "Mozambique",
+                "currency_code": "MZN",
                 "population": "22061451",
                 "capital": "Maputo",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "NA",
-                "countryName": "Namibia",
-                "currencyCode": "NAD",
+                "country": "Namibia",
+                "currency_code": "NAD",
                 "population": "2128471",
                 "capital": "Windhoek",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "NC",
-                "countryName": "New Caledonia",
-                "currencyCode": "XPF",
+                "country": "New Caledonia",
+                "currency_code": "XPF",
                 "population": "216494",
                 "capital": "Noumea",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "NE",
-                "countryName": "Niger",
-                "currencyCode": "XOF",
+                "country": "Niger",
+                "currency_code": "XOF",
                 "population": "15878271",
                 "capital": "Niamey",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "NF",
-                "countryName": "Norfolk Island",
-                "currencyCode": "AUD",
+                "country": "Norfolk Island",
+                "currency_code": "AUD",
                 "population": "1828",
                 "capital": "Kingston",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "NG",
-                "countryName": "Nigeria",
-                "currencyCode": "NGN",
+                "country": "Nigeria",
+                "currency_code": "NGN",
                 "population": "154000000",
                 "capital": "Abuja",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "NI",
-                "countryName": "Nicaragua",
-                "currencyCode": "NIO",
+                "country": "Nicaragua",
+                "currency_code": "NIO",
                 "population": "5995928",
                 "capital": "Managua",
                 "continentName": "North America"
             },
             {
                 "countryCode": "NL",
-                "countryName": "Netherlands",
-                "currencyCode": "EUR",
+                "country": "Netherlands",
+                "currency_code": "EUR",
                 "population": "16645000",
                 "capital": "Amsterdam",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "NO",
-                "countryName": "Norway",
-                "currencyCode": "NOK",
+                "country": "Norway",
+                "currency_code": "NOK",
                 "population": "5009150",
                 "capital": "Oslo",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "NP",
-                "countryName": "Nepal",
-                "currencyCode": "NPR",
+                "country": "Nepal",
+                "currency_code": "NPR",
                 "population": "28951852",
                 "capital": "Kathmandu",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "NR",
-                "countryName": "Nauru",
-                "currencyCode": "AUD",
+                "country": "Nauru",
+                "currency_code": "AUD",
                 "population": "10065",
                 "capital": "Yaren",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "NU",
-                "countryName": "Niue",
-                "currencyCode": "NZD",
+                "country": "Niue",
+                "currency_code": "NZD",
                 "population": "2166",
                 "capital": "Alofi",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "NZ",
-                "countryName": "New Zealand",
-                "currencyCode": "NZD",
+                "country": "New Zealand",
+                "currency_code": "NZD",
                 "population": "4252277",
                 "capital": "Wellington",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "OM",
-                "countryName": "Oman",
-                "currencyCode": "OMR",
+                "country": "Oman",
+                "currency_code": "OMR",
                 "population": "2967717",
                 "capital": "Muscat",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "PA",
-                "countryName": "Panama",
-                "currencyCode": "PAB",
+                "country": "Panama",
+                "currency_code": "PAB",
                 "population": "3410676",
                 "capital": "Panama City",
                 "continentName": "North America"
             },
             {
                 "countryCode": "PE",
-                "countryName": "Peru",
-                "currencyCode": "PEN",
+                "country": "Peru",
+                "currency_code": "PEN",
                 "population": "29907003",
                 "capital": "Lima",
                 "continentName": "South America"
             },
             {
                 "countryCode": "PF",
-                "countryName": "French Polynesia",
-                "currencyCode": "XPF",
+                "country": "French Polynesia",
+                "currency_code": "XPF",
                 "population": "270485",
                 "capital": "Papeete",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "PG",
-                "countryName": "Papua New Guinea",
-                "currencyCode": "PGK",
+                "country": "Papua New Guinea",
+                "currency_code": "PGK",
                 "population": "6064515",
                 "capital": "Port Moresby",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "PH",
-                "countryName": "Philippines",
-                "currencyCode": "PHP",
+                "country": "Philippines",
+                "currency_code": "PHP",
                 "population": "99900177",
                 "capital": "Manila",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "PK",
-                "countryName": "Pakistan",
-                "currencyCode": "PKR",
+                "country": "Pakistan",
+                "currency_code": "PKR",
                 "population": "184404791",
                 "capital": "Islamabad",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "PL",
-                "countryName": "Poland",
-                "currencyCode": "PLN",
+                "country": "Poland",
+                "currency_code": "PLN",
                 "population": "38500000",
                 "capital": "Warsaw",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "PM",
-                "countryName": "Saint Pierre and Miquelon",
-                "currencyCode": "EUR",
+                "country": "Saint Pierre and Miquelon",
+                "currency_code": "EUR",
                 "population": "7012",
                 "capital": "Saint-Pierre",
                 "continentName": "North America"
             },
             {
                 "countryCode": "PN",
-                "countryName": "Pitcairn Islands",
-                "currencyCode": "NZD",
+                "country": "Pitcairn Islands",
+                "currency_code": "NZD",
                 "population": "46",
                 "capital": "Adamstown",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "PR",
-                "countryName": "Puerto Rico",
-                "currencyCode": "USD",
+                "country": "Puerto Rico",
+                "currency_code": "USD",
                 "population": "3916632",
                 "capital": "San Juan",
                 "continentName": "North America"
             },
             {
                 "countryCode": "PS",
-                "countryName": "Palestine",
-                "currencyCode": "ILS",
+                "country": "Palestine",
+                "currency_code": "ILS",
                 "population": "3800000",
                 "capital": "",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "PT",
-                "countryName": "Portugal",
-                "currencyCode": "EUR",
+                "country": "Portugal",
+                "currency_code": "EUR",
                 "population": "10676000",
                 "capital": "Lisbon",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "PW",
-                "countryName": "Palau",
-                "currencyCode": "USD",
+                "country": "Palau",
+                "currency_code": "USD",
                 "population": "19907",
                 "capital": "Melekeok",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "PY",
-                "countryName": "Paraguay",
-                "currencyCode": "PYG",
+                "country": "Paraguay",
+                "currency_code": "PYG",
                 "population": "6375830",
                 "capital": "Asunción",
                 "continentName": "South America"
             },
             {
                 "countryCode": "QA",
-                "countryName": "Qatar",
-                "currencyCode": "QAR",
+                "country": "Qatar",
+                "currency_code": "QAR",
                 "population": "840926",
                 "capital": "Doha",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "RE",
-                "countryName": "Réunion",
-                "currencyCode": "EUR",
+                "country": "Réunion",
+                "currency_code": "EUR",
                 "population": "776948",
                 "capital": "Saint-Denis",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "RO",
-                "countryName": "Romania",
-                "currencyCode": "RON",
+                "country": "Romania",
+                "currency_code": "RON",
                 "population": "21959278",
                 "capital": "Bucharest",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "RS",
-                "countryName": "Serbia",
-                "currencyCode": "RSD",
+                "country": "Serbia",
+                "currency_code": "RSD",
                 "population": "7344847",
                 "capital": "Belgrade",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "RU",
-                "countryName": "Russia",
-                "currencyCode": "RUB",
+                "country": "Russia",
+                "currency_code": "RUB",
                 "population": "140702000",
                 "capital": "Moscow",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "RW",
-                "countryName": "Rwanda",
-                "currencyCode": "RWF",
+                "country": "Rwanda",
+                "currency_code": "RWF",
                 "population": "11055976",
                 "capital": "Kigali",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "SA",
-                "countryName": "Saudi Arabia",
-                "currencyCode": "SAR",
+                "country": "Saudi Arabia",
+                "currency_code": "SAR",
                 "population": "25731776",
                 "capital": "Riyadh",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "SB",
-                "countryName": "Solomon Islands",
-                "currencyCode": "SBD",
+                "country": "Solomon Islands",
+                "currency_code": "SBD",
                 "population": "559198",
                 "capital": "Honiara",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "SC",
-                "countryName": "Seychelles",
-                "currencyCode": "SCR",
+                "country": "Seychelles",
+                "currency_code": "SCR",
                 "population": "88340",
                 "capital": "Victoria",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "SD",
-                "countryName": "Sudan",
-                "currencyCode": "SDG",
+                "country": "Sudan",
+                "currency_code": "SDG",
                 "population": "35000000",
                 "capital": "Khartoum",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "SE",
-                "countryName": "Sweden",
-                "currencyCode": "SEK",
+                "country": "Sweden",
+                "currency_code": "SEK",
                 "population": "9828655",
                 "capital": "Stockholm",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "SG",
-                "countryName": "Singapore",
-                "currencyCode": "SGD",
+                "country": "Singapore",
+                "currency_code": "SGD",
                 "population": "4701069",
                 "capital": "Singapore",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "SH",
-                "countryName": "Saint Helena",
-                "currencyCode": "SHP",
+                "country": "Saint Helena",
+                "currency_code": "SHP",
                 "population": "7460",
                 "capital": "Jamestown",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "SI",
-                "countryName": "Slovenia",
-                "currencyCode": "EUR",
+                "country": "Slovenia",
+                "currency_code": "EUR",
                 "population": "2007000",
                 "capital": "Ljubljana",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "SJ",
-                "countryName": "Svalbard and Jan Mayen",
-                "currencyCode": "NOK",
+                "country": "Svalbard and Jan Mayen",
+                "currency_code": "NOK",
                 "population": "2550",
                 "capital": "Longyearbyen",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "SK",
-                "countryName": "Slovakia",
-                "currencyCode": "EUR",
+                "country": "Slovakia",
+                "currency_code": "EUR",
                 "population": "5455000",
                 "capital": "Bratislava",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "SL",
-                "countryName": "Sierra Leone",
-                "currencyCode": "SLL",
+                "country": "Sierra Leone",
+                "currency_code": "SLL",
                 "population": "5245695",
                 "capital": "Freetown",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "SM",
-                "countryName": "San Marino",
-                "currencyCode": "EUR",
+                "country": "San Marino",
+                "currency_code": "EUR",
                 "population": "31477",
                 "capital": "San Marino",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "SN",
-                "countryName": "Senegal",
-                "currencyCode": "XOF",
+                "country": "Senegal",
+                "currency_code": "XOF",
                 "population": "12323252",
                 "capital": "Dakar",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "SO",
-                "countryName": "Somalia",
-                "currencyCode": "SOS",
+                "country": "Somalia",
+                "currency_code": "SOS",
                 "population": "10112453",
                 "capital": "Mogadishu",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "SR",
-                "countryName": "Suriname",
-                "currencyCode": "SRD",
+                "country": "Suriname",
+                "currency_code": "SRD",
                 "population": "492829",
                 "capital": "Paramaribo",
                 "continentName": "South America"
             },
             {
                 "countryCode": "SS",
-                "countryName": "South Sudan",
-                "currencyCode": "SSP",
+                "country": "South Sudan",
+                "currency_code": "SSP",
                 "population": "8260490",
                 "capital": "Juba",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "ST",
-                "countryName": "São Tomé and Príncipe",
-                "currencyCode": "STD",
+                "country": "São Tomé and Príncipe",
+                "currency_code": "STD",
                 "population": "175808",
                 "capital": "São Tomé",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "SV",
-                "countryName": "El Salvador",
-                "currencyCode": "USD",
+                "country": "El Salvador",
+                "currency_code": "USD",
                 "population": "6052064",
                 "capital": "San Salvador",
                 "continentName": "North America"
             },
             {
                 "countryCode": "SX",
-                "countryName": "Sint Maarten",
-                "currencyCode": "ANG",
+                "country": "Sint Maarten",
+                "currency_code": "ANG",
                 "population": "37429",
                 "capital": "Philipsburg",
                 "continentName": "North America"
             },
             {
                 "countryCode": "SY",
-                "countryName": "Syria",
-                "currencyCode": "SYP",
+                "country": "Syria",
+                "currency_code": "SYP",
                 "population": "22198110",
                 "capital": "Damascus",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "SZ",
-                "countryName": "Swaziland",
-                "currencyCode": "SZL",
+                "country": "Swaziland",
+                "currency_code": "SZL",
                 "population": "1354051",
                 "capital": "Mbabane",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "TC",
-                "countryName": "Turks and Caicos Islands",
-                "currencyCode": "USD",
+                "country": "Turks and Caicos Islands",
+                "currency_code": "USD",
                 "population": "20556",
                 "capital": "Cockburn Town",
                 "continentName": "North America"
             },
             {
                 "countryCode": "TD",
-                "countryName": "Chad",
-                "currencyCode": "XAF",
+                "country": "Chad",
+                "currency_code": "XAF",
                 "population": "10543464",
                 "capital": "N'Djamena",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "TF",
-                "countryName": "French Southern Territories",
-                "currencyCode": "EUR",
+                "country": "French Southern Territories",
+                "currency_code": "EUR",
                 "population": "140",
                 "capital": "Port-aux-Français",
                 "continentName": "Antarctica"
             },
             {
                 "countryCode": "TG",
-                "countryName": "Togo",
-                "currencyCode": "XOF",
+                "country": "Togo",
+                "currency_code": "XOF",
                 "population": "6587239",
                 "capital": "Lomé",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "TH",
-                "countryName": "Thailand",
-                "currencyCode": "THB",
+                "country": "Thailand",
+                "currency_code": "THB",
                 "population": "67089500",
                 "capital": "Bangkok",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "TJ",
-                "countryName": "Tajikistan",
-                "currencyCode": "TJS",
+                "country": "Tajikistan",
+                "currency_code": "TJS",
                 "population": "7487489",
                 "capital": "Dushanbe",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "TK",
-                "countryName": "Tokelau",
-                "currencyCode": "NZD",
+                "country": "Tokelau",
+                "currency_code": "NZD",
                 "population": "1466",
                 "capital": "",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "TL",
-                "countryName": "East Timor",
-                "currencyCode": "USD",
+                "country": "East Timor",
+                "currency_code": "USD",
                 "population": "1154625",
                 "capital": "Dili",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "TM",
-                "countryName": "Turkmenistan",
-                "currencyCode": "TMT",
+                "country": "Turkmenistan",
+                "currency_code": "TMT",
                 "population": "4940916",
                 "capital": "Ashgabat",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "TN",
-                "countryName": "Tunisia",
-                "currencyCode": "TND",
+                "country": "Tunisia",
+                "currency_code": "TND",
                 "population": "10589025",
                 "capital": "Tunis",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "TO",
-                "countryName": "Tonga",
-                "currencyCode": "TOP",
+                "country": "Tonga",
+                "currency_code": "TOP",
                 "population": "122580",
                 "capital": "Nuku'alofa",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "TR",
-                "countryName": "Turkey",
-                "currencyCode": "TRY",
+                "country": "Turkey",
+                "currency_code": "TRY",
                 "population": "77804122",
                 "capital": "Ankara",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "TT",
-                "countryName": "Trinidad and Tobago",
-                "currencyCode": "TTD",
+                "country": "Trinidad and Tobago",
+                "currency_code": "TTD",
                 "population": "1228691",
                 "capital": "Port of Spain",
                 "continentName": "North America"
             },
             {
                 "countryCode": "TV",
-                "countryName": "Tuvalu",
-                "currencyCode": "AUD",
+                "country": "Tuvalu",
+                "currency_code": "AUD",
                 "population": "10472",
                 "capital": "Funafuti",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "TW",
-                "countryName": "Taiwan",
-                "currencyCode": "TWD",
+                "country": "Taiwan",
+                "currency_code": "TWD",
                 "population": "22894384",
                 "capital": "Taipei",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "TZ",
-                "countryName": "Tanzania",
-                "currencyCode": "TZS",
+                "country": "Tanzania",
+                "currency_code": "TZS",
                 "population": "41892895",
                 "capital": "Dodoma",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "UA",
-                "countryName": "Ukraine",
-                "currencyCode": "UAH",
+                "country": "Ukraine",
+                "currency_code": "UAH",
                 "population": "45415596",
                 "capital": "Kiev",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "UG",
-                "countryName": "Uganda",
-                "currencyCode": "UGX",
+                "country": "Uganda",
+                "currency_code": "UGX",
                 "population": "33398682",
                 "capital": "Kampala",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "UM",
-                "countryName": "U.S. Minor Outlying Islands",
-                "currencyCode": "USD",
+                "country": "U.S. Minor Outlying Islands",
+                "currency_code": "USD",
                 "population": "0",
                 "capital": "",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "US",
-                "countryName": "United States",
-                "currencyCode": "USD",
+                "country": "United States",
+                "currency_code": "USD",
                 "population": "310232863",
                 "capital": "Washington",
                 "continentName": "North America"
             },
             {
                 "countryCode": "UY",
-                "countryName": "Uruguay",
-                "currencyCode": "UYU",
+                "country": "Uruguay",
+                "currency_code": "UYU",
                 "population": "3477000",
                 "capital": "Montevideo",
                 "continentName": "South America"
             },
             {
                 "countryCode": "UZ",
-                "countryName": "Uzbekistan",
-                "currencyCode": "UZS",
+                "country": "Uzbekistan",
+                "currency_code": "UZS",
                 "population": "27865738",
                 "capital": "Tashkent",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "VA",
-                "countryName": "Vatican City",
-                "currencyCode": "EUR",
+                "country": "Vatican City",
+                "currency_code": "EUR",
                 "population": "921",
                 "capital": "Vatican City",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "VC",
-                "countryName": "Saint Vincent and the Grenadines",
-                "currencyCode": "XCD",
+                "country": "Saint Vincent and the Grenadines",
+                "currency_code": "XCD",
                 "population": "104217",
                 "capital": "Kingstown",
                 "continentName": "North America"
             },
             {
                 "countryCode": "VE",
-                "countryName": "Venezuela",
-                "currencyCode": "VEF",
+                "country": "Venezuela",
+                "currency_code": "VEF",
                 "population": "27223228",
                 "capital": "Caracas",
                 "continentName": "South America"
             },
             {
                 "countryCode": "VG",
-                "countryName": "British Virgin Islands",
-                "currencyCode": "USD",
+                "country": "British Virgin Islands",
+                "currency_code": "USD",
                 "population": "21730",
                 "capital": "Road Town",
                 "continentName": "North America"
             },
             {
                 "countryCode": "VI",
-                "countryName": "U.S. Virgin Islands",
-                "currencyCode": "USD",
+                "country": "U.S. Virgin Islands",
+                "currency_code": "USD",
                 "population": "108708",
                 "capital": "Charlotte Amalie",
                 "continentName": "North America"
             },
             {
                 "countryCode": "VN",
-                "countryName": "Vietnam",
-                "currencyCode": "VND",
+                "country": "Vietnam",
+                "currency_code": "VND",
                 "population": "89571130",
                 "capital": "Hanoi",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "VU",
-                "countryName": "Vanuatu",
-                "currencyCode": "VUV",
+                "country": "Vanuatu",
+                "currency_code": "VUV",
                 "population": "221552",
                 "capital": "Port Vila",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "WF",
-                "countryName": "Wallis and Futuna",
-                "currencyCode": "XPF",
+                "country": "Wallis and Futuna",
+                "currency_code": "XPF",
                 "population": "16025",
                 "capital": "Mata-Utu",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "WS",
-                "countryName": "Samoa",
-                "currencyCode": "WST",
+                "country": "Samoa",
+                "currency_code": "WST",
                 "population": "192001",
                 "capital": "Apia",
                 "continentName": "Oceania"
             },
             {
                 "countryCode": "XK",
-                "countryName": "Kosovo",
-                "currencyCode": "EUR",
+                "country": "Kosovo",
+                "currency_code": "EUR",
                 "population": "1800000",
                 "capital": "Pristina",
                 "continentName": "Europe"
             },
             {
                 "countryCode": "YE",
-                "countryName": "Yemen",
-                "currencyCode": "YER",
+                "country": "Yemen",
+                "currency_code": "YER",
                 "population": "23495361",
                 "capital": "Sanaa",
                 "continentName": "Asia"
             },
             {
                 "countryCode": "YT",
-                "countryName": "Mayotte",
-                "currencyCode": "EUR",
+                "country": "Mayotte",
+                "currency_code": "EUR",
                 "population": "159042",
                 "capital": "Mamoudzou",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "ZA",
-                "countryName": "South Africa",
-                "currencyCode": "ZAR",
+                "country": "South Africa",
+                "currency_code": "ZAR",
                 "population": "49000000",
                 "capital": "Pretoria",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "ZM",
-                "countryName": "Zambia",
-                "currencyCode": "ZMW",
+                "country": "Zambia",
+                "currency_code": "ZMW",
                 "population": "13460305",
                 "capital": "Lusaka",
                 "continentName": "Africa"
             },
             {
                 "countryCode": "ZW",
-                "countryName": "Zimbabwe",
-                "currencyCode": "ZWL",
+                "country": "Zimbabwe",
+                "currency_code": "ZWL",
                 "population": "13061000",
                 "capital": "Harare",
                 "continentName": "Africa"
             }
         ]
-    }
-}
+   

@@ -3,7 +3,7 @@ const Course = require('../models/courseModel').course
 const Question = require('../models/examModel').question
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
-//const Sub = require('../models/courseModel').sub
+const Sub = require('../models/courseModel').sub
 const Video = require('../models/courseModel').video
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
@@ -17,7 +17,7 @@ var Questions = [{}]
 const createCourse = async (req, res) => {
     const InstructorId = req.user
 
-    const { Title, Subject, Hours, Price } = req.body
+    const { Title, Subject, Hours, Price} = req.body
     if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
         return res.status(404).json({ error: 'no such id' })
     }
@@ -30,21 +30,21 @@ const createCourse = async (req, res) => {
 }
 
 const createSubtitle = async (req, res) => {
-    const InstructorId = req.user
-    const { subtitle, subHours, videoTitle, videoURL, videoDesc } = req.body
+    const InstructorId  = req.user
+    const {subtitle,subHours,videoTitle,videoURL,videoDesc} = req.body
     const courseId = req.params.courseid
-    if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
-        return res.status(404).json({ error: 'no such id' })
+    if(!mongoose.Types.ObjectId.isValid(InstructorId)){
+        return res.status(404).json({error: 'no such id'})
     }
     try {
         const course = await Course.findById(courseId)
-        if (!course) {
-            return res.status(404).json({ error: 'no such course' })
+        if(!course){
+            return res.status(404).json({error: 'no such course'})
         }
-        const sub = await Subtitle.create({ Title: subtitle, Hours: subHours })
+        const sub = await Sub.create({Title: subtitle, Hours: subHours})
         course.Subtitle.push(sub)
         await course.save()
-        const video = await Video.create({ Title: videoTitle, Description: videoDesc, url: videoURL })
+        const video = await Video.create({Title: videoTitle, Description: videoDesc, url: videoURL})
         sub.Videos.push(video)
         await sub.save()
         res.status(200).json(course)
@@ -299,7 +299,6 @@ const EditInstructorinfo = async(req,res) => {
 }
 
 module.exports = {
-    searchCourse,
     createCourse,
     viewAllInsCourses,
     editBiographyorEmail,
@@ -310,6 +309,7 @@ module.exports = {
     createExam,
     createQuestion,
     viewExams,
+    searchCourse,
     setFlag,
     getInsDetails,
     EditInstructorinfo
