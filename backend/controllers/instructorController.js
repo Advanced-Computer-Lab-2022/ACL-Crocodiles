@@ -102,9 +102,9 @@ const searchCourse = async (req, res) => {
 
 
 
-const editBiographyorEmail = async (req, res) => {
+const editEmail = async (req, res) => {
     try{
-    const { Email, Biography } = req.body
+    const { Email} = req.body
     const id = req.user
 
     if (Email && !Validator.isEmail(Email)){
@@ -116,14 +116,27 @@ const editBiographyorEmail = async (req, res) => {
     }
    
     const userupdated = await User.findByIdAndUpdate(id, { Email: Email })
-    const updated = await Instructor.findByIdAndUpdate(id, { Biography: Biography })
-    return res.status(200).json({ updated, userupdated })
+    return res.status(200).json(userupdated )
     }
     catch(error){
         res.status(400).json({ error: error.message })
     }
 }
+const editBiography = async(req,res) => {
+    try{
+        const {Biography} = req.body
+        const id = req.user
+        const updated = await Instructor.findByIdAndUpdate(id, { Biography: Biography })
+        if(!updated)
+            return res.status(400).json({ error: 'No user found' })
 
+        return res.status(200).json(updated)
+        
+    }
+    catch(error){
+        res.status(400).json({ error: error.message })
+    }
+}
 
 
 const viewAllInsCourses = async (req, res) => {
@@ -300,7 +313,8 @@ module.exports = {
     searchCourse,
     createCourse,
     viewAllInsCourses,
-    editBiographyorEmail,
+    editEmail,
+    editBiography,
     defineDiscount,
     getRating,
     createSubtitle,
