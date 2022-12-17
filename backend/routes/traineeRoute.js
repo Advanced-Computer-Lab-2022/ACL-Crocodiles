@@ -21,7 +21,8 @@ const {
     addAssignment,
     getAssignment,
     calculateGrade,
-    isTrainee
+    isTrainee,
+    checkRatingTrainee
 } = require('../controllers/traineeController')
 
 const router = express.Router()
@@ -59,6 +60,7 @@ router.post('/page/calculateGrade', calculateGrade)
 router.get('/page/sub/', findSub2)
 router.post('/page/rateCourse', rateCourse)
 router.post('/page/rateInstructor', rateInstructor)
+router.post('/page/checkRatingTrainee', checkRatingTrainee)
 
 
 

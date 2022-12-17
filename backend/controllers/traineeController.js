@@ -365,8 +365,6 @@ const calculateGrade = async (req, res) => {
         const oldCount = course1.RatingCount
         const newCount = oldCount + 1
         const newRating = ((oldRating*oldCount) + rating) / (newCount)
-        const everything = {newCount,newRating,oldRating,oldCount,rating}
-        console.log(everything)
         course1 = await course1.update({$set: {Rating:newRating,RatingCount:newCount}})
         const ratrev = await courseRatingModel.create({CourseId:courseID,UserId:user._id,Rating:rating,Review:review})
         res.status(200)
@@ -374,6 +372,19 @@ const calculateGrade = async (req, res) => {
     catch(error){
         console.log(error)
         res.status(400).json(error)
+    }
+ }
+
+ const checkRatingTrainee = async(req,res) => {
+    const {courseID} = req.body;
+    const user = req.user;
+    const response = await courseRatingModel.find({CourseId:courseID}).and([{UserId:user._id}])
+    let flag 
+    if(response.length == 0){
+        res.status(400).json(response)
+    }
+    else{
+        res.status(200).json(response)
     }
  }
 
@@ -421,5 +432,6 @@ module.exports = {
     addAssignment,
     getAssignment,
     calculateGrade,
-    isTrainee
+    isTrainee,
+    checkRatingTrainee
 }

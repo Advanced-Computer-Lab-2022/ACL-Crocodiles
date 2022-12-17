@@ -126,7 +126,6 @@ const TraineeCoursePage = () => {
 
   return (
     <Box sx={{ margin: "-20px" }}>
-      <p>{courseid1}</p>
       <Grid container sx={{ height: "110vh" }} alignItems="flex-start">
 
         {open ?
