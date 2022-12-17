@@ -38,6 +38,18 @@ const getTrainee = async (req, res) => {
     }
     res.status(200).json(trainee)
 }
+const isTrainee = async (req, res) => {
+    const { id } = req.user
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(200).json({isTrainee:false})
+    }
+
+    const trainee = await Trainee.findById(id)
+    if (!trainee) {
+        return res.status(200).json({isTrainee:false})
+    }
+    return res.status(200).json({isTrainee:true})
+}
 const deleteTrainee = async (req, res) => {
     const { id } = req.params
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -330,7 +342,7 @@ const calculateGrade = async (req, res) => {
         }
 
         const percentage = (grade / answer.length) * 100
-        res.json({ Grade: grade, Percentage: percentage })
+       return res.json({ Grade: grade, Percentage: percentage })
 
     } catch (error) {
 
@@ -339,8 +351,7 @@ const calculateGrade = async (req, res) => {
 }
 
  const rateCourse = async(req,res)=>{
-    const courseID = req.params.id;
-    const {value, review} = req.body;
+    const {rating, review, courseID} = req.body;
     const user = req.user;
     if(!mongoose.Types.ObjectId.isValid(courseID)){ 
         return res.status(404).json({error: 'no such course id'})
@@ -350,9 +361,14 @@ const calculateGrade = async (req, res) => {
         if(!course1){
             return res.status(404).json({error: 'no such course id'})
         }
-        const newRating = (course1.Rating*course1.RatingCount + value) / (course1.RatingCount + 1)
-        course1 = await course1.update({Rating:newRating,RatingCount:course1.RatingCount+1})
-        const ratrev = await courseRatingModel.create({CourseId:courseID,UserId:user._id,Rating:value,Review:review})
+        const oldRating = course1.Rating
+        const oldCount = course1.RatingCount
+        const newCount = oldCount + 1
+        const newRating = ((oldRating*oldCount) + rating) / (newCount)
+        const everything = {newCount,newRating,oldRating,oldCount,rating}
+        console.log(everything)
+        course1 = await course1.update({$set: {Rating:newRating,RatingCount:newCount}})
+        const ratrev = await courseRatingModel.create({CourseId:courseID,UserId:user._id,Rating:rating,Review:review})
         res.status(200)
     }
     catch(error){
@@ -404,5 +420,6 @@ module.exports = {
     findSub2,
     addAssignment,
     getAssignment,
-    calculateGrade
+    calculateGrade,
+    isTrainee
 }

@@ -7,6 +7,7 @@ import { AuthContextProvider } from './context/AuthContext';
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from "react-redux";
 import countryReducer from './Features/country'
+
 const store = configureStore({
   reducer: {
     country: countryReducer

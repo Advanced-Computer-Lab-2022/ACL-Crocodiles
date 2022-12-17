@@ -22,7 +22,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-
+import RatingAndReview from '../components/RatingAndReview';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -47,6 +47,8 @@ const TraineeCoursePage = () => {
   const [open, setOpen] = useState(false);
   const [video, setVideo] = useState(null);
   const [exercise, setExercise] = useState(null);
+  const params1 = new URLSearchParams(window.location.search);
+  const courseid1= params1.get('courseId');
 
   const menuHandler = () => {
     setOpen(true);
@@ -124,7 +126,8 @@ const TraineeCoursePage = () => {
 
   return (
     <Box sx={{ margin: "-20px" }}>
-      <Grid container sx={{ height: "110vh" }} alignItems="center">
+      <p>{courseid1}</p>
+      <Grid container sx={{ height: "110vh" }} alignItems="flex-start">
 
         {open ?
           <Grid item xs={1.9} >
@@ -143,7 +146,7 @@ const TraineeCoursePage = () => {
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               display: "grid",
-              placeItems: "center",
+              placeItems: "flex-start",
               minHeight: "75vh",
               width: "100%",
             }}
@@ -192,8 +195,21 @@ const TraineeCoursePage = () => {
                   {/* {(video && video.Title) || (exercise && exercise.Title)} */}
                   {course.Title}
                 </Typography>
-
+                
               </Grid>
+              <Grid
+              container
+              item
+              xs={10}
+              lg={8}
+              alignContent="right" justifyContent="right"
+
+              alignItems="right"
+              flexDirection="column"
+              >
+                <RatingAndReview courseID={courseid1} />
+              </Grid>
+              
             </Container>
 
 
@@ -238,7 +254,7 @@ const TraineeCoursePage = () => {
                       <Box alignItems="top" sx={{ minHeight: "fit-content", display: "grid" }}>
                         {/* {video?<iframe frameborder="0" scrolling="no" marginheight="30" marginwidth="0"width="80%" height="600" type="text/html" src={video && video.url} ></iframe>:<></>} */}
                         <div style={{ position: "relative", height: 0, overflow: "hidden", paddingBottom: "56.25%", /* 16/9 ratio */ borderStyle: "none", objectFit: "cover" }}>
-                          {video ? <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", borderRadius: '16px', objectFit: "cover" }} src="https://www.youtube.com/embed/j942wKiXFu8"></iframe> : <></>}
+                          {video ? <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", borderRadius: '16px', objectFit: "cover" }} src={video.url}></iframe> : <></>}
                         </div>
                       </Box>
                     </Grid>
