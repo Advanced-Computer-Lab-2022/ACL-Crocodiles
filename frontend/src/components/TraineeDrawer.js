@@ -19,6 +19,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import Toolbar from '@mui/material/Toolbar';
 
 const drawerWidth = 240;
 
@@ -80,6 +81,7 @@ const TraineeDrawer = ({ subtitles, arrowHandler,open,vidHandler,exerciseHandler
       }
 
     return(
+      <div>
         <Drawer
         
         sx={{
@@ -94,6 +96,8 @@ const TraineeDrawer = ({ subtitles, arrowHandler,open,vidHandler,exerciseHandler
         anchor="left"
         open={open}
       >
+       
+      <Toolbar/>
         <DrawerHeader>
         <Grid container 
               item >
@@ -168,8 +172,9 @@ const TraineeDrawer = ({ subtitles, arrowHandler,open,vidHandler,exerciseHandler
             </List>
             
         </Drawer>
-
+        </div>
     )
+   
 }
 
 export default TraineeDrawer

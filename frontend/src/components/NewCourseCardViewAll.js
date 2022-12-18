@@ -28,20 +28,20 @@ if (country.rate)
 var oldPrice = Math.round(Course.Price * country.rate * 100) / 100
 
     return (
-        <div>
-            <Card >
+     
+            <Card sx={{height:"100%",display:'flex', flexDirection:'column',flex:'1'}}>
             <CardMedia
           component="img"
           height="180"
           image={bgImage}
           alt="course photo"
         />
-        <CardContent  >
+        <CardContent  sx={{display:'flex', flexDirection:'column',flex:'1'}}>
           <Typography gutterBottom variant="h5" component="div">
           {Course.Title}
           </Typography>
-          <Box minHeight={60}    marginBottom= {'1.35em'} >
-          <Typography   variant="body2" color="text.secondary" marginBottom= {'1.35em'}  sx={{ display:'-webkit-box',wordBreak: "break-word" ,overflow:'hidden',"-webkit-line-clamp":'3','-webkit-box-orient':'vertical'}}>
+          <Box   sx={{display:'flex', flexDirection:'column',flex:'1'}} marginBottom= {'1.35em'} >
+          <Typography   variant="body2" color="text.secondary" marginBottom= {'1.35em'}  sx={{ display:'-webkit-box',wordBreak: "break-word" ,overflow:'hidden',"-webkit-line-clamp":'2','-webkit-box-orient':'vertical'}}>
          
     
             {Course.Summary}
@@ -135,7 +135,7 @@ var oldPrice = Math.round(Course.Price * country.rate * 100) / 100
     
             </Card>
            
-        </div>
+   
     );
 };
 

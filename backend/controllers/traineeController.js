@@ -2,10 +2,11 @@ const Trainee = require('../models/traineeModel')
 
 const mongoose = require('mongoose')
 const Instructor = require('../models/instructorModel')
+const { default: isBoolean } = require('validator/lib/isboolean')
 const Course = require('../models/courseModel').course
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
-
+const Video = require('../models/courseModel').video
 
 
 const createTrainee = async (req, res) => {
@@ -126,18 +127,19 @@ const getMyCourses = async (req, res) => {
 
 
     const course_ids = trainee.My_courses;
-
     for (let i = 0; i < course_ids.length; i++) {
-        const course_id = course_ids[i];
+        const course_id = course_ids[i].course_id;
         if (!mongoose.Types.ObjectId.isValid(course_id))
             return res.status(404).json({ error: 'Invalid course id' });
         const course = await Course.findById(course_id)
-        if (!course)
-            res.status(500).json({ error: "course not found" });
+        if (!course){
+            console.log(course_id+'hi')
+           return res.status(500).json({ error: "course not found" });
+        }
         courses.push(course);
 
     }
-    res.json(courses);
+    return res.json(courses);
 
 }
 const findCourse = async (req, res) => {
@@ -286,7 +288,7 @@ const addAssignment = async (req, res) => {
         const examId = req.body.Examid
         const answers = req.body.Answers
         const exam = await Exam.findById(examId)
-
+        const cid = req.body.cid
         if (!exam) {
             return res.status(404).json({ error: 'not a valid exam id' })
         }
@@ -298,13 +300,17 @@ const addAssignment = async (req, res) => {
                 return res.status(400).json({ error: "test already taken" })
         }
 
+       
         const trainee = await Trainee.updateOne({ _id: traineeID }, { $push: { My_assignments: { quiz_id: examId, Answer: answers } } })
-
+       
         if (!trainee) {
             return res.status(404).json({ error: 'trainee not found' })
         }
 
-
+  
+        const x = await Trainee.findById(traineeID);
+        console.log(x)
+        updateProgressHelper(x,cid)
 
         res.json(trainee)
 
@@ -389,6 +395,101 @@ const calculateGrade = async (req, res) => {
     }
 }
 
+const addWatchedVideo = async (req,res)=>{ 
+    try {
+   console.log('hi')
+    const traineeID = req.user
+    const Videoid = req.body.Videoid
+    const cid = req.body.cid
+    const video = await Video.findById(Videoid)
+    const t = await Trainee.findById(traineeID);
+  
+    if (!video) {
+        return res.status(404).json({ error: 'not a valid video id' })
+    }
+
+    
+    if (!t) {
+        return res.status(404).json({ error: 'not a valid trainee id' })
+    }
+
+    for (let i = 0; i < t.Watched_videos.length; i++) {
+        if (t.Watched_videos[i]==Videoid)
+            return res.status(200).json(t)
+    }
+
+    const trainee = await Trainee.updateOne({ _id: traineeID }, { $push: { Watched_videos: Videoid } })
+
+ 
+
+
+    if (!trainee) {
+        return res.status(404).json({ error: 'trainee not found' })
+    }
+   
+    const x = await Trainee.findById(traineeID);
+    console.log(x)
+    updateProgressHelper(x,cid)
+ 
+   return res.json(trainee)
+
+} 
+catch (error) {
+
+   return res.status(400).json({ error: 'error' })
+}
+}
+
+const updateProgressHelper = async (trainee,CourseID)=>{ 
+    const course = await Course.findById(CourseID).populate('Subtitle')
+    const sub = course.Subtitle;
+    let totalContent = 0;
+    let seen = 0;
+    for(let i=0;i<sub.length;i++){
+        const vid = sub[i].Videos;
+        console.log(vid)
+        const ex = sub[i].Exercises;
+        for(let j=0; j<vid.length;j++){
+            console.log('here')
+             const found = trainee.Watched_videos.find(watched => watched.equals(vid[j]));
+             console.log(trainee.Watched_videos.length)
+             if(found!=undefined)
+             seen+=1;
+            totalContent+=1; 
+        }
+        for(let j=0; j<ex.length;j++){
+            console.log(trainee.My_assignments)
+            const found = trainee.My_assignments.find(solved => solved.quiz_id.equals(ex[j]));
+            if(found!=undefined)
+            seen+=1;
+            totalContent+=1;
+        }
+        
+    }
+    const newProgress =seen/(totalContent)
+    const trainee1 = await Trainee.updateOne({ _id: trainee._id }, { $set: { "My_courses.$[i].Progress":newProgress  } },{arrayFilters:[{"i.course_id":CourseID}]})
+
+  
+}
+
+const getProgress = async (req,res)=>{ 
+const traineeID = req.user
+const trainee = await Trainee.findById(traineeID)
+if(!trainee)
+    return res.status(404).json({error: 'trainee not found'})
+
+const courseid = req.body.cid
+const course = Course.findById(courseid)
+
+if(!course)
+    return res.status(404).json({error: 'trainee not found'})
+
+    const found=trainee.My_courses.find(c => c.course_id.equals(courseid))
+if(found)
+    return res.status(200).json({Progress: found.Progress})
+
+return res.status(200).json({error: 'you do not take this course'})
+}
 module.exports = {
     getTrainees,
     getTrainee,
@@ -409,5 +510,7 @@ module.exports = {
     addAssignment,
     getAssignment,
     calculateGrade,
-    isTrainee
+    isTrainee,
+    addWatchedVideo,
+    getProgress
 }

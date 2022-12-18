@@ -22,7 +22,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-
+import Toolbar from '@mui/material/Toolbar';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -35,7 +35,7 @@ import GradeWidget from '../components/GradeWidget'
 import CheckAnswersWidget from '../components/CheckAnswersWidget'
 import TakeTestWidget from '../components/TakeTestWidget'
 import GradeWidgetHelper from '../components/GradeWidgetHelper'
-
+import VideoPlayer from '../components/VideoPlayer'
 
 // import rgba from "../functions/rgba";
 
@@ -123,7 +123,9 @@ const TraineeCoursePage = () => {
 
 
   return (
+    
     <Box sx={{ margin: "-20px" }}>
+       
       <Grid container sx={{ height: "110vh" }} alignItems="flex-start">
 
         {open ?
@@ -238,7 +240,9 @@ const TraineeCoursePage = () => {
                       <Box alignItems="top" sx={{ minHeight: "fit-content", display: "grid" }}>
                         {/* {video?<iframe frameborder="0" scrolling="no" marginheight="30" marginwidth="0"width="80%" height="600" type="text/html" src={video && video.url} ></iframe>:<></>} */}
                         <div style={{ position: "relative", height: 0, overflow: "hidden", paddingBottom: "56.25%", /* 16/9 ratio */ borderStyle: "none", objectFit: "cover" }}>
-                          {video ? <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", borderRadius: '16px', objectFit: "cover" }} src={video.url}></iframe> : <></>}
+                          {/* {video ? <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", borderRadius: '16px', objectFit: "cover" }} src={video.url}></iframe> : <></>} */}
+                          {video ?<VideoPlayer vid={video._id} url={video.url} cid={course._id}/> : <></>}
+                          
                         </div>
                       </Box>
                     </Grid>
@@ -253,10 +257,10 @@ const TraineeCoursePage = () => {
                 <Grid container justifyContent="center" alignItems="center" spacing={2}>
 
                   <Grid item>
-                    < TakeTestWidget examid={exercise._id} type={"Trainee"}/>
+                    < TakeTestWidget examid={exercise._id} courseid={course._id} type={"Trainee"}/>
                   </Grid>
                   <Grid item>
-                    < CheckAnswersWidget  examid={exercise._id} type={"Trainee"} />
+                    < CheckAnswersWidget  examid={exercise._id} courseid={course._id} type={"Trainee"} />
                   </Grid>
                   <Grid item>
                     <GradeWidgetHelper ExamId={exercise._id} type={"Trainee"}/>

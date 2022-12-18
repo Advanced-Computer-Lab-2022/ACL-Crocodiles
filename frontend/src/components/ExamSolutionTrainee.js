@@ -16,7 +16,7 @@ const ExamTrainee = () => {
     const [Answer, setAnswer] = useState([])
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
-    const { examid } = useParams()
+    const {courseid, examid } = useParams()
     const [value, setValue] = useState('');
     const [answers, setAnswers] = useState(['','','','']);
     const [notSelected,setNotSelected] = useState([]);
@@ -27,7 +27,7 @@ const ExamTrainee = () => {
     let navigate = useNavigate()
 
     const handleClick = () =>{
-        navigate('/Mycourses/course?courseId='+Exam.courseId)
+        navigate('/Mycourses/course?courseId='+courseid)
     }
     useEffect( () => {
     

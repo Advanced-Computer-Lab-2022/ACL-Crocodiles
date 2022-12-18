@@ -13,11 +13,18 @@ import { lineHeight } from '@mui/system';
 import {useSelector} from 'react-redux'
 import { CardActionArea } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import LinearWithLabel from './LinearProgressWithLabel';
+import { useEffect,useState } from 'react';
 
-const NewCourseCard = ({Course,redirect}) => {
+const NewCourseCard = ({user,Course,redirect}) => {
+
+  
     const DiscountEndDate = new Date(Course.DiscountEndDate)
     console.log(Course.Discount)
     const country = useSelector((state) => state.country.value);
+    const [progress,setProgress]=useState(0)
+    const [progressReady,setProgressReady]=useState(false)
+
     if (Course.Discount != null && Course.Discount!=undefined )
     var discountRate = 1 - (Course.Discount / 100)
 else
@@ -26,11 +33,34 @@ var newPrice = Course.Price * discountRate
 
 if (country.rate)
     var newPrice = Math.round(Course.Price * country.rate * discountRate * 100) / 100
-var oldPrice = Math.round(Course.Price * country.rate * 100) / 100
+    useEffect( () => {
+  const fetchProgress = async () => {
 
+    await fetch('/api/trainee/page/getProgress/' , {
+        method: 'POST', headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          
+
+        },
+        body:  JSON.stringify({
+          cid:Course._id })
+
+    }).then((res) => {
+      return res.json()
+  }).then(data => {
+    console.log(data)
+    setProgress(data.Progress*100)
+    setProgressReady(true)
+
+  })
+
+  }
+  fetchProgress();
+},[user] )
     return (
-        <div>
-            <Card >
+     
+            <Card  sx={{height:"100%",display:'flex', flexDirection:'column',flex:'1'}}>
             <CardActionArea  onClick = {() => {window.location.href=redirect}}>
             <CardMedia
           component="img"
@@ -38,12 +68,12 @@ var oldPrice = Math.round(Course.Price * country.rate * 100) / 100
           image={bgImage}
           alt="course photo"
         />
-        <CardContent  >
+        <CardContent  sx={{display:'flex', flexDirection:'column',flex:'1'}} >
           <Typography gutterBottom variant="h5" component="div">
           {Course.Title}
           </Typography>
-          <Box minHeight={60}    marginBottom= {'1.35em'} >
-          <Typography   variant="body2" color="text.secondary" marginBottom= {'1.35em'}  sx={{ display:'-webkit-box',wordBreak: "break-word" ,overflow:'hidden',"-webkit-line-clamp":'3','-webkit-box-orient':'vertical'}}>
+          <Box     marginBottom= {'1.35em'}  sx={{display:'flex', flexDirection:'column',flex:'1'}} >
+          <Typography   variant="body2" color="text.secondary" marginBottom= {'1.35em'}  sx={{ display:'-webkit-box',wordBreak: "break-word" ,overflow:'hidden',"-webkit-line-clamp":'2','-webkit-box-orient':'vertical'}}>
          
     
             {Course.Summary}
@@ -93,11 +123,13 @@ var oldPrice = Math.round(Course.Price * country.rate * 100) / 100
        </Grid>
 
        </CardContent >
+ 
+       {progressReady && <LinearWithLabel progress={progress} />}
+       
        </CardActionArea>
-       <LinearProgress variant="determinate" value={50} />
             </Card>
            
-        </div>
+       
     );
 };
 

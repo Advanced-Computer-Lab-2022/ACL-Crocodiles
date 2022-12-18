@@ -14,7 +14,7 @@ const ExamTrainee = () => {
     const [Questions, setQuestions] = useState([])
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
-    const { examid } = useParams()
+    const {courseid, examid } = useParams()
     const [value, setValue] = useState('');
     const [answers, setAnswers] = useState(['','','','']);
     const [text, setText] = useState("Submit");
@@ -54,7 +54,8 @@ const ExamTrainee = () => {
                     },
                     body:  JSON.stringify({
                         Examid: examid,
-                        Answers: answers})
+                        Answers: answers,
+                        cid:courseid })
                        
                     
                 })
@@ -63,7 +64,7 @@ const ExamTrainee = () => {
                      setError(json.error) 
                 setText("view Solution")
                 if(text=="view Solution")
-                  navigate('/viewSolution/' + examid)   
+                  navigate('/viewSolution/' +courseid+'/' +examid)   
       
         }
         addAssignment();
