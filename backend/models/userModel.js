@@ -25,10 +25,15 @@ const userSchema = new Schema({
     Type :{
       type:String,
       required:true
-    }}, { timestamps: true });
+    },
+    Flag:{
+      type:String,
+      default:"true"
+    },
+    }, { timestamps: true });
 
 
-  userSchema.statics.RegTrainee = async function(Username,Email,Password,Firstname,Lastname){
+  userSchema.statics.RegTrainee = async function(Username,Email,Password,Firstname,Lastname,Gender){
     const Type = 'Trainee'
     if(!Email || !Password || !Username)
         throw Error('Must type email or password or username')
@@ -48,7 +53,7 @@ const userSchema = new Schema({
     const salt = await bcrypt.genSalt(10)
     let hash = await bcrypt.hash(Password,salt)
     const user = await this.create({Username,Email,Password:hash,Type})
-    const trainee =  await Trainee.create({_id:user._id,Firstname:Firstname,Lastname:Lastname})
+    const trainee =  await Trainee.create({_id:user._id,Firstname:Firstname,Lastname:Lastname,Gender:Gender})
     if(!trainee)
       await this.delete({_id:user._id})
     return trainee
@@ -70,22 +75,26 @@ const userSchema = new Schema({
     }
 
     userSchema.statics.ChangePass = async function(Username,OldPassword,NewPassword1,NewPassword2){
+     
       const user = await this.findOne({Username})
       if (!user)
         throw Error ('no such user')
+  
       const validpass = await bcrypt.compare(OldPassword,user.Password)
       if(!validpass)
           throw Error('Old Password is incorrect')
-      else {
-        if (NewPassword1 === NewPassword2){
-          const salt = await bcrypt.genSalt(10)
-          let hash = await bcrypt.hash(NewPassword1,salt)
-          user = await this.update({Password:hash})
-        }
-        else
+
+      if (NewPassword1 !== NewPassword2)
           throw Error('New Password doesnt match')
-      }
-      return true;
+
+      if(!Validator.isStrongPassword(NewPassword1))
+          throw Error('Choose a strong password')
+
+      const salt = await bcrypt.genSalt(10)
+      let hash = await bcrypt.hash(NewPassword1,salt)
+      let password = await this.findByIdAndUpdate(user._id, { Password: hash })
+      
+      return password
     }
     
 

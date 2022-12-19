@@ -10,6 +10,8 @@ const User = require('../models/userModel')
 const Validator = require('validator')
 
 
+
+
 var Questions = [{}]
 
 const createCourse = async (req, res) => {
@@ -48,6 +50,16 @@ const createSubtitle = async (req, res) => {
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({ error: error.message })
+    }
+}
+const CheckFlag = async (req,res) => {
+    id = req.user
+    try{
+        const flag = await User.findById(id).select('Flag')
+        res.status(200).send(flag)
+    }
+    catch(error){
+
     }
 }
 
@@ -95,12 +107,10 @@ const editBiographyorEmail = async (req, res) => {
     const { Email, Biography } = req.body
     const id = req.user
 
-    if (!Validator.isEmail(Email)){
+    if (Email && !Validator.isEmail(Email)){
         return res.status(400).json({ error: 'incorrect Email format' })
     }
-    console.log(Email)
     let user = await User.findOne({Email})
-    console.log(user)
     if( user ) {
         return res.status(400).json({ error: 'Email already in use' })
     }
@@ -239,6 +249,52 @@ const getRating = async (req, res) => {
         res.status(400).json({ error: 'error' })
     }
 }
+const setFlag = async(req,res) => {
+    const{Flag} = req.body
+    console.log(req.body)
+    const {id} = req.user
+    try{
+        const user = await User.findByIdAndUpdate(id,{Flag:Flag})
+        console.log(user)
+        if(!user){
+            res.status(400).json({error: 'no user'})
+        }
+       // res.send(user.Flag) 
+
+    }catch(error){
+        console.log(error)
+    }
+}
+
+const getInsDetails = async (req, res) => {
+    const id = req.user
+    try {
+        const user = await User.findById(id)
+        const instructorDetails = await Instructor.findById(id)
+        if (!user) {
+            return res.status(404).json({ error: 'user not found' })
+        }
+       
+        res.status(200).json({instructorDetails,user})
+
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+        console.log(error)
+    }
+}
+const EditInstructorinfo = async(req,res) => {
+    const {Firstname,Lastname,Gender} = req.body
+    try{
+    const instructor = await Instructor.findByIdAndUpdate(req.user,{Firstname,Lastname,Gender})
+    if(!instructor){
+        return res.status(404).json({ error: 'user not found' })
+    }
+    res.status(200).json('edited')
+    }catch(error){
+        res.status(400).json({error:error})
+
+    }
+}
 
 module.exports = {
     searchCourse,
@@ -251,5 +307,8 @@ module.exports = {
     createVideo,
     createExam,
     createQuestion,
-    viewExams
+    viewExams,
+    setFlag,
+    getInsDetails,
+    EditInstructorinfo
 }

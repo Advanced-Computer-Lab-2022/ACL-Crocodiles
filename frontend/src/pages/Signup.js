@@ -105,7 +105,7 @@ const Signup = () => {
          Sign Up
          </Button>
         </Stack>
-        <Alert severity ='error' > {error}</Alert>
+        
         </Paper>
       
            

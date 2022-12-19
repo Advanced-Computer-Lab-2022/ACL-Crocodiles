@@ -17,10 +17,9 @@ const ForgotPassword = () =>{
             }
         if (response.ok){
             setEmail('')
-            setError('')
+            setError('')            
+            }
             
-               
-    }
 }
     return(
         <div>

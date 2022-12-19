@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Subtitle from './Subtitle'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from "../hooks/useAuthContext";
 const InstrCourseDetails = ({ course, currency, rate }) => {
 

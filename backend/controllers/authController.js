@@ -7,11 +7,10 @@ var cid = null
 
 const Signin = async (req, res) => {
     const { Username, Password } = req.body
-
     try {
         const user = await User.Login( Username, Password)
         const token = jwt.sign({ _id: user._id, Username: user.Username }, process.env.SECRET, { expiresIn: '3d' })
-        res.status(200).json({ Username, token })
+        res.status(200).json({ flag:user.Flag ,Type:user.Type, Username, token })
     }
     catch (error) {
         res.status(400).json({ error: error.message })
@@ -87,14 +86,12 @@ const Resetpasswordput = async (req, res) => {
 
 }
 const ChangePassword = async (req, res) => {
-    const {Username} = req.username
-    const { OldPassword, NewPassword1, NewPassword2 } = req.body;
+   
+    const { OldPassword, NewPassword1, NewPassword2, Username } = req.body;
     try {
         const user = await User.ChangePass(Username, OldPassword, NewPassword1, NewPassword2);
         if (user)
-            res.status(200)
-        else
-            throw Error('Failed')
+            res.status(200).json(user)
     }
     catch (error) {
         res.status(400).json({ error: error.message })

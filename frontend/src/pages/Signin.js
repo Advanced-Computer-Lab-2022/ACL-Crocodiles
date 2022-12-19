@@ -10,16 +10,22 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import PersonIcon from '@mui/icons-material/Person';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Signin = () => {
     const[Username,setUsername] = useState('')
     const[Password,setPassword] = useState('')
+
     const {login,error,isLoading}= useLogin()
+  
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         await login(Username,Password)
+
+      
+        
     }
     const PaperStyle = {padding:20 ,height:'65vh',width:280,margin:'20px auto'}
     const btnstyle = { margin:'8px '}
@@ -64,7 +70,8 @@ const Signin = () => {
          <Typography>Do you have an acount?
          <Link href= '/signup'>Sign up </Link>
          </Typography> 
-        </Paper> 
+        </Paper>
+       
      </Grid>
     )
 }
