@@ -31,6 +31,7 @@ import { useDispatch } from 'react-redux';
 import { chooseRatingFilter } from '../Features/ratingFilter';
 import { choosePriceFilter } from '../Features/priceFilter';
 import { chooseSubjectFilter } from '../Features/subjectFilter';
+
 const drawerWidth = 300;
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -47,7 +48,8 @@ const FilterDrawer = ({subjectOptions}) => {
      const currRatingRange = useSelector((state) => state.ratingFilter.value.range);
      const currPriceRange = useSelector((state) => state.priceFilter.value.range);
      const currSubject = useSelector((state) => state.subjectFilter.value.range);
-
+     const rate = useSelector((state) => state.country.value.rate);
+     
      const [priceRange,setPriceRange] = useState(currPriceRange);
      const [ratingRange,setRatingRange] = useState(currRatingRange);
      const [subject,setSubject] = useState(currSubject);
@@ -60,7 +62,7 @@ const FilterDrawer = ({subjectOptions}) => {
     }
     const handlePrice = (e,data)=> {
       setPriceRange(data);
-      dispatch(choosePriceFilter({ range: data}))
+      dispatch(choosePriceFilter({ range: [data[0]/rate,data[1]/rate]}))
 
     }
     const handleSubject = (e,data)=> {
@@ -68,6 +70,7 @@ const FilterDrawer = ({subjectOptions}) => {
       dispatch(chooseSubjectFilter({ label: data}))
 
     }
+
     return(
         <div>
            
@@ -134,14 +137,14 @@ const FilterDrawer = ({subjectOptions}) => {
             
             <Slider
   getAriaLabel={() => 'range'}
-
+  sx={{width:"237px",marginLeft:"10px"}}
   valueLabelDisplay="auto"
   min={0}
-  max={500}
-  value={priceRange}
+  max={500*rate}
+  value={[priceRange[0],priceRange[1]]}
   onChange={(e,data)=> {  setPriceRange(data);}}
   onChangeCommitted={(e,data)=> handlePrice(e,data)}
-  marks={[{value:0,label:'0'},{value:500,label:'500'}]}
+  marks={[{value:0,label:'0'},{value:500*rate,label:`${Math.round(500*rate * 100) / 100}`}]}
 size="small"
 />
              </Box>
@@ -162,7 +165,7 @@ size="small"
             
             <Slider
   getAriaLabel={() => 'range'}
-
+  sx={{width:"237px",marginLeft:"10px"}}
   valueLabelDisplay="auto"
   min={0}
   max={5}

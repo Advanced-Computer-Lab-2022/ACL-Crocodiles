@@ -7,6 +7,8 @@ import TraineeNavBar from '../components/TraineeNavBar'
 import FilterDrawer from '../components/FilterDrawer';
 import FilterDrawerSwipable from '../components/FilterDrawerSwipable';
 import { useSelector } from 'react-redux';
+import Alert from '@mui/material/Alert';
+import { minWidth } from '@mui/system';
 //import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {
 
@@ -57,7 +59,10 @@ const Course = () => {
                         setCourses(intersection)
                         
                 //setRating(0)
-                setError(null)
+                if(intersection.length===0)
+                    setError('No Courses found')
+                else
+                    setError(null)
             }
     
                 }    }
@@ -86,13 +91,18 @@ const Course = () => {
 
 
     return (
-        
         <div className="Course" style={{display:'flex'}}>
    
-            {/* <DropDown courses={courses} /> */}
+        
             
             {subjectOptions && <FilterDrawer subjectOptions={subjectOptions}/>}
             <FilterDrawerSwipable subjectOptions={subjectOptions}/>
+            
+
+   <div style={{display:'flex', flexDirection:'column',width:'100%'}}>
+   { error && <Alert sx={{marginBottom:'20px'}} severity="error">{error}</Alert>}
+   <div className="Course" style={{display:'flex'}}>
+   
             <Grid container
           item spacing={1}>
           {courses && courses.map(course => (
@@ -104,10 +114,9 @@ const Course = () => {
 
 
         </Grid>
-        {error && <div className='error'>{error}</div>}
 
-          
-
+          </div>
+        </div>
         </div>
     )
 }

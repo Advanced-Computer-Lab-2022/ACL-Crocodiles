@@ -25,7 +25,8 @@ export default function NewCountryDD() {
     const [Currency, setCurrency] = useState('');
     const [Rate, setRate] = useState(1);
     const handleSubmit = async (e) => {
-        console.log(e)
+      if(e){
+        
         const rates = await x()
         for (let i = 0; i < CountryJSONArray.length; i++) {
             if (CountryJSONArray[i].country == e.country) {
@@ -47,6 +48,9 @@ export default function NewCountryDD() {
         }
      
         dispatch(chooseCountry({ countryName: Country, rate: r, code: Curr }))
+      }else{
+        dispatch(chooseCountry({ countryName: Country, rate: 1, code: 'USD' }))
+      }
     }
 
   return (

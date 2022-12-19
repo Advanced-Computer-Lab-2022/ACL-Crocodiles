@@ -41,7 +41,6 @@ import VideoPlayer from '../components/VideoPlayer'
 
 const TraineeCoursePage = () => {
   const { user } = useAuthContext()
-  console.log(user)
   const [course, setCourse] = useState("");
   const [Subtitles, setSubtitles] = useState([]);
   const [open, setOpen] = useState(false);
@@ -70,7 +69,7 @@ const TraineeCoursePage = () => {
   useEffect(() => {
 
     const fetchCourse = async () => {
-      //console.log(user+"hi")
+
       const params = new URLSearchParams(window.location.search);
       const courseId = params.get('courseId');
 
@@ -88,36 +87,9 @@ const TraineeCoursePage = () => {
 
       }
      }
-    // const fetchAnswer= async () => {
-    //   const response = await fetch('/api/trainee/page/getAssignment/' , {
-    //       method: 'POST', headers: {
-    //           'content-type': 'application/json',
-    //           'Authorization': `Bearer ${user.token}`
-
-    //       },
-    //       body:  JSON.stringify({
-    //           Examid: exercise._id})
-    //   })
-
-
-    //   const json = await response.json()
-    //   let grade = 0;
-     
-    //   if (response.ok) {
-    //     const answer = json.Answer;
-    //     for(let i=0; i<answer.length;i++){
-    //       if(answer[i]==exercise.Questions.correctAnswer){
-    //         grade+=1;
-    //       }
-    //     }
-    //     grade=(grade/answer.length)*100
-   
-    //   }
-    //   console.log(exercise)
-    // }
   
     fetchCourse()
-    // fetchAnswer()
+ 
 
   }, [user])
 

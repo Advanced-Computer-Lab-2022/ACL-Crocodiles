@@ -36,7 +36,7 @@ function TraineeNavBar() {
   const { user } = useAuthContext();
   const dispatch = useDispatch();
   const { logout } = useLogout()
-  console.log(user)
+
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -44,7 +44,7 @@ function TraineeNavBar() {
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    console.log(event.currentTarget)
+ 
   };
 
   const handleCloseNavMenu = (e) => {
@@ -61,7 +61,7 @@ function TraineeNavBar() {
   };
 
   const handleCloseUserMenu = (setting) => {
-    console.log(setting)
+
     switch(setting){
         case "Logout": {
                logout();
