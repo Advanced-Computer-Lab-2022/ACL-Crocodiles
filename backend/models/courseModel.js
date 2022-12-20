@@ -26,7 +26,7 @@ const courseSchema = new Schema({
     },
     Hours: {
         type: Number,
-        required: true
+        default: 0
     },
     Summary: {
         type: String,
@@ -51,6 +51,10 @@ const courseSchema = new Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Subtitle',
         //ref: 'subtitleSchema'
+        required: false
+    },
+    PreviewVideo: {
+        type: String,
         required: false
     },
 }, { timestamps: true })

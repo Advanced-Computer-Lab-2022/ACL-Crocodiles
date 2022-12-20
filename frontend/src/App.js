@@ -33,6 +33,10 @@ import AddSubtitle from './pages/AddSubtitle'
 import TraineeNavBar from './components/TraineeNavBar'
 import NavAssign from './components/NavAssign'
 import TM from './pages/TM'
+import AdminPromo from './pages/AdminPromo'
+import AdminAddUser from './pages/AdminAddUser'
+import InstructorCreate from './pages/InstructorCreate'
+import InstructorCourse from './components/InstructorCourse'
 function App() {
   return (
     <div className="App">
@@ -168,6 +172,22 @@ function App() {
             <Route
               path="/viewSolution/:examid"
               element={<ExamSolutionTrainee />}
+            />
+            <Route
+              path="/adminpromo"
+              element={<AdminPromo />}
+            />
+            <Route
+              path="/adminadduser"
+              element={<AdminAddUser />}
+            />
+            <Route
+              path="/instructorcreate"
+              element={<InstructorCreate />}
+            />
+            <Route
+              path="/instructorcourse/:courseid"
+              element={<InstructorCourse />}
             />
 
 

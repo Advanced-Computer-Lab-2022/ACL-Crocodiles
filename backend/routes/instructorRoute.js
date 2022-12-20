@@ -14,9 +14,10 @@ const {
     createVideo,
     getInsDetails,
     setFlag,
-    EditInstructorinfo
-    
-
+    EditInstructorinfo,
+    getCourse,
+    uploadPreview,
+    getMySubtitles
   
 } = require('../controllers/instructorController')
 
@@ -42,6 +43,9 @@ router.post('/definediscount/:courseid', defineDiscount),
 router.get('/getrating', getRating)
 router.post('/createsubtitle/:courseid', createSubtitle)
 router.post('/createvideo', createVideo)
+router.get('/getcourse/:courseid', getCourse)
+router.post('/uploadpreview/:courseid', uploadPreview)
+router.get('/getmysubtitles/:courseid', getMySubtitles)
 
 
 module.exports = router

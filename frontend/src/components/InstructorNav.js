@@ -28,7 +28,7 @@ const pages = ['Explore', 'My Courses','Define a Promotion'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const log = ['sign in', 'sign up'];
 
-function AdminNav() {
+function InstructorNav() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { user } = useAuthContext();
@@ -69,7 +69,13 @@ function AdminNav() {
     }
     const clickUser = () => {
         navigate('/adminadduser');
-        }
+    }
+    const addCourseDirect = () => {
+        navigate('/instructorcreate');
+    }
+    const instructorCoursesDirect = () => {
+        navigate('/InstructorCourses');
+    }
   const theme = createTheme({
 
     palette:{
@@ -130,26 +136,26 @@ function AdminNav() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
         
               <Button
-                onClick={clickUser}
+                onClick={() => handleCloseNavMenu('Explore')}
                 color='secondary'
                 sx={{ my: 2, display: 'block' }}
               >
-                {'Create a User'}
+                {'Explore'}
               </Button>
 
-             { user &&<Button
-                onClick={() => handleCloseNavMenu('My Courses')}
+             <Button
+                onClick={addCourseDirect}
                 color='secondary'
                 sx={{ my: 2, display: 'block' }}
               >
-                {'My Courses'}
-              </Button>}
+                {'Create a course'}
+              </Button>
               <Button
-                onClick={promo}
+                onClick={instructorCoursesDirect}
                 color='secondary'
                 sx={{ my: 2, display: 'block' }}
                 >
-                    {'Define a Promtion'}
+                    {'My Courses'}
                 </Button>
               
         
@@ -216,4 +222,4 @@ function AdminNav() {
     </ThemeProvider>
   );
 }
-export default AdminNav;
+export default InstructorNav;
