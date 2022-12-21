@@ -5,40 +5,26 @@ import TraineeNavBar from '../components/TraineeNavBar.js'
 import Navbar from './Navbar';
 const NavAssign = () => {
     const { user } = useAuthContext();
-    const [type,setType] = useState(false);
-    useEffect(() => {
-      
+   
         if(user){
-       
-            const t = async () => {
-             await fetch('/api/trainee/page/isTrainee/' , {
-                method: 'GET', headers: {
-                    'content-type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
-
-                }
-            }).then((res) => {
-                console.log('hiiiiiii')
-               return res.json()
-           }).then(data => {
-            setType(true)
-      console.log(data.isTrainee)
-            })
+          switch (user.Type) {
+              case 'Trainee':
+                return (<TraineeNavBar/>);
+              case 'Instructor':
+                  return (<Navbar/>);
+         
+              case 'Admin':
+                 return (<Navbar/>)
+              case 'Corporate':
+                  return (<Navbar/>)
           
-      
-       
-      
+            }
         }
-         t();
- }
- else
- setType(false)
- }, [user])
+    
+      
 
 
-  return(<>  {type?<TraineeNavBar/>:<Navbar/>}</>
- 
-  )
+  return(<Navbar/>)
 };
 
 export default NavAssign;

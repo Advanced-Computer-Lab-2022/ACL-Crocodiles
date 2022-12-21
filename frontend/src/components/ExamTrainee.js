@@ -7,6 +7,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+
 import { useNavigate } from "react-router-dom"
   
 const ExamTrainee = () => {
@@ -144,7 +146,9 @@ const ExamTrainee = () => {
     </FormControl>
         
                 </div>)}
-                {error&& <div className="error">{error}</div>}
+
+                 {error && <Alert severity="error">{error}</Alert>}
+        
                 <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined" size="large"  onClick={handleClick}>
                 {text}
         </Button>
