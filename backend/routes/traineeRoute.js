@@ -21,12 +21,15 @@ const {
     addAssignment,
     getAssignment,
     calculateGrade,
-    isTrainee
+    isTrainee,
+    buyCourse,
+    addCourse
 } = require('../controllers/traineeController')
 
 const router = express.Router()
 
 router.use(requireAuthTrainee)
+router.post('/page/buynow',buyCourse)
 
 router.get('/', getTrainees)
 
@@ -55,7 +58,7 @@ router.post('/subtitles', getSubtitles)
 router.patch('/page/addAssignment', addAssignment)
 router.post('/page/getAssignment', getAssignment)
 router.post('/page/calculateGrade', calculateGrade)
-
+router.post('/page/addcourse/:id')
 router.get('/page/sub/', findSub2)
 router.put('/page/rateCourse/:id', rateCourse)
 router.put('/rateInstructor/:id', rateInstructor)

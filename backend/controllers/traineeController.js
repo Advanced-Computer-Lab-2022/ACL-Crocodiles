@@ -1,11 +1,11 @@
 const Trainee = require('../models/traineeModel')
-
+const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
-
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
 
 
 const createTrainee = async (req, res) => {
@@ -129,6 +129,7 @@ const getMyCourses = async (req, res) => {
 
     for (let i = 0; i < course_ids.length; i++) {
         const course_id = course_ids[i];
+        cons
         if (!mongoose.Types.ObjectId.isValid(course_id))
             return res.status(404).json({ error: 'Invalid course id' });
         const course = await Course.findById(course_id)
@@ -388,6 +389,47 @@ const calculateGrade = async (req, res) => {
        return res.status(400).json({ error: 'error' })
     }
 }
+const buyCourse = async (req,res) => {
+    const {Title,Price,id} = req.body
+    const trainee = req.user
+    console.log(id)
+
+    try{
+        const course = await Course.findOne({_id:_id})
+        const secret = process.env.SECRET
+        const token = jwt.sign({ _id: _id, }, secret, { expiresIn: '5m' })
+        if(!course)
+            res.status(400).json({error:'course has been removed'})
+        const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        mode:'payment',
+        line_items:[{
+                price_data:{
+                currency:'usd',
+                product_data:{
+                    name:Title
+                },
+                unit_amount: Price
+                },
+                quantity:1
+            }],
+        success_url:`http://localhost:4000/api/guest/addcourse/${id}/${token}/${trainee}`,
+        cancel_url:"http://localhost:3000",
+        
+        })
+        res.json({url:session.url})
+       
+        
+  
+        
+      
+    }catch(error){
+        console.log(error)
+        res.status(400).json({error:error.messsage})
+    }
+}
+
+
 
 module.exports = {
     getTrainees,
@@ -409,5 +451,7 @@ module.exports = {
     addAssignment,
     getAssignment,
     calculateGrade,
-    isTrainee
+    isTrainee,
+    buyCourse,
+
 }
