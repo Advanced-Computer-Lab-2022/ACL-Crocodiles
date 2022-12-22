@@ -13,7 +13,7 @@ import { lineHeight } from '@mui/system';
 import {useSelector} from 'react-redux'
 import { CardActionArea } from '@mui/material';
 
-const NewCourseCardViewAll = ({Course}) => {
+const NewCourseCardViewAll = ({Course,redirect}) => {
     const DiscountEndDate = new Date(Course.DiscountEndDate)
 
     const country = useSelector((state) => state.country.value);
@@ -30,6 +30,7 @@ var oldPrice = Math.round(Course.Price * country.rate * 100) / 100
     return (
         <div>
             <Card >
+            <CardActionArea  onClick = {() => {window.location.href=redirect}}>
             <CardMedia
           component="img"
           height="180"
@@ -132,7 +133,7 @@ var oldPrice = Math.round(Course.Price * country.rate * 100) / 100
        </Grid>
 
        </CardContent >
-    
+       </CardActionArea>
             </Card>
            
         </div>

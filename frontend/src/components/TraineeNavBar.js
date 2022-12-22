@@ -59,7 +59,13 @@ function TraineeNavBar() {
     switch(setting){
         case "Logout": {
                logout();
-               break;};
+                break;};
+        case "Profile": {
+          if(user.Type==='trainee')
+            navigate('/traineeprofile');
+          else
+            navigate('/instructorprofile');
+              break;};
      
     }
     setAnchorElUser(null);
