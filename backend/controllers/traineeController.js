@@ -1,5 +1,5 @@
 const Trainee = require('../models/traineeModel')
-
+const User = require('../models/userModel')
 const mongoose = require('mongoose')
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
@@ -377,6 +377,23 @@ const calculateGrade = async (req, res) => {
     }
 }
 
+const getTraineeDetails = async (req, res) => {
+    const id = req.user
+    try {
+        const user = await User.findById(id)
+        const traineeDetails = await Trainee.findById(id)
+        if (!user) {
+            return res.status(404).json({ error: 'user not found' })
+        }
+
+        res.status(200).json({ traineeDetails, user })
+
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+        console.log(error)
+    }
+}
+
 module.exports = {
     getTrainees,
     getTrainee,
@@ -396,5 +413,6 @@ module.exports = {
     rateInstructor,
     addAssignment,
     getAssignment,
-    calculateGrade
+    calculateGrade,
+    getTraineeDetails
 }

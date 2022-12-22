@@ -30,7 +30,7 @@ const Navbar = () => {
                     <h2>Guest</h2>
                 </Link>
                 <Link to="/profile">
-                    <h2>Profile</h2>
+                    <h2>TraineeProfile</h2>
                 </Link>
                 <nav>
                    {user && (

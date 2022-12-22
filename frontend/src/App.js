@@ -14,7 +14,9 @@ import Filter from './pages/Filter'
 import InstructorCourses from './pages/InstructorCourses'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
-import Profile from './pages/Profile'
+//import Profile from './pages/Profile'
+import TraineeProfile from './pages/TraineeProfile'
+import InstructorProfile from './pages/Profile'
 import Contract from './pages/Contract'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
@@ -43,7 +45,7 @@ function App() {
               path="/resetpassword"
               element={<ResetPassword />}
             />
-             <Route
+            <Route
               path="/termsandconditions"
               element={<TM />}
             />
@@ -141,8 +143,12 @@ function App() {
               element={<Exam />}
             />
             <Route
-              path="/profile"
-              element={<Profile />}
+              path="/instructorprofile"
+              element={<InstructorProfile />}
+            />
+            <Route
+              path="/traineeprofile"
+              element={<TraineeProfile />}
             />
             <Route
               path="/changePassword"

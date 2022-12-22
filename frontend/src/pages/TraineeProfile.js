@@ -4,6 +4,8 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import BriefCourseCard from '../components/BriefCourseCard'
 import {
     autocompleteClasses,
     Avatar,
@@ -16,13 +18,14 @@ import {
     Typography,
     Stack,
     TextField,
-    Rating,
     Dialog,
     DialogContent,
     DialogTitle,
     DialogContentText,
     DialogActions,
-    Alert
+    Alert,
+    Grid,
+    Paper
 
 } from '@mui/material';
 
@@ -30,9 +33,9 @@ import {
 
 
 
-const Profile = () => {
+const ProfileTrainee = () => {
     const { user } = useAuthContext()
-    const [Instructor, setInstructor] = useState(null)
+    const [Trainee, setTrainee] = useState(null)
     const [OldPassword, setOldPassword] = useState('')
     const [NewPassword1, setNewPassword1] = useState('')
     const [NewPassword2, setNewPassword2] = useState('')
@@ -40,21 +43,21 @@ const Profile = () => {
     const [Type, setType] = useState('')
     const [Open1, setOpen1] = useState(false)
     const [Open2, setOpen2] = useState(false)
-    const [Open3, setOpen3] = useState(false)
+    // const [Open3, setOpen3] = useState(false)
     const [error, setError] = useState(null)
     const [error1, setError1] = useState(null)
-    const [error2, setError2] = useState(null)
+    //const [error2, setError2] = useState(null)
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const [Email, setEmail] = useState('')
-    const [Biography, setBiography] = useState('')
+
 
     useEffect(() => {
 
-        const fetchIns = async () => {
+        const fetchTrainee = async () => {
 
-            const response = await fetch('/api/instructor/insdetails', {
+            const response = await fetch('/api/trainee/page/traineedetails', {
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
                     'content-type': 'application/json'
@@ -62,21 +65,48 @@ const Profile = () => {
             })
             const json = await response.json()
             if (response.ok) {
-                setInstructor(json)
+                setTrainee(json)
                 console.log(json)
                 setOldEmail(json.user.Email)
                 setType(json.user.Type)
 
             }
+            console.log(Trainee)
             if (!response.ok) {
                 setError(json.error)
             }
         }
-        fetchIns()
+        fetchTrainee()
 
 
     },)
 
+    const [courses, setCourses] = useState(null)
+    const [clicked, setClicked] = useState(null);
+    useEffect(() => {
+        console.log(clicked)
+        const fetchCourses = async () => {
+            console.log(user.token)
+            const response = await fetch('/api/trainee/page/MyCourses', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+            if (response.ok) {
+                setCourses(json)
+            }
+        }
+        fetchCourses()
+    }, [user])
+
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }));
 
 
     const handleOpenEmail = async (e) => {
@@ -86,42 +116,45 @@ const Profile = () => {
         e.preventDefault()
         setOpen2(true)
     }
-    const handleEmail = async (e) => {
+    // const handleEmail = async (e) => {
 
-        const updated = { Email, Biography }
+    //     const updated = { Email, Biography }
 
-        console.log(JSON.stringify(updated))
-        const response = await fetch('/api/instructor/editbiographyoremail', {
-            method: 'put', body: JSON.stringify(updated), headers: {
-                'Authorization': `Bearer ${user.token}`,
-                'content-type': 'application/json',
-            }
-        })
-        const json = await response.json()
-        if (!response.ok) {
-            setError2(json.error)
-            setOpen3(true)
-            setEmail('')
-            setBiography('')
+    //     console.log(JSON.stringify(updated))
+    //     const response = await fetch('/api/instructor/editbiographyoremail', {
+    //         method: 'put', body: JSON.stringify(updated), headers: {
+    //             'Authorization': `Bearer ${user.token}`,
+    //             'content-type': 'application/json',
+    //         }
+    //     })
+    //     const json = await response.json()
+    //     if (!response.ok) {
+    //         setError2(json.error)
+    //         setOpen3(true)
+    //         setEmail('')
+    //         setBiography('')
 
 
-        }
-        if (response.ok) {
-            setEmail('')
-            setBiography('')
-            setOpen1(false)
-            alert("Email changed")
-            // setId('')
-            setError(null)
-            setOpen3(true)
-        }
-    }
+    //     }
+    //     if (response.ok) {
+    //         setEmail('')
+    //         setBiography('')
+    //         setOpen1(false)
+    //         alert("Email changed")
+    //         // setId('')
+    //         setError(null)
+    //         setOpen3(true)
+    //     }
+    // }
 
     const handlePass = async (e) => {
         e.preventDefault();
         const Username = user.Username;
         await changePass(Username, OldPassword, NewPassword1, NewPassword2)
     }
+    const handleClose = () => {
+        setOpen2(false);
+    };
     const changePass = async (Username, OldPassword, NewPassword1, NewPassword2) => {
 
         const response = await fetch('/api/auth/changepassword', {
@@ -139,10 +172,6 @@ const Profile = () => {
 
         }
     }
-
-    const handleClose = () => {
-        setOpen2(false);
-    };
 
     const cardstyle = { width: 600, margin: '20px auto', height: 600 }
     const buttonstyle = { maxWidth: '150px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '10px', margin: '25px ' }
@@ -207,37 +236,7 @@ const Profile = () => {
                 </Stack>
             </Dialog>
 
-            <Dialog
-                fullWidth
-                fullScreen={fullScreen}
-                open={Open1}
-                aria-labelledby="responsive-dialog-title">
-                <Stack >
-                    <DialogTitle marginBottom='-5px'>
-                        Change Email
-                    </DialogTitle>
 
-                    <DialogContent margin='5px '>
-                        <TextField
-                            id="standard-password-input"
-                            label="New Email"
-                            type="Email"
-                            variant="standard"
-                            required
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-
-                        {error2 && <Alert severity="error">{error2}</Alert>}
-
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleEmail} autoFocus>
-                            Confirm
-                        </Button>
-
-                    </DialogActions>
-                </Stack>
-            </Dialog>
 
             <Card style={cardstyle}>
                 <CardContent>
@@ -271,10 +270,18 @@ const Profile = () => {
                             color="textSecondary"
                             variant="h6"
                         >
-                            {Instructor && Instructor.instructorDetails.Firstname} {Instructor && Instructor.instructorDetails.Lastname}
+                            {Trainee && Trainee.traineeDetails.Firstname} {Trainee && Trainee.traineeDetails.Lastname}
 
                         </Typography>
-                        <Rating name="read-only" value={Instructor && Instructor.instructorDetails.Rating} readOnly />
+
+                        <Typography
+                            color="textPrimary"
+                            variant="h6"
+                        >
+                            {OldEmail}
+
+                        </Typography>
+
 
                     </Box>
                 </CardContent>
@@ -289,38 +296,9 @@ const Profile = () => {
                 >
 
                     <Stack direction="column" spacing={1}>
-                        <Stack direction="row"  >
-                            <TextField
 
-                                inputProps sx={{
-                                    width: { sm: 200, md: 300 },
-                                    "& .MuiInputBase-root": {
-                                        height: 45
-                                    }
-                                }}
 
-                                value={OldEmail}
-                                label="Email"
-                                id="outlined-password-input"
-                                type="text"
-                                helperText='Type email'
-                                style={textfield}
-
-                            // autoComplete="current-password"
-                            />
-                            <Button
-                                style={buttonstyle}
-                                color="primary"
-                                variant="contained"
-                                onClick={handleOpenEmail}
-
-                            >
-                                Change Email
-                            </Button>
-
-                        </Stack>
-
-                        <Stack direction="row">
+                        <Stack direction="row" spacing={1}>
 
                             <TextField
                                 inputProps sx={{
@@ -350,15 +328,47 @@ const Profile = () => {
                             </Button>
 
                         </Stack>
-                        <TextField
+                        {/* <TextField
                             id="outlined-multiline-flexible"
                             multiline
                             maxRows={8}
                             label="Biography"
-                            value={Instructor && Instructor.instructorDetails.Biography}
+
                             onChange={(e) => setBiography(e.target.value)}
                             fullWidth
-                        />
+                        /> */}
+                    </Stack>
+                </Box>
+
+                <Divider />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        '& button': { m: 2 }
+
+                    }}
+                >
+                    <Stack direction="column">
+                        <Typography
+                            color="textSecondary"
+                            variant="h6"
+                        >
+                            My Courses
+
+                        </Typography>
+
+
+                        <Stack direction="row" spacing={1}>
+
+                            {courses && courses.map(course => (
+
+                                <BriefCourseCard Course={course} redirect={`/Mycourses/course?courseId=${course._id}`} />
+
+                            ))}
+
+
+                        </Stack>
                     </Stack>
                 </Box>
             </Card>
@@ -367,11 +377,8 @@ const Profile = () => {
         </div>
 
 
-        /*<div className="Profile">
-            <a href="/changePassword" class="button">Change Password</a>
-        </div>*/
 
     )
 }
 
-export default Profile
+export default ProfileTrainee

@@ -1,6 +1,6 @@
 import FilterByPrice from '../components/filterbyprice'
 import FilterBySR from '../components/FilterBySR'
-const  Filter  = () => {
+const Filter = () => {
 
     return (
         <div className="filter">

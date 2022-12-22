@@ -20,7 +20,8 @@ const {
     rateInstructor,
     addAssignment,
     getAssignment,
-    calculateGrade
+    calculateGrade,
+    getTraineeDetails
 } = require('../controllers/traineeController')
 
 const router = express.Router()
@@ -38,6 +39,7 @@ router.delete('/:id', deleteTrainee)
 router.patch('/:id', updateTrainee)
 
 router.get('/page/viewAllCourses', viewAllCourses)
+router.get('/page/traineedetails', getTraineeDetails)
 
 //router.get('/page/viewExams/:courseid', viewExams)
 
