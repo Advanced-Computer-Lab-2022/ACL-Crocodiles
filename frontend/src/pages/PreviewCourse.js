@@ -12,17 +12,27 @@ import { redirect, useNavigate } from "react-router-dom";
 const PreviewCourse = () => {
     const[error,setError] = useState(null)
     const[course,setCourse]=useState(null)
+    const[type,setType]=useState(null)
+    const[courseId,setCourseId]=useState(null)
     const {user} = useAuthContext()
     const navigate = useNavigate();
     useEffect(() => {
+        if(user && user.Type === 'Trainee'){
+            setType(false)
+        }
+        else {
+            setType(true)
+        }
+        
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('courseId');
-
+        
         const fetchCourseDetails = async () => {
             const response = await fetch(`/api/guest/coursedetails/${courseId}`)
             const json = await response.json()
             if (response.ok) {
                 setCourse(json)
+                
                 console.log(json)
 
             }
@@ -31,7 +41,8 @@ const PreviewCourse = () => {
             }
         }
         fetchCourseDetails()
-    },[])
+    },[user])
+    console.log(type)
     const BuyClick = async (e) =>{
        
             e.preventDefault()
@@ -53,6 +64,7 @@ const PreviewCourse = () => {
         }
         
     }
+
 
     return(
         <Box>
@@ -120,14 +132,14 @@ const PreviewCourse = () => {
             </Typography>
         
         </Grid>
-        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}} variant="contained" onClick={BuyClick} >Buy Now</Button>
+        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}}disabled={type} variant="contained" onClick={BuyClick} >Buy Now</Button>
         </Stack>
       
         </Stack>
         <Typography align="left" sx={{mt:"100px" ,ml:"60px"}}variant="h5"  >Other courses by Author</Typography>
         <Grid container
           item spacing={2} columnSpacing={{ xs: 2, sm: 2, md: 3 }} sx={{ margin:"40px 0px "}} >
-        <Stack spacing={1.5}>
+        <Stack spacing={1.5} direction={'row'}>
             <Grid itemspacing={2} sx={{ml:"80px"}}>
         {course && course.othercourses && course.othercourses.map((courses) => (
             <NewCourseCardViewAll Course={courses} redirect={`/course/previewcourse?courseId=${courses._id}`}/>

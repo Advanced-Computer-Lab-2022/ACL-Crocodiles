@@ -23,6 +23,7 @@ const createCourse = async (req, res) => {
     }
     try {
         const course = await Course.create({ Title, Subject, Hours, Price, InstructorId })
+        const instructor = await Instructor.updateOne({_id:InstructorId,$push: { My_Courses: course._id } })
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -308,6 +309,25 @@ const EditInstructorinfo = async(req,res) => {
 
     }
 }
+const owedPermonth = async(req,res) => {
+    try {
+        const id = req.user
+        const courses = await Instructor.find({_id:id}).select("My_Courses")
+        console.log(courses)
+        var price = 0
+        for(i=0 ;i<courses.length;i++){
+           var course = await Course.find({_id:courses[i]})
+           if(course.Discount !== 0)
+             price = price + (course.Price * course.Discount*0.1)
+           else
+             price = price + course.Price          
+        }
+        res.status(200).json(price)
+    } catch (error) {
+        
+    }
+  
+}
 
 module.exports = {
     searchCourse,
@@ -324,5 +344,6 @@ module.exports = {
     viewExams,
     setFlag,
     getInsDetails,
-    EditInstructorinfo
+    EditInstructorinfo,
+    owedPermonth
 }

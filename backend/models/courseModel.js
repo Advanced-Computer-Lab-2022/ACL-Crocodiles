@@ -16,6 +16,11 @@ const courseSchema = new Schema({
         type: Number,
         required: true
     },
+    Count:{
+        type:Number,
+        default:0,
+        required:false
+    },
     Discount: {
         type: Number,
         required: false

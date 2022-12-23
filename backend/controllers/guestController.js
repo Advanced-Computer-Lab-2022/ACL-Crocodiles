@@ -97,10 +97,11 @@ const addCourse = async (req,res) => {
     console.log(id,trainee,token)
     const secret = process.env.SECRET
     const verify = jwt.verify(token, secret)
-    if (verify)
-        res.redirect("http://localhost:3000")
+    if (verify){
+    res.redirect("http://localhost:3000")
     const product = await Trainee.updateOne({ _id: trainee }, { $push: { My_courses: {_id:id} } })
     console.log(product)
+    }
 }
 
 

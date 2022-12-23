@@ -34,6 +34,7 @@ import TraineeNavBar from './components/TraineeNavBar'
 import NavAssign from './components/NavAssign'
 import PreviewCourse from './pages/PreviewCourse'
 import TM from './pages/TM'
+import Success from './pages/Success'
 function App() {
   return (
     <div className="App">
@@ -45,6 +46,10 @@ function App() {
             <Route
               path="/resetpassword"
               element={<ResetPassword />}
+            />
+            <Route
+              path="/success"
+              element={<Success />}
             />
             <Route
               path="/course/previewcourse"

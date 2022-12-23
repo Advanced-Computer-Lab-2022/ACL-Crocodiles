@@ -15,7 +15,8 @@ const {
     createVideo,
     getInsDetails,
     setFlag,
-    EditInstructorinfo
+    EditInstructorinfo,
+    owedPermonth
     
 
   
@@ -37,6 +38,7 @@ router.post('/editinsinfo', EditInstructorinfo)
 router.post('/getcoursebyid', searchCourse)
 router.post('/setflag', setFlag)
 //router.post('/search', Search)
+router.get('/owedpermonth', owedPermonth)
 router.post('/viewExam', viewExams)
 router.put('/editemail', editEmail)
 router.put('/editbiography', editBiography)

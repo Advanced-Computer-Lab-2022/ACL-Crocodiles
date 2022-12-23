@@ -6,7 +6,7 @@ const Course = require('../models/courseModel').course
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
-
+let course 
 
 const createTrainee = async (req, res) => {
     const { Name, Email, Age } = req.body
@@ -129,7 +129,6 @@ const getMyCourses = async (req, res) => {
 
     for (let i = 0; i < course_ids.length; i++) {
         const course_id = course_ids[i];
-        cons
         if (!mongoose.Types.ObjectId.isValid(course_id))
             return res.status(404).json({ error: 'Invalid course id' });
         const course = await Course.findById(course_id)
@@ -390,14 +389,14 @@ const calculateGrade = async (req, res) => {
     }
 }
 const buyCourse = async (req,res) => {
-    const {Title,Price,id} = req.body
-    const trainee = req.user
-    console.log(id)
+    const {Title,_id,Discount} = req.body
+    let {Price} = req.body
 
+    course = _id
+    if(Discount !== 0)
+        Price = Price*Discount*0.01
     try{
         const course = await Course.findOne({_id:_id})
-        const secret = process.env.SECRET
-        const token = jwt.sign({ _id: _id, }, secret, { expiresIn: '5m' })
         if(!course)
             res.status(400).json({error:'course has been removed'})
         const session = await stripe.checkout.sessions.create({
@@ -413,20 +412,34 @@ const buyCourse = async (req,res) => {
                 },
                 quantity:1
             }],
-        success_url:`http://localhost:4000/api/guest/addcourse/${id}/${token}/${trainee}`,
+        success_url:'http://localhost:3000/success',
         cancel_url:"http://localhost:3000",
         
         })
-        res.json({url:session.url})
-       
-        
-  
-        
-      
+        res.json({url:session.url})   
+
     }catch(error){
         console.log(error)
         res.status(400).json({error:error.messsage})
     }
+}
+const addCourse = async (req,res) => {
+
+try {
+    const product = await Trainee.updateOne({ _id: req.user }, { $push: { My_courses: {_id:course} } })
+    var coursecount = await Course.findOne({_id:course})
+    var count = coursecount.Count + 1
+    console.log(count)
+    const updated = await Course.findByIdAndUpdate({_id:course,Count:count})
+    
+    console.log(product,updated)
+    res.status(200).json("course Added")
+} catch (error) {
+    res.status(400).json({error:error.messsage})
+    console.log(error)
+}
+
+    
 }
 
 
@@ -453,5 +466,6 @@ module.exports = {
     calculateGrade,
     isTrainee,
     buyCourse,
+    addCourse
 
 }

@@ -56,7 +56,7 @@ const userSchema = new Schema({
     const trainee =  await Trainee.create({_id:user._id,Firstname:Firstname,Lastname:Lastname,Gender:Gender})
     if(!trainee)
       await this.delete({_id:user._id})
-    return trainee
+    return trainee,user
   }
 
   userSchema.statics.Login = async function(Username,Password){
