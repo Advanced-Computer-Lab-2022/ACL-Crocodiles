@@ -4,7 +4,8 @@ const {
     viewAllCourses,
     Search,
     filterCoursePrice,
-    filterCourse
+    filterCourse,
+    viewRatingAndReviews
  
 } = require('../controllers/guestController')
 
@@ -14,5 +15,6 @@ router.get('/viewAllCourses',viewAllCourses)
 router.post('/search',Search)
 router.post('/filterbyprice', filterCoursePrice)
 router.post('/filterbysr', filterCourse)
+router.get('/viewratingandreviews/:courseid', viewRatingAndReviews)
 
 module.exports = router

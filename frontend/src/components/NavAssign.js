@@ -5,6 +5,7 @@ import TraineeNavBar from '../components/TraineeNavBar.js'
 import Navbar from './Navbar';
 import AdminNav from './AdminNav';
 import InstructorNav from './InstructorNav';
+import CorpNav from './CorpNav';
 const NavAssign = () => {
     const { user } = useAuthContext();
     const [type,setType] = useState('');
@@ -18,6 +19,9 @@ const NavAssign = () => {
         }
         else if (user.Type === 'Instructor') {
             setType('Instructor')
+        }
+        else if (user.Type === 'Corporate') {
+            setType('Corporate')
         }
     }
     if(!user){
@@ -53,9 +57,10 @@ const NavAssign = () => {
 
   return(<>  {/*{type?<AdminNav/>:<Navbar/>}*/}
             {!user && <Navbar/>}
-            {type=='Admin' && <AdminNav/>}
-            {type=='Trainee' && <TraineeNavBar/>}
-            {type=='Instructor' && <InstructorNav/>}
+            {type==='Admin' && <AdminNav/>}
+            {type==='Trainee' && <TraineeNavBar/>}
+            {type==='Instructor' && <InstructorNav/>}
+            {type==='Corporate' && <CorpNav/>}
     </>
  
   )

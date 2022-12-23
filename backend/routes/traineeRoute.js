@@ -60,7 +60,7 @@ router.post('/page/calculateGrade', calculateGrade)
 router.get('/page/sub/', findSub2)
 router.post('/page/rateCourse', rateCourse)
 router.post('/page/rateInstructor', rateInstructor)
-router.post('/page/checkRatingTrainee', checkRatingTrainee)
+router.get('/page/checkRatingTrainee', checkRatingTrainee)
 
 
 

@@ -351,13 +351,13 @@ const calculateGrade = async (req, res) => {
 }
 
  const rateCourse = async(req,res)=>{
-    const {rating, review, courseID} = req.body;
+    const {rating, review, courseID, Username} = req.body;
     const user = req.user;
     if(!mongoose.Types.ObjectId.isValid(courseID)){ 
         return res.status(404).json({error: 'no such course id'})
     }
     try {
-        let course1 = await Course.findById(courseID);
+        const course1 = await Course.findById(courseID);
         if(!course1){
             return res.status(404).json({error: 'no such course id'})
         }
@@ -365,9 +365,10 @@ const calculateGrade = async (req, res) => {
         const oldCount = course1.RatingCount
         const newCount = oldCount + 1
         const newRating = ((oldRating*oldCount) + rating) / (newCount)
-        course1 = await course1.update({$set: {Rating:newRating,RatingCount:newCount}})
-        const ratrev = await courseRatingModel.create({CourseId:courseID,UserId:user._id,Rating:rating,Review:review})
-        res.status(200)
+        const course2 = await Course.findByIdAndUpdate(courseID , {$set: {Rating:newRating,RatingCount:newCount}})
+        console.log('test mes username isss ' + Username)
+        const ratrev = await courseRatingModel.create({CourseId:courseID,UserId:user._id,Username: Username,Rating:rating,Review:review})
+        res.status(200).json(ratrev)
     }
     catch(error){
         console.log(error)
@@ -376,15 +377,25 @@ const calculateGrade = async (req, res) => {
  }
 
  const checkRatingTrainee = async(req,res) => {
-    const {courseID} = req.body;
-    const user = req.user;
-    const response = await courseRatingModel.find({CourseId:courseID}).and([{UserId:user._id}])
-    let flag 
-    if(response.length == 0){
-        res.status(400).json(response)
+    const courseID = req.body.courseID;
+    const {user} = req.user;
+    if(!mongoose.Types.ObjectId.isValid(courseID)){ 
+        return res.status(404).json({error: 'no such course id'})
+    }
+    try {
+    const response = await courseRatingModel.find({CourseId:courseID}).find({UserId:user._id})
+    console.log(response)
+    console.log(response[0])
+    if(!response){
+        res.status(404).json({error: 'no courses found'})
     }
     else{
-        res.status(200).json(response)
+        res.status(200).json(response[0])
+    }
+    }
+    catch(error){
+        console.log(error)
+        res.status(400).json(error)
     }
  }
 

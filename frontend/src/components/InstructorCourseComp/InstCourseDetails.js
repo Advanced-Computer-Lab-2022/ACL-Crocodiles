@@ -2,9 +2,11 @@ import { useState,useEffect } from "react"
 import Paper from '@mui/material/Paper';
 import { Button, Rating, Stack, Typography, Box } from "@mui/material";
 import bgImage from "../../images/hope.jpg"
+import { useNavigate } from "react-router-dom";
 const InstCourseDetails = ({Course}) => {
     const [courseDiscount, setCourseDiscount] = useState(Course.Discount);
     const [newPrice, setNewPrice] = useState(Course.Price-(Course.Price*courseDiscount/100));
+    const navigate = useNavigate();
     useEffect(() => {
         setCourseDiscount(Course.Discount);
         setNewPrice(Course.Price-(Course.Price*courseDiscount/100));
@@ -28,6 +30,7 @@ const InstCourseDetails = ({Course}) => {
             </Typography>
             <Button
                 variant="text"
+                onClick={() => {navigate('/viewratings/'+Course._id)}}
                 >
                     <Stack direction="column" spacing={1} alignItems="center">
                         <Rating name="read-only" value={Course.Rating} readOnly />

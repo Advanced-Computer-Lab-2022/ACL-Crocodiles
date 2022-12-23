@@ -1,6 +1,8 @@
 const Instructor = require('../models/instructorModel.js')
 const Course = require('../models/courseModel.js').course;
 const mongoose = require('mongoose');
+const { findOne } = require('../models/instructorModel.js');
+const CourseRating = require('../models/ratingAndReviewModel.js').courseRatingModel;
 
 const Search = async (req, res) => {
     const { Username, Title, Subject } = req.body
@@ -74,7 +76,22 @@ const viewAllCourses = async (req, res) => {
         res.status(400).json({ error: 'error' })
     }
 }
-
+const viewRatingAndReviews = async (req, res) => {
+    const courseid = req.params.courseid
+    // if (!mongoose.Types.ObjectId.isValid(courseid)) {
+    //     return res.status(404).json({ error: 'invalid input' })
+    // }
+    try {
+        const courseRating = await CourseRating.find({CourseId: courseid})
+        if (!courseRating) {
+            return res.status(404).json({ error: 'no course ratings found found' })
+        }
+        console.log(courseRating)
+        res.status(200).json(courseRating)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
 
 
 module.exports = {
@@ -82,5 +99,6 @@ module.exports = {
     getPrice,
     viewAllCourses,
     filterCoursePrice,
-    filterCourse
+    filterCourse,
+    viewRatingAndReviews
 };

@@ -37,6 +37,7 @@ import AdminPromo from './pages/AdminPromo'
 import AdminAddUser from './pages/AdminAddUser'
 import InstructorCreate from './pages/InstructorCreate'
 import InstructorCourse from './components/InstructorCourse'
+import ViewRatingsPage from './pages/ViewRatingsPage'
 function App() {
   return (
     <div className="App">
@@ -188,6 +189,10 @@ function App() {
             <Route
               path="/instructorcourse/:courseid"
               element={<InstructorCourse />}
+            />
+            <Route
+              path="/viewratings/:courseid"
+              element={<ViewRatingsPage />}
             />
 
 

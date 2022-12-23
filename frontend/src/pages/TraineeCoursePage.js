@@ -35,6 +35,8 @@ import GradeWidget from '../components/GradeWidget'
 import CheckAnswersWidget from '../components/CheckAnswersWidget'
 import TakeTestWidget from '../components/TakeTestWidget'
 import GradeWidgetHelper from '../components/GradeWidgetHelper'
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 
 // import rgba from "../functions/rgba";
@@ -49,6 +51,7 @@ const TraineeCoursePage = () => {
   const [exercise, setExercise] = useState(null);
   const params1 = new URLSearchParams(window.location.search);
   const courseid1= params1.get('courseId');
+  const navigate = useNavigate();
 
   const menuHandler = () => {
     setOpen(true);
@@ -173,15 +176,15 @@ const TraineeCoursePage = () => {
   image="https://www.youtube.com/embed/muuK4SpRR5M"
 />
             </Card> */}
-            <Container>
+            <Stack direction="row" spacing={2} sx={{ width: '100%' }}>
               <Grid
                 container
                 item
                 xs={10}
                 lg={8}
-                alignContent="left" justifyContent="left"
+                alignContent="center" justifyContent="center"
 
-                alignItems="left"
+                alignItems="center"
                 flexDirection="column"
                 sx={{ mx: "auto", textAlign: "left", width: "75%" }}
               >
@@ -199,17 +202,25 @@ const TraineeCoursePage = () => {
               <Grid
               container
               item
-              xs={10}
-              lg={8}
-              alignContent="right" justifyContent="right"
-
-              alignItems="right"
+              xs={3}
+              lg={4}
+              alignContent="center" justifyContent="center"
+              margin="20px"
+              alignItems="center"
               flexDirection="column"
               >
                 <RatingAndReview courseID={courseid1} />
+                <Button
+                variant="text"
+                onClick={() => {navigate('/viewratings/'+courseid1)}}
+                >
+                    <Stack direction="column" spacing={1} alignItems="center">
+                        <Typography>View All Ratings and Reviews</Typography>
+                    </Stack>
+            </Button>
               </Grid>
               
-            </Container>
+            </Stack>
 
 
           </Box>

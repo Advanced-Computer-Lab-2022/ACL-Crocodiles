@@ -12,6 +12,10 @@ const courseRatingSchema = new Schema({
         ref: 'User',
         required: true
     },
+    Username: {
+        type: String,
+        required: false
+    },
     Rating: {
         type: Number,
         required: true
