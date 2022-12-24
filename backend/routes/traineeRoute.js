@@ -27,6 +27,7 @@ const {
   getNotes,
   deleteNote,
   getProgress,
+  getMyCoursesLimited,
 } = require("../controllers/traineeController");
 
 const router = express.Router();
@@ -50,6 +51,7 @@ router.get("/page/viewAllCourses", viewAllCourses);
 router.get("/page/viewExam/:examid", viewExam);
 
 router.get("/page/MyCourses", getMyCourses);
+router.get("/page/getMyCoursesLimited", getMyCoursesLimited);
 router.get("/page/MyCourses/:id", findCourse);
 router.get("/page/findSub/:id", findSub);
 router.get("/page/getMyTrainee/", getMyTrainee);
