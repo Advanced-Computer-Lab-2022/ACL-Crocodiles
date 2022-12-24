@@ -26,9 +26,9 @@ const {
   addNote,
   getNotes,
   deleteNote,
-  getProgress,,
-    buyCourse,
-    addCourse
+  getProgress,
+  buyCourse,
+  addCourse
 } = require("../controllers/traineeController");
 
 const router = express.Router();
@@ -52,7 +52,8 @@ router.get("/page/viewAllCourses", viewAllCourses);
 
 router.get("/page/viewExam/:examid", viewExam);
 
-router.get("/page/MyCourses", getMyCourses);
+router.get("/page/course/MyCourses", getMyCourses);
+
 router.get("/page/MyCourses/:id", findCourse);
 router.get("/page/findSub/:id", findSub);
 router.get("/page/getMyTrainee/", getMyTrainee);
@@ -70,21 +71,9 @@ router.get("/page/sub/", findSub2);
 router.put("/page/rateCourse/:id", rateCourse);
 router.put("/rateInstructor/:id", rateInstructor);
 router.post("/page/getProgress/", getProgress);
-
-router.get('/page/MyCourses', getMyCourses)
-router.get('/page/MyCourses/:id', findCourse)
-router.get('/page/findSub/:id', findSub)
-router.get('/page/getMyTrainee/', getMyTrainee)
-router.get('/page/isTrainee/', isTrainee)
-router.get('/page/getMyCourse/:id', getMyCourse)
-router.post('/subtitles', getSubtitles)
-router.patch('/page/addAssignment', addAssignment)
-router.post('/page/getAssignment', getAssignment)
-router.post('/page/calculateGrade', calculateGrade)
 router.post('/addcourse',addCourse)
-router.get('/page/sub/', findSub2)
-router.put('/page/rateCourse/:id', rateCourse)
-router.put('/rateInstructor/:id', rateInstructor)
+
+
 
 
 

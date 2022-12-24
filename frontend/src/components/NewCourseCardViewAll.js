@@ -28,7 +28,7 @@ if (country.rate)
 var oldPrice = Math.round(Course.Price * country.rate * 100) / 100
 
     return (
-        <div>
+        
             <Card >
             <CardActionArea  onClick = {() => {window.location.href=redirect}}>
             <CardMedia

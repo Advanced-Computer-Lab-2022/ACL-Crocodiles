@@ -29,7 +29,6 @@ app.listen(process.env.PORT, () => {
 .catch(err => console.log(err));
 
 app.use('/api/trainee', traineeRoutes)
-
 app.use('/api/corpTrainee', corpTraineeRoutes)
 app.use('/api/admin',adminRoutes)
 app.use('/api/instructor',instructorRoutes)
