@@ -7,10 +7,18 @@ import { AuthContextProvider } from './context/AuthContext';
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from "react-redux";
 import countryReducer from './Features/country'
+import ratingFilterReducer from './Features/ratingFilter'
+import priceFilterReducer from './Features/priceFilter'
+import subjectFilterReducer from './Features/subjectFilter'
+import SwipableIsOpenReducer from './Features/swipableIsOpen'
 
 const store = configureStore({
   reducer: {
-    country: countryReducer
+    country: countryReducer,
+    ratingFilter: ratingFilterReducer,
+    priceFilter: priceFilterReducer,
+    subjectFilter: subjectFilterReducer,
+    SwipableIsOpen:SwipableIsOpenReducer
   }
 })
 

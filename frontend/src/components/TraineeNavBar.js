@@ -23,17 +23,20 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from '../hooks/useLogout'
 import PersonIcon from '@mui/icons-material/Person';
 import SearchAppBar from './SearchAppBar'
+import { useDispatch } from 'react-redux';
+import { chooseSwipableIsOpen } from '../Features/swipableIsOpen'
 
-const pages = ['Explore', 'My Courses'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Explore', 'My Courses','Filter'];
+const settings = ['Profile', 'Account', 'Logout'];
 const log = ['sign in', 'sign up'];
 
 function TraineeNavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { user } = useAuthContext();
+  const dispatch = useDispatch();
   const { logout } = useLogout()
-  console.log(user)
+
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -41,7 +44,7 @@ function TraineeNavBar() {
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    console.log(event.currentTarget)
+ 
   };
 
   const handleCloseNavMenu = (e) => {
@@ -51,11 +54,14 @@ function TraineeNavBar() {
     else
     if(e=='My Courses' && user)
     navigate('/MyCourses');
+    else
+    if(e=='Filter')
+    dispatch(chooseSwipableIsOpen(true))
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = (setting) => {
-    console.log(setting)
+
     switch(setting){
         case "Logout": {
                logout();
@@ -84,7 +90,7 @@ function TraineeNavBar() {
 
   return (
     <ThemeProvider theme={theme}>
-    <AppBar position="static">
+    <AppBar position="fixed" sx={{ backgroundColor:"#ffffffff",zIndex: (theme) => theme.zIndex.drawer+1}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
@@ -120,8 +126,8 @@ function TraineeNavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} >
-                  <Typography sx={ {color:'#FFFF'}}color='green' textAlign="center">{page}</Typography>
+                <MenuItem key={page} onClick={() =>handleCloseNavMenu(page)} >
+                  <Typography color='secondary' textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -151,7 +157,7 @@ function TraineeNavBar() {
           {user? <Box sx={{ display: { xs: 'flex'}, flexGrow: 0 }}>
           <NewCountryDD/>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 , marginLeft:'8px'}}>
                 <Avatar alt={user.Email} src="/static/images/avatar/2.jpg">
                 <PersonIcon fontSize='large'/> </Avatar>
               </IconButton>
@@ -206,7 +212,9 @@ function TraineeNavBar() {
         </Toolbar>
       </Container>
     </AppBar>
+    <Toolbar/>
     </ThemeProvider>
+  
   );
 }
 export default TraineeNavBar;

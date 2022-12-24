@@ -173,13 +173,13 @@ function App() {
               element={<AddSubtitle />}
             />
             <Route
-              path="/viewExam/:examid"
+              path="/viewExam/:courseid/:examid"
               element={<ExamTrainee />}
             />
 
 
             <Route
-              path="/viewSolution/:examid"
+              path="/viewSolution/:courseid/:examid"
               element={<ExamSolutionTrainee />}
             />
 
