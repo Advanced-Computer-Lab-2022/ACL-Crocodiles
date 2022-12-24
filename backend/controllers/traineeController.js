@@ -391,10 +391,8 @@ const calculateGrade = async (req, res) => {
 const buyCourse = async (req,res) => {
     const {Title,_id,Discount} = req.body
     let {Price} = req.body
-
     course = _id
-    if(Discount !== 0)
-        Price = Price*Discount*0.01
+    var price = (Price - (Price*Discount*0.01))*100
     try{
         const course = await Course.findOne({_id:_id})
         if(!course)
@@ -408,7 +406,7 @@ const buyCourse = async (req,res) => {
                 product_data:{
                     name:Title
                 },
-                unit_amount: Price
+                unit_amount: price
                 },
                 quantity:1
             }],

@@ -25,9 +25,10 @@ const traineeSchema = new Schema({
     
     },
     My_courses: {
-      type: [mongoose.Schema.Types.ObjectId],
+      type : {
+      type: mongoose.Schema.Types.ObjectId,
       ref:'Course',
-      required: false
+      required: true
     },
     My_assignments:{
       type: [{
