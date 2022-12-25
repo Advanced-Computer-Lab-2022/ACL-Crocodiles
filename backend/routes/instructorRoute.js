@@ -17,7 +17,8 @@ const {
     EditInstructorinfo,
     getCourse,
     uploadPreview,
-    getMySubtitles
+    getMySubtitles,
+    getMyVideos
   
 } = require('../controllers/instructorController')
 

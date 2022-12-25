@@ -95,9 +95,9 @@ const InstCourseVideo = ({Video}) => {
         </AccordionDetails>
       </Accordion>}
       {embedLink && 
-      <Paper elevation={3} sx={{maxWidth:"900px", borderRadius:"16px", alignItems:"center", display:"flex", flexDirection:"column"}}>
+      <Paper elevation={3} sx={{width:"650px",height:"350px", borderRadius:"16px", alignItems:"center", display:"flex", flexDirection:"column"}}>
             <Typography variant="h3">Preview Video</Typography>
-      <Typography>{embedLink}</Typography>
+            {embedLink?<iframe width= "100%" height= "100%"src={embedLink}></iframe>:<></>}
       </Paper>}
             {error && <Typography variant="h5" color="error">{error}</Typography>}
             {success && <Typography variant="h5" color="success">{success}</Typography>}

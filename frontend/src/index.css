@@ -170,3 +170,7 @@ div.error {
 .same {
   display:inline-block;
 }
+
+.successComp{
+  border-left: 4px dotted green;
+}

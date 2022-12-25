@@ -75,7 +75,7 @@ const createVideo = async (req, res) => {
         if (!sub) {
             return res.status(404).json({ error: 'no such subtitle' })
         }
-        const video = await Video.create({ videoTitle, videoDesc, videoURL })
+        const video = await Video.create({ Title:videoTitle, Description:videoDesc, url:videoURL })
         sub.Videos.push(video)
         await sub.save()
         res.status(200).json(sub)
@@ -334,7 +334,6 @@ const uploadPreview = async (req, res) => {
 const getMySubtitles = async (req, res) => {
     const courseid = req.params.courseid
     const subtitles = []
-    console.log('helloo getting subtitles ' + courseid)
     if (!mongoose.Types.ObjectId.isValid(courseid)) {
         return res.status(404).json({ error: 'no such id' })
     }
@@ -343,8 +342,6 @@ const getMySubtitles = async (req, res) => {
         if (!course) {
             return res.status(404).json({ error: 'course not found' })
         }
-        console.log(course)
-        console.log(course.Subtitle)
         const subids = course.Subtitle
         
         for(let i=0;i<subids.length;i++){
@@ -352,16 +349,14 @@ const getMySubtitles = async (req, res) => {
             if (!mongoose.Types.ObjectId.isValid(subid)) {
                 return res.status(404).json({ error: 'no such id' })
             }
-            console.log('subid ' + subid)
             const subtitle = await Sub.findById(subid)
-            console.log('subtitle isss ' + subtitle)
+                .populate({path:"Videos"})
+                .populate({path:"Exercises"})
             if (!subtitle) {
                 return res.status(500).json({ error: 'subtitle not found' })
             }
             subtitles.push(subtitle)
-            console.log('gotten subs ' + subtitles)
         }
-        console.log('gotten subs out of loop ' + subtitles)
         res.status(200).json(subtitles)
     } catch (error) {
         res.status(400).json({ error: 'error' })
