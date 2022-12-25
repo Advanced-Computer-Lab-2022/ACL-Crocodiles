@@ -48,7 +48,7 @@ const FilterDrawer = ({ subjectOptions }) => {
 
   const dispatch = useDispatch();
   const sortOptions = [
-    { label: "Most Popular", value: "N_enrolled" },
+    { label: "Most Popular", value: "Count" },
     { label: "Highest Rating", value: "Rating" },
   ];
   const handleRating = (e, data) => {

@@ -86,7 +86,10 @@ const Course = () => {
             {courses &&
               courses.map((course) => (
                 <Grid item xs={12} sm={6} md={4}>
-                  <NewCourseCardViewAll Course={course} />
+                  <NewCourseCardViewAll
+                    Course={course}
+                    redirect={`/course/previewcourse?courseId=${course._id}`}
+                  />
                 </Grid>
               ))}
           </Grid>

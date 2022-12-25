@@ -16,9 +16,15 @@ const courseSchema = new Schema(
       type: Number,
       required: true,
     },
+    Count: {
+      type: Number,
+      default: 0,
+      required: false,
+    },
     Discount: {
       type: Number,
       required: false,
+      default: 0,
     },
     DiscountEndDate: {
       type: Date,
@@ -52,11 +58,6 @@ const courseSchema = new Schema(
       ref: "Subtitle",
       //ref: 'subtitleSchema'
       required: false,
-    },
-    N_enrolled: {
-      type: Number,
-      required: false,
-      default: 0,
     },
   },
   { timestamps: true }

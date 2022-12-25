@@ -1,12 +1,14 @@
+const { default: isBoolean } = require("validator/lib/isboolean");
+const Video = require("../models/courseModel").video;
 const Trainee = require("../models/traineeModel");
-
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const Instructor = require("../models/instructorModel");
-const { default: isBoolean } = require("validator/lib/isboolean");
 const Course = require("../models/courseModel").course;
 const Subtitle = require("../models/courseModel").sub;
 const Exam = require("../models/examModel").exam;
-const Video = require("../models/courseModel").video;
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+let course;
 
 const createTrainee = async (req, res) => {
   const { Name, Email, Age } = req.body;
@@ -116,6 +118,7 @@ const getSubtitles = async (req, res) => {
 const getMyCourses = async (req, res) => {
   const ID = req.user;
   const courses = [];
+  console.log("hi");
   if (!mongoose.Types.ObjectId.isValid(ID)) {
     return res.status(404).json({ error: "Invalid trainee ID" });
   }
@@ -123,8 +126,10 @@ const getMyCourses = async (req, res) => {
   if (!trainee) return res.status(400).json({ error: "trainee not found" });
 
   const course_ids = trainee.My_courses;
+
   for (let i = 0; i < course_ids.length; i++) {
-    const course_id = course_ids[i].course_id;
+    const course_id = course_ids[i]._id;
+
     if (!mongoose.Types.ObjectId.isValid(course_id))
       return res.status(404).json({ error: "Invalid course id" });
     const course = await Course.findById(course_id);
@@ -148,7 +153,7 @@ const getMyCoursesLimited = async (req, res) => {
 
   const course_ids = trainee.My_courses;
   for (let i = 0; i < course_ids.length && count < 4; i++) {
-    const course_id = course_ids[i].course_id;
+    const course_id = course_ids[i]._id;
     if (!mongoose.Types.ObjectId.isValid(course_id))
       return res.status(404).json({ error: "Invalid course id" });
     const course = await Course.findById(course_id);
@@ -160,7 +165,6 @@ const getMyCoursesLimited = async (req, res) => {
   }
   return res.json(courses);
 };
-
 const findCourse = async (req, res) => {
   const course_id = req.params.id;
 
@@ -406,6 +410,7 @@ const addWatchedVideo = async (req, res) => {
     const t = await Trainee.findById(traineeID);
 
     if (!video) {
+      console.log(video);
       return res.status(404).json({ error: "not a valid video id" });
     }
 
@@ -420,7 +425,7 @@ const addWatchedVideo = async (req, res) => {
 
     const trainee = await Trainee.updateOne(
       { _id: traineeID },
-      { $push: { Watched_videos: { video_id: Videoid, course_id: cid } } }
+      { $push: { Watched_videos: { video_id: Videoid, _id: cid } } }
     );
 
     if (!trainee) {
@@ -452,7 +457,7 @@ const updateProgressHelper = async (trainee, CourseID) => {
     for (let j = 0; j < vid.length; j++) {
       const found = trainee.Watched_videos.find(
         (watched) =>
-          watched.video_id.equals(vid[j]) && watched.course_id.equals(CourseID)
+          watched.video_id.equals(vid[j]) && watched._id.equals(CourseID)
       );
 
       if (found != undefined) {
@@ -465,8 +470,7 @@ const updateProgressHelper = async (trainee, CourseID) => {
     }
     for (let j = 0; j < ex.length; j++) {
       const found = trainee.My_assignments.find(
-        (solved) =>
-          solved.quiz_id.equals(ex[j]) && solved.course_id.equals(CourseID)
+        (solved) => solved.quiz_id.equals(ex[j]) && solved._id.equals(CourseID)
       );
 
       if (found != undefined) {
@@ -493,7 +497,7 @@ const updateProgressHelper = async (trainee, CourseID) => {
         },
       },
     },
-    { arrayFilters: [{ "i.course_id": CourseID }] }
+    { arrayFilters: [{ "i._id": CourseID }] }
   );
   return newProgress;
 };
@@ -508,7 +512,7 @@ const getProgress = async (req, res) => {
 
   if (!course) return res.status(404).json({ error: "trainee not found" });
 
-  const found = trainee.My_courses.find((c) => c.course_id.equals(courseid));
+  const found = trainee.My_courses.find((c) => c._id.equals(courseid));
   if (found) {
     const N_Vids = trainee.Watched_videos.length;
     const N_Ex = trainee.My_assignments.length;
@@ -537,7 +541,7 @@ const addNote = async (req, res) => {
       _id: traineeID,
       My_courses: {
         $elemMatch: {
-          course_id: course_id,
+          _id: course_id,
           My_Notes: { $elemMatch: { video_id: video_id } },
         },
       },
@@ -551,10 +555,7 @@ const addNote = async (req, res) => {
           },
         },
         {
-          arrayFilters: [
-            { "i.course_id": course_id },
-            { "j.video_id": video_id },
-          ],
+          arrayFilters: [{ "i._id": course_id }, { "j.video_id": video_id }],
         }
       );
 
@@ -570,7 +571,7 @@ const addNote = async (req, res) => {
           },
         },
         {
-          arrayFilters: [{ "i.course_id": course_id }],
+          arrayFilters: [{ "i._id": course_id }],
         }
       );
       if (trainee1) {
@@ -594,14 +595,14 @@ const getNotes = async (req, res) => {
       _id: traineeID,
       My_courses: {
         $elemMatch: {
-          course_id: course_id,
+          _id: course_id,
           My_Notes: { $elemMatch: { video_id: video_id } },
         },
       },
     });
     if (trainee) {
       const found = trainee.My_courses.find((course) =>
-        course.course_id.equals(course_id)
+        course._id.equals(course_id)
       );
       if (found != undefined) {
         return res.status(200).json({
@@ -629,7 +630,7 @@ const deleteNote = async (req, res) => {
     const trainee = await Trainee.findById(traineeID);
     if (!trainee) return res.status(404).json({ error: "trainee not found" });
     const found = trainee.My_courses.find((course) =>
-      course.course_id.equals(course_id)
+      course._id.equals(course_id)
     );
     if (found == undefined) {
       return res.status(404).json({ error: "course not found" });
@@ -652,10 +653,7 @@ const deleteNote = async (req, res) => {
         },
       },
       {
-        arrayFilters: [
-          { "i.course_id": course_id },
-          { "j.video_id": video_id },
-        ],
+        arrayFilters: [{ "i._id": course_id }, { "j.video_id": video_id }],
       }
     );
     if (trainee1) {
@@ -665,6 +663,68 @@ const deleteNote = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error: error.message });
+  }
+};
+const buyCourse = async (req, res) => {
+  const { Title, _id, Discount } = req.body;
+  let { Price } = req.body;
+
+  course = _id;
+  let price = (Price - Price * Discount * 0.01) * 100;
+
+  try {
+    const course = await Course.findOne({ _id: _id });
+    if (!course) res.status(400).json({ error: "course has been removed" });
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: Title,
+            },
+            unit_amount: price,
+          },
+          quantity: 1,
+        },
+      ],
+      success_url: "http://localhost:3000/success",
+      cancel_url: "http://localhost:3000",
+    });
+    res.json({ url: session.url });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.messsage });
+  }
+};
+const addCourse = async (req, res) => {
+  try {
+    console.log(course);
+    const product = await Trainee.updateOne(
+      { _id: req.user },
+      {
+        $push: {
+          My_courses: {
+            _id: course,
+            Progress: { value: 0, seen: [0, 0], total: 0 },
+          },
+        },
+      }
+    );
+    var coursecount = await Course.findOne({ _id: course });
+    var count = coursecount.Count + 1;
+    console.log(count);
+    const updated = await Course.findByIdAndUpdate({
+      _id: course,
+      Count: count,
+    });
+    console.log(product, updated);
+    res.status(200).json("course Added");
+  } catch (error) {
+    res.status(400).json({ error: error.messsage });
+    console.log(error);
   }
 };
 
@@ -694,5 +754,7 @@ module.exports = {
   addNote,
   getNotes,
   deleteNote,
+  buyCourse,
+  addCourse,
   getMyCoursesLimited,
 };

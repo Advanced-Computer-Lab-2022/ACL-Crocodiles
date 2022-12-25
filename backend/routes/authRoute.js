@@ -16,5 +16,6 @@ router.post('/forgotpassword',ForgotPassword)
 router.put('/changepassword',ChangePassword)
 
 router.get('/resetpassword/:id/:token',Resetpassword)
+
 router.post('/resetpassword/',Resetpasswordput)
 module.exports = router

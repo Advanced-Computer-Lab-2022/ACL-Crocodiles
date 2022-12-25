@@ -33,7 +33,9 @@ import AddSubtitle from "./pages/AddSubtitle";
 import TraineeNavBar from "./components/TraineeNavBar";
 import NavAssign from "./components/NavAssign";
 import HomeAssign from "./components/HomeAssign";
+import PreviewCourse from "./pages/PreviewCourse";
 import TM from "./pages/TM";
+import Success from "./pages/Success";
 function App() {
   return (
     <div className="App">
@@ -42,6 +44,8 @@ function App() {
         <div className="pages">
           <Routes>
             <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="/course/previewcourse" element={<PreviewCourse />} />
             <Route path="/termsandconditions" element={<TM />} />
             <Route path="/" element={<HomeAssign />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />

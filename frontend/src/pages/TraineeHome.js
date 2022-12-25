@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NewCourseCardViewAll from "../components/NewCourseCardViewAll";
 import NewCourseCard from "../components/NewCourseCard";
-import Alert from "@mui/material";
+import { Alert, Button } from "@mui/material";
 
 import { useState, useEffect } from "react";
 var settings = {
@@ -111,6 +111,7 @@ const TraineeHome = () => {
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
+                width="320px"
               >
                 <Typography
                   sx={{
@@ -144,19 +145,29 @@ const TraineeHome = () => {
                       </div>
                     ))}
                 </Slider>
-                <Link
-                  href="/MyCourses"
-                  sx={{
-                    color: "#A00407",
-                    fontFamily: "Helvetica,Arial,sans-serif",
-                    fontSize: "1.2rem",
-                    marginTop: "40px",
-                  }}
-                  variant="h3"
-                  underline="none"
-                >
-                  View all
-                </Link>
+                {myCourses && myCourses.length != 0 ? (
+                  <Link
+                    href="/MyCourses"
+                    sx={{
+                      color: "#A00407",
+                      fontFamily: "Helvetica,Arial,sans-serif",
+                      fontSize: "1.2rem",
+                      marginTop: "40px",
+                    }}
+                    variant="h3"
+                    underline="none"
+                  >
+                    View all
+                  </Link>
+                ) : (
+                  <Box>
+                    <Alert severity="info">
+                      it looks like you are not enrolled in any course! Click
+                      here to explore our courses
+                    </Alert>
+                    <Button href="/course">Explore</Button>
+                  </Box>
+                )}
               </Box>
             </Grid>
             <Grid item>
@@ -191,7 +202,10 @@ const TraineeHome = () => {
                           width: "100%",
                         }}
                       >
-                        <NewCourseCardViewAll Course={course} />
+                        <NewCourseCardViewAll
+                          Course={course}
+                          redirect={`/course/previewcourse?courseId=${course._id}`}
+                        />
                       </div>
                     ))}
                 </Slider>

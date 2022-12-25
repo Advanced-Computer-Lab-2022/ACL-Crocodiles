@@ -180,7 +180,6 @@ const TraineeDrawer = ({
                                 (v) => v.video_id == video._id
                               ) != undefined ? (
                                 <>
-                                  {" "}
                                   <CheckCircleOutlineOutlinedIcon
                                     sx={{ paddingBottom: "5%", pl: 4.5 }}
                                     size="small"

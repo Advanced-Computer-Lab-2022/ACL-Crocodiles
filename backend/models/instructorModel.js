@@ -46,6 +46,11 @@ const instructorSchema = new Schema({
       required: false,
       default : 0 
     },
+    My_Courses: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref:'Course',
+      required: false
+    },
     
 
   }, { timestamps: true });

@@ -27,7 +27,7 @@ const traineeSchema = new Schema(
     My_courses: {
       type: [
         {
-          course_id: {
+          _id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Course",
             required: true,

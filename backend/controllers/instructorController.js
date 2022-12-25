@@ -23,6 +23,7 @@ const createCourse = async (req, res) => {
     }
     try {
         const course = await Course.create({ Title, Subject, Hours, Price, InstructorId })
+        const instructor = await Instructor.updateOne({_id:InstructorId,$push: { My_Courses: course._id } })
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -102,9 +103,9 @@ const searchCourse = async (req, res) => {
 
 
 
-const editBiographyorEmail = async (req, res) => {
+const editEmail = async (req, res) => {
     try{
-    const { Email, Biography } = req.body
+    const { Email} = req.body
     const id = req.user
 
     if (Email && !Validator.isEmail(Email)){
@@ -116,14 +117,27 @@ const editBiographyorEmail = async (req, res) => {
     }
    
     const userupdated = await User.findByIdAndUpdate(id, { Email: Email })
-    const updated = await Instructor.findByIdAndUpdate(id, { Biography: Biography })
-    return res.status(200).json({ updated, userupdated })
+    return res.status(200).json(userupdated )
     }
     catch(error){
         res.status(400).json({ error: error.message })
     }
 }
+const editBiography = async(req,res) => {
+    try{
+        const {Biography} = req.body
+        const id = req.user
+        const updated = await Instructor.findByIdAndUpdate(id, { Biography: Biography })
+        if(!updated)
+            return res.status(400).json({ error: 'No user found' })
 
+        return res.status(200).json(updated)
+        
+    }
+    catch(error){
+        res.status(400).json({ error: error.message })
+    }
+}
 
 
 const viewAllInsCourses = async (req, res) => {
@@ -295,12 +309,29 @@ const EditInstructorinfo = async(req,res) => {
 
     }
 }
+const owedPermonth = async(req,res) => {
+    try {
+        const id = req.user
+        const courses = await Instructor.find({_id:id}).select("My_Courses")
+        console.log(courses)
+        var price = 0
+        for(i=0 ;i<courses.length;i++){
+           var course = await Course.find({_id:courses[i]})
+           price = price + (course.Price * course.Discount*0.1)     
+        }
+        res.status(200).json(price)
+    } catch (error) {
+        
+    }
+  
+}
 
 module.exports = {
     searchCourse,
     createCourse,
     viewAllInsCourses,
-    editBiographyorEmail,
+    editEmail,
+    editBiography,
     defineDiscount,
     getRating,
     createSubtitle,
@@ -310,5 +341,6 @@ module.exports = {
     viewExams,
     setFlag,
     getInsDetails,
-    EditInstructorinfo
+    EditInstructorinfo,
+    owedPermonth
 }

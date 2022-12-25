@@ -1,6 +1,8 @@
 const Instructor = require("../models/instructorModel.js");
 const Course = require("../models/courseModel.js").course;
 const mongoose = require("mongoose");
+const Trainee = require("../models/traineeModel.js");
+const jwt = require("jsonwebtoken");
 
 const Search = async (req, res) => {
   const { Username, Title, Subject } = req.body;
@@ -52,7 +54,10 @@ const filterCourse = async (req, res) => {
       finalFilter["Subject"] = Subject;
     }
 
-    course = await Course.find(finalFilter).sort(finalSort);
+    course = await Course.find(finalFilter)
+      .sort(finalSort)
+      .populate({ path: "Subtitle", populate: { path: "Exercises" } })
+      .populate({ path: "Subtitle", populate: { path: "Videos" } });
 
     if (!course) {
       return res.status(404).json({ error: "no such course" });
@@ -118,7 +123,11 @@ const sortBy = async (req, res) => {
 
 const getMostPopularCourses = async (req, res) => {
   try {
-    const courses = await Course.find().sort({ N_enrolled: -1 }).limit(4);
+    const courses = await Course.find()
+      .sort({ Count: -1 })
+      .limit(4)
+      .populate({ path: "Subtitle", populate: { path: "Exercises" } })
+      .populate({ path: "Subtitle", populate: { path: "Videos" } });
     if (!courses) {
       return res.status(404).json({ error: "no courses found" });
     }
@@ -128,12 +137,51 @@ const getMostPopularCourses = async (req, res) => {
   }
 };
 
+const CourseDetails = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const coursedetails = await Course.findOne({ _id: id })
+      .populate({ path: "Subtitle", populate: { path: "Exercises" } })
+      .populate({ path: "Subtitle", populate: { path: "Videos" } });
+    const instructorid = await Course.findOne({ _id: id }).select(
+      "InstructorId"
+    );
+
+    const othercourses = await Course.find({
+      InstructorId: instructorid.InstructorId,
+      _id: { $ne: id },
+    });
+    const instructordetails = await Instructor.findOne({
+      _id: instructorid.InstructorId,
+    });
+    if (!coursedetails)
+      return res.status(404).json({ error: "no courses found" });
+    res.status(200).json({ coursedetails, othercourses, instructordetails });
+  } catch (error) {}
+};
+const addCourse = async (req, res) => {
+  const { id, token, trainee } = req.params;
+  console.log(id, trainee, token);
+  const secret = process.env.SECRET;
+  const verify = jwt.verify(token, secret);
+  if (verify) {
+    res.redirect("http://localhost:3000");
+    const product = await Trainee.updateOne(
+      { _id: trainee },
+      { $push: { My_courses: { _id: id } } }
+    );
+    console.log(product);
+  }
+};
+
 module.exports = {
   Search,
   getPrice,
   viewAllCourses,
   filterCoursePrice,
   filterCourse,
+  CourseDetails,
+  addCourse,
   getMostPopularCourses,
   sortBy,
 };
