@@ -312,13 +312,17 @@ const EditInstructorinfo = async(req,res) => {
 const owedPermonth = async(req,res) => {
     try {
         const id = req.user
-        const courses = await Instructor.find({_id:id}).select("My_Courses")
-        console.log(courses)
+        const courses = await Instructor.findOne({_id:id}).select("My_Courses")
         var price = 0
-        for(i=0 ;i<courses.length;i++){
-           var course = await Course.find({_id:courses[i]})
-           price = price + (course.Price * course.Discount*0.1)     
+        for(i=0 ;i<courses.My_Courses.length;i++){
+           console.log(courses.My_Courses[i])
+           
+           var course = await Course.findOne({_id:courses.My_Courses[i]})
+           console.log(course)
+           price = price + (course.Price - (course.Price * course.Discount*0.1))
+           console.log(price)     
         }
+
         res.status(200).json(price)
     } catch (error) {
         

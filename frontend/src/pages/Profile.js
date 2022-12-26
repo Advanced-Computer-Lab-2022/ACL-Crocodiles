@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import {
     autocompleteClasses,
     Avatar,
@@ -23,6 +24,7 @@ import {
     DialogContentText,
     DialogActions,
     Alert,
+    Paper,
     Fade
 
 } from '@mui/material';
@@ -41,6 +43,7 @@ const Profile = () => {
     const[Open1,setOpen1] = useState(false)
     const[Open2,setOpen2] = useState(false)
     const[Open3,setOpen3] = useState(false)
+    const[Open4,setOpen4] = useState(false)
     const[alertvisibilty,setAlertVisibility] = useState(false)
     const [error, setError] = useState(null)
     const [error1, setError1] = useState(null)
@@ -48,7 +51,7 @@ const Profile = () => {
     const [success,setSuccess] = useState('')
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
+    const[amount,setAmount] = useState(null)
     const[Email,setEmail] = useState('')
     const[Biography,setBiography] = useState('')
     
@@ -56,26 +59,40 @@ const Profile = () => {
        
         const fetchIns = async () => {
            
-            const response = await fetch('/api/instructor/insdetails',{headers: {
+            const response1 = await fetch('/api/instructor/insdetails',{headers: {
                 'Authorization': `Bearer ${user.token}`,
                 'content-type': 'application/json'
                     }
                 })
-            const json = await response.json()
-            if (response.ok) {
+            const json = await response1.json()
+            if (response1.ok) {
                 setInstructor(json)
                 console.log(json)
                 setOldEmail(json.user.Email)
                 
             }
-            if (!response.ok) {
+            if (!response1.ok) {
                 setError(json.error)
             }
+            const response2 = await fetch('/api/instructor/owedpermonth',{headers: {
+                'Authorization': `Bearer ${user.token}`,
+                'content-type': 'application/json'
+                    }
+                })
+                const json1 = await response2.json()
+                if (response2.ok) {
+                    console.log(json1)
+                    setAmount(json1)
+                    
+                }
+                if (!response2.ok) {
+                    setError(json1.error)
+                }  
         }
         fetchIns()
         
        
-    },)
+    },[user])
 
     
 
@@ -86,12 +103,12 @@ const Profile = () => {
         e.preventDefault()
         setOpen2(true)
     }
-    const handleEmailBio = async (e) =>{
+    const handleEmail = async (e) =>{
         
-        const updated = {Email,Biography}
+        const updated = {Email}
 
         console.log(JSON.stringify(updated))
-        const response =  await fetch('/api/instructor/editbiographyoremail',{method:'put',body:JSON.stringify(updated),headers: {
+        const response =  await fetch('/api/instructor/editemail',{method:'put',body:JSON.stringify(updated),headers: {
             'Authorization': `Bearer ${user.token}`,
             'content-type':'application/json',       
         }
@@ -99,26 +116,47 @@ const Profile = () => {
       const json = await response.json()
     if(!response.ok){
         setError2(json.error)
-        setEmail('')
-        setBiography('')
-       
-       
+        setEmail('')    
     }
     if (response.ok){
         setEmail('')
-        setBiography('')
         setOpen1(false)
-       
         alert("Email changed")
         setOpen3(false)
        // setId('')
-        setError(null)
-       
+        setError(null)      
+    }
+    }
+    const handleBio = async (e) =>{
+        
+        const updated = {Biography}
+
+        console.log(JSON.stringify(updated))
+        const response =  await fetch('/api/instructor/editbiography',{method:'put',body:JSON.stringify(updated),headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'content-type':'application/json',       
+        }
+      })
+      const json = await response.json()
+    if(!response.ok){
+        setError2(json.error)
+        setBiography('')    
+    }
+    if (response.ok){
+        setBiography('')
+        setOpen1(false)
+        alert("Bio edited")
+        setOpen3(false)
+        setError(null)      
     }
     }
     const handleOpenBio = async (e) => {
         e.preventDefault();
         setOpen3(true)
+    }
+    const handleOpenAmount = async (e) => {
+        e.preventDefault();
+        setOpen4(true)
     }
 
     const handlePass = async (e) => {
@@ -237,7 +275,7 @@ const Profile = () => {
         
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleEmailBio} autoFocus>
+                <Button onClick={handleEmail} autoFocus>
                 Confirm
                 </Button>
                
@@ -266,7 +304,7 @@ const Profile = () => {
 
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleEmailBio} autoFocus>
+                <Button onClick={handleBio} autoFocus>
                 Confirm
                 </Button>   
                 </DialogActions>
@@ -389,9 +427,15 @@ const Profile = () => {
                             variant="contained"
                             onClick={handleOpenBio}
                             >
-                            Change Password
+                            Edit Bio
                             </Button>
-                            </Stack>                    
+                            <Stack direction='row' spacing={1}>
+                             <AttachMoneyIcon sx={{color:"green"}}> </AttachMoneyIcon>
+                            <Typography>Amount this month  : {amount}</Typography>
+                           
+                            </Stack>
+                           
+                            </Stack>          
                         </Box>
                     </Card>
                     

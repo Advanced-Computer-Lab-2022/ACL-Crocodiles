@@ -124,11 +124,13 @@ const getMyCourses = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(ID)) {
     return res.status(404).json({ error: "Invalid trainee ID" });
   }
-  const trainee = await Trainee.findById(ID);
+  const trainee = await Trainee.findOne({_id:ID});
   if (!trainee) return res.status(400).json({ error: "trainee not found" });
+
 
   const course_ids = trainee.My_courses;
   console.log(course_ids)
+  console.log(trainee.My_courses._id)
   for (let i = 0; i < course_ids.length; i++) {
     const course_id = course_ids[i]._id;
     console.log(course_id)

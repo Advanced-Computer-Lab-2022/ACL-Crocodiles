@@ -70,7 +70,7 @@ function TraineeNavBar() {
           if(user.Type==='trainee')
             navigate('/traineeprofile');
           else
-            navigate('/instructorprofile');
+            navigate('/profile');
               break;};
      
     }
