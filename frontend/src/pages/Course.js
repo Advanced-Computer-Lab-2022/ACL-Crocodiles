@@ -23,6 +23,8 @@ const Course = () => {
     (state) => state.subjectFilter.value.label
   );
   const currSort = useSelector((state) => state.sort.value);
+  const search = useSelector((state) => state.search.value);
+  console.log(search);
   let x = {};
   x[currSort.element] = currSort.ascending;
 
@@ -33,6 +35,7 @@ const Course = () => {
       Price: { $gte: currPriceRange[0], $lte: currPriceRange[1] },
     },
     sort: x,
+    search: search,
   };
   //  { Subject:currSubjectFilter,Rating: currRatingRange}
 
@@ -68,7 +71,14 @@ const Course = () => {
 
   useEffect(() => {
     filterRS();
-  }, [user, currRatingRange, currSubjectFilter, currPriceRange, currSort]);
+  }, [
+    user,
+    currRatingRange,
+    currSubjectFilter,
+    currPriceRange,
+    currSort,
+    search,
+  ]);
 
   return (
     <div className="Course" style={{ display: "flex" }}>

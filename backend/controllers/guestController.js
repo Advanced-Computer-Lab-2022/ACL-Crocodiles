@@ -29,6 +29,8 @@ const filterCourse = async (req, res) => {
   try {
     const { Rating, Price, Subject } = req.body.filter;
     const sort = req.body.sort;
+    const search = req.body.search;
+
     let course;
 
     let finalFilter = {};
@@ -55,6 +57,14 @@ const filterCourse = async (req, res) => {
     }
 
     course = await Course.find(finalFilter)
+      .and({
+        $or: [
+          { Title: { $regex: search, $options: "i" } },
+          { Subject: { $regex: search, $options: "i" } },
+          { InstructorName: { $regex: search, $options: "i" } },
+          
+        ],
+      })
       .sort(finalSort)
       .populate({ path: "Subtitle", populate: { path: "Exercises" } })
       .populate({ path: "Subtitle", populate: { path: "Videos" } });
@@ -64,7 +74,7 @@ const filterCourse = async (req, res) => {
     }
     return res.status(200).json(course);
   } catch (error) {
-    return res.status(400).json({ error: "error" });
+    return res.status(400).json({ error: error.message });
   }
 };
 

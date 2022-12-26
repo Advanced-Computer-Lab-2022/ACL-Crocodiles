@@ -50,7 +50,8 @@ const StyledMenu = styled((props) => (
   />
 ))(({ theme }) => ({
   "& .MuiPaper-root": {
-    borderRadius: 0,
+  
+    borderRadius: '8px',
     maxHeight: "200px ",
     marginTop: theme.spacing(1),
     width: "inherit",
@@ -61,7 +62,7 @@ const StyledMenu = styled((props) => (
     boxShadow:
       "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
     "& .MuiMenu-list": {
-      padding: "4px 0",
+      padding: "0 0",
     },
     "& .MuiMenuItem-root": {
       "& .MuiSvgIcon-root": {
@@ -280,7 +281,8 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
         aria-expanded={open ? "true" : undefined}
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
+        endIcon={<KeyboardArrowDownIcon sx={{marginLeft:'opx'}} />}
+        sx={{width:'fit-content',justifyContent:'inherit',fontSize:'0.7rem'}}
       >
         course content
       </Button>
@@ -292,6 +294,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        
       >
         <MenuItem onClick={handleClose} disabled disableRipple>
           <TocIcon />
@@ -304,6 +307,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                 marginTop: "0px !important",
                 borderRadius: "0px !important",
                 maxHeight: "max-content !important",
+           
               }}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
