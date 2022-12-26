@@ -318,8 +318,10 @@ const owedPermonth = async(req,res) => {
            console.log(courses.My_Courses[i])
            
            var course = await Course.findOne({_id:courses.My_Courses[i]})
-           console.log(course)
-           price = price + (course.Price - (course.Price * course.Discount*0.1))
+           console.log(course.Count)
+           console.log(course.Count)
+           
+           price = price + ((course.Price - (course.Price * course.Discount*0.1))*course.Count)
            console.log(price)     
         }
 

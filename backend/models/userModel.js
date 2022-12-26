@@ -66,7 +66,6 @@ const userSchema = new Schema({
     const user = await this.findOne({Username})
       if (!user)
         throw Error ('Incorrect username or password')
-
       const validpass = await bcrypt.compare(Password,user.Password)
       if(!validpass)
         throw Error('incorrect username or password')

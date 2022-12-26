@@ -43,7 +43,7 @@ const Profile = () => {
     const[Open1,setOpen1] = useState(false)
     const[Open2,setOpen2] = useState(false)
     const[Open3,setOpen3] = useState(false)
-    const[Open4,setOpen4] = useState(false)
+  
     const[alertvisibilty,setAlertVisibility] = useState(false)
     const [error, setError] = useState(null)
     const [error1, setError1] = useState(null)
@@ -153,10 +153,6 @@ const Profile = () => {
     const handleOpenBio = async (e) => {
         e.preventDefault();
         setOpen3(true)
-    }
-    const handleOpenAmount = async (e) => {
-        e.preventDefault();
-        setOpen4(true)
     }
 
     const handlePass = async (e) => {
@@ -431,7 +427,7 @@ const Profile = () => {
                             </Button>
                             <Stack direction='row' spacing={1}>
                              <AttachMoneyIcon sx={{color:"green"}}> </AttachMoneyIcon>
-                            <Typography>Amount this month  : {amount}</Typography>
+                            <Typography>Amount this month  : {amount}$</Typography>
                            
                             </Stack>
                            

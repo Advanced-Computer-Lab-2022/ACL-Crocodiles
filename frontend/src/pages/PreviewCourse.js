@@ -13,20 +13,38 @@ const PreviewCourse = () => {
     const[error,setError] = useState(null)
     const[course,setCourse]=useState(null)
     const[type,setType]=useState(null)
+    const[iscourse,setisCourse] = useState(null)
     const[courseId,setCourseId]=useState(null)
     const {user} = useAuthContext()
     const navigate = useNavigate();
     useEffect(() => {
-        if(user && user.Type === 'Trainee'){
-            setType(false)
-        }
-        else {
-            setType(true)
-        }
+
+   
         
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('courseId');
-        
+        const checkCourse = async () => {
+        const response = await fetch (`../api/trainee/page/checkcourse/${courseId}`,{headers:{'Authorization': `Bearer ${user.token}`,}})
+            
+            const json = await response.json()
+            console.log(json)
+            if (response.ok) {
+                if(json===0)
+                    setisCourse(false)
+                else if(json===1)
+                    setisCourse(true)
+                }
+            if (!response.ok) {
+                setError(error)
+                }
+            }
+            if(user && user.Type === 'Trainee'){
+                setType(false)
+            }
+            else {
+                setType(true)
+            }
+            
         const fetchCourseDetails = async () => {
             const response = await fetch(`/api/guest/coursedetails/${courseId}`)
             const json = await response.json()
@@ -40,14 +58,14 @@ const PreviewCourse = () => {
                 setError(error)
             }
         }
+        checkCourse()
         fetchCourseDetails()
     },[user])
-    console.log(type)
+    console.log(iscourse)
     const BuyClick = async (e) =>{
-       
-            e.preventDefault()
-           
-            const response =  await fetch('/api/trainee/page/buynow',{method:'POST',body:JSON.stringify(course.coursedetails), headers: {
+        e.preventDefault()
+        if(user && user.Type=="Trainee" && !iscourse){
+        const response =  await fetch('/api/trainee/page/buynow',{method:'POST',body:JSON.stringify(course.coursedetails), headers: {
                 'Authorization': `Bearer ${user.token}`,
                 'content-type':'application/json',
             }
@@ -64,7 +82,7 @@ const PreviewCourse = () => {
         }
         
     }
-
+}
 
     return(
         <Box>
@@ -132,7 +150,7 @@ const PreviewCourse = () => {
             </Typography>
         
         </Grid>
-        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}}disabled={type} variant="contained" onClick={BuyClick} >Buy Now</Button>
+        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}} disabled={type || iscourse} variant="contained" onClick={BuyClick} >Buy Now</Button>
         </Stack>
       
         </Stack>
