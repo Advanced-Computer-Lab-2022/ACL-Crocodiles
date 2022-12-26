@@ -5,7 +5,10 @@ const  {
    createInstructor,
    createCorporateTrainee,
    setPromotion,
-   setPromotionAllCourses
+   setPromotionAllCourses,
+   getPendingCourseRequests,
+   grantCourseAccess,
+   denyCourseAccess
 } = require('../controllers/adminController')
 
 const router = express.Router()
@@ -18,7 +21,13 @@ router.post('/createinstructor',createInstructor)
 
 router.post('/createcorporatetrainee',createCorporateTrainee)
 
-router.post('/setpromotion',setPromotion)
+router.put('/setpromotion',setPromotion)
+
+router.get('/getpendingcourserequests',getPendingCourseRequests)
 
 router.post('/setpromotionallcourses',setPromotionAllCourses)
+
+router.post('/grantcourseaccess',grantCourseAccess)
+
+router.post('/denycourseaccess',denyCourseAccess)
 module.exports = router

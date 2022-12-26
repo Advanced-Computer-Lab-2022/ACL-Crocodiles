@@ -86,14 +86,12 @@ const Resetpasswordput = async (req, res) => {
 
 }
 const ChangePassword = async (req, res) => {
-    const {Username} = req.username
-    const { OldPassword, NewPassword1, NewPassword2 } = req.body;
+   
+    const { OldPassword, NewPassword1, NewPassword2, Username } = req.body;
     try {
         const user = await User.ChangePass(Username, OldPassword, NewPassword1, NewPassword2);
         if (user)
-            res.status(200)
-        else
-            throw Error('Failed')
+            res.status(200).json(user)
     }
     catch (error) {
         res.status(400).json({ error: error.message })

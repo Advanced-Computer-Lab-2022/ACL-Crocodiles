@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
 
-const requireAuthTrainee = async (req,res,next) => {
+const requireAuthCorporate = async (req,res,next) => {
 
 
 
@@ -15,8 +15,8 @@ const requireAuthTrainee = async (req,res,next) => {
     const {_id} = jwt.verify(token,process.env.SECRET)
     
     const {Type} = await User.findOne({_id}).select('Type')
-    if(Type !== 'Trainee' )
-        return res.status(401).json({error:'Only Trainee can access'})
+    if(Type !== 'Corporate' )
+        return res.status(401).json({error:'Only Corporate Trainee can access'})
     
     req.user = await User.findOne({_id}).select('_id')
     
@@ -28,4 +28,4 @@ const requireAuthTrainee = async (req,res,next) => {
     }
     
 }
-module.exports = requireAuthTrainee
+module.exports = requireAuthCorporate

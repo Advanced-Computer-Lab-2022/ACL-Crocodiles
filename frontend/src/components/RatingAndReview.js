@@ -5,43 +5,42 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { renderMatches } from 'react-router-dom';
-import { Paper, Typography } from '@mui/material';
+import { Alert, Paper, Typography } from '@mui/material';
 
 const RatingAndReview = ({courseID}) => {
     const {user} = useAuthContext();
+    console.log("User iiiissss" + user)
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
-    const [flag, setFlag] = useState(true);
+    const [flag, setFlag] = useState(null);
     const [valueDisabled, setValueDisabled] = useState(0);
-
+    console.log('My courseID is : '+courseID);
     useEffect(() => {
         const checkRating = async ()=> {
-            const response = await fetch('/api/trainee/page/checkRatingTrainee', {
-                method: 'GET',
-                body: JSON.stringify({courseID}),
+            const response = await fetch('/api/trainee/page/checkRatingTrainee/'+courseID, {
                 headers: {
-                    'content-type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${user.token}`,
+                    'content-type':'application/json',
                 }
             })
             const json = await response.json()
             console.log('json is ' + json)
-            if (response.status === 200){
-                setFlag(false)
-                const s = json
-                console.log('s isss ' + s + "rating is " + s.Rating + "review is " + s.Review)
-                setValueDisabled(s.Rating)
+            if (response.ok) {
+                if (json.rated) {
+                    setFlag(false);
+                    setValueDisabled(json.rating);
+                }
+                else
+                    setFlag(true);
             }
-            if(response.status === 404) {
-                console.log(json.error)
-                setFlag(true)
-
+            if (!response.ok) {
+                setError(error)
             }
         }
         checkRating()
-    },[])
+    },[user])
 
 
     const handleSubmit = async (e) => {
@@ -79,13 +78,14 @@ const RatingAndReview = ({courseID}) => {
     return(
         <Paper
             sx={{
-                borderRadius: '20px',
+                borderRadius: '10px',
                 padding: '20px',
+                minWidth: '250px',
             }}
         >
         <Stack direction="column" spacing={2}>
             <Typography variant="h5" sx={{alignSelf:'center'}}>Rating: </Typography>
-            {flag==true && <Rating
+            {flag && <Rating
                 name="simple-controlled"
                 value={rating}
                 onChange={(event, newValue) => {
@@ -93,8 +93,8 @@ const RatingAndReview = ({courseID}) => {
                   }}
                   sx={{alignSelf:'center'}}
             />}
-            {flag==false && valueDisabled!=0 && <Rating name="disabled" value={valueDisabled} disabled sx={{alignSelf:'center'}}/>}
-            {flag==true && <TextField
+            {!flag && valueDisabled!=0 && <Rating name="disabled" value={valueDisabled} readOnly sx={{alignSelf:'center'}}/>}
+            {flag && <TextField
                 id="outlined-multiline-static"
                 label="Review"
                 multiline
@@ -105,11 +105,11 @@ const RatingAndReview = ({courseID}) => {
                 fullWidth
                 borderRadius="16px"
             />}
-            {flag==true && <Button variant="contained" onClick={handleSubmit}>
+            {flag && <Button variant="contained" onClick={handleSubmit}>
                 Submit
             </Button>}
-            {success && <p>{success}</p>}
-            {error && <p>{error}</p>}
+            {success && <Alert severity="success">{success}</Alert>}
+            {error && <Alert severity="error">{error}</Alert>}
         </Stack>
         </Paper>
         

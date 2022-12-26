@@ -70,6 +70,9 @@ function AdminNav() {
     const clickUser = () => {
         navigate('/adminadduser');
         }
+    const courseRequests = () => {
+        navigate('/admincorprequests');
+        }
   const theme = createTheme({
 
     palette:{
@@ -136,20 +139,19 @@ function AdminNav() {
               >
                 {'Create a User'}
               </Button>
-
-             { user &&<Button
-                onClick={() => handleCloseNavMenu('My Courses')}
-                color='secondary'
-                sx={{ my: 2, display: 'block' }}
-              >
-                {'My Courses'}
-              </Button>}
               <Button
                 onClick={promo}
                 color='secondary'
                 sx={{ my: 2, display: 'block' }}
                 >
                     {'Define a Promtion'}
+                </Button>
+                <Button
+                onClick={courseRequests}
+                color='secondary'
+                sx={{ my: 2, display: 'block' }}
+                >
+                    {'Course Requests'}
                 </Button>
               
         

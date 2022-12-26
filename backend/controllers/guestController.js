@@ -3,12 +3,14 @@ const Course = require('../models/courseModel.js').course;
 const mongoose = require('mongoose');
 const { findOne } = require('../models/instructorModel.js');
 const CourseRating = require('../models/ratingAndReviewModel.js').courseRatingModel;
+const Trainee = require('../models/traineeModel.js')
+const jwt = require('jsonwebtoken')
 
 const Search = async (req, res) => {
     const { Username, Title, Subject } = req.body
 
     try {
-        const instructor = await Instructor.find({ Username }).select({ id: 1 })
+        const instructor = await User.find({ Username }).select({ id: 1 })
         if (!instructor) {
             return res.status(404).json({ error: 'Couldnt find instructor' })
         }
@@ -92,6 +94,33 @@ const viewRatingAndReviews = async (req, res) => {
         res.status(400).json({ error: 'error' })
     }
 }
+const CourseDetails = async (req,res) => {
+    const {id} = req.params
+    try{
+        const coursedetails = await Course.findOne({_id:id}).populate({ path: 'Subtitle', populate: { path: 'Exercises' } })
+        .populate({ path: 'Subtitle', populate: { path: 'Videos' } });
+        const instructorid = await Course.findOne({_id:id}).select('InstructorId')
+
+        const othercourses = await Course.find({InstructorId:instructorid.InstructorId , _id:{$ne:id}})
+        const instructordetails = await Instructor.findOne({_id:instructorid.InstructorId})
+        if(!coursedetails)
+            return res.status(404).json({ error: 'no courses found' })
+        res.status(200).json({coursedetails,othercourses,instructordetails})
+    } catch(error){
+
+    }
+}
+const addCourse = async (req,res) => {
+    const {id,token,trainee} = req.params
+    console.log(id,trainee,token)
+    const secret = process.env.SECRET
+    const verify = jwt.verify(token, secret)
+    if (verify){
+    res.redirect("http://localhost:3000")
+    const product = await Trainee.updateOne({ _id: trainee }, { $push: { My_courses: {_id:id} } })
+    console.log(product)
+    }
+}
 
 
 module.exports = {
@@ -100,5 +129,7 @@ module.exports = {
     viewAllCourses,
     filterCoursePrice,
     filterCourse,
-    viewRatingAndReviews
+    viewRatingAndReviews,
+    CourseDetails,
+    addCourse
 };

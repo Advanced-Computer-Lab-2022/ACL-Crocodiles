@@ -104,6 +104,7 @@ const Signup = () => {
         <Button variant="contained"  fullWidth disabled = {isLoading} onClick={handleSubmit} >
          Sign Up
          </Button>
+         {error && <Alert severity='error'>{error}</Alert>}
         </Stack>
         
         </Paper>

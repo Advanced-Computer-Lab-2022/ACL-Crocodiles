@@ -7,7 +7,8 @@ const {
     createQuestion,
     viewExams,
     viewAllInsCourses,
-    editBiographyorEmail,
+    editEmail,
+    editBiography,
     defineDiscount,
     getRating,
     createSubtitle,
@@ -17,7 +18,10 @@ const {
     EditInstructorinfo,
     getCourse,
     uploadPreview,
-    getMySubtitles
+    getMySubtitles,
+    owedPermonth
+    
+
   
 } = require('../controllers/instructorController')
 
@@ -37,8 +41,10 @@ router.post('/editinsinfo', EditInstructorinfo)
 router.post('/getcoursebyid', searchCourse)
 router.post('/setflag', setFlag)
 //router.post('/search', Search)
+router.get('/owedpermonth', owedPermonth)
 router.post('/viewExam', viewExams)
-router.put('/editbiographyoremail', editBiographyorEmail)
+router.put('/editemail', editEmail)
+router.put('/editbiography', editBiography)
 router.post('/definediscount/:courseid', defineDiscount),
 router.get('/getrating', getRating)
 router.post('/createsubtitle/:courseid', createSubtitle)

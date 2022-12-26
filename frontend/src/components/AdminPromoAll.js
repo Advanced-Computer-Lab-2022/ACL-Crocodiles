@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Alert, Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
@@ -12,7 +12,8 @@ const AdminPromoAll = () => {
     const [Discount, setDiscount] = useState('');
     const [EndDate, setEndDate] = useState(''+todayDate);
     const [Status, setStatus] = useState('');
-    const [Error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
+    const [Error, setError] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,15 +28,17 @@ const AdminPromoAll = () => {
         })
         const json = await response.json()
         if (!response.ok) {
-            setError(json.error)
+            setError(true)
+            setSuccess(false)
             setStatus('Error happened')
         }
         if (response.ok) {
             console.log("success " + json)
             setDiscount('')
-            setEndDate('')
+            setEndDate(todayDate)
             setStatus('Promotion defined sucessfully ')
-            setError(null)
+            setError(false)
+            setSuccess(true)
         }
     }
 
@@ -54,6 +57,8 @@ const AdminPromoAll = () => {
             <TextField label="Discount Percentage" type="number" min="0" max="100" onChange={(e) => setDiscount(e.target.value)} value={Discount} />
             <TextField label="Discount Expiry Date" type="date" onChange={(e) => setEndDate(e.target.value)} value={EndDate}/>
             <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+            {Error && <Alert severity="error">{Status}</Alert>}
+            {success && <Alert severity="success">{Status}</Alert>}
         </Stack>
         </AccordionDetails>
       </Accordion>

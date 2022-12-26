@@ -50,7 +50,7 @@ function CorpNav() {
     navigate('/course');
     else
     if(e=='My Courses' && user)
-    navigate('/MyCourses');
+    navigate('/corpcourses');
     setAnchorElNav(null);
   };
 

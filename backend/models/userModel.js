@@ -56,7 +56,7 @@ const userSchema = new Schema({
     const trainee =  await Trainee.create({_id:user._id,Firstname:Firstname,Lastname:Lastname,Gender:Gender})
     if(!trainee)
       await this.delete({_id:user._id})
-    return trainee
+    return trainee,user
   }
 
   userSchema.statics.Login = async function(Username,Password){
@@ -66,7 +66,7 @@ const userSchema = new Schema({
     const user = await this.findOne({Username})
       if (!user)
         throw Error ('Incorrect username or password')
-    
+
       const validpass = await bcrypt.compare(Password,user.Password)
       if(!validpass)
         throw Error('incorrect username or password')
@@ -75,22 +75,26 @@ const userSchema = new Schema({
     }
 
     userSchema.statics.ChangePass = async function(Username,OldPassword,NewPassword1,NewPassword2){
+     
       const user = await this.findOne({Username})
       if (!user)
         throw Error ('no such user')
+  
       const validpass = await bcrypt.compare(OldPassword,user.Password)
       if(!validpass)
           throw Error('Old Password is incorrect')
-      else {
-        if (NewPassword1 === NewPassword2){
-          const salt = await bcrypt.genSalt(10)
-          let hash = await bcrypt.hash(NewPassword1,salt)
-          user = await this.update({Password:hash})
-        }
-        else
+
+      if (NewPassword1 !== NewPassword2)
           throw Error('New Password doesnt match')
-      }
-      return true;
+
+      if(!Validator.isStrongPassword(NewPassword1))
+          throw Error('Choose a strong password')
+
+      const salt = await bcrypt.genSalt(10)
+      let hash = await bcrypt.hash(NewPassword1,salt)
+      let password = await this.findByIdAndUpdate(user._id, { Password: hash })
+      
+      return password
     }
     
 

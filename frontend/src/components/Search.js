@@ -69,6 +69,7 @@ const Search = () => {
             }
         })
         const json = await response.json()
+        console.log(json)
         if (!response.ok) {
             setError(json.error)
         }
@@ -97,6 +98,7 @@ const Search = () => {
             {error && <div className="error">{error}</div>}
             {courses && courses.map((course) =>(
                     <SearchDetails key={course._id} course={course} currency={Curr} rate={Rate}/>
+                    
                 ))}
                 </div>
         )}

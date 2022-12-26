@@ -16,6 +16,11 @@ const courseSchema = new Schema({
         type: Number,
         required: true
     },
+    Count:{
+        type:Number,
+        default:0,
+        required:false
+    },
     Discount: {
         type: Number,
         required: false
@@ -88,7 +93,7 @@ courseSchema.statics.deleteDiscounts = async function () {
     const courses = await this.find()
     courses.forEach(async (course) => {
         if (course.DiscountEndDate < Date.now()) {
-            course.Discount = undefined
+            course.Discount = 0
             course.DiscountEndDate = undefined
             await course.save()
         }

@@ -8,8 +8,7 @@ const Video = require('../models/courseModel').video
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
-const { create } = require('../models/userModel')
-const { json } = require('express')
+
 
 
 
@@ -24,6 +23,7 @@ const createCourse = async (req, res) => {
     }
     try {
         const course = await Course.create({ Title, Subject, Price, InstructorId, Summary })
+        const instructor = await Instructor.updateOne({_id:InstructorId,$push: { My_Courses: course._id } })
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -103,30 +103,41 @@ const searchCourse = async (req, res) => {
 
 
 
-const editBiographyorEmail = async (req, res) => {
+const editEmail = async (req, res) => {
     try{
-    const { Email, Biography } = req.body
+    const { Email} = req.body
     const id = req.user
 
-    if (!Validator.isEmail(Email)){
+    if (Email && !Validator.isEmail(Email)){
         return res.status(400).json({ error: 'incorrect Email format' })
     }
-    console.log(Email)
     let user = await User.findOne({Email})
-    console.log(user)
     if( user ) {
         return res.status(400).json({ error: 'Email already in use' })
     }
    
     const userupdated = await User.findByIdAndUpdate(id, { Email: Email })
-    const updated = await Instructor.findByIdAndUpdate(id, { Biography: Biography })
-    return res.status(200).json({ updated, userupdated })
+    return res.status(200).json(userupdated )
     }
     catch(error){
         res.status(400).json({ error: error.message })
     }
 }
+const editBiography = async(req,res) => {
+    try{
+        const {Biography} = req.body
+        const id = req.user
+        const updated = await Instructor.findByIdAndUpdate(id, { Biography: Biography })
+        if(!updated)
+            return res.status(400).json({ error: 'No user found' })
 
+        return res.status(200).json(updated)
+        
+    }
+    catch(error){
+        res.status(400).json({ error: error.message })
+    }
+}
 
 
 const viewAllInsCourses = async (req, res) => {
@@ -367,11 +378,31 @@ const getMySubtitles = async (req, res) => {
         res.status(400).json({ error: 'error' })
     }
 }
+const owedPermonth = async(req,res) => {
+    try {
+        const id = req.user
+        const courses = await Instructor.find({_id:id}).select("My_Courses")
+        console.log(courses)
+        var price = 0
+        for(i=0 ;i<courses.length;i++){
+           var course = await Course.find({_id:courses[i]})
+           if(course.Discount !== 0)
+             price = price + (course.Price * course.Discount*0.1)
+           else
+             price = price + course.Price          
+        }
+        res.status(200).json(price)
+    } catch (error) {
+        
+    }
+  
+}
 
 module.exports = {
     createCourse,
     viewAllInsCourses,
-    editBiographyorEmail,
+    editEmail,
+    editBiography,
     defineDiscount,
     getRating,
     createSubtitle,
@@ -383,6 +414,7 @@ module.exports = {
     setFlag,
     getInsDetails,
     EditInstructorinfo,
+    owedPermonth,
     getCourse,
     uploadPreview,
     getMySubtitles

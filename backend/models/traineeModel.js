@@ -26,6 +26,7 @@ const traineeSchema = new Schema({
     },
     My_courses: {
       type: [mongoose.Schema.Types.ObjectId],
+      ref:'Course',
       required: false
     },
     My_assignments:{
@@ -74,13 +75,8 @@ const traineeSchema = new Schema({
   //     required: false,
     
   //   },
-  //   My_courses: {
-  //     type: [{
-  //       course_id:{
-  //         type: mongoose.Schema.Types.ObjectId,
-  //         ref:'Course',
-  //         required: true
-  //       },
+
+    
   //       Assignments:{
   //         type: [{
   //           exercise_id:{
@@ -103,5 +99,6 @@ const traineeSchema = new Schema({
 
 
 
+
+
   module.exports = mongoose.model('Trainee', traineeSchema);
- 

@@ -32,12 +32,16 @@ import ChangePassword from './pages/ChangePassword'
 import AddSubtitle from './pages/AddSubtitle'
 import TraineeNavBar from './components/TraineeNavBar'
 import NavAssign from './components/NavAssign'
+import PreviewCourse from './pages/PreviewCourse'
 import TM from './pages/TM'
 import AdminPromo from './pages/AdminPromo'
 import AdminAddUser from './pages/AdminAddUser'
 import InstructorCreate from './pages/InstructorCreate'
 import InstructorCourse from './components/InstructorCourse'
 import ViewRatingsPage from './pages/ViewRatingsPage'
+import Success from './pages/Success'
+import AdminCorpRequests from './pages/AdminCorpRequests'
+import CorpCourses from './pages/CorpCourses'
 function App() {
   return (
     <div className="App">
@@ -49,6 +53,14 @@ function App() {
             <Route
               path="/resetpassword"
               element={<ResetPassword />}
+            />
+            <Route
+              path="/success"
+              element={<Success />}
+            />
+            <Route
+              path="/course/previewcourse"
+              element={<PreviewCourse />}
             />
              <Route
               path="/termsandconditions"
@@ -193,6 +205,14 @@ function App() {
             <Route
               path="/viewratings/:courseid"
               element={<ViewRatingsPage />}
+            />
+            <Route
+              path="/admincorprequests"
+              element={<AdminCorpRequests />}
+            />
+            <Route
+              path="/corpcourses"
+              element={<CorpCourses />}
             />
 
 
