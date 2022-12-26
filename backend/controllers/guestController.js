@@ -1,6 +1,8 @@
 const Instructor = require("../models/instructorModel.js");
 const Course = require("../models/courseModel.js").course;
 const mongoose = require("mongoose");
+const { findOne } = require('../models/instructorModel.js');
+const CourseRating = require('../models/ratingAndReviewModel.js').courseRatingModel;
 const Trainee = require("../models/traineeModel.js");
 const jwt = require("jsonwebtoken");
 
@@ -107,6 +109,22 @@ const viewAllCourses = async (req, res) => {
     res.status(400).json({ error: "error" });
   }
 };
+const viewRatingAndReviews = async (req, res) => {
+    const courseid = req.params.courseid
+    // if (!mongoose.Types.ObjectId.isValid(courseid)) {
+    //     return res.status(404).json({ error: 'invalid input' })
+    // }
+    try {
+        const courseRating = await CourseRating.find({CourseId: courseid})
+        if (!courseRating) {
+            return res.status(404).json({ error: 'no course ratings found found' })
+        }
+        console.log(courseRating)
+        res.status(200).json(courseRating)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
 
 const sortBy = async (req, res) => {
   try {
@@ -180,6 +198,7 @@ module.exports = {
   viewAllCourses,
   filterCoursePrice,
   filterCourse,
+  viewRatingAndReviews,
   CourseDetails,
   addCourse,
   getMostPopularCourses,

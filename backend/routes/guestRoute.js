@@ -8,6 +8,7 @@ const {
   getMostPopularCourses,
   sortBy,
   CourseDetails,
+  viewRatingAndReviews,
 } = require("../controllers/guestController");
 
 const router = express.Router();
@@ -18,7 +19,7 @@ router.post("/filterbyprice", filterCoursePrice);
 router.post("/filterbysr", filterCourse);
 router.post("/sortBy", sortBy);
 router.get("/getMostPopularCourses", getMostPopularCourses);
+router.get('/viewratingandreviews/:courseid', viewRatingAndReviews)
 router.get("/coursedetails/:id", CourseDetails);
 
 module.exports = router;
-router.get("/coursedetails/:id", CourseDetails);

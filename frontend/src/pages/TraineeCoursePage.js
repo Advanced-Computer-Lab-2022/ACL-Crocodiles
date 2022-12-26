@@ -23,7 +23,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
-
+import RatingAndReview from '../components/RatingAndReview';
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
@@ -35,6 +35,8 @@ import GradeWidget from "../components/GradeWidget";
 import CheckAnswersWidget from "../components/CheckAnswersWidget";
 import TakeTestWidget from "../components/TakeTestWidget";
 import GradeWidgetHelper from "../components/GradeWidgetHelper";
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import VideoPlayer from "../components/VideoPlayer";
 import NoteTaking from "../components/NoteTaking";
 
@@ -47,6 +49,9 @@ const TraineeCoursePage = () => {
   const [open, setOpen] = useState(false);
   const [video, setVideo] = useState(null);
   const [exercise, setExercise] = useState(null);
+  const params1 = new URLSearchParams(window.location.search);
+  const courseid1= params1.get('courseId');
+  const navigate = useNavigate();
   const [trainee, setTrainee] = useState(null);
   const [error, setError] = useState(null);
   const [change, setChange] = useState(false);
@@ -165,7 +170,7 @@ const TraineeCoursePage = () => {
   image="https://www.youtube.com/embed/muuK4SpRR5M"
 />
             </Card> */}
-            <Container>
+            <Stack direction="row" spacing={2} sx={{ width: '100%' }}>
               <Grid
                 container
                 item
@@ -181,8 +186,32 @@ const TraineeCoursePage = () => {
                   {/* {(video && video.Title) || (exercise && exercise.Title)} */}
                   {course.Title}
                 </Typography>
+
               </Grid>
-            </Container>
+              <Grid
+              container
+              item
+              xs={3}
+              lg={4}
+              alignContent="center" justifyContent="center"
+              margin="20px"
+              alignItems="center"
+              flexDirection="column"
+              >
+                <RatingAndReview courseID={courseid1} />
+                <Button
+                variant="text"
+                onClick={() => {navigate('/viewratings/'+courseid1)}}
+                >
+                    <Stack direction="column" spacing={1} alignItems="center">
+                        <Typography>View All Ratings and Reviews</Typography>
+                    </Stack>
+            </Button>
+              </Grid>
+              
+            </Stack>
+
+
           </Box>
 
           {video || exercise ? (

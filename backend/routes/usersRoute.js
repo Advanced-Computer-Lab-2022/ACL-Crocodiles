@@ -1,6 +1,5 @@
 const express = require('express')
 const {
-    RegisterInstructor,
     RegisterTrainee
 
 } = require('../controllers/usersController')

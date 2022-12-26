@@ -30,8 +30,8 @@ const courseSchema = new Schema(
       required: false,
     },
     Hours: {
-      type: Number,
-      required: true,
+        type: Number,
+        default: 0
     },
     Summary: {
       type: String,
@@ -58,9 +58,13 @@ const courseSchema = new Schema(
       //ref: 'subtitleSchema'
       required: false,
     },
-  },
-  { timestamps: true }
-);
+    PreviewVideo: {
+        type: String,
+        required: false
+    },
+}, { timestamps: true })
+
+
 
 //SUBTITLES SCHEMA
 const subtitleSchema = new Schema(
@@ -90,16 +94,6 @@ const subtitleSchema = new Schema(
   { timestamps: true }
 );
 
-courseSchema.statics.deleteDiscounts = async function () {
-  const courses = await this.find();
-  courses.forEach(async (course) => {
-    if (course.DiscountEndDate < Date.now()) {
-      course.Discount = undefined;
-      course.DiscountEndDate = undefined;
-      await course.save();
-    }
-  });
-};
 
 //Exercise SCHEMA
 // const exerciseSchema = new Schema({
@@ -139,20 +133,19 @@ const videoSchema = new Schema(
       type: String,
       required: false,
     },
-  },
-  { timestamps: true }
-);
+}, { timestamps: true })
 
 courseSchema.statics.deleteDiscounts = async function () {
-  const courses = await this.find();
-  courses.forEach(async (course) => {
-    if (course.DiscountEndDate < Date.now()) {
-      course.Discount = undefined;
-      course.DiscountEndDate = undefined;
-      await course.save();
-    }
-  });
-};
+    const courses = await this.find()
+    courses.forEach(async (course) => {
+        if (course.DiscountEndDate < Date.now()) {
+            course.Discount = 0
+            course.DiscountEndDate = undefined
+            await course.save()
+        }
+    })
+}
+
 
 const course = mongoose.model("Course", courseSchema);
 const sub = mongoose.model("Subtitle", subtitleSchema);

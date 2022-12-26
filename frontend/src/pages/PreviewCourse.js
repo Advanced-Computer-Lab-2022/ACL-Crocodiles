@@ -1,4 +1,4 @@
-import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,AccordionDetails,Divider,Button} from "@mui/material"
+import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,AccordionDetails,Divider,Button, Alert} from "@mui/material"
 
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
@@ -15,6 +15,10 @@ const PreviewCourse = () => {
     const[type,setType]=useState(null)
     const[iscourse,setisCourse] = useState(null)
     const[courseId,setCourseId]=useState(null)
+    const[corpError,setCorpError]=useState(false)
+    const[corpSuccess,setCorpSuccess]=useState(false)
+    const[corpDisabled,setCorpDisabled]=useState(false)
+    const[corp,setCorp]=useState(null)
     const {user} = useAuthContext()
     const navigate = useNavigate();
     useEffect(() => {
@@ -58,8 +62,24 @@ const PreviewCourse = () => {
                 setError(error)
             }
         }
+        const checkRequested = async () => {
+            const response = await fetch(`/api/corpTrainee/page/checkRequested/${courseId}`,{
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                    'content-type':'application/json',
+                }
+            })
+            const json = await response.json()
+            console.log('My check requested json is : '+json.requested)
+            if (json.requested){
+                setCorpDisabled(true)
+            }
+        }
         checkCourse()
         fetchCourseDetails()
+        if(user && user.Type === 'Corporate'){
+            checkRequested()
+        }
     },[user])
     console.log(iscourse)
     const BuyClick = async (e) =>{
@@ -82,7 +102,28 @@ const PreviewCourse = () => {
         }
         
     }
-}
+    const RequestClick = async (e) =>{
+        e.preventDefault()
+        const mybody = {CourseID: course.coursedetails._id, CourseTitle: course.coursedetails.Title, TraineeUsername: user.Username}
+        const response = await fetch('/api/corpTrainee/page/requestCourse', 
+        {method:'POST',body:JSON.stringify(mybody), headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'content-type':'application/json',
+        }
+        })
+        const json = await response.json()
+        if(!response.ok){
+            setCorpError(true)
+            setCorpSuccess(false)
+        }
+        if (response.ok){
+            setCorpSuccess(true)
+            setCorpDisabled(true)
+            setCorpError(false)
+        }
+    }
+
+
 
     return(
         <Box>
@@ -150,7 +191,12 @@ const PreviewCourse = () => {
             </Typography>
         
         </Grid>
-        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}} disabled={type || iscourse} variant="contained" onClick={BuyClick} >Buy Now</Button>
+        {corp ? 
+        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}}disabled={corpDisabled} variant="contained" onClick={RequestClick} >Request Access</Button>
+         :
+        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}} disabled={type || iscourse} variant="contained" onClick={BuyClick} >Buy Now</Button>}
+        {corpSuccess && <Alert severity="success">{'Course Requested Successfully'}</Alert>}
+        {corpError && <Alert severity="error">{'Course Request Failed'}</Alert>}
         </Stack>
       
         </Stack>

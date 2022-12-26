@@ -1,14 +1,17 @@
-
+const Trainee = require('../models/traineeModel')
+const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
+const Instructor = require('../models/instructorModel')
+const Course = require('../models/courseModel').course
+const Subtitle = require('../models/courseModel').sub
+const Exam = require('../models/examModel').exam
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+const courseRatingModel = require('../models/ratingAndReviewModel').courseRatingModel
+const instructorRatingModel = require('../models/ratingAndReviewModel').instructorRatingModel
+const { default: isBoolean } = require("validator/lib/isboolean");
 const Video = require("../models/courseModel").video;
-const Trainee = require("../models/traineeModel");
-const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const Instructor = require("../models/instructorModel");
-const Course = require("../models/courseModel").course;
-const Subtitle = require("../models/courseModel").sub;
-const Exam = require("../models/examModel").exam;
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
-let course;
+
+let course 
 
 const createTrainee = async (req, res) => {
   const { Name, Email, Age } = req.body;
@@ -265,52 +268,6 @@ const findSub2 = async (req, res) => {
   res.json(sub);
 };
 
-const rateCourse = async (req, res) => {
-  const courseID = req.params.id;
-  const value = req.body.value;
-  if (!mongoose.Types.ObjectId.isValid(courseID)) {
-    return res.status(404).json({ error: "no such course id" });
-  }
-  try {
-    let course1 = await Course.findById(courseID);
-    const newRating =
-      (course1.Rating * course1.RatingCount + value) /
-      (course1.RatingCount + 1);
-    course1 = await course1.update({
-      Rating: newRating,
-      RatingCount: course1.RatingCount + 1,
-    });
-    return res.status(200);
-  } catch (error) {
-    return res.status(400).json(error);
-  }
-};
-
-const rateInstructor = async (req, res) => {
-  const courseID = req.params.id;
-  const { value1 } = req.body;
-  if (!mongoose.Types.ObjectId.isValid(courseID)) {
-    return res.status(404).json({ error: "no such course id" });
-  }
-  try {
-    const course1 = await Course.findById(courseID);
-    const instructorID = course1.InstructorId;
-    let instructor = await Instructor.findById(instructorID);
-    if (!instructor)
-      return res.status(404).json({ error: "no such instructor id" });
-    const newRating =
-      (instructor.Rating * instructor.RatingCount + value1) /
-      (instructor.RatingCount + 1);
-    instructor = await instructor.update({
-      Rating: newRating,
-      RatingCount: instructor.RatingCount + 1,
-    });
-    return res.status(200);
-  } catch (error) {
-    return res.status(400).json(error);
-  }
-};
-
 const viewExam = async (req, res) => {
   try {
     const examId = req.params.examid;
@@ -391,6 +348,8 @@ const calculateGrade = async (req, res) => {
     const examId = req.body.Examid;
     const trainee = await Trainee.findById(traineeID);
     const exam = await Exam.findById(examId).populate("Questions");
+
+    
 
     if (!exam) {
       return res.status(404).json({ error: "not a valid exam id" });
@@ -756,6 +715,78 @@ const addCourse = async (req, res) => {
   }
 };
 
+const rateCourse = async(req,res)=>{
+  const {rating, review, courseID, Username} = req.body;
+  const user = req.user;
+  if(!mongoose.Types.ObjectId.isValid(courseID)){ 
+      return res.status(404).json({error: 'no such course id'})
+  }
+  try {
+      const course1 = await Course.findById(courseID);
+      if(!course1){
+          return res.status(404).json({error: 'no such course id'})
+      }
+      const oldRating = course1.Rating
+      const oldCount = course1.RatingCount
+      const newCount = oldCount + 1
+      const newRating = ((oldRating*oldCount) + rating) / (newCount)
+      const course2 = await Course.findByIdAndUpdate(courseID , {$set: {Rating:newRating,RatingCount:newCount}})
+      console.log('test mes username isss ' + Username)
+      const ratrev = await courseRatingModel.create({CourseId:courseID,UserId:user._id,Username: Username,Rating:rating,Review:review})
+      res.status(200).json(ratrev)
+  }
+  catch(error){
+      console.log(error)
+      res.status(400).json(error)
+  }
+}
+
+const checkRatingTrainee = async(req,res) => {
+  const {courseID} = req.params;
+  const traineeID = req.user;
+  console.log('Courseid: ' + courseID)
+  console.log('Userid: ' + traineeID._id)
+  if(!mongoose.Types.ObjectId.isValid(courseID)){ 
+      return res.status(404).json({error: 'no such course id'})
+  }
+  try {
+  const response = await courseRatingModel.findOne({CourseId:courseID,UserId:traineeID})
+  console.log('ratings is: ' + response)
+  if(response){
+      return res.status(200).json({rated: true, rating: response.Rating, review: response.Review})
+  }
+  return res.status(200).json({rated: false})
+  }
+  catch(error){
+      console.log(error)
+      res.status(400).json(error)
+  }
+}
+
+const rateInstructor = async(req,res)=>{
+  const courseID = req.params.id;
+  const {value1,review1} = req.body;
+  const user = req.user;
+  if(!mongoose.Types.ObjectId.isValid(courseID)){ 
+      return res.status(404).json({error: 'no such course id'})
+  }
+  try {
+      const course1 = await Course.findById(courseID);
+      const instructorID = course1.InstructorId
+      let instructor = await Instructor.findById(instructorID)
+      if (!instructor)
+          res.status(404).json({error: 'no such instructor id'})
+      const newRating = (instructor.Rating*instructor.RatingCount + value1) / (instructor.RatingCount + 1)
+      instructor = await instructor.update({Rating:newRating,RatingCount:(instructor.RatingCount+1)})
+      const ratrev = await instructorRatingModel.create({InstructorId:instructorID,UserId:user._id,Rating:value1,Review:review1})
+      res.status(200)
+  }
+  catch(error){
+      console.log(error)
+      res.status(400).json(error)
+  }
+}
+
 module.exports = {
   getTrainees,
   getTrainee,
@@ -786,4 +817,5 @@ module.exports = {
   addCourse,
   getMyCoursesLimited,
   checkCourse
+  checkRatingTrainee,
 };

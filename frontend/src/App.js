@@ -35,7 +35,14 @@ import NavAssign from "./components/NavAssign";
 import HomeAssign from "./components/HomeAssign";
 import PreviewCourse from "./pages/PreviewCourse";
 import TM from "./pages/TM";
+import AdminPromo from './pages/AdminPromo'
+import AdminAddUser from './pages/AdminAddUser'
+import InstructorCreate from './pages/InstructorCreate'
+import InstructorCourse from './components/InstructorCourse'
+import ViewRatingsPage from './pages/ViewRatingsPage'
 import Success from "./pages/Success";
+import AdminCorpRequests from './pages/AdminCorpRequests'
+import CorpCourses from './pages/CorpCourses'
 function App() {
   return (
     <div className="App">
@@ -65,17 +72,28 @@ function App() {
               element={<CorpTraineeCoursePage />}
             />
             <Route
-              path="/CorpTraineeMyCourses/course"
-              element={<CorpTraineeCoursePage />}
+              path="/guest"
+              element={<Guest />}
             />
-            <Route path="/guest" element={<Guest />} />
-            <Route path="/filter" element={<Filter />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/corpTraineeFilter" element={<CorpTraineeFilter />} />
-            <Route path="/InstructorCourses" element={<InstructorCourses />} />
             <Route
-              path="/definediscount/:courseid"
-              element={<DefineDiscount />}
+              path="/filter"
+              element={<Filter />}
+            />
+            <Route
+              path="/search"
+              element={<Search />}
+            />
+            <Route
+              path="/corpTraineeFilter"
+              element={<CorpTraineeFilter />}
+            />
+            <Route
+              path="/InstructorCourses"
+              element={<InstructorCourses />}
+            />
+            <Route
+              path="/createexam"
+              element={<Exam />}
             />
             <Route
               path="/CorpTraineeMyCourses"
@@ -98,6 +116,37 @@ function App() {
               path="/viewSolution/:courseid/:examid"
               element={<ExamSolutionTrainee />}
             />
+            <Route
+              path="/adminpromo"
+              element={<AdminPromo />}
+            />
+            <Route
+              path="/adminadduser"
+              element={<AdminAddUser />}
+            />
+            <Route
+              path="/instructorcreate"
+              element={<InstructorCreate />}
+            />
+            <Route
+              path="/instructorcourse/:courseid"
+              element={<InstructorCourse />}
+            />
+            <Route
+              path="/viewratings/:courseid"
+              element={<ViewRatingsPage />}
+            />
+            <Route
+              path="/admincorprequests"
+              element={<AdminCorpRequests />}
+            />
+            <Route
+              path="/corpcourses"
+              element={<CorpCourses />}
+            />
+
+
+
           </Routes>
         </div>
       </BrowserRouter>

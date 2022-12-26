@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import DropDown from "../components/CountryDropDown";
 import NewCourseCardViewAll from "../components/NewCourseCardViewAll";
-import { Grid } from "@mui/material";
+import { Box, CircularProgress, Grid, Skeleton, Stack } from "@mui/material";
 import TraineeNavBar from "../components/TraineeNavBar";
 import FilterDrawer from "../components/FilterDrawer";
 import FilterDrawerSwipable from "../components/FilterDrawerSwipable";
@@ -25,6 +25,7 @@ const Course = () => {
   const currSort = useSelector((state) => state.sort.value);
   let x = {};
   x[currSort.element] = currSort.ascending;
+    const [loading, setLoading] = useState(true)
 
   const body = {
     filter: {
