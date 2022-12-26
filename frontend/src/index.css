@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
 
 /* layout */
 :root {
@@ -25,7 +25,7 @@ header a {
   color: #333;
   text-decoration: none;
 }
-.pages{
+.pages {
   max-width: 1400px;
   padding: 20px;
   margin: 0 auto;
@@ -43,7 +43,7 @@ header a {
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 .course-details h4 {
   margin: 0 0 10px 0;
@@ -72,12 +72,12 @@ header a {
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 .subtitle-details h4 {
   margin: 0 0 10px 0;
   font-size: 1em;
-  color:  rgb(77, 195, 170);
+  color: rgb(77, 195, 170);
 }
 .subtitle-details p {
   margin: 0;
@@ -96,7 +96,8 @@ header a {
 }
 
 /* new workout form */
-label, input {
+label,
+input {
   display: block;
 }
 input {
@@ -129,7 +130,7 @@ div.error {
   border-radius: 4px;
   margin: 20px 0;
 }
-.topnav input[type=text] {
+.topnav input[type="text"] {
   float: right;
   padding: 6px;
   border: none;
@@ -144,7 +145,7 @@ div.error {
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 .search-details h4 {
   margin: 0 0 10px 0;
@@ -168,5 +169,25 @@ div.error {
 }
 
 .same {
-  display:inline-block;
+  display: inline-block;
+}
+.test iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+}
+.test div {
+  width: 100%;
+  height: 100%;
+}
+.slick-prev:before,
+.slick-next:before {
+  color: #a00407 !important;
+}
+.slick-slider {
+  width: 300px !important;
 }

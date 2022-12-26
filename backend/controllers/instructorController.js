@@ -386,10 +386,7 @@ const owedPermonth = async(req,res) => {
         var price = 0
         for(i=0 ;i<courses.length;i++){
            var course = await Course.find({_id:courses[i]})
-           if(course.Discount !== 0)
-             price = price + (course.Price * course.Discount*0.1)
-           else
-             price = price + course.Price          
+           price = price + (course.Price * course.Discount*0.1)     
         }
         res.status(200).json(price)
     } catch (error) {
