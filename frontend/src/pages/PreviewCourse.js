@@ -80,7 +80,9 @@ const PreviewCourse = () => {
         if(user && user.Type === 'Corporate'){
             checkRequested()
         }
+    
     },[user])
+
     console.log(iscourse)
     const BuyClick = async (e) =>{
         e.preventDefault()
@@ -102,6 +104,7 @@ const PreviewCourse = () => {
         }
         
     }
+}
     const RequestClick = async (e) =>{
         e.preventDefault()
         const mybody = {CourseID: course.coursedetails._id, CourseTitle: course.coursedetails.Title, TraineeUsername: user.Username}
@@ -122,7 +125,6 @@ const PreviewCourse = () => {
             setCorpError(false)
         }
     }
-
 
 
     return(
@@ -146,9 +148,6 @@ const PreviewCourse = () => {
         <Typography component="legend" variant='body' sx={{color:'yellow'}}>{course && course.Rating} </Typography>
         <Rating name="read-only" value={course && course.coursedetails.Rating} readOnly /> 
         </Stack>
-        <Typography variant="body" gutterBottom sx={{color:'white' ,margin:"0,200px"}} align='center'>
-        {course && course.coursedetails.Summary}
-        </Typography>
         <Typography variant="body" gutterBottom sx={{color:'black' ,margin:"0,200px"}} align='center'>
         Author: {course && course.instructordetails && course.instructordetails.Firstname}  {course && course.instructordetails && course.instructordetails.Lastname}
         </Typography>
@@ -185,9 +184,8 @@ const PreviewCourse = () => {
                Course Description
         </Typography>
         <Grid sx={{ width:600 ,margin:"75px -35px" ,border: "2px solid #a00407"  , borderRadius: '7px' ,padding:"10px" ,background:'white'}}>
-        <Typography  >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis ipsum epsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione iure repellat dolor expedita autem omnis est perferendis, perspiciatis molestias in laboriosam esse tempora nisi nobis dicta odit commodi neque? Vitae.
+        <Typography variant="body"  >
+        {course && course.coursedetails.Summary}
             </Typography>
         
         </Grid>

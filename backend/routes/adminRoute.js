@@ -7,8 +7,11 @@ const  {
    setPromotion,
    setPromotionAllCourses,
    getPendingCourseRequests,
+   getPendingRefundRequests,
    grantCourseAccess,
-   denyCourseAccess
+   denyCourseAccess,
+   grantRefund,
+   denyRefund
 } = require('../controllers/adminController')
 
 const router = express.Router()
@@ -25,9 +28,17 @@ router.put('/setpromotion',setPromotion)
 
 router.get('/getpendingcourserequests',getPendingCourseRequests)
 
+router.get('/getpendingrefundrequests',getPendingRefundRequests)
+
+//router.post('/setpendingcourserequests',setPendingRefundRequests)
+router.post('/grantrefund', grantRefund)
+
 router.post('/setpromotionallcourses',setPromotionAllCourses)
 
 router.post('/grantcourseaccess',grantCourseAccess)
 
 router.post('/denycourseaccess',denyCourseAccess)
+
+router.post('/denyrefund',denyRefund)
+
 module.exports = router

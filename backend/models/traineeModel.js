@@ -109,6 +109,16 @@ const traineeSchema = new Schema(
       ],
       required: false,
     },
+    My_Refund_Requests:{
+      type: [mongoose.Schema.Types.ObjectId],
+      ref:'RefundRequest',
+      required: false
+    },
+    Wallet:{
+      type:Number,
+      required:false,
+      default:0
+    }
   },
   { timestamps: true }
 );

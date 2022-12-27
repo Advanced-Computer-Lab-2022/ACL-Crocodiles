@@ -64,14 +64,17 @@ function AdminNav() {
     setAnchorElUser(null);
   };
 
-  const promo = () => {
-    navigate('/adminpromo');
-    }
+    const promo = () => {
+        navigate('/adminpromo');
+        }
     const clickUser = () => {
         navigate('/adminadduser');
         }
     const courseRequests = () => {
         navigate('/admincorprequests');
+        }
+    const refundRequests = () => {
+        navigate('/adminrefundrequests');
         }
   const theme = createTheme({
 
@@ -152,6 +155,13 @@ function AdminNav() {
                 sx={{ my: 2, display: 'block' }}
                 >
                     {'Course Requests'}
+                </Button>
+                <Button
+                onClick={refundRequests}
+                color='secondary'
+                sx={{ my: 2, display: 'block' }}
+                >
+                    {'Refund Requests'}
                 </Button>
               
         

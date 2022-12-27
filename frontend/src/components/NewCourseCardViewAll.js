@@ -325,7 +325,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                   subheader={<li />}
                 >
                   <li>
-                    {sub.Videos.length != 0 && (
+                    {sub.Videos && sub.Videos.length != 0 && (
                       <ul>
                         <ListSubheader>
                           <div
@@ -349,7 +349,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                           ))}
                       </ul>
                     )}
-                    {sub.Exercises.length != 0 && (
+                    {sub.Exercises && sub.Exercises.length != 0 && (
                       <ul>
                         <ListSubheader>
                           {" "}

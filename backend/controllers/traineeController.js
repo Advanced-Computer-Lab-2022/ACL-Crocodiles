@@ -10,7 +10,7 @@ const courseRatingModel = require('../models/ratingAndReviewModel').courseRating
 const instructorRatingModel = require('../models/ratingAndReviewModel').instructorRatingModel
 const { default: isBoolean } = require("validator/lib/isboolean");
 const Video = require("../models/courseModel").video;
-
+const RefundRequest = require("../models/refundRequestModel")
 let course 
 
 const createTrainee = async (req, res) => {
@@ -786,6 +786,51 @@ const rateInstructor = async(req,res)=>{
       res.status(400).json(error)
   }
 }
+const requestRefund = async (req, res) => {
+  const { CourseID, CourseTitle, TraineeUsername } = req.body;
+  const TraineeID = req.user
+  if (!mongoose.Types.ObjectId.isValid(CourseID)){
+      return res.status(400).json({error: 'Invalid course id'});
+  }
+  if (!mongoose.Types.ObjectId.isValid(TraineeID)){
+      return res.status(400).json({error: 'Invalid trainee id'});
+  }
+  const course = await Course.findOne({_id:CourseID})
+  try {
+      const newRefundRequest = await RefundRequest.create({ CourseID, TraineeID, CourseTitle, TraineeUsername, amount:course.Price*0.5 })
+      console.log(newRefundRequest)
+      const trainee = await Trainee.updateOne({TraineeID},{$push:{My_Refund_Requests:newRefundRequest}})
+      console.log(trainee)
+      res.status(200).json(newRefundRequest)
+  } catch (error) {
+      console.log(error)
+      res.status(401).json({ error: 'error' })
+  }
+}
+const getrefundrequests = async (req,res) =>{
+  const {id} = req.user
+  try {
+    const request = await RefundRequest.find({TraineeID:id})
+    if(!request)
+      return res.status(401).json({error:'error'})
+    res.status(200).json(request)
+  } catch (error) {
+    res.status(400).json({error:error})
+  }
+
+}
+const checkRequest = async (req,res) => {
+  const {id} =req.user
+  const{CourseID} = req.body
+  try {
+    const request = await RefundRequest.find({TraineeID:id}).and({CourseID})
+    if(request.length===0)
+      return res.status(401).json({error:'error'})
+    res.status(200).json({message:"ok"})
+  } catch (error) {
+    res.status(400).json({error:error})
+  }
+}
 
 module.exports = {
   getTrainees,
@@ -816,6 +861,9 @@ module.exports = {
   buyCourse,
   addCourse,
   getMyCoursesLimited,
-  checkCourse
+  checkCourse,
   checkRatingTrainee,
+  requestRefund,
+  getrefundrequests,
+  checkRequest
 };

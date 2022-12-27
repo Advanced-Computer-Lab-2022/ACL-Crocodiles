@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const Course = require('../models/courseModel').course
 const CourseRequest = require('../models/courseRequestModel')
-
+const RefundRequest = require('../models/refundRequestModel')
+const Trainee = require('../models/traineeModel')
 const createAdmin = async (req,res) => {
     const {Username,Email,Password} = req.body
     const Type = 'Admin'
@@ -118,6 +119,15 @@ const getPendingCourseRequests = async (req,res) => {
         res.status(400).json({ error: error.message })
     }
 }
+const getPendingRefundRequests = async (req,res) => {
+    try {
+        const requests = await RefundRequest.find({Status:'Pending'})
+        res.status(200).json(requests)
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
 
 const grantCourseAccess = async (req,res) => {
     const {CourseID,TraineeID} = req.body
@@ -157,6 +167,43 @@ const denyCourseAccess = async (req,res) => {
         res.status(400).json({ error: error.message })
     }
 }
+const grantRefund = async (req,res) => {
+    const {CourseID,TraineeID,amount} = req.body
+    console.log(CourseID,TraineeID)
+    try {
+        const trainee = await Trainee.updateOne({_id:TraineeID},{Wallet:amount})
+        console.log(trainee)
+        if (!trainee) {
+            return res.status(404).json({ error: 'no trainee found' })
+        }
+
+        const request = await RefundRequest.updateOne({CourseID,TraineeID}, {$set: {Status:'Granted'}})
+        if (!request) {
+            return res.status(404).json({ error: 'no request found' })
+        }
+
+        res.status(200).json({trainee,request})
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const denyRefund = async (req,res) => {
+    const {CourseID,TraineeID} = req.body
+    console.log(CourseID,TraineeID)
+    try {
+        const request = await RefundRequest.updateOne({CourseID,TraineeID}, {$set: {Status:'Denied'}})
+        console.log(request)
+        if (!request) {
+            return res.status(404).json({ error: 'no request found' })
+        }
+        res.status(200).json(request)
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
 
 module.exports = {
     createAdmin,
@@ -165,6 +212,9 @@ module.exports = {
     setPromotionAllCourses,
     setPromotion,
     getPendingCourseRequests,
+    getPendingRefundRequests,
     grantCourseAccess,
-    denyCourseAccess
+    denyCourseAccess,
+    grantRefund,
+    denyRefund
 }

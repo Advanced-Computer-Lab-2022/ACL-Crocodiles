@@ -43,6 +43,8 @@ import ViewRatingsPage from './pages/ViewRatingsPage'
 import Success from "./pages/Success";
 import AdminCorpRequests from './pages/AdminCorpRequests'
 import CorpCourses from './pages/CorpCourses'
+import TraineeRefundRequests from "./pages/TraineeRefundRequests";
+import AdminRefundRequest from "./pages/AdminRefundRequests";
 function App() {
   return (
     <div className="App">
@@ -67,6 +69,8 @@ function App() {
             <Route path="/Mycourses/course" element={<TraineeCoursePage />} />
             <Route path="/CorpTrainee" element={<CorpTrainee />} />
             <Route path="/corpTraineeCourses" element={<CorpTraineeCourse />} />
+            <Route path="/traineerefundrequests" element={<TraineeRefundRequests />} />
+            <Route path="/adminrefundrequests" element={<AdminRefundRequest />} />
             <Route
               path="/CorpTraineeMyCourses/course"
               element={<CorpTraineeCoursePage />}
