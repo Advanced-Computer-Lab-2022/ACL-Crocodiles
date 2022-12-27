@@ -5,6 +5,8 @@ import TraineeNavBar from "../components/TraineeNavBar.js";
 import Home from "../pages/Home";
 import TraineeHome from "../pages/TraineeHome";
 import GuestHome from "../pages/GuestHome";
+import AdminAddUser from "../pages/AdminAddUser"
+
 const HomeAssign = () => {
   const { user } = useAuthContext();
 
@@ -16,9 +18,9 @@ const HomeAssign = () => {
         return <Home />;
 
       case "Admin":
-        return <Home />;
+        return <AdminAddUser />;
       case "Corporate":
-        return <Home />;
+        return <TraineeHome />;
     }
   }
 

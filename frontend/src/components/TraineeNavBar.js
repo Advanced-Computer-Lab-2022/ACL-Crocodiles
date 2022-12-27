@@ -57,6 +57,7 @@ function TraineeNavBar() {
     switch (setting) {
       case "Logout": {
         logout();
+        navigate("/");
         break;
       }
       case "Profile": {

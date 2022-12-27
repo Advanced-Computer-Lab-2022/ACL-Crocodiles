@@ -2,19 +2,25 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import DropDown from "../components/CountryDropDown";
 import NewCourseCardViewAll from "../components/NewCourseCardViewAll";
-import { Grid } from "@mui/material";
+import { Box, CircularProgress, Grid, Skeleton, Stack } from "@mui/material";
 import TraineeNavBar from "../components/TraineeNavBar";
 import FilterDrawer from "../components/FilterDrawer";
 import FilterDrawerSwipable from "../components/FilterDrawerSwipable";
 import { useSelector } from "react-redux";
 import Alert from "@mui/material/Alert";
+import Pagination from "@mui/material/Pagination";
 import { minWidth } from "@mui/system";
+import CoursePagination from './CoursePagination'
 //import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {
   const { user } = useAuthContext();
   const [courses, setCourses] = useState(null);
   const [subjectOptions, setSubjectOptions] = useState(null);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const handlePage = (event, value) => {
+    setPage(value);
+  };
   const currRatingRange = useSelector(
     (state) => state.ratingFilter.value.range
   );
@@ -27,57 +33,24 @@ const Course = () => {
   console.log(search);
   let x = {};
   x[currSort.element] = currSort.ascending;
+    const [loading, setLoading] = useState(true)
 
-  const body = {
-    filter: {
-      Subject: currSubjectFilter,
-      Rating: { $gte: currRatingRange[0], $lte: currRatingRange[1] },
-      Price: { $gte: currPriceRange[0], $lte: currPriceRange[1] },
-    },
-    sort: x,
-    search: search,
-  };
-  //  { Subject:currSubjectFilter,Rating: currRatingRange}
-
-  const filterRS = async () => {
-    const response = await fetch("/api/guest/filterbysr", {
-      method: "POST",
-      body: JSON.stringify(body),
+    const getSubjects = async ()=>{ await fetch("/api/guest/getSubjectsAndPages", {
+      method: "GET",
       headers: {
         "content-type": "application/json",
       },
-    });
-    const json = await response.json();
-    if (!response.ok) {
-      setError(json.error);
-    }
-    if (response.ok) {
-      const t = [];
-      setCourses(json);
-      for (let i = 0; i < json.length; i++) {
-        if (json[i].Subject != undefined && json[i].Subject) {
-          const found = t.find((element) => element.label == json[i].Subject);
-          if (found == undefined) {
-            t.push({ label: json[i].Subject });
-          }
-        }
-      }
-      setSubjectOptions(t);
-
-      if (json.length === 0) setError("No Courses found");
-      else setError(null);
-    }
-  };
-
+    }).then((res) => {
+      return res.json()})
+      .then(data => {
+        const arr = data.map((subject)=>({ label: subject }))
+        setSubjectOptions(arr)}).catch((e)=>setError(e));
+  }
+   
   useEffect(() => {
-    filterRS();
+    getSubjects()
   }, [
-    user,
-    currRatingRange,
-    currSubjectFilter,
-    currPriceRange,
-    currSort,
-    search,
+
   ]);
 
   return (
@@ -91,19 +64,9 @@ const Course = () => {
             {error}
           </Alert>
         )}
-        <div className="Course" style={{ display: "flex" }}>
-          <Grid container item spacing={1}>
-            {courses &&
-              courses.map((course) => (
-                <Grid item xs={12} sm={6} md={4}>
-                  <NewCourseCardViewAll
-                    Course={course}
-                    redirect={`/course/previewcourse?courseId=${course._id}`}
-                  />
-                </Grid>
-              ))}
-          </Grid>
-        </div>
+
+    <CoursePagination currSubjectFilter={currSubjectFilter} currRatingRange={currRatingRange} currPriceRange={currPriceRange} x={x} search={search} />
+      
       </div>
     </div>
   );

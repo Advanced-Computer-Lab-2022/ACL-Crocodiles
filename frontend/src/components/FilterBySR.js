@@ -17,7 +17,8 @@ const FilterBySR = () => {
         console.log(body)
         const response = await fetch('/api/guest/filterbysr', {
             method: 'POST', body: JSON.stringify(body), headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

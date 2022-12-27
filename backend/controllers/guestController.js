@@ -1,6 +1,8 @@
 const Instructor = require("../models/instructorModel.js");
 const Course = require("../models/courseModel.js").course;
 const mongoose = require("mongoose");
+const { findOne } = require('../models/instructorModel.js');
+const CourseRating = require('../models/ratingAndReviewModel.js').courseRatingModel;
 const Trainee = require("../models/traineeModel.js");
 const jwt = require("jsonwebtoken");
 
@@ -30,6 +32,8 @@ const filterCourse = async (req, res) => {
     const { Rating, Price, Subject } = req.body.filter;
     const sort = req.body.sort;
     const search = req.body.search;
+    const page = req.query.page || 0;
+    const cardsPerPage = 15
 
     let course;
 
@@ -62,17 +66,27 @@ const filterCourse = async (req, res) => {
           { Title: { $regex: search, $options: "i" } },
           { Subject: { $regex: search, $options: "i" } },
           { InstructorName: { $regex: search, $options: "i" } },
-          
         ],
       })
       .sort(finalSort)
+      .skip(page*cardsPerPage)
+      .limit(cardsPerPage)
       .populate({ path: "Subtitle", populate: { path: "Exercises" } })
       .populate({ path: "Subtitle", populate: { path: "Videos" } });
 
     if (!course) {
       return res.status(404).json({ error: "no such course" });
     }
-    return res.status(200).json(course);
+    count = await Course.find(finalFilter)
+    .and({
+      $or: [
+        { Title: { $regex: search, $options: "i" } },
+        { Subject: { $regex: search, $options: "i" } },
+        { InstructorName: { $regex: search, $options: "i" } },
+      ],
+    }).count();
+
+    return res.status(200).json({courses:course,count:count});
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -117,6 +131,23 @@ const viewAllCourses = async (req, res) => {
     res.status(400).json({ error: "error" });
   }
 };
+
+const viewRatingAndReviews = async (req, res) => {
+  const courseid = req.params.courseid
+  // if (!mongoose.Types.ObjectId.isValid(courseid)) {
+  //     return res.status(404).json({ error: 'invalid input' })
+  // }
+  try {
+      const courseRating = await CourseRating.find({CourseId: courseid})
+      if (!courseRating) {
+          return res.status(404).json({ error: 'no course ratings found found' })
+      }
+      console.log(courseRating)
+      res.status(200).json(courseRating)
+  } catch (error) {
+      res.status(400).json({ error: 'error' })
+  }
+}
 
 const sortBy = async (req, res) => {
   try {
@@ -184,14 +215,28 @@ const addCourse = async (req, res) => {
   }
 };
 
+const getSubjectsAndPages = async (req, res) => {
+     try {
+
+  const subjects = await Course.find().distinct('Subject');
+  if (!subjects) {
+    return res.status(404).json({ error: "no courses found" });
+  }
+  return res.status(200).json(subjects);
+} catch (error) {
+  return res.status(400).json({ error: error.message});
+}
+};
 module.exports = {
   Search,
   getPrice,
   viewAllCourses,
   filterCoursePrice,
   filterCourse,
+  viewRatingAndReviews,
   CourseDetails,
   addCourse,
   getMostPopularCourses,
   sortBy,
+  getSubjectsAndPages
 };

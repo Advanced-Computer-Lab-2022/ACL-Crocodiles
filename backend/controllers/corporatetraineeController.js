@@ -2,6 +2,7 @@ const Course = require('../models/courseModel').course
 const mongoose = require('mongoose')
 const CorpTrainee = require('../models/corporatetraineeModel')
 const Exam = require('../models/examModel').exam
+const CourseRequest = require('../models/courseRequestModel')
 
 const viewAllCourses = async (req,res) => {
     try {
@@ -28,7 +29,7 @@ const searchCourse = async (req,res) => {
 }
 const getMyCourses = async(req, res)=>{
 
-    const ID  = "6391383e89acbda5734e887c"
+    const ID  = req.user;
     const courses = [];
     if(!mongoose.Types.ObjectId.isValid(ID)){
       
@@ -195,6 +196,47 @@ const calculateGrade = async (req, res) => {
     }
 }
 
+const requestCourse = async (req, res) => {
+    const { CourseID, CourseTitle, TraineeUsername } = req.body;
+    const TraineeID = req.user
+    console.log(req.body)
+    if (!mongoose.Types.ObjectId.isValid(CourseID)){
+        return res.status(404).json({error: 'Invalid course id'});
+    }
+    if (!mongoose.Types.ObjectId.isValid(TraineeID)){
+        return res.status(404).json({error: 'Invalid trainee id'});
+    }
+    try {
+        const newCourseRequest = await CourseRequest.create({ CourseID, TraineeID, CourseTitle, TraineeUsername })
+        console.log(newCourseRequest)
+        const trainee = await CorpTrainee.findById(TraineeID)
+        trainee.My_course_requests.push(newCourseRequest)
+        await trainee.save()
+        res.status(200).json(newCourseRequest)
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
+const checkRequested = async (req, res) => {
+    const {CourseID} = req.params;
+    const TraineeID = req.user
+    if (!mongoose.Types.ObjectId.isValid(CourseID)){
+        return res.status(404).json({error: 'Invalid course id'});
+    }
+    if (!mongoose.Types.ObjectId.isValid(TraineeID)){
+        return res.status(404).json({error: 'Invalid trainee id'});
+    }
+    try {
+        const CourseReq = await CourseRequest.findOne({CourseID, TraineeID})
+        console.log(CourseReq)
+        if(CourseReq){
+            return res.status(200).json({requested: true})
+        }
+        res.status(200).json({requested: false})
+    } catch (error) {
+        res.status(400).json({ error: 'error' })
+    }
+}
 
 module.exports = {
     searchCourse,
@@ -204,5 +246,7 @@ module.exports = {
     addAssignment,
     getAssignment,
     calculateGrade,
-    viewExam
+    viewExam,
+    requestCourse,
+    checkRequested
 }

@@ -11,7 +11,7 @@ body {
   font-family: "Poppins";
 }
 header {
-  background: #fff;
+  background: rgb(247, 63, 63);
 }
 header .container {
   max-width: 1550px;
@@ -190,4 +190,11 @@ div.error {
 }
 .slick-slider {
   width: 300px !important;
+}
+
+.pgntn {
+  margin-top:50px
+}
+.pgntn ul{
+  justify-content:center;
 }
