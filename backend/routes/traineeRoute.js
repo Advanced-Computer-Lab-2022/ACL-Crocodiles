@@ -21,7 +21,6 @@ const {
     addAssignment,
     getAssignment,
     calculateGrade,
-    getTraineeDetails,
     isTrainee,
     addWatchedVideo,
     addNote,
@@ -29,9 +28,11 @@ const {
     deleteNote,
     getProgress,
     buyCourse,
-    reportProblem,
+    addCourse,
     getMyCoursesLimited,
     checkRatingTrainee,
+    getTraineeDetails,
+    reportProblem,
 } = require("../controllers/traineeController");
 
 const router = express.Router();
@@ -77,23 +78,10 @@ router.post('/page/rateInstructor', rateInstructor)
 router.get('/page/checkRatingTrainee/:courseID', checkRatingTrainee)
 router.post("/page/getProgress/", getProgress);
 router.post("/addcourse", addCourse);
-
-router.get('/page/MyCourses', getMyCourses)
 router.post('/page/reportProblem', reportProblem)
-router.get('/page/MyCourses/:id', findCourse)
-router.get('/page/findSub/:id', findSub)
-router.get('/page/getMyTrainee/', getMyTrainee)
-router.get('/page/isTrainee/', isTrainee)
-router.get('/page/getMyCourse/:id', getMyCourse)
-router.post('/subtitles', getSubtitles)
-router.patch('/page/addAssignment', addAssignment)
-router.post('/page/getAssignment', getAssignment)
-router.post('/page/calculateGrade', calculateGrade)
-router.post('/addcourse', addCourse)
-router.get('/page/sub/', findSub2)
-router.post('/page/rateCourse', rateCourse)
-router.post('/page/rateInstructor', rateInstructor)
-router.get('/page/checkRatingTrainee/:courseID', checkRatingTrainee)
+router.get('/page/traineedetails', getTraineeDetails)
+
+
 
 
 
