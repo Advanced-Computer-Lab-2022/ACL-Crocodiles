@@ -68,7 +68,7 @@ function TraineeNavBar() {
         break;
       };
       case "Profile": {
-        if (user.Type === 'trainee')
+        if (user.Type === 'Trainee')
           navigate('/traineeprofile');
         else
           navigate('/instructorprofile');

@@ -102,7 +102,6 @@ function App() {
               element={<CorpTraineeMyCourses />}
             />
             <Route path="/createexam" element={<Exam />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/changePassword" element={<ChangePassword />} />{" "}
             <Route path="/viewExamCorp/:examid" element={<ExamCorpTrainee />} />
             <Route

@@ -74,6 +74,7 @@ const TraineeProfile = () => {
             console.log(Trainee)
             if (!response.ok) {
                 setError(json.error)
+                //console.log(json.error)
             }
         }
         fetchTrainee()
@@ -87,7 +88,7 @@ const TraineeProfile = () => {
         console.log(clicked)
         const fetchCourses = async () => {
             console.log(user.token)
-            const response = await fetch('/api/trainee/page/MyCourses', {
+            const response = await fetch('/api/trainee/page/course/MyCourses', {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
