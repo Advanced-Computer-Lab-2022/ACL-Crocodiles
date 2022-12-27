@@ -33,7 +33,7 @@ import {
 
 
 
-const ProfileTrainee = () => {
+const TraineeProfile = () => {
     const { user } = useAuthContext()
     const [Trainee, setTrainee] = useState(null)
     const [OldPassword, setOldPassword] = useState('')
@@ -381,4 +381,4 @@ const ProfileTrainee = () => {
     )
 }
 
-export default ProfileTrainee
+export default TraineeProfile

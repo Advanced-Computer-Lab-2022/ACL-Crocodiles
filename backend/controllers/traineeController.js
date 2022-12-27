@@ -1,10 +1,14 @@
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
 const Trainee = require('../models/traineeModel')
+const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
+const Problem = require('../models/problemModel')
+
 
 
 
@@ -35,6 +39,18 @@ const getTrainee = async (req, res) => {
         return res.status(404).json({ error: 'no such trainee2' })
     }
     res.status(200).json(trainee)
+}
+const isTrainee = async (req, res) => {
+    const { id } = req.user
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(200).json({ isTrainee: false })
+    }
+
+    const trainee = await Trainee.findById(id)
+    if (!trainee) {
+        return res.status(200).json({ isTrainee: false })
+    }
+    return res.status(200).json({ isTrainee: true })
 }
 const deleteTrainee = async (req, res) => {
     const { id } = req.params
@@ -117,6 +133,7 @@ const getMyCourses = async (req, res) => {
 
     for (let i = 0; i < course_ids.length; i++) {
         const course_id = course_ids[i];
+        cons
         if (!mongoose.Types.ObjectId.isValid(course_id))
             return res.status(404).json({ error: 'Invalid course id' });
         const course = await Course.findById(course_id)
@@ -221,11 +238,11 @@ const rateCourse = async (req, res) => {
         let course1 = await Course.findById(courseID);
         const newRating = (course1.Rating * course1.RatingCount + value) / (course1.RatingCount + 1)
         course1 = await course1.update({ Rating: newRating, RatingCount: course1.RatingCount + 1 })
-        res.status(200)
+        return res.status(200)
     }
     catch (error) {
         console.log(error)
-        res.status(400).json(error)
+        return res.status(400).json(error)
     }
 }
 
@@ -240,14 +257,14 @@ const rateInstructor = async (req, res) => {
         const instructorID = course1.InstructorId
         let instructor = await Instructor.findById(instructorID)
         if (!instructor)
-            res.status(404).json({ error: 'no such instructor id' })
+            return res.status(404).json({ error: 'no such instructor id' })
         const newRating = (instructor.Rating * instructor.RatingCount + value1) / (instructor.RatingCount + 1)
         instructor = await instructor.update({ Rating: newRating, RatingCount: (instructor.RatingCount + 1) })
-        res.status(200)
+        return res.status(200)
     }
     catch (error) {
         console.log(error)
-        res.status(400).json(error)
+        return res.status(400).json(error)
     }
 }
 
@@ -369,11 +386,50 @@ const calculateGrade = async (req, res) => {
         }
 
         const percentage = (grade / answer.length) * 100
-        res.json({ Grade: grade, Percentage: percentage })
+        return res.json({ Grade: grade, Percentage: percentage })
 
     } catch (error) {
 
-        res.status(400).json({ error: 'error' })
+        return res.status(400).json({ error: 'error' })
+    }
+}
+const buyCourse = async (req, res) => {
+    const { Title, Price, id } = req.body
+    const trainee = req.user
+    console.log(id)
+
+    try {
+        const course = await Course.findOne({ _id: _id })
+        const secret = process.env.SECRET
+        const token = jwt.sign({ _id: _id, }, secret, { expiresIn: '5m' })
+        if (!course)
+            res.status(400).json({ error: 'course has been removed' })
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            mode: 'payment',
+            line_items: [{
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: Title
+                    },
+                    unit_amount: Price
+                },
+                quantity: 1
+            }],
+            success_url: `http://localhost:4000/api/guest/addcourse/${id}/${token}/${trainee}`,
+            cancel_url: "http://localhost:3000",
+
+        })
+        res.json({ url: session.url })
+
+
+
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ error: error.messsage })
     }
 }
 
@@ -382,6 +438,7 @@ const getTraineeDetails = async (req, res) => {
     try {
         const user = await User.findById(id)
         const traineeDetails = await Trainee.findById(id)
+        //const traineeDetails = await Trainee.findOne({ _id: id })
         if (!user) {
             return res.status(404).json({ error: 'user not found' })
         }
@@ -391,6 +448,28 @@ const getTraineeDetails = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: 'error' })
         console.log(error)
+    }
+}
+
+const reportProblem = async (req, res) => {
+    const id = req.user
+    const { Title, Description, courseId } = req.body
+    //const courseId = req.params.courseid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        const course = await Course.findById(courseId)
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
+        }
+        const problem = await Problem.create({ submitter_id: id, course_id: courseId, Title: Title, Description: Description, Status: 'unseen' })
+        Trainee.My_problems.push(problem)
+
+
+        res.status(200).json(problem)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
     }
 }
 
@@ -414,5 +493,9 @@ module.exports = {
     addAssignment,
     getAssignment,
     calculateGrade,
-    getTraineeDetails
+    getTraineeDetails,
+    isTrainee,
+    buyCourse,
+    reportProblem
+
 }

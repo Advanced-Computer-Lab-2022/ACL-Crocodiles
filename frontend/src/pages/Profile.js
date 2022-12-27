@@ -22,7 +22,8 @@ import {
     DialogTitle,
     DialogContentText,
     DialogActions,
-    Alert
+    Alert,
+    Fade
 
 } from '@mui/material';
 
@@ -37,13 +38,14 @@ const Profile = () => {
     const [NewPassword1, setNewPassword1] = useState('')
     const [NewPassword2, setNewPassword2] = useState('')
     const [OldEmail, setOldEmail] = useState('')
-    const [Type, setType] = useState('')
     const [Open1, setOpen1] = useState(false)
     const [Open2, setOpen2] = useState(false)
     const [Open3, setOpen3] = useState(false)
+    const [alertvisibilty, setAlertVisibility] = useState(false)
     const [error, setError] = useState(null)
     const [error1, setError1] = useState(null)
     const [error2, setError2] = useState(null)
+    const [success, setSuccess] = useState('')
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -86,7 +88,7 @@ const Profile = () => {
         e.preventDefault()
         setOpen2(true)
     }
-    const handleEmail = async (e) => {
+    const handleEmailBio = async (e) => {
 
         const updated = { Email, Biography }
 
@@ -100,7 +102,6 @@ const Profile = () => {
         const json = await response.json()
         if (!response.ok) {
             setError2(json.error)
-            setOpen3(true)
             setEmail('')
             setBiography('')
 
@@ -110,11 +111,17 @@ const Profile = () => {
             setEmail('')
             setBiography('')
             setOpen1(false)
+
             alert("Email changed")
+            setOpen3(false)
             // setId('')
             setError(null)
-            setOpen3(true)
+
         }
+    }
+    const handleOpenBio = async (e) => {
+        e.preventDefault();
+        setOpen3(true)
     }
 
     const handlePass = async (e) => {
@@ -135,7 +142,8 @@ const Profile = () => {
         }
         if (response.ok) {
             setOpen2(false)
-            alert("Password Changed")
+            setAlertVisibility(true)
+            setSuccess('Password Changed')
 
         }
     }
@@ -154,6 +162,9 @@ const Profile = () => {
 
 
         <div>
+
+
+
             <Dialog
                 fullWidth
                 fullScreen={fullScreen}
@@ -195,11 +206,14 @@ const Profile = () => {
                                 value={NewPassword2}
                                 fullWidth
                             />
+
+
+
+
                             {error1 && <Alert severity="error">{error1}</Alert>}
                         </Stack>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
                         <Button onClick={handlePass} autoFocus>
                             Confirm
                         </Button>
@@ -231,10 +245,38 @@ const Profile = () => {
 
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleEmail} autoFocus>
+                        <Button onClick={handleEmailBio} autoFocus>
                             Confirm
                         </Button>
 
+                    </DialogActions>
+                </Stack>
+            </Dialog>
+
+            <Dialog
+                fullWidth
+                fullScreen={fullScreen}
+                open={Open3}
+                aria-labelledby="responsive-dialog-title">
+                <Stack >
+                    <DialogTitle marginBottom='-5px'>
+                        Edit Bio
+                    </DialogTitle>
+                    <DialogContent margin='5px '>
+                        <TextField
+                            id="standard-password-input"
+                            multiline
+                            type="text"
+                            required
+                            fullWidth
+                            onChange={(e) => setBiography(e.target.value)}
+                        />
+
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleEmailBio} autoFocus>
+                            Confirm
+                        </Button>
                     </DialogActions>
                 </Stack>
             </Dialog>
@@ -359,6 +401,14 @@ const Profile = () => {
                             onChange={(e) => setBiography(e.target.value)}
                             fullWidth
                         />
+                        <Button
+                            style={buttonstyle2}
+                            color="primary"
+                            variant="contained"
+                            onClick={handleOpenBio}
+                        >
+                            Change Password
+                        </Button>
                     </Stack>
                 </Box>
             </Card>

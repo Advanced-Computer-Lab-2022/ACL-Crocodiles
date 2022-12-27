@@ -10,7 +10,7 @@ const Trainee = () => {
                 <Link to="/course">
                     <input type="button" value="View All Courses" />
                 </Link>
-                <Link to="/Mycourses">
+                <Link to="/MyCourses">
                     <input type="button" value="View My Courses" />
                 </Link>
             </div>

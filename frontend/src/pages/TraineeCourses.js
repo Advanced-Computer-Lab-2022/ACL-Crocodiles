@@ -7,8 +7,9 @@ import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import CourseCard from '../components/CourseCard'
 import Grid from '@mui/material/Grid';
-
+import NewCourseCard from '../components/NewCourseCard'
 import { useAuthContext } from "../hooks/useAuthContext"
+import TraineeNavBar from '../components/TraineeNavBar'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -45,13 +46,14 @@ const TraineeCourses = () => {
 
 
       <React.Fragment>
-        <Grid container
-          direction="Column"
-          item spacing={4}>
+
+<Grid container
+          item spacing={1}>
           {courses && courses.map(course => (
-            <Grid item xs={6} >
-              <CourseCard Course={course} redirect={`/Mycourses/course?courseId=${course._id}`} />
-            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+                <NewCourseCard Course={course} redirect={`/Mycourses/course?courseId=${course._id}`}/>
+          </Grid>
+    
           ))}
 
 

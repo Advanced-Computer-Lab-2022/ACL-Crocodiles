@@ -7,7 +7,8 @@ const {
     createQuestion,
     viewExams,
     viewAllInsCourses,
-    editBiographyorEmail,
+    editEmail,
+    editBiography,
     defineDiscount,
     getRating,
     createSubtitle,
@@ -37,7 +38,8 @@ router.post('/getcoursebyid', searchCourse)
 router.post('/setflag', setFlag)
 //router.post('/search', Search)
 router.post('/viewExam', viewExams)
-router.put('/editbiographyoremail', editBiographyorEmail)
+router.put('/editemail', editEmail)
+router.put('/editbiography', editBiography)
 router.post('/definediscount/:courseid', defineDiscount),
 router.get('/getrating', getRating)
 router.post('/createsubtitle/:courseid', createSubtitle)
