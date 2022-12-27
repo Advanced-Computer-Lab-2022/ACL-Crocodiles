@@ -7,20 +7,14 @@ const corporatetraineeSchema = new Schema({
     ref:'User',
     required:true
     },
-    Email: {
-      type: String,
-      required: true
+    My_course_requests: {
+      type: [mongoose.Schema.Types.ObjectId],
+      required: false
     },
-    Password: {
-      type:String,
-      required: true
-    },
- 
     My_courses: {
       type: [mongoose.Schema.Types.ObjectId],
       required: false
     },
-    
     My_assignments:{
       type: [{
         quiz_id: {     

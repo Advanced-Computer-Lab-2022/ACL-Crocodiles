@@ -9,6 +9,7 @@ const NewCourseForm = () => {
     const [Subject, setSubject] = useState('')
     const [Hours, setHours] = useState('')
     const [Price, setPrice] = useState('')
+    const [Summary, setSummary] = useState('')
     const [subtitle, setSubtitle] = useState('')
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState('')
@@ -25,7 +26,7 @@ const NewCourseForm = () => {
             setError('You must be logged in')
             return
         }
-        const course = { Title, Subject, Hours, Price }
+        const course = { Title, Subject, Hours, Price, Summary }
         console.log(JSON.stringify(course))
         const response = await fetch('/api/instructor/createcourse', {
             method: 'POST', body: JSON.stringify(course), headers: {
@@ -43,6 +44,7 @@ const NewCourseForm = () => {
             setSubject('')
             setHours('')
             setPrice('')
+            setSummary('')
             //setID('')
             // setId('')
             setError(null)
@@ -53,6 +55,7 @@ const NewCourseForm = () => {
 
 
     return (
+
         <form className="createcourse" onSubmit={handleSubmit}>
             <h3>Add a new Course</h3>
             <label>Course title:</label>
@@ -67,19 +70,18 @@ const NewCourseForm = () => {
                 onChange={(e) => setSubject(e.target.value)}
                 value={Subject}
             />
-            <label>Course Hours:</label>
-            <input
-                type="number"
-                onChange={(e) => setHours(e.target.value)}
-                value={Hours}
-            />
             <label>Course Price:</label>
             <input
                 type="number"
                 onChange={(e) => setPrice(e.target.value)}
                 value={Price}
             />
-
+            <label>Course Summary:</label>
+            <input
+                type="text"
+                onChange={(e) => setSummary(e.target.value)}
+                value={Summary}
+            />
             <button>Create Course</button>
             {error && <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>

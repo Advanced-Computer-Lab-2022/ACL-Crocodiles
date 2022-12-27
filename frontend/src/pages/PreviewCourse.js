@@ -1,4 +1,4 @@
-import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,AccordionDetails,Divider,Button} from "@mui/material"
+import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,AccordionDetails,Divider,Button, Alert} from "@mui/material"
 
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
@@ -12,17 +12,36 @@ import { redirect, useNavigate } from "react-router-dom";
 const PreviewCourse = () => {
     const[error,setError] = useState(null)
     const[course,setCourse]=useState(null)
+    const[type,setType]=useState(null)
+    const[courseId,setCourseId]=useState(null)
+    const[corpError,setCorpError]=useState(false)
+    const[corpSuccess,setCorpSuccess]=useState(false)
+    const[corpDisabled,setCorpDisabled]=useState(false)
+    const[corp,setCorp]=useState(null)
     const {user} = useAuthContext()
     const navigate = useNavigate();
     useEffect(() => {
+        if(user && user.Type === 'Trainee'){
+            setType(false)
+        }
+        else {
+            setType(true)
+        }
+        if(user && user.Type === 'Corporate'){
+            setCorp(true)
+        }else{
+            setCorp(false)
+        }
+        
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('courseId');
-
+        
         const fetchCourseDetails = async () => {
             const response = await fetch(`/api/guest/coursedetails/${courseId}`)
             const json = await response.json()
             if (response.ok) {
                 setCourse(json)
+                
                 console.log(json)
 
             }
@@ -30,8 +49,25 @@ const PreviewCourse = () => {
                 setError(error)
             }
         }
+        const checkRequested = async () => {
+            const response = await fetch(`/api/corpTrainee/page/checkRequested/${courseId}`,{
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                    'content-type':'application/json',
+                }
+            })
+            const json = await response.json()
+            console.log('My check requested json is : '+json.requested)
+            if (json.requested){
+                setCorpDisabled(true)
+            }
+        }
         fetchCourseDetails()
-    },[])
+        if(user && user.Type === 'Corporate'){
+            checkRequested()
+        }
+    },[user])
+    console.log(type)
     const BuyClick = async (e) =>{
        
             e.preventDefault()
@@ -53,6 +89,28 @@ const PreviewCourse = () => {
         }
         
     }
+    const RequestClick = async (e) =>{
+        e.preventDefault()
+        const mybody = {CourseID: course.coursedetails._id, CourseTitle: course.coursedetails.Title, TraineeUsername: user.Username}
+        const response = await fetch('/api/corpTrainee/page/requestCourse', 
+        {method:'POST',body:JSON.stringify(mybody), headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'content-type':'application/json',
+        }
+        })
+        const json = await response.json()
+        if(!response.ok){
+            setCorpError(true)
+            setCorpSuccess(false)
+        }
+        if (response.ok){
+            setCorpSuccess(true)
+            setCorpDisabled(true)
+            setCorpError(false)
+        }
+    }
+
+
 
     return(
         <Box>
@@ -120,14 +178,19 @@ const PreviewCourse = () => {
             </Typography>
         
         </Grid>
-        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}} variant="contained" onClick={BuyClick} >Buy Now</Button>
+        {corp ? 
+        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}}disabled={corpDisabled} variant="contained" onClick={RequestClick} >Request Access</Button>
+         :
+        <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}}disabled={type} variant="contained" onClick={BuyClick} >Buy Now</Button>}
+        {corpSuccess && <Alert severity="success">{'Course Requested Successfully'}</Alert>}
+        {corpError && <Alert severity="error">{'Course Request Failed'}</Alert>}
         </Stack>
       
         </Stack>
         <Typography align="left" sx={{mt:"100px" ,ml:"60px"}}variant="h5"  >Other courses by Author</Typography>
         <Grid container
           item spacing={2} columnSpacing={{ xs: 2, sm: 2, md: 3 }} sx={{ margin:"40px 0px "}} >
-        <Stack spacing={1.5}>
+        <Stack spacing={1.5} direction={'row'}>
             <Grid itemspacing={2} sx={{ml:"80px"}}>
         {course && course.othercourses && course.othercourses.map((courses) => (
             <NewCourseCardViewAll Course={courses} redirect={`/course/previewcourse?courseId=${courses._id}`}/>

@@ -1,6 +1,5 @@
 const express = require('express')
-// const requireAuth = require('../middleware/requireAuthAdmin')
-// const requireAuthcorpTrainee = require('../middleware/requireAuthcorpTrainee')
+const requireAuthCorporate = require('../middleware/requireAuthCorporate')
 
 const {
     viewAllCourses,
@@ -10,13 +9,15 @@ const {
     addAssignment,
     getAssignment,
     calculateGrade,
-    viewExam
+    viewExam,
+    requestCourse,
+    checkRequested
 } = require('../controllers/corporatetraineeController')
 
 
 const router = express.Router()
 
-// router.use(requireAuthTrainee)
+router.use(requireAuthCorporate)
 router.get('/viewall',viewAllCourses)
 router.get('/searchall',searchCourse)
 router.get('/page/MyCourses',getMyCourses)
@@ -25,6 +26,8 @@ router.patch('/page/addAssignment',addAssignment)
 router.post('/page/getAssignment',getAssignment)
 router.post('/page/calculateGrade',calculateGrade)
 router.get('/page/viewExam/:examid', viewExam)
+router.post('/page/requestCourse', requestCourse)
+router.get('/page/checkRequested/:CourseID', checkRequested)
 module.exports = router
 
 

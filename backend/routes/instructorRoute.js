@@ -15,7 +15,11 @@ const {
     createVideo,
     getInsDetails,
     setFlag,
-    EditInstructorinfo
+    EditInstructorinfo,
+    getCourse,
+    uploadPreview,
+    getMySubtitles,
+    owedPermonth
     
 
   
@@ -37,6 +41,7 @@ router.post('/editinsinfo', EditInstructorinfo)
 router.post('/getcoursebyid', searchCourse)
 router.post('/setflag', setFlag)
 //router.post('/search', Search)
+router.get('/owedpermonth', owedPermonth)
 router.post('/viewExam', viewExams)
 router.put('/editemail', editEmail)
 router.put('/editbiography', editBiography)
@@ -44,6 +49,9 @@ router.post('/definediscount/:courseid', defineDiscount),
 router.get('/getrating', getRating)
 router.post('/createsubtitle/:courseid', createSubtitle)
 router.post('/createvideo', createVideo)
+router.get('/getcourse/:courseid', getCourse)
+router.post('/uploadpreview/:courseid', uploadPreview)
+router.get('/getmysubtitles/:courseid', getMySubtitles)
 
 
 module.exports = router

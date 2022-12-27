@@ -29,7 +29,6 @@ app.listen(process.env.PORT, () => {
 .catch(err => console.log(err));
 
 app.use('/api/trainee', traineeRoutes)
-
 app.use('/api/corpTrainee', corpTraineeRoutes)
 app.use('/api/admin',adminRoutes)
 app.use('/api/instructor',instructorRoutes)
@@ -40,6 +39,6 @@ app.use('/api/auth',authRoutes)
 
 const courses = require('./models/courseModel').course
 const schedule = require('node-schedule')
-const checkDiscountsAtMidnight = schedule.scheduleJob('0 0 * * *', function () {
+const checkDiscountsAtMidnight = schedule.scheduleJob('8 0 * * *', function () {
   courses.deleteDiscounts()
 })

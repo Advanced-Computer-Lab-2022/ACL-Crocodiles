@@ -7,6 +7,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+
 import { useNavigate } from "react-router-dom"
   
 const ExamTrainee = () => {
@@ -14,7 +16,7 @@ const ExamTrainee = () => {
     const [Questions, setQuestions] = useState([])
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
-    const { examid } = useParams()
+    const {courseid, examid } = useParams()
     const [value, setValue] = useState('');
     const [answers, setAnswers] = useState(['','','','']);
     const [text, setText] = useState("Submit");
@@ -54,7 +56,8 @@ const ExamTrainee = () => {
                     },
                     body:  JSON.stringify({
                         Examid: examid,
-                        Answers: answers})
+                        Answers: answers,
+                        cid:courseid })
                        
                     
                 })
@@ -63,7 +66,7 @@ const ExamTrainee = () => {
                      setError(json.error) 
                 setText("view Solution")
                 if(text=="view Solution")
-                  navigate('/viewSolution/' + examid)   
+                  navigate('/viewSolution/' +courseid+'/' +examid)   
       
         }
         addAssignment();
@@ -143,7 +146,9 @@ const ExamTrainee = () => {
     </FormControl>
         
                 </div>)}
-                {error&& <div className="error">{error}</div>}
+
+                 {error && <Alert severity="error">{error}</Alert>}
+        
                 <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined" size="large"  onClick={handleClick}>
                 {text}
         </Button>

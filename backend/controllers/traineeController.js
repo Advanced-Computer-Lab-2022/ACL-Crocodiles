@@ -453,8 +453,8 @@ const getTraineeDetails = async (req, res) => {
 
 const reportProblem = async (req, res) => {
     const id = req.user
-    const { Title, Description, courseId } = req.body
-    //const courseId = req.params.courseid
+    const { Title, Description } = req.body
+    const courseId = req.params.courseid
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'no such id' })
     }
@@ -463,7 +463,8 @@ const reportProblem = async (req, res) => {
         if (!course) {
             return res.status(404).json({ error: 'no such course' })
         }
-        const problem = await Problem.create({ submitter_id: id, course_id: courseId, Title: Title, Description: Description, Status: 'unseen' })
+        const problem = await Problem.create({ submitter_id: id, course_id: courseId, Title: Title, Description: Description })
+        //course.Subtitle.push(sub)
         Trainee.My_problems.push(problem)
 
 

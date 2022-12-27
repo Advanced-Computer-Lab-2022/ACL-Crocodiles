@@ -25,8 +25,8 @@ const Signup = () => {
   let checkbox = true
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    await signup(Username, Email, Password, Firstname, Lastname)
+    console.log(Username, Email, Password, Firstname, Lastname, Gender)
+    await signup(Username, Email, Password, Firstname, Lastname, Gender)
   }
 
   const Paper1Style = { height: '100vh', width: 400, margin: '20px -200px', padding: 10 }
