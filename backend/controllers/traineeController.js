@@ -759,6 +759,46 @@ const rateInstructor = async(req,res)=>{
   }
 }
 
+const getTraineeDetails = async (req, res) => {
+  const id = req.user
+  try {
+      const user = await User.findById(id)
+      const traineeDetails = await Trainee.findById(id)
+      //const traineeDetails = await Trainee.findOne({ _id: id })
+      if (!user) {
+          return res.status(404).json({ error: 'user not found' })
+      }
+
+      res.status(200).json({ traineeDetails, user })
+
+  } catch (error) {
+      res.status(400).json({ error: 'error' })
+      console.log(error)
+  }
+}
+
+const reportProblem = async (req, res) => {
+  const id = req.user
+  const { Title, Description, courseId } = req.body
+  //const courseId = req.params.courseid
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'no such id' })
+  }
+  try {
+      const course = await Course.findById(courseId)
+      if (!course) {
+          return res.status(404).json({ error: 'no such course' })
+      }
+      const problem = await Problem.create({ submitter_id: id, course_id: courseId, Title: Title, Description: Description, Status: 'unseen' })
+      Trainee.My_problems.push(problem)
+
+
+      res.status(200).json(problem)
+  } catch (error) {
+      res.status(400).json({ error: error.message })
+  }
+}
+
 module.exports = {
   getTrainees,
   getTrainee,
@@ -789,4 +829,6 @@ module.exports = {
   addCourse,
   getMyCoursesLimited,
   checkRatingTrainee,
+  getTraineeDetails,
+  reportProblem,
 };
