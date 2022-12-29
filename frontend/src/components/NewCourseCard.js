@@ -2,6 +2,8 @@ import React from "react";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -18,12 +20,15 @@ import LinearProgress, {
 import LinearWithLabel from "./LinearProgressWithLabel";
 import { useEffect, useState } from "react";
 
+
 const NewCourseCard = ({ user, Course, redirect }) => {
   const DiscountEndDate = new Date(Course.DiscountEndDate);
   console.log(Course.Discount);
   const country = useSelector((state) => state.country.value);
   const [progress, setProgress] = useState(0);
   const [progressReady, setProgressReady] = useState(false);
+  const [refundrequest,setRefundRequest] = useState(true)
+  const[error,setError] = useState(null)
 
   if (Course.Discount != null && Course.Discount != undefined)
     var discountRate = 1 - Course.Discount / 100;
@@ -54,8 +59,51 @@ const NewCourseCard = ({ user, Course, redirect }) => {
           setProgressReady(true);
         });
     };
+    const CheckRequest = async () => {
+      const response = await fetch("/api/trainee/page/checkrequest/", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },body: JSON.stringify({
+          CourseID: Course._id,
+        }),
+      })
+      const json = await response.json()
+      if(response.ok){
+        console.log(json)
+        setRefundRequest(false)
+      }
+      if(!response.ok){
+        setRefundRequest(true)
+      }
+      console.log(refundrequest)
+
+    }
+    console.log(refundrequest)
+    CheckRequest()
     fetchProgress();
   }, [user]);
+
+ const requestRefund =async(e) =>{
+  e.preventDefault()
+  const response = await fetch('/api/trainee/page/requestrefund',
+  { body: JSON.stringify({ CourseID: Course._id , TraineeUsername:user.Username , CourseTitle:Course.Title }), method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${user.token}`,
+      'Content-type': 'application/json',
+  }})
+  const json = await response.json()
+  if(response.ok){
+    console.log('ok')
+  }
+  if(!response.ok){
+      setError(json)
+      console.log('not')
+  }
+
+ }
+
   return (
     <Card
       sx={{
@@ -79,9 +127,12 @@ const NewCourseCard = ({ user, Course, redirect }) => {
         <CardContent
           sx={{ display: "flex", flexDirection: "column", flex: "1" }}
         >
+          <Stack direction="row" spacing={20}>
           <Typography gutterBottom variant="h5" component="div">
             {Course.Title}
           </Typography>
+       
+          </Stack>
           <Box
             marginBottom={"1.35em"}
             sx={{ display: "flex", flexDirection: "column", flex: "1" }}
@@ -136,9 +187,14 @@ const NewCourseCard = ({ user, Course, redirect }) => {
             </Grid>
           </Grid>
         </CardContent>
-
+      
         {progressReady && <LinearWithLabel progress={progress} />}
+    
       </CardActionArea>
+
+      {refundrequest && progress <= 50 && <Button  variant="contained"  onClick={requestRefund} sx={{ margin:'auto auto'} }>
+          Request Refund
+          </Button>}
     </Card>
   );
 };

@@ -30,9 +30,14 @@ const {
     buyCourse,
     addCourse,
     getMyCoursesLimited,
+    checkCourse,
     checkRatingTrainee,
     getTraineeDetails,
     reportProblem,
+    requestRefund,
+    getrefundrequests,
+    checkRequest
+
 } = require("../controllers/traineeController");
 
 const router = express.Router();
@@ -56,7 +61,7 @@ router.get('/page/viewAllCourses', viewAllCourses)
 //router.get('/page/viewExams/:courseid', viewExams)
 
 router.get("/page/viewExam/:examid", viewExam);
-
+router.get("/page/checkcourse/:id", checkCourse)
 router.get("/page/course/MyCourses", getMyCourses);
 router.get("/page/getMyCoursesLimited", getMyCoursesLimited);
 router.get("/page/MyCourses/:id", findCourse);
@@ -80,9 +85,13 @@ router.post("/page/getProgress/", getProgress);
 router.post("/addcourse", addCourse);
 router.post('/page/reportProblem', reportProblem)
 router.get('/page/traineedetails', getTraineeDetails)
-
-
-
-
+router.post("/page/requestrefund", requestRefund)
+router.get("/page/getrefundrequests", getrefundrequests)
+router.post("/page/checkrequest", checkRequest)
 
 module.exports = router
+
+
+
+
+

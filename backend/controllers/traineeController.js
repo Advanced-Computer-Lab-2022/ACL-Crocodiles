@@ -12,7 +12,7 @@ const instructorRatingModel = require('../models/ratingAndReviewModel').instruct
 const { default: isBoolean } = require("validator/lib/isboolean");
 const Video = require("../models/courseModel").video;
 const Problem = require('../models/problemModel')
-
+const RefundRequest = require("../models/refundRequestModel")
 let course
 
 const createTrainee = async (req, res) => {
@@ -44,6 +44,31 @@ const getTrainee = async (req, res) => {
     }
     res.status(200).json(trainee);
 };
+const checkCourse = async (req, res) => {
+    const trainee = req.user
+    const { id } = req.params
+    var flag = 0
+    try {
+        const mycourses = await Trainee.findOne({ _id: trainee })
+        for (i = 0; i < mycourses.My_courses.length; i++) {
+            if (mycourses.My_courses[i]._id.equals(id)) {
+                flag = 1
+            }
+        }
+        console.log(flag)
+        if (flag === 1) {
+            return res.status(200).json(flag)
+        }
+        else {
+            return res.status(200).json(flag)
+        }
+    } catch (error) {
+        return res.status(400).json({ error: error })
+    }
+
+
+
+}
 const isTrainee = async (req, res) => {
     const { id } = req.user;
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -788,11 +813,21 @@ const reportProblem = async (req, res) => {
     }
     try {
         const course = await Course.findById(courseId)
+        const trainee = await Trainee.findById(id)
         if (!course) {
             return res.status(404).json({ error: 'no such course' })
         }
         const problem = await Problem.create({ submitter_id: id, course_id: courseId, Title: Title, Description: Description, Status: 'unseen' })
-        Trainee.My_problems.push(problem)
+        const product = await Trainee.updateOne(
+            { _id: id },
+            {
+                $push: {
+                    My_problems: {
+                        _id: problem,
+                    },
+                },
+            }
+        );
 
 
         res.status(200).json(problem)
@@ -802,6 +837,51 @@ const reportProblem = async (req, res) => {
 }
 
 
+const requestRefund = async (req, res) => {
+    const { CourseID, CourseTitle, TraineeUsername } = req.body;
+    const TraineeID = req.user
+    if (!mongoose.Types.ObjectId.isValid(CourseID)) {
+        return res.status(400).json({ error: 'Invalid course id' });
+    }
+    if (!mongoose.Types.ObjectId.isValid(TraineeID)) {
+        return res.status(400).json({ error: 'Invalid trainee id' });
+    }
+    const course = await Course.findOne({ _id: CourseID })
+    try {
+        const newRefundRequest = await RefundRequest.create({ CourseID, TraineeID, CourseTitle, TraineeUsername, amount: course.Price * 0.5 })
+        console.log(newRefundRequest)
+        const trainee = await Trainee.updateOne({ TraineeID }, { $push: { My_Refund_Requests: newRefundRequest } })
+        console.log(trainee)
+        res.status(200).json(newRefundRequest)
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({ error: 'error' })
+    }
+}
+const getrefundrequests = async (req, res) => {
+    const { id } = req.user
+    try {
+        const request = await RefundRequest.find({ TraineeID: id })
+        if (!request)
+            return res.status(401).json({ error: 'error' })
+        res.status(200).json(request)
+    } catch (error) {
+        res.status(400).json({ error: error })
+    }
+
+}
+const checkRequest = async (req, res) => {
+    const { id } = req.user
+    const { CourseID } = req.body
+    try {
+        const request = await RefundRequest.find({ TraineeID: id }).and({ CourseID })
+        if (request.length === 0)
+            return res.status(401).json({ error: 'error' })
+        res.status(200).json({ message: "ok" })
+    } catch (error) {
+        res.status(400).json({ error: error })
+    }
+}
 
 module.exports = {
     getTrainees,
@@ -832,7 +912,11 @@ module.exports = {
     buyCourse,
     addCourse,
     getMyCoursesLimited,
+    checkCourse,
     checkRatingTrainee,
     getTraineeDetails,
     reportProblem,
+    requestRefund,
+    getrefundrequests,
+    checkRequest
 };
