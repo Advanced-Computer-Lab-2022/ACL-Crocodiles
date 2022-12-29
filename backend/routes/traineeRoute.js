@@ -33,6 +33,7 @@ const {
   checkRatingTrainee,
   getTraineeDetails,
   reportProblem,
+  checkRatingTraineeInstructor,
 } = require("../controllers/traineeController");
 
 const router = express.Router();
@@ -79,6 +80,7 @@ router.post("/page/getProgress/", getProgress);
 router.post("/addcourse", addCourse);
 router.post('/page/reportProblem', reportProblem)
 router.get('/page/traineedetails', getTraineeDetails)
+router.get('/page/checkRatingTraineeInstructor/:instructorID', checkRatingTraineeInstructor)
 
 module.exports = router;
 

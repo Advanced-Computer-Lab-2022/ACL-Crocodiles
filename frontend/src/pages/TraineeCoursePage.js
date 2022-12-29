@@ -39,6 +39,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import VideoPlayer from "../components/VideoPlayer";
 import NoteTaking from "../components/NoteTaking";
+import RatingAndReviewInstructor from "../components/RatingAndReviewInstructor";
 
 // import rgba from "../functions/rgba";
 
@@ -207,6 +208,7 @@ const TraineeCoursePage = () => {
                         <Typography>View All Ratings and Reviews</Typography>
                     </Stack>
             </Button>
+            <RatingAndReviewInstructor instructorID={course.InstructorId} />
               </Grid>
               
             </Stack>

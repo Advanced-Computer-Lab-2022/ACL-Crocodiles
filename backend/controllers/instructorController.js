@@ -15,15 +15,15 @@ const Validator = require('validator')
 var Questions = [{}]
 
 const createCourse = async (req, res) => {
-    const InstructorId = req.user
-
+    const InstructorId = req.user.id
+    console.log(InstructorId)
     const { Title, Subject, Price, Summary} = req.body
     if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
         return res.status(404).json({ error: 'no such id' })
     }
     try {
         const course = await Course.create({ Title, Subject, Price, InstructorId, Summary })
-        const instructor = await Instructor.updateOne({_id:InstructorId,$push: { My_Courses: course._id } })
+        const instructor = await Instructor.updateOne({_id:InstructorId},{$push: { My_Courses: course._id } })
         res.status(200).json(course)
     } catch (error) {
         res.status(400).json({ error: error.message })

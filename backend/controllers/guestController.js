@@ -1,7 +1,6 @@
 const Instructor = require("../models/instructorModel.js");
 const Course = require("../models/courseModel.js").course;
 const mongoose = require("mongoose");
-const { findOne } = require('../models/instructorModel.js');
 const CourseRating = require('../models/ratingAndReviewModel.js').courseRatingModel;
 const Trainee = require("../models/traineeModel.js");
 const jwt = require("jsonwebtoken");

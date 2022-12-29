@@ -7,7 +7,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { renderMatches } from 'react-router-dom';
 import { Alert, Paper, Typography } from '@mui/material';
 
-const RatingAndReview = ({courseID}) => {
+const RatingAndReviewInstructor = ({instructorID}) => {
     const {user} = useAuthContext();
     console.log("User iiiissss" + user)
     const [rating, setRating] = useState(0);
@@ -16,17 +16,19 @@ const RatingAndReview = ({courseID}) => {
     const [success, setSuccess] = useState(null);
     const [flag, setFlag] = useState(null);
     const [valueDisabled, setValueDisabled] = useState(0);
-    console.log('My courseID is : '+courseID);
+    console.log('My instructorID is : '+instructorID);
     useEffect(() => {
+        console.log('My instructorID inside useeffect is : '+instructorID);
+
         const checkRating = async ()=> {
-            const response = await fetch('/api/trainee/page/checkRatingTrainee/'+courseID, {
+            const response = await fetch('/api/trainee/page/checkRatingTraineeInstructor/'+instructorID, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
                     'content-type':'application/json',
                 }
             })
             const json = await response.json()
-            console.log('json is ' + json)
+            console.log('json rated is ' + json.rated)
             if (response.ok) {
                 if (json.rated) {
                     setFlag(false);
@@ -40,7 +42,7 @@ const RatingAndReview = ({courseID}) => {
             }
         }
         checkRating()
-    },[user])
+    },[user,instructorID])
 
 
     const handleSubmit = async (e) => {
@@ -50,9 +52,9 @@ const RatingAndReview = ({courseID}) => {
             return;
         }
         const Username = user.Username;
-        const body1 = {rating, review, courseID, Username};
+        const body1 = {rating, review, instructorID, Username};
         console.log(JSON.stringify(body1));
-        const response = await fetch('/api/trainee/page/rateCourse', {
+        const response = await fetch('/api/trainee/page/rateInstructor', {
             method: 'POST',
             body: JSON.stringify(body1),
             headers: {
@@ -84,7 +86,7 @@ const RatingAndReview = ({courseID}) => {
             }}
         >
         <Stack direction="column" spacing={2}>
-            <Typography variant="h5" sx={{alignSelf:'center'}}>Rating (Course): </Typography>
+            <Typography variant="h5" sx={{alignSelf:'center'}}>Rating (Instructor): </Typography>
             {flag && <Rating
                 name="simple-controlled"
                 value={rating}
@@ -116,4 +118,4 @@ const RatingAndReview = ({courseID}) => {
     )
 
 }
-export default RatingAndReview;
+export default RatingAndReviewInstructor;

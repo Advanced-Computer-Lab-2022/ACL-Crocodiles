@@ -110,6 +110,11 @@ const PreviewCourse = () => {
         }
     }
 
+    const viewRatings = async (e) =>{
+        e.preventDefault()
+        navigate("/viewratings/"+course.coursedetails._id)
+    }
+
 
 
     return(
@@ -131,7 +136,9 @@ const PreviewCourse = () => {
         </Typography>
         <Stack direction="row">
         <Typography component="legend" variant='body' sx={{color:'yellow'}}>{course && course.Rating} </Typography>
+        <Button variant="text" onClick={viewRatings}>
         <Rating name="read-only" value={course && course.coursedetails.Rating} readOnly /> 
+        </Button>
         </Stack>
         <Typography variant="body" gutterBottom sx={{color:'white' ,margin:"0,200px"}} align='center'>
         {course && course.coursedetails.Summary}

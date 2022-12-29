@@ -8,7 +8,7 @@ import FilterDrawer from "../components/FilterDrawer";
 import FilterDrawerSwipable from "../components/FilterDrawerSwipable";
 import { useSelector } from "react-redux";
 import Alert from "@mui/material/Alert";
-import { minWidth } from "@mui/system";
+
 //import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {
   const { user } = useAuthContext();
