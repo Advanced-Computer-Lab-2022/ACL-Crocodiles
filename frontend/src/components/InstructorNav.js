@@ -59,6 +59,9 @@ function InstructorNav() {
         case "Logout": {
                logout();
                break;};
+        case "Profile": {
+              navigate('/profile')
+        }
      
     }
     setAnchorElUser(null);

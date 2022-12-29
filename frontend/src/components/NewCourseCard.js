@@ -192,7 +192,7 @@ const NewCourseCard = ({ user, Course, redirect }) => {
     
       </CardActionArea>
 
-      {refundrequest && progress <= 50 && <Button  variant="contained"  onClick={requestRefund} sx={{ margin:'auto auto'} }>
+      {user && user.Type==="Trainee" && refundrequest && progress <= 50 && <Button  variant="contained"  onClick={requestRefund} sx={{ margin:'auto auto'} }>
           Request Refund
           </Button>}
     </Card>

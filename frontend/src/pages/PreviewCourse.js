@@ -48,6 +48,11 @@ const PreviewCourse = () => {
             else {
                 setType(true)
             }
+            if(user && user.Type === 'Corporate')
+                setCorp(true)
+            else{
+                setCorp(false)
+            }
             
         const fetchCourseDetails = async () => {
             const response = await fetch(`/api/guest/coursedetails/${courseId}`)

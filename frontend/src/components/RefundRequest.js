@@ -28,7 +28,7 @@ const RefundRequest = ({Request}) => {
             <Typography variant='h6'>
                 Course Requested:
             </Typography>
-            <Typography  sx={{margin:'4px 5px'}} variant='body' color='#A00407'>
+            <Typography  sx={{margin:'4px 5px'}} variant='body' color='red'>
                 {Request.CourseTitle}
             </Typography>
             </Grid>
@@ -36,7 +36,7 @@ const RefundRequest = ({Request}) => {
             <Typography variant='h6'>
                 Amount:
             </Typography>
-            <Typography sx={{margin:"4px 5px"}} variant='body' color='#A00407'>
+            <Typography sx={{margin:"4px 5px"}} variant='body' color='red'>
                 {Request.amount}
             </Typography>
             </Grid>
@@ -50,7 +50,7 @@ const RefundRequest = ({Request}) => {
             {Request.Status==="Granted" &&<Typography sx={{margin:"4px 5px"}} variant='body1' color='green'>
                 {Request.Status}
             </Typography>}
-            {Request.Status==="Denied" &&<Typography sx={{margin:"4px 5px"}} variant='body1' color='#A00407'>
+            {Request.Status==="Denied" &&<Typography sx={{margin:"4px 5px"}} variant='body1' color='red'>
                 {Request.Status}
             </Typography>}
             
