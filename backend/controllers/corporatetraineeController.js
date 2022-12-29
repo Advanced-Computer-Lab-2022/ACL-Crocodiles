@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const CorpTrainee = require('../models/corporatetraineeModel')
 const Exam = require('../models/examModel').exam
 const CourseRequest = require('../models/courseRequestModel')
+const Problem = require('../models/problemModel')
 
 const viewAllCourses = async (req,res) => {
     try {
@@ -263,6 +264,25 @@ const getMyCoursesLimited = async (req, res) => {
     return res.json(courses);
   };
 
+  const reportProblem = async (req, res) => {
+    const id = req.user
+    const { Title, Description, courseId, type, Username } = req.body
+    //const courseId = req.params.courseid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        const course = await Course.findById(courseId)
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
+        }
+        const problem = await Problem.create({ submitter_id: id, submitter_username: Username, course_id: courseId, course_title: course.Title, Title: Title, Description: Description, Type: type })
+        res.status(200).json(problem)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 module.exports = {
     searchCourse,
     viewAllCourses,
@@ -274,5 +294,6 @@ module.exports = {
     viewExam,
     requestCourse,
     checkRequested,
-    getMyCoursesLimited
+    getMyCoursesLimited,
+    reportProblem,
 }

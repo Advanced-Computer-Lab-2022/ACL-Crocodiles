@@ -13,6 +13,7 @@ const {
     requestCourse,
     checkRequested,
     getMyCoursesLimited,
+    reportProblem,
 } = require('../controllers/corporatetraineeController')
 
 
@@ -30,6 +31,7 @@ router.get('/page/viewExam/:examid', viewExam)
 router.post('/page/requestCourse', requestCourse)
 router.get('/page/checkRequested/:CourseID', checkRequested)
 router.get('/page/getMyCoursesLimited', getMyCoursesLimited)
+router.post('/page/reportProblem', reportProblem)
 
 
 

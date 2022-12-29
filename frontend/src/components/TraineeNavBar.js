@@ -54,17 +54,22 @@ function TraineeNavBar() {
   };
 
   const handleCloseUserMenu = (setting) => {
+
     switch (setting) {
       case "Logout": {
         logout();
-        navigate("/");
         break;
-      }
+      };
       case "Profile": {
-        if (user.Type === "trainee") navigate("/traineeprofile");
-        else navigate("/instructorprofile");
+        if (user.Type === 'Trainee')
+          navigate('/traineeprofile');
+        else
+          navigate('/instructorprofile');
         break;
-      }
+      };
+      case "My Requests":
+        navigate('/traineerefundrequests');
+
     }
     setAnchorElUser(null);
   };

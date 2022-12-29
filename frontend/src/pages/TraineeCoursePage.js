@@ -40,6 +40,7 @@ import Button from '@mui/material/Button';
 import VideoPlayer from "../components/VideoPlayer";
 import NoteTaking from "../components/NoteTaking";
 import RatingAndReviewInstructor from "../components/RatingAndReviewInstructor";
+import ReportProblem from "../components/ReportProblem";
 
 // import rgba from "../functions/rgba";
 
@@ -209,8 +210,8 @@ const TraineeCoursePage = () => {
                     </Stack>
             </Button>
             <RatingAndReviewInstructor instructorID={course.InstructorId} />
+              <ReportProblem courseid={courseid1}/>
               </Grid>
-              
             </Stack>
 
 

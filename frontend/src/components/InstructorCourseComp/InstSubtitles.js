@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, TextField, Button } from "@mui/material"
+import { Box, Stack, Typography, TextField, Button, Alert } from "@mui/material"
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material"
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -118,8 +118,8 @@ const InstSubtitles = ({Subtitles}) => {
                 type="number"
                 />
                 <Button variant="contained" color="primary" onClick={handleSubmit}>Add</Button>
-                {error && <Typography variant="h5" color="error">{error}</Typography>}
-                {success && <Typography variant="h5" color="success">{success}</Typography>}
+                {error && <Alert severity="error">{error}</Alert>}
+                {success && <Alert severity="success">{success}</Alert>}
             </Stack>
             </AccordionDetails>
         </Accordion>

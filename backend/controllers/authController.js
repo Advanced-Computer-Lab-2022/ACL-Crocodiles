@@ -3,14 +3,16 @@ const Validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
+const Trainee = require('../models/traineeModel')
 var cid = null
 
 const Signin = async (req, res) => {
     const { Username, Password } = req.body
     try {
         const user = await User.Login( Username, Password)
+        console.log(user)
         const token = jwt.sign({ _id: user._id, Username: user.Username }, process.env.SECRET, { expiresIn: '3d' })
-        res.status(200).json({ flag:user.Flag ,Type:user.Type, Username, token })
+        res.status(200).json({ flag:user.Flag ,Type:user.Type,Username, token })
     }
     catch (error) {
         res.status(400).json({ error: error.message })

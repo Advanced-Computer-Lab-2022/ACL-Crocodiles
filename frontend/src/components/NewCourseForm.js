@@ -1,50 +1,62 @@
 import React, { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Alert, AlertTitle, Fade } from '@mui/material';
+
 
 const NewCourseForm = () => {
-    const {user} = useAuthContext()
-    const[Title,setTitle] = useState('')
-    const[Subject,setSubject] = useState('')
-    const[Price,setPrice] = useState('')
-    const[Summary,setSummary] = useState('')
-    const[error,setError] = useState(null)
-    const[success,setSuccess] = useState(null)
+    const { user } = useAuthContext()
+    const [Title, setTitle] = useState('')
+    const [Subject, setSubject] = useState('')
+    const [Hours, setHours] = useState('')
+    const [Price, setPrice] = useState('')
+    const [Summary, setSummary] = useState('')
+    const [subtitle, setSubtitle] = useState('')
+    const [error, setError] = useState(null)
+    const [success, setSuccess] = useState('')
+    const [alertVisibility, setAlertVisibility] = useState(false);
+    const [subHours, setSubHours] = useState('')
+    const [videoTitle, setVideoTitle] = useState('')
+    const [videoURL, setVideoURL] = useState('')
+    const [videoDesc, setVideoDesc] = useState('')
 
-    const handleSubmit = async (e) =>{
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if(!user){
+        if (!user) {
             setError('You must be logged in')
             return
         }
-        const course = {Title,Subject,Price,Summary}
+        const course = { Title, Subject, Hours, Price, Summary }
         console.log(JSON.stringify(course))
-        const response =  await fetch('/api/instructor/createcourse',{method:'POST',body:JSON.stringify(course),headers: {
-            'content-type':'application/json',
-            'Authorization': `Bearer ${user.token}`
-            
-        }
-      })
-      const json = await response.json()
-    if(!response.ok){
-        setError(json.error)    
-    }
-    if (response.ok){
-        setTitle('')
-        setSubject('')
-        setPrice('')
-        setSummary('')
-        //setID('')
-       // setId('')
-       setSuccess('Course added successfully')
-        setError(null)
-        console.log('new course added', json)
-    }
-    }
-    
+        const response = await fetch('/api/instructor/createcourse', {
+            method: 'POST', body: JSON.stringify(course), headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
 
-    return(
-        
-        <form  className="createcourse" onSubmit={handleSubmit}>
+            }
+        })
+        const json = await response.json()
+        if (!response.ok) {
+            setError(json.error)
+        }
+        if (response.ok) {
+            setTitle('')
+            setSubject('')
+            setHours('')
+            setPrice('')
+            setSummary('')
+            //setID('')
+            // setId('')
+            setError(null)
+            setSuccess("Course Created Successfully")
+            console.log('new course added', json)
+        }
+    }
+
+
+    return (
+
+        <form className="createcourse" onSubmit={handleSubmit}>
             <h3>Add a new Course</h3>
             <label>Course title:</label>
             <input
@@ -71,8 +83,17 @@ const NewCourseForm = () => {
                 value={Summary}
             />
             <button>Create Course</button>
-            {error && <div className="error">{error}</div>}
-            {success && <div className="success">{success}</div>}
+            {error && <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {error}
+            </Alert>}
+
+            {success && <Alert severity="success">
+                <AlertTitle>Success</AlertTitle>
+                {success}
+            </Alert>}
+
+
         </form>
 
     )

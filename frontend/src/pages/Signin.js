@@ -1,28 +1,32 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
-import Box from "@mui/material/Box";
+//import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import PersonIcon from "@mui/icons-material/Person";
-import { useAuthContext } from "../hooks/useAuthContext";
-
+//import { useAuthContext } from "../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
 const Signin = () => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const { login, error, isLoading } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     await login(Username, Password);
- 
+    if (!error && !isLoading) {
+      navigate("/");
+    }
   };
   const PaperStyle = {
     padding: 20,
@@ -73,12 +77,18 @@ const Signin = () => {
           <Link href="/forgotpassword"> Forgot Password?</Link>
         </Typography>
 
-        <Typography>
-          Do you have an acount?
-          <Link href="/signup">Sign up </Link>
+        <Typography>Do you have an acount?
+          <Link href='/signup'>Sign up </Link>
         </Typography>
+
+        {error && <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error}
+        </Alert>}
+
       </Paper>
+
     </Grid>
-  );
-};
-export default Signin;
+  )
+}
+export default Signin

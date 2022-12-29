@@ -11,20 +11,20 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import {createTheme} from '@mui/material';
-import {ThemeProvider} from '@mui/material';
+import { createTheme } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import logo from '../images/logo.png'
-import {Link, redirect} from 'react-router-dom'
-import NewCountryDD from './NewCountryDD' 
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom'
+import NewCountryDD from './NewCountryDD'
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from '../hooks/useLogout'
 import PersonIcon from '@mui/icons-material/Person';
 
 
-const pages = ['Explore', 'My Courses','Define a Promotion'];
+const pages = ['Explore', 'My Courses', 'Define a Promotion'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const log = ['sign in', 'sign up'];
 
@@ -45,11 +45,11 @@ function AdminNav() {
 
   const handleCloseNavMenu = (e) => {
 
-    if(e=='Explore')
-    navigate('/course');
+    if (e == 'Explore')
+      navigate('/course');
     else
-    if(e=='My Courses' && user)
-    navigate('/MyCourses');
+      if (e == 'My Courses' && user)
+        navigate('/MyCourses');
     setAnchorElNav(null);
   };
 
@@ -67,22 +67,29 @@ function AdminNav() {
 
   const promo = () => {
     navigate('/adminpromo');
-    }
-    const clickUser = () => {
-        navigate('/adminadduser');
-        }
-    const courseRequests = () => {
-        navigate('/admincorprequests');
-        }
+  }
+  const clickUser = () => {
+    navigate('/adminadduser');
+  }
+  const courseRequests = () => {
+    navigate('/admincorprequests');
+  }
+  const refundRequests = () => {
+    navigate('/adminrefundrequests');
+  }
+  const reportedProblems = () => {
+    navigate('/adminproblems');
+  }
+
   const theme = createTheme({
 
-    palette:{
-        primary:{
-            main: '#ffffff00'
-        },
-        secondary:{
-            main: '#A00407'
-        }
+    palette: {
+      primary: {
+        main: '#ffffff00'
+      },
+      secondary: {
+        main: '#A00407'
+      }
     }
   })
 
@@ -159,13 +166,28 @@ function AdminNav() {
 
                 <Button
                 onClick={courseRequests}
-                color="secondary"
-                sx={{ my: 2, display: "block" }}
+                color='secondary'
+                sx={{ my: 2, display: 'block' }}
               >
-                {"Course Requests"}
+                {'Course Requests'}
+              </Button>
+              <Button
+                onClick={refundRequests}
+                color='secondary'
+                sx={{ my: 2, display: 'block' }}
+              >
+                {'Refund Requests'}
               </Button>
 
-     
+              <Button
+                onClick={reportedProblems}
+                color='secondary'
+                sx={{ my: 2, display: 'block' }}
+              >
+                {'Reported Problems'}
+              </Button>
+
+
             </Box>
 
             {user ? (

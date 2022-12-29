@@ -8,7 +8,7 @@ const Video = require('../models/courseModel').video
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
-
+const Problem = require('../models/problemModel')
 
 
 
@@ -33,25 +33,25 @@ const createCourse = async (req, res) => {
   };
   
 
-const createSubtitle = async (req, res) => {
-    const InstructorId = req.user
-    const { subtitle, subHours, videoTitle, videoURL, videoDesc } = req.body
+  const createSubtitle = async (req, res) => {
+    const InstructorId  = req.user
+    const {subtitle,subHours} = req.body
     const courseId = req.params.courseid
-    if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
-        return res.status(404).json({ error: 'no such id' })
+    console.log(req.body)
+    if(!mongoose.Types.ObjectId.isValid(InstructorId)){
+        return res.status(404).json({error: 'no such id'})
     }
     try {
         const course = await Course.findById(courseId)
-        if (!course) {
-            return res.status(404).json({ error: 'no such course' })
+        if(!course){
+            return res.status(404).json({error: 'no such course'})
         }
-        const sub = await Subtitle.create({ Title: subtitle, Hours: subHours })
+        const newHours = course.Hours + subHours
+        const sub = await Sub.create({Title: subtitle, Hours: subHours})
+        course.Hours = newHours
         course.Subtitle.push(sub)
         await course.save()
-        const video = await Video.create({ Title: videoTitle, Description: videoDesc, url: videoURL })
-        sub.Videos.push(video)
-        await sub.save()
-        res.status(200).json(course)
+        res.status(200).json(sub)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -384,18 +384,43 @@ const getMySubtitles = async (req, res) => {
 const owedPermonth = async(req,res) => {
     try {
         const id = req.user
-        const courses = await Instructor.find({_id:id}).select("My_Courses")
-        console.log(courses)
+        const courses = await Instructor.findOne({_id:id}).select("My_Courses")
         var price = 0
-        for(i=0 ;i<courses.length;i++){
-           var course = await Course.find({_id:courses[i]})
-           price = price + (course.Price * course.Discount*0.1)     
+        for(i=0 ;i<courses.My_Courses.length;i++){
+           console.log(courses.My_Courses[i])
+           
+           var course = await Course.findOne({_id:courses.My_Courses[i]})
+           console.log(course.Count)
+           console.log(course.Count)
+           
+           price = price + ((course.Price - (course.Price * course.Discount*0.1))*course.Count)
+           console.log(price)     
         }
+
         res.status(200).json(price)
     } catch (error) {
         
     }
   
+}
+
+const reportProblem = async (req, res) => {
+    const id = req.user
+    const { Title, Description, courseId, type, Username } = req.body
+    //const courseId = req.params.courseid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        const course = await Course.findById(courseId)
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
+        }
+        const problem = await Problem.create({ submitter_id: id, submitter_username: Username, course_id: courseId, course_title: course.Title, Title: Title, Description: Description, Type: type })
+        res.status(200).json(problem)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 module.exports = {
@@ -417,5 +442,6 @@ module.exports = {
     owedPermonth,
     getCourse,
     uploadPreview,
-    getMySubtitles
+    getMySubtitles,
+    reportProblem
 }

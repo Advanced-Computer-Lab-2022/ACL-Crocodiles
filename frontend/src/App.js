@@ -14,7 +14,9 @@ import Filter from "./pages/Filter";
 import InstructorCourses from "./pages/InstructorCourses";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
+//import Profile from "./pages/Profile";
+import TraineeProfile from './pages/TraineeProfile'
+import InstructorProfile from './pages/Profile'
 import Contract from "./pages/Contract";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
@@ -43,6 +45,9 @@ import ViewRatingsPage from './pages/ViewRatingsPage'
 import Success from "./pages/Success";
 import AdminCorpRequests from './pages/AdminCorpRequests'
 import CorpCourses from './pages/CorpCourses'
+import TraineeRefundRequests from "./pages/TraineeRefundRequests";
+import AdminRefundRequest from "./pages/AdminRefundRequests";
+import AdminProblems from "./pages/AdminProblems"
 function App() {
   return (
     <div className="App">
@@ -67,6 +72,9 @@ function App() {
             <Route path="/Mycourses/course" element={<TraineeCoursePage />} />
             <Route path="/CorpTrainee" element={<CorpTrainee />} />
             <Route path="/corpTraineeCourses" element={<CorpTraineeCourse />} />
+            <Route path="/traineerefundrequests" element={<TraineeRefundRequests />} />
+            <Route path="/adminrefundrequests" element={<AdminRefundRequest />} />
+            <Route path="/adminproblems" element={<AdminProblems />} />
             <Route
               path="/CorpTraineeMyCourses/course"
               element={<CorpTraineeCoursePage />}
@@ -100,7 +108,6 @@ function App() {
               element={<CorpTraineeMyCourses />}
             />
             <Route path="/createexam" element={<Exam />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/changePassword" element={<ChangePassword />} />{" "}
             <Route path="/viewExamCorp/:examid" element={<ExamCorpTrainee />} />
             <Route
@@ -119,6 +126,14 @@ function App() {
             <Route
               path="/adminpromo"
               element={<AdminPromo />}
+            />
+            <Route
+              path="/instructorprofile"
+              element={<InstructorProfile />}
+            />
+            <Route
+              path="/traineeprofile"
+              element={<TraineeProfile />}
             />
             <Route
               path="/adminadduser"

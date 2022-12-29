@@ -18,7 +18,6 @@ const courseSchema = new Schema(
     },
     Count: {
       type: Number,
-      default: 0,
       required: false,
     },
     Discount: {
@@ -84,7 +83,7 @@ const subtitleSchema = new Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Exam",
-        required: true,
+        required: false,
       },
     ],
     Videos: {

@@ -92,6 +92,16 @@ const traineeSchema = new Schema(
       ],
       required: false,
     },
+    // My_problems: {
+    //   type: [{
+    //     course_id: {
+    //       type: mongoose.Schema.Types.ObjectId,
+    //       ref: 'Problem',
+    //       required: true
+    //     }
+    //   }],
+    //   required: false
+    // },
     Watched_videos: {
       type: [
         {
@@ -109,6 +119,16 @@ const traineeSchema = new Schema(
       ],
       required: false,
     },
+    My_Refund_Requests:{
+      type: [mongoose.Schema.Types.ObjectId],
+      ref:'RefundRequest',
+      required: false
+    },
+    Wallet:{
+      type:Number,
+      required:false,
+      default:0
+    }
   },
   { timestamps: true }
 );
@@ -165,4 +185,6 @@ const traineeSchema = new Schema(
 
 // }, { timestamps: true });
 
-module.exports = mongoose.model("Trainee", traineeSchema);
+
+
+module.exports = mongoose.model('Trainee', traineeSchema);

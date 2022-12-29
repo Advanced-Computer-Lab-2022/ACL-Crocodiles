@@ -362,7 +362,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                           ))}
                       </ul>
                     )}
-                    {sub.Exercises.length != 0 && (
+                    {sub.Exercises && sub.Exercises.length != 0 && (
                       <ul>
                         <ListSubheader>
                           {" "}
