@@ -1,4 +1,4 @@
-import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,AccordionDetails,Divider,Button, Alert} from "@mui/material"
+import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,AccordionDetails,Divider,Button, Alert, Skeleton} from "@mui/material"
 
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
@@ -47,6 +47,9 @@ const PreviewCourse = () => {
             }
             else {
                 setType(true)
+            }
+            if(user && user.Type === 'Corporate'){
+                setCorp(true)
             }
             
         const fetchCourseDetails = async () => {
@@ -164,6 +167,7 @@ const PreviewCourse = () => {
         <Paper elevation={0} sx={{alignItems:"center",display:"flex",flexDirection:'column',alignSelf:"center",width:"900px" ,border: "2px solid #a00407" , borderRadius: '7px', margin:"20px", padding:"20px"}}>
         <Typography variant="h4">Preview Video</Typography>
             {course && course.coursedetails.PreviewVideo && <iframe width= "800px" height= "450px"src={course.coursedetails.PreviewVideo}></iframe>}
+            {(!course || !course.coursedetails || !course.coursedetails.PreviewVideo) && <Skeleton variant="rectangular" width="800px" height="450px"/>}
         </Paper>
         <Typography variant="h5"  sx={{color:'black' ,margin:"50px 50px"}} align='left'>
         Course Content

@@ -35,6 +35,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { useAuthContext } from "../hooks/useAuthContext";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -83,7 +84,7 @@ const StyledMenu = styled((props) => (
 const NewCourseCardViewAll = ({ Course, redirect }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const DiscountEndDate = new Date(Course.DiscountEndDate);
-
+  const { user } = useAuthContext();
   const country = useSelector((state) => state.country.value);
   if (Course.Discount != null && Course.Discount != undefined)
     var discountRate = 1 - Course.Discount / 100;
@@ -203,7 +204,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
             </Grid>
             <Grid item xs={8}>
               <Grid container justifyContent="flex-end">
-                <Grid item xs={12}>
+                { (!user || (user && user.Type !== "Corporate")) && <Grid item xs={12}>
                   {Course.Discount &&
                   Course.Discount != 1 &&
                   Course.Discount != undefined ? (
@@ -257,7 +258,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                       )}
                     </Typography>
                   )}
-                </Grid>
+                </Grid>}
 
                 {Course.DiscountEndDate != undefined &&
                 Course.Discount &&
@@ -280,7 +281,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
           </Grid>
         </CardContent>
       </CardActionArea>
-      <Button
+      { (!user || (user && user.Type !== "Corporate")) && <Button
         variant="text"
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
@@ -294,8 +295,8 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
       fontFamily: "Poppins"}}
       >
         course content
-      </Button>
-      <StyledMenu
+      </Button>}
+      { (!user || (user && user.Type !== "Corporate")) && <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{
           "aria-labelledby": "demo-customized-button",
@@ -393,7 +394,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
               </AccordionDetails>
             </Accordion>
           ))}
-      </StyledMenu>
+      </StyledMenu>}
     </Card>
   );
 };
