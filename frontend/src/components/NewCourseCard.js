@@ -79,7 +79,12 @@ const NewCourseCard = ({ user, Course, redirect }) => {
         <CardContent
           sx={{ display: "flex", flexDirection: "column", flex: "1" }}
         >
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" sx={{"background-image":
+                        "linear-gradient(52deg, #A00407, #ff5659)",
+                      "-webkit-background-clip": "text",
+                      "-webkit-text-fill-color": "#ff000000",
+                      fontSize: "2rem",
+                      fontFamily: "Poppins",}}>
             {Course.Title}
           </Typography>
           <Box

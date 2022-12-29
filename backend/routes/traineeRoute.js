@@ -78,11 +78,8 @@ router.post('/page/rateInstructor', rateInstructor)
 router.get('/page/checkRatingTrainee/:courseID', checkRatingTrainee)
 router.post("/page/getProgress/", getProgress);
 router.post("/addcourse", addCourse);
-router.post('/page/reportProblem', reportProblem)
-router.get('/page/traineedetails', getTraineeDetails)
-router.get('/page/checkRatingTraineeInstructor/:instructorID', checkRatingTraineeInstructor)
 
-module.exports = router;
 
 
 
+module.exports = router;

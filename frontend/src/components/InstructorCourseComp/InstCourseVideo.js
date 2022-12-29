@@ -1,4 +1,4 @@
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Button, TextField, Box, Stack, Paper } from "@mui/material"
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Button, TextField, Box, Stack, Paper, Alert } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -95,12 +95,12 @@ const InstCourseVideo = ({Video}) => {
         </AccordionDetails>
       </Accordion>}
       {embedLink && 
-      <Paper elevation={3} sx={{maxWidth:"900px", borderRadius:"16px", alignItems:"center", display:"flex", flexDirection:"column"}}>
-            <Typography variant="h3">Preview Video</Typography>
-      <Typography>{embedLink}</Typography>
+      <Paper elevation={3} sx={{maxWidth:"900px", borderRadius:"16px", alignItems:"center", display:"flex", flexDirection:"column", padding:"16px"}}>
+            <Typography variant="h4">Preview Video</Typography>
+            <iframe width= "800px" height= "450px"src={embedLink}></iframe>
       </Paper>}
-            {error && <Typography variant="h5" color="error">{error}</Typography>}
-            {success && <Typography variant="h5" color="success">{success}</Typography>}
+            {error && <Alert severity="error">{error}</Alert>}
+            {success && <Alert severity="success">{success}</Alert>}
       </Box>
     )
 }

@@ -26,11 +26,11 @@ import SearchAppBar from "./SearchAppBar";
 import { useDispatch } from "react-redux";
 import { chooseSwipableIsOpen } from "../Features/swipableIsOpen";
 
-const pages = ["Explore", "My Courses", "Filter"];
-const settings = ["Profile", "Account", "Logout"];
+const pages = ["Explore", "Filter"];
+
 const log = ["sign in", "sign up"];
 
-function TraineeNavBar() {
+function GuestNav() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { user } = useAuthContext();
@@ -48,26 +48,11 @@ function TraineeNavBar() {
 
   const handleCloseNavMenu = (e) => {
     if (e == "Explore") navigate("/course");
-    else if (e == "My Courses" && user) navigate("/MyCourses");
     else if (e == "Filter") dispatch(chooseSwipableIsOpen(true));
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (setting) => {
-    switch (setting) {
-      case "Logout": {
-        logout();
-        navigate("/");
-        break;
-      }
-      case "Profile": {
-        if (user.Type === "trainee") navigate("/traineeprofile");
-        else navigate("/instructorprofile");
-        break;
-      }
-    }
-    setAnchorElUser(null);
-  };
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -142,15 +127,6 @@ function TraineeNavBar() {
                 {"Explore"}
               </Button>
 
-              {user && (
-                <Button
-                  onClick={() => handleCloseNavMenu("My Courses")}
-                  color="secondary"
-                  sx={{ my: 2, display: "block" }}
-                >
-                  {"My Courses"}
-                </Button>
-              )}
             </Box>
 
             {user ? (
@@ -166,31 +142,7 @@ function TraineeNavBar() {
                     </Avatar>
                   </IconButton>
                 </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem
-                      key={setting}
-                      onClick={() => handleCloseUserMenu(setting)}
-                    >
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
+    
               </Box>
             ) : (
               <Box
@@ -224,4 +176,4 @@ function TraineeNavBar() {
     </ThemeProvider>
   );
 }
-export default TraineeNavBar;
+export default GuestNav;

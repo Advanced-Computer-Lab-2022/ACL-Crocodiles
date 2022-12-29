@@ -238,6 +238,31 @@ const checkRequested = async (req, res) => {
     }
 }
 
+const getMyCoursesLimited = async (req, res) => {
+    const ID = req.user;
+    let count = 0;
+    const courses = [];
+    if (!mongoose.Types.ObjectId.isValid(ID)) {
+      return res.status(404).json({ error: "Invalid trainee ID" });
+    }
+    const trainee = await CorpTrainee.findById(ID);
+    if (!trainee) return res.status(400).json({ error: "trainee not found" });
+  
+    const course_ids = trainee.My_courses;
+    for (let i = 0; i < course_ids.length && count < 4; i++) {
+      const course_id = course_ids[i]._id;
+      if (!mongoose.Types.ObjectId.isValid(course_id))
+        return res.status(404).json({ error: "Invalid course id" });
+      const course = await Course.findById(course_id);
+      if (!course) {
+        return res.status(500).json({ error: "course not found" });
+      }
+      courses.push(course);
+      count++;
+    }
+    return res.json(courses);
+  };
+
 module.exports = {
     searchCourse,
     viewAllCourses,
@@ -248,5 +273,6 @@ module.exports = {
     calculateGrade,
     viewExam,
     requestCourse,
-    checkRequested
+    checkRequested,
+    getMyCoursesLimited
 }

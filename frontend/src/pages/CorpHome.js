@@ -20,17 +20,17 @@ var settings = {
   autoplay: true,
   autoplaySpeed: 2500,
 };
-const GuestHome = () => {
+const CorpHome = () => {
   const [alert, setAlert] = useState(null);
   const [popularCourses, setPopularCourses] = useState(null);
   const [myCourses, setMyCourses] = useState(null);
-
+  const { user } = useAuthContext();
   useEffect(() => {
     fetch("/api/guest/getMostPopularCourses", {
       method: "GET",
       headers: {
         "content-type": "application/json",
-    
+        Authorization: `Bearer ${user.token}`,
       },
     })
       .then((response) => response.json())
@@ -39,7 +39,18 @@ const GuestHome = () => {
         setAlert(error.message);
       });
 
-
+    fetch("/api/corpTrainee/page/getMyCoursesLimited", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setMyCourses(data))
+      .catch((error) => {
+        setAlert(error.message);
+      });
   }, []);
 
   return (
@@ -50,7 +61,7 @@ const GuestHome = () => {
         >
           <Grid container spacing={3}>
             <Grid item>
-         
+              {user && (
                 <Box sx={{ padding: "20px" }}>
                   <Typography
                     sx={{
@@ -64,7 +75,7 @@ const GuestHome = () => {
                     }}
                     variant="h1"
                   >
-                    Join us now!
+                    Welcome back,
                   </Typography>
                   <Typography
                     sx={{
@@ -75,10 +86,10 @@ const GuestHome = () => {
                     }}
                     variant="h2"
                   >
-              
+                    {user.Username}
                   </Typography>
                 </Box>
-
+              )}
             </Grid>
             <Grid item md>
               <Box
@@ -92,8 +103,74 @@ const GuestHome = () => {
               />
             </Grid>
           </Grid>
-     
-      
+          <Grid container justifyContent="space-around">
+            <Grid item>
+              <Box
+                marginBottom="40px"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                flexDirection="column"
+                width="320px"
+              >
+                <Typography
+                  sx={{
+                    "background-image":
+                      "linear-gradient(52deg, #A00407, #ff5659)",
+                    "-webkit-background-clip": "text",
+                    "-webkit-text-fill-color": "#ff000000",
+                    fontFamily: "Helvetica,Arial,sans-serif",
+                    fontSize: "2rem",
+                    marginBottom: "40px",
+                  }}
+                  variant="h3"
+                >
+                  Start where you left off
+                </Typography>
+                <Slider {...settings} width="300px">
+                  {myCourses &&
+                    myCourses.map((course) => (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          width: "100%",
+                        }}
+                      >
+                        <NewCourseCard
+                          user={user}
+                          Course={course}
+                          redirect={`/Mycourses/course?courseId=${course._id}`}
+                        />
+                      </div>
+                    ))}
+                </Slider>
+                {myCourses && myCourses.length != 0 ? (
+                  <Link
+                    href="/corpcourses"
+                    sx={{
+                      color: "#A00407",
+                      fontFamily: "Helvetica,Arial,sans-serif",
+                      fontSize: "1.2rem",
+                      marginTop: "40px",
+                    }}
+                    variant="h3"
+                    underline="none"
+                  >
+                    View all
+                  </Link>
+                ) : (
+                  <Box>
+                    <Alert severity="info">
+                      it looks like you are not enrolled in any course! Click
+                      here to explore our courses
+                    </Alert>
+                    <Button href="/course">Explore</Button>
+                  </Box>
+                )}
+              </Box>
+            </Grid>
+            <Grid item>
               <Box
                 display="flex"
                 justifyContent="center"
@@ -146,11 +223,12 @@ const GuestHome = () => {
                   View all
                 </Link>
               </Box>
-         
+            </Grid>
+          </Grid>
         </Container>
       </Box>
     </div>
   );
 };
 
-export default GuestHome;
+export default CorpHome;

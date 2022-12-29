@@ -11,7 +11,8 @@ const {
     calculateGrade,
     viewExam,
     requestCourse,
-    checkRequested
+    checkRequested,
+    getMyCoursesLimited,
 } = require('../controllers/corporatetraineeController')
 
 
@@ -28,7 +29,7 @@ router.post('/page/calculateGrade',calculateGrade)
 router.get('/page/viewExam/:examid', viewExam)
 router.post('/page/requestCourse', requestCourse)
 router.get('/page/checkRequested/:CourseID', checkRequested)
-module.exports = router
+router.get('/page/getMyCoursesLimited', getMyCoursesLimited)
 
 
 

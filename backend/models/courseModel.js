@@ -43,6 +43,7 @@ const courseSchema = new Schema(
       ref: "Instructor",
       required: true,
     },
+    InstructorName: { type: String, required: true },
     Rating: {
       type: Number,
       required: false,

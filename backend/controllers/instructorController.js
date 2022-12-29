@@ -19,36 +19,39 @@ const createCourse = async (req, res) => {
     console.log(InstructorId)
     const { Title, Subject, Price, Summary} = req.body
     if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
+      return res.status(404).json({ error: "no such id" });
+    }
+    const instr = await Instructor.findById(InstructorId)
+    const InstructorName = instr.Firstname + " " + instr.Lastname
+    try {
+        const course = await Course.create({ Title, Subject, Price, InstructorId, InstructorName, Summary })
+        const instructor = await Instructor.updateOne({_id:InstructorId},{$push: { My_Courses: course._id } })
+        res.status(200).json({course, instructor})
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+  
+
+const createSubtitle = async (req, res) => {
+    const InstructorId = req.user
+    const { subtitle, subHours, videoTitle, videoURL, videoDesc } = req.body
+    const courseId = req.params.courseid
+    if (!mongoose.Types.ObjectId.isValid(InstructorId)) {
         return res.status(404).json({ error: 'no such id' })
     }
     try {
-        const course = await Course.create({ Title, Subject, Price, InstructorId, Summary })
-        const instructor = await Instructor.updateOne({_id:InstructorId},{$push: { My_Courses: course._id } })
-        res.status(200).json(course)
-    } catch (error) {
-        res.status(400).json({ error: error.message })
-    }
-}
-
-const createSubtitle = async (req, res) => {
-    const InstructorId  = req.user
-    const {subtitle,subHours} = req.body
-    const courseId = req.params.courseid
-    console.log(req.body)
-    if(!mongoose.Types.ObjectId.isValid(InstructorId)){
-        return res.status(404).json({error: 'no such id'})
-    }
-    try {
         const course = await Course.findById(courseId)
-        if(!course){
-            return res.status(404).json({error: 'no such course'})
+        if (!course) {
+            return res.status(404).json({ error: 'no such course' })
         }
-        const newHours = course.Hours + subHours
-        const sub = await Sub.create({Title: subtitle, Hours: subHours})
-        course.Hours = newHours
+        const sub = await Subtitle.create({ Title: subtitle, Hours: subHours })
         course.Subtitle.push(sub)
         await course.save()
-        res.status(200).json(sub)
+        const video = await Video.create({ Title: videoTitle, Description: videoDesc, url: videoURL })
+        sub.Videos.push(video)
+        await sub.save()
+        res.status(200).json(course)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

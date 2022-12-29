@@ -13,7 +13,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
+import { useNavigate } from 'react-router-dom';
 const Signup = () => {
     const[Username,setUsername] = useState('')
     const[Email,setEmail] = useState('')
@@ -22,6 +22,7 @@ const Signup = () => {
     const[Password,setPassword] = useState('')
     const[Gender,setGender] = useState('')
     const {signup,error,isLoading} = useSignup()
+    let navigate = useNavigate();
     let checkbox = true
     const handleSubmit = async (e) => {
         e.preventDefault()

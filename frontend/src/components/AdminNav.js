@@ -22,7 +22,7 @@ import {Routes, Route, useNavigate} from 'react-router-dom';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from '../hooks/useLogout'
 import PersonIcon from '@mui/icons-material/Person';
-import SearchAppBar from './SearchAppBar'
+
 
 const pages = ['Explore', 'My Courses','Define a Promotion'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -58,6 +58,7 @@ function AdminNav() {
     switch(setting){
         case "Logout": {
                logout();
+               navigate("/");
                break;};
      
     }
@@ -87,134 +88,154 @@ function AdminNav() {
 
   return (
     <ThemeProvider theme={theme}>
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: "#ffffffff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Link to="/">
+              <img src={logo} alt="logo" style={{ maxWidth: 160 }} />
+            </Link>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
+                    <Typography color="secondary" textAlign="center">
+                      {page}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
 
-                <Link to="/"><img src={logo} alt="logo"  style={{  maxWidth: 160,}} /></Link> 
-<SearchAppBar/>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton  
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu 
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} >
-                  <Typography sx={ {color:'#FFFF'}}color='green' textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-   
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-        
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <Button
                 onClick={clickUser}
-                color='secondary'
-                sx={{ my: 2, display: 'block' }}
+                color="secondary"
+                sx={{ my: 2, display: "block" }}
               >
-                {'Create a User'}
+                {"Create A User"}
               </Button>
-              <Button
-                onClick={promo}
-                color='secondary'
-                sx={{ my: 2, display: 'block' }}
+     
+              
+                <Button
+                  onClick={ promo}
+                  color="secondary"
+                  sx={{ my: 2, display: "block" }}
                 >
-                    {'Define a Promtion'}
+                  {"Define a promotion"}
                 </Button>
+
                 <Button
                 onClick={courseRequests}
-                color='secondary'
-                sx={{ my: 2, display: 'block' }}
+                color="secondary"
+                sx={{ my: 2, display: "block" }}
+              >
+                {"Course Requests"}
+              </Button>
+
+     
+            </Box>
+
+            {user ? (
+              <Box sx={{ display: { xs: "flex" }, flexGrow: 0 }}>
+                <NewCountryDD />
+                <Tooltip title="Open settings">
+                  <IconButton
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0, marginLeft: "8px" }}
+                  >
+                    <Avatar alt={user.Email} src="/static/images/avatar/2.jpg">
+                      <PersonIcon fontSize="large" />{" "}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
                 >
-                    {'Course Requests'}
+                  {settings.map((setting) => (
+                    <MenuItem
+                      key={setting}
+                      onClick={() => handleCloseUserMenu(setting)}
+                    >
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            ) : (
+              <Box
+                sx={{ flexGrow: 0, display: { xs: "flex", md: "flex" } }}
+                alignItems="center"
+              >
+                <NewCountryDD />
+                <Button
+                  key={"sign in"}
+                  onClick={() => navigate("/signin")}
+                  color="secondary"
+                  sx={{ my: 2, display: "block" }}
+                >
+                  {"sign in"}
                 </Button>
-              
-        
-          </Box>
 
-          {user? <Box sx={{ display: { xs: 'flex'}, flexGrow: 0 }}>
-          <NewCountryDD/>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={user.Email} src="/static/images/avatar/2.jpg">
-                <PersonIcon fontSize='large'/> </Avatar>
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>:
-               <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'flex' } }} alignItems='center'>
-                <NewCountryDD/>
-                 <Button
-                 
-                   key={'sign in'}
-                   onClick={() => navigate('/signin')}
-                   color='secondary'
-                   sx={{ my: 2, display: 'block' }}
-                 >
-                   {'sign in'}
-                 </Button>
-            
-                 <Button
-                 
-                 key={'sign up'}
-                 onClick={() => navigate('/signup')}
-                 color='secondary'
-                 sx={{ my: 2, display: 'block' }}
-               >
-                 {'sign up'}
-               </Button>
-             </Box>
-          }
-
-        </Toolbar>
-      </Container>
-    </AppBar>
+                <Button
+                  key={"sign up"}
+                  onClick={() => navigate("/signup")}
+                  color="secondary"
+                  sx={{ my: 2, display: "block" }}
+                >
+                  {"sign up"}
+                </Button>
+              </Box>
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Toolbar />
     </ThemeProvider>
   );
 }

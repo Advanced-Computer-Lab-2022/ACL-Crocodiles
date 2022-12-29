@@ -148,10 +148,16 @@ const PreviewCourse = () => {
         </Typography>
         </Grid>
         </Container>
-        <Typography variant="h5"  sx={{color:'black' ,margin:"50px 100px"}} align='left'>
+        <Stack direction="column" spacing = {2}>
+        <Paper elevation={0} sx={{alignItems:"center",display:"flex",flexDirection:'column',alignSelf:"center",width:"900px" ,border: "2px solid #a00407" , borderRadius: '7px', margin:"20px", padding:"20px"}}>
+        <Typography variant="h4">Preview Video</Typography>
+            {course && course.coursedetails.PreviewVideo && <iframe width= "800px" height= "450px"src={course.coursedetails.PreviewVideo}></iframe>}
+        </Paper>
+        <Typography variant="h5"  sx={{color:'black' ,margin:"50px 50px"}} align='left'>
         Course Content
         </Typography>
         <Stack direction='row'>
+        
         <Grid sx={{ width:600 ,margin:"-40px 75px" ,border: "2px solid #a00407"  , borderRadius: '7px'}}>
         
         {course && course.coursedetails.Subtitle && course.coursedetails.Subtitle.map((subtitle) => (
@@ -194,14 +200,15 @@ const PreviewCourse = () => {
         </Stack>
       
         </Stack>
+        </Stack>
         <Typography align="left" sx={{mt:"100px" ,ml:"60px"}}variant="h5"  >Other courses by Author</Typography>
         <Grid container
           item spacing={2} columnSpacing={{ xs: 2, sm: 2, md: 3 }} sx={{ margin:"40px 0px "}} >
         <Stack spacing={1.5} direction={'row'}>
             <Grid itemspacing={2} sx={{ml:"80px"}}>
-        {course && course.othercourses && course.othercourses.map((courses) => (
+        {/*{course && course.othercourses && course.othercourses.map((courses) => (
             <NewCourseCardViewAll Course={courses} redirect={`/course/previewcourse?courseId=${courses._id}`}/>
-        ))}
+        ))}*/}
         </Grid>
         </Stack>
         
