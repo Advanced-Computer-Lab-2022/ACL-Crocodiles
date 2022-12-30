@@ -21,7 +21,15 @@ const RatingAndReviewInstructor = ({instructorID}) => {
         console.log('My instructorID inside useeffect is : '+instructorID);
 
         const checkRating = async ()=> {
-            const response = await fetch('/api/trainee/page/checkRatingTraineeInstructor/'+instructorID, {
+            const response = (user.Type === 'Trainee') ?
+            
+            await fetch('/api/trainee/page/checkRatingTraineeInstructor/'+instructorID, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                    'content-type':'application/json',
+                }
+            }) :
+            await fetch('/api/corpTrainee/page/checkRatingTraineeInstructor/'+instructorID, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
                     'content-type':'application/json',
@@ -52,9 +60,19 @@ const RatingAndReviewInstructor = ({instructorID}) => {
             return;
         }
         const Username = user.Username;
-        const body1 = {rating, review, instructorID, Username};
+        const body1 = {rating: parseInt(rating), review, instructorID, Username};
         console.log(JSON.stringify(body1));
-        const response = await fetch('/api/trainee/page/rateInstructor', {
+        const response = (user.Type === 'Trainee') ?
+        
+        await fetch('/api/trainee/page/rateInstructor', {
+            method: 'POST',
+            body: JSON.stringify(body1),
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }) : 
+        await fetch('/api/corpTrainee/page/rateInstructor', {
             method: 'POST',
             body: JSON.stringify(body1),
             headers: {

@@ -19,7 +19,15 @@ const RatingAndReview = ({courseID}) => {
     console.log('My courseID is : '+courseID);
     useEffect(() => {
         const checkRating = async ()=> {
-            const response = await fetch('/api/trainee/page/checkRatingTrainee/'+courseID, {
+            const response = (user.Type === 'Trainee') ? 
+            
+            await fetch('/api/trainee/page/checkRatingTrainee/'+courseID, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                    'content-type':'application/json',
+                }
+            }) : 
+            await fetch('/api/corpTrainee/page/checkRatingTrainee/'+courseID, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
                     'content-type':'application/json',
@@ -39,7 +47,8 @@ const RatingAndReview = ({courseID}) => {
                 setError(error)
             }
         }
-        checkRating()
+        if (user)
+            checkRating()
     },[user])
 
 
@@ -50,9 +59,18 @@ const RatingAndReview = ({courseID}) => {
             return;
         }
         const Username = user.Username;
-        const body1 = {rating, review, courseID, Username};
+        const body1 = {rating: parseInt(rating), review, courseID, Username};
         console.log(JSON.stringify(body1));
-        const response = await fetch('/api/trainee/page/rateCourse', {
+        const response = (user.Type === 'Trainee') ?
+        await fetch('/api/trainee/page/rateCourse', {
+            method: 'POST',
+            body: JSON.stringify(body1),
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }) :
+        await fetch('/api/corpTrainee/page/rateCourse', {
             method: 'POST',
             body: JSON.stringify(body1),
             headers: {
