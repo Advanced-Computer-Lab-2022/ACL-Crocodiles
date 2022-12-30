@@ -38,6 +38,7 @@ import TM from "./pages/TM";
 import AdminPromo from './pages/AdminPromo'
 import AdminAddUser from './pages/AdminAddUser'
 import InstructorCreate from './pages/InstructorCreate'
+import NewCreateCourse from './pages/NewCreateCourse'
 import InstructorCourse from './components/InstructorCourse'
 import ViewRatingsPage from './pages/ViewRatingsPage'
 import Success from "./pages/Success";
@@ -126,7 +127,7 @@ function App() {
             />
             <Route
               path="/instructorcreate"
-              element={<InstructorCreate />}
+              element={<NewCreateCourse />}
             />
             <Route
               path="/instructorcourse/:courseid"

@@ -113,7 +113,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
     >
       <CardActionArea
         onClick={() => {
-          window.location.href = redirect;
+          if(redirect)window.location.href = redirect;
         }}
       >
         <CardMedia
