@@ -1,5 +1,4 @@
 const Instructor = require('../models/instructorModel')
-const Course = require('../models/courseModel').course
 const Question = require('../models/examModel').question
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
@@ -8,7 +7,7 @@ const Video = require('../models/courseModel').video
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
-
+const Course = require('../models/courseModel').course
 
 
 
@@ -414,6 +413,33 @@ const owedPermonth = async(req,res) => {
   
 }
 
+const initiateCourse = async(req,res) => {
+    try{
+    const instructor_id = req.user;
+    const {course,Subtitles} = req.body
+    if (!mongoose.Types.ObjectId.isValid(instructor_id)) {
+        return res.status(404).json({ error: "no such id" });
+      }
+      const instr = await Instructor.findById(instructor_id);
+    let subIds = [];
+    for(const sub of Subtitles){
+        const videos = sub.Videos
+        let vidIds = [];
+        for(const vid of videos){
+         const {_id} = await Video.create(vid)
+         vidIds.push(_id)
+        }
+        const {_id} = await Sub.create({Title:sub.Title,Hours:parseInt(sub.Hours),Videos:vidIds,Exercises:sub.Exercises})
+        subIds.push(_id)
+     
+    }
+    const c =  await Course.create({Title:course.title,Subject:course.subject, Price:Number(course.price),Hours:course.totalHours,Summary:course.description,InstructorId:instructor_id,InstructorName: instr.Firstname + " " + instr.Lastname,Subtitle:subIds,PreviewVideo:course.previewLink})
+    return res.status(200).json(c)
+    }catch(e){
+        res.status(400).json(e.message)
+    }
+}
+
 module.exports = {
     createCourse,
     viewAllInsCourses,
@@ -433,5 +459,6 @@ module.exports = {
     owedPermonth,
     getCourse,
     uploadPreview,
-    getMySubtitles
+    getMySubtitles,
+    initiateCourse
 }

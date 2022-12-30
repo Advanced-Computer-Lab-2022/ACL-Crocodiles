@@ -371,7 +371,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                             </span>
                           </div>
                         </ListSubheader>
-                        {sub.Videos &&
+                        {sub.Exercises &&
                           sub.Exercises.map((ex) => (
                             <ListItem>
                               <ListItemText primary={` ${ex._id}`} />

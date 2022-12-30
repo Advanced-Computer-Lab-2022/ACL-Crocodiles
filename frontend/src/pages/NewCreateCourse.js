@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { Box ,Stepper,Step,StepLabel,Button ,Typography,Paper ,TextField, stack,Autocomplete,Grid,styled} from '@mui/material';
+import { Box ,Stepper,Step,StepLabel,Button ,Typography,Paper ,TextField, stack,Autocomplete,Grid,styled,Alert,CircularProgress} from '@mui/material';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
@@ -10,6 +10,7 @@ import {useSelector} from "react-redux"
 import EnterCourseDetails from '../components/EnterCourseDetails';
 import AddContent from '../components/AddContent';
 import NewCourseCardViewAll from '../components/NewCourseCardViewAll';
+import {useNavigate} from 'react-router-dom';
 const steps = ['Enter Course Details', 'Add course Content', 'Create Course'];
 
 
@@ -29,7 +30,11 @@ const [error, setError] = useState([null,null,null,null,null]);
 const [subtitles, setSubtitles] = useState([]);
 const [videos, setVideos] = useState([]);
 const [totalHours, setTotalHours] = useState(0)
-
+const [created, setCreated]=useState(false)
+const [alert,setAlert] = useState(null)
+const [loading,setLoading] = useState(false)
+const [CID,setCID] = useState(null)
+const navigate = useNavigate()
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -107,6 +112,39 @@ if(can){
 }
    
     setSkipped(newSkipped);
+
+    if(activeStep===2 && created===false){
+    
+      setLoading(true)
+      const initiateCourse = async ()=>{
+        await fetch('/api/instructor/initiateCourse/', {
+          method: 'POST', headers: {
+              'content-type': 'application/json',
+              'Authorization': `Bearer ${user.token}`
+             
+
+          },
+          body:  JSON.stringify({
+              Subtitles:subtitles,
+              course: {title,subject,price,description,previewLink,totalHours  }})
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const {_id} =data;
+          setCID(_id)
+          setCreated(true);
+          setLoading(false);
+          setAlert({severity:'success', message:'Course Created Successfully'})}).catch((err)=>{
+          setAlert({severity:'error', message:err})
+          setLoading(false);
+        });
+      }
+      initiateCourse();
+     
+      
+      //create course
+   
+    }
   };
 
   const handleBack = () => {
@@ -129,7 +167,21 @@ if(can){
   };
 
   const handleReset = () => {
-    setActiveStep(0);
+  setActiveStep(0);
+ setSkipped(new Set());
+ setTitle(null);
+ setSubject(null);
+   setPrice(null);
+   setDescription(null);
+  setPreviewLink(null);
+   setError([null,null,null,null,null]);
+   setSubtitles([]);
+   setVideos([]);
+   setTotalHours(0)
+   setCreated(false)
+   setAlert(null)
+   setLoading(false)
+   setCID(null)
   };
 
   
@@ -160,14 +212,21 @@ if(can){
         })}
       </Stepper>
       {activeStep === steps.length ? (
+        
         <React.Fragment>
+          { !loading && alert && <> <Alert severity={alert.severity} >{alert.message}</Alert>
+       
           <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+           
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
+            {alert.severity==='success' && <Button onClick={ ()=>navigate(`/instructorcourse/${CID}`)}>Go to Course</Button>}
           </Box>
+          </>}
+          {loading && <Box sx={{ flex: '1 1 auto' , margin:'auto', paddingTop:'100px'}} >
+           <CircularProgress sx={{color:"#a00407" }}/>
+           </Box>}
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -185,10 +244,11 @@ if(can){
         </React.Fragment>
       )}
               {activeStep==2 && 
-              <Box sx={{marginLeft:'auto',marginRight:'auto', paddingTop:'40px'}}>
+              <Box sx={{marginLeft:'auto',marginRight:'auto', paddingTop:'40px',maxWidth:'300px'}}>
                <NewCourseCardViewAll Course={{Title:title,Subject:subject,Price:price, Summary:description, Subtitle:subtitles,Discount:0,Hours:totalHours}}/> 
                </Box>}
-             
+              
+               
          </Box>
               
          <Box sx={{ display:'grid',alignContent:'center', marginBottom:'20px',width: '75%',marginLeft:'auto',marginRight:'auto' }}>
@@ -209,9 +269,14 @@ if(can){
               </Button>
             )}
 
+{activeStep !== steps.length ?
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Create' : 'Next'}
+            </Button>:
+              <Button onClick={handleReset}>
+              Create another course
             </Button>
+            }
         
           </Box>
           </Box>

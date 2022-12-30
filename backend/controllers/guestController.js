@@ -191,7 +191,9 @@ const CourseDetails = async (req, res) => {
     const othercourses = await Course.find({
       InstructorId: instructorid.InstructorId,
       _id: { $ne: id },
-    });
+    })      .populate({ path: "Subtitle", populate: { path: "Exercises" } })
+      .populate({ path: "Subtitle", populate: { path: "Videos" } });
+      
     const instructordetails = await Instructor.findOne({
       _id: instructorid.InstructorId,
     });
