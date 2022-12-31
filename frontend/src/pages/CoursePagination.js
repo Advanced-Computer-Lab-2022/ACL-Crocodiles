@@ -28,7 +28,6 @@ const CoursePagination = () => {
     );
     const currSort = useSelector((state) => state.sort.value);
     const search = useSelector((state) => state.search.value);
-    console.log(search);
     let x = {};
     x[currSort.element] = currSort.ascending;
     

@@ -92,7 +92,7 @@ const InstSubtitles = ({Subtitles}) => {
                         </AccordionDetails>
                     </Accordion>
             ))}
-        <Accordion
+        {/* <Accordion
             >
             <AccordionSummary
             expandIcon={<AddIcon />}
@@ -122,7 +122,7 @@ const InstSubtitles = ({Subtitles}) => {
                 {success && <Alert severity="success">{success}</Alert>}
             </Stack>
             </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
             </Stack>
         </Box>
     )

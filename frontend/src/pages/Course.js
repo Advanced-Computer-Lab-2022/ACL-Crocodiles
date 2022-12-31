@@ -16,22 +16,6 @@ const Course = () => {
   const [courses, setCourses] = useState(null);
   const [subjectOptions, setSubjectOptions] = useState(null);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const handlePage = (event, value) => {
-    setPage(value);
-  };
-  const currRatingRange = useSelector(
-    (state) => state.ratingFilter.value.range
-  );
-  const currPriceRange = useSelector((state) => state.priceFilter.value.range);
-  const currSubjectFilter = useSelector(
-    (state) => state.subjectFilter.value.label
-  );
-  const currSort = useSelector((state) => state.sort.value);
-  const search = useSelector((state) => state.search.value);
-  console.log(search);
-  let x = {};
-  x[currSort.element] = currSort.ascending;
     const [loading, setLoading] = useState(true)
 
     const getSubjects = async ()=>{ await fetch("/api/guest/getSubjectsAndPages", {
@@ -64,7 +48,7 @@ const Course = () => {
           </Alert>
         )}
 
-    <CoursePagination currSubjectFilter={currSubjectFilter} currRatingRange={currRatingRange} currPriceRange={currPriceRange} x={x} search={search} />
+    <CoursePagination  />
       
       </div>
     </div>

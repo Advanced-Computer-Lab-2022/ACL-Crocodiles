@@ -1,5 +1,4 @@
 const Instructor = require('../models/instructorModel')
-const Course = require('../models/courseModel').course
 const Question = require('../models/examModel').question
 const Subtitle = require('../models/courseModel').sub
 const Exam = require('../models/examModel').exam
@@ -8,7 +7,9 @@ const Video = require('../models/courseModel').video
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Validator = require('validator')
+const Course = require('../models/courseModel').course
 const Problem = require('../models/problemModel')
+const instructorRatingModel = require('../models/ratingAndReviewModel').instructorRatingModel
 
 
 
@@ -257,13 +258,14 @@ const viewExams = async (req, res) => {
 const getRating = async (req, res) => {
     const id = req.user
     try {
-        const rating = await Instructor.findById(id).select({ Rating: 1 })
+        const rating = await Instructor.findById(id).select({ Rating: 1, RatingCount: 1 })
+        console.log(rating)
         if (!rating) {
             return res.status(404).json({ error: 'rating is null' })
         }
         res.status(200).json(rating)
     } catch (error) {
-        res.status(400).json({ error: 'error' })
+        res.status(400).json({ error: 'error getting rating and rating count' })
     }
 }
 const setFlag = async(req,res) => {
@@ -423,6 +425,47 @@ const reportProblem = async (req, res) => {
     }
 }
 
+const initiateCourse = async(req,res) => {
+    try{
+    const instructor_id = req.user;
+    const {course,Subtitles} = req.body
+    if (!mongoose.Types.ObjectId.isValid(instructor_id)) {
+        return res.status(404).json({ error: "no such id" });
+      }
+      const instr = await Instructor.findById(instructor_id);
+    let subIds = [];
+    for(const sub of Subtitles){
+        const videos = sub.Videos
+        let vidIds = [];
+        for(const vid of videos){
+         const {_id} = await Video.create(vid)
+         vidIds.push(_id)
+        }
+        const {_id} = await Sub.create({Title:sub.Title,Hours:parseInt(sub.Hours),Videos:vidIds,Exercises:sub.Exercises})
+        subIds.push(_id)
+     
+    }
+    const c =  await Course.create({Title:course.title,Subject:course.subject, Price:Number(course.price),Hours:course.totalHours,Summary:course.description,InstructorId:instructor_id,InstructorName: instr.Firstname + " " + instr.Lastname,Subtitle:subIds,PreviewVideo:course.previewLink})
+    return res.status(200).json(c)
+    }catch(e){
+        res.status(400).json(e.message)
+    }
+}
+
+const getMyRatings = async (req, res) => {
+    const id = req.user
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        const ratings = await instructorRatingModel.find({ InstructorId: id })
+        console.log(ratings)
+        res.status(200).json(ratings)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 module.exports = {
     createCourse,
     viewAllInsCourses,
@@ -443,5 +486,7 @@ module.exports = {
     getCourse,
     uploadPreview,
     getMySubtitles,
-    reportProblem
+    reportProblem,
+    initiateCourse,
+    getMyRatings,
 }

@@ -222,12 +222,28 @@ const PreviewCourse = () => {
         <Stack spacing={1.5} direction={'row'}>
             <Grid itemspacing={2} sx={{ml:"80px"}}>
         {/*{course && course.othercourses && course.othercourses.map((courses) => (
+        {/* <Grid container
+           >
+      
+            <Grid item  xs={3} >
+        {course && course.othercourses && course.othercourses.map((courses) => (
             <NewCourseCardViewAll Course={courses} redirect={`/course/previewcourse?courseId=${courses._id}`}/>
         ))}*/}
         </Grid>
         </Stack>
-        
         </Grid>
+
+        <Grid container item spacing={1}>
+              {course && course.othercourses && course.othercourses.map((courses) => (
+                <Grid item xs={4}  >
+                  <NewCourseCardViewAll
+          
+                    Course={courses}
+                    redirect={`/course/previewcourse?courseId=${courses._id}`}
+                  />
+                </Grid>
+              ))}
+          </Grid>
         </Box>
         
         </Box>

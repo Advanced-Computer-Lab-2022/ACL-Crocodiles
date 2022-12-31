@@ -114,7 +114,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
     >
       <CardActionArea
         onClick={() => {
-          window.location.href = redirect;
+          if(redirect)window.location.href = redirect;
         }}
       >
         <CardMedia
@@ -260,7 +260,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                   )}
                 </Grid>}
 
-                {Course.DiscountEndDate != undefined &&
+                { (!user || (user && user.Type !== "Corporate")) && Course.DiscountEndDate != undefined &&
                 Course.Discount &&
                 Course.Discount != 1 &&
                 Course.Discount != undefined ? (
@@ -381,7 +381,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                             </span>
                           </div>
                         </ListSubheader>
-                        {sub.Videos &&
+                        {sub.Exercises &&
                           sub.Exercises.map((ex) => (
                             <ListItem>
                               <ListItemText primary={` ${ex._id}`} />

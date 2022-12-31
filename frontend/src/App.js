@@ -40,6 +40,7 @@ import TM from "./pages/TM";
 import AdminPromo from './pages/AdminPromo'
 import AdminAddUser from './pages/AdminAddUser'
 import InstructorCreate from './pages/InstructorCreate'
+import NewCreateCourse from './pages/NewCreateCourse'
 import InstructorCourse from './components/InstructorCourse'
 import ViewRatingsPage from './pages/ViewRatingsPage'
 import Success from "./pages/Success";
@@ -48,6 +49,7 @@ import CorpCourses from './pages/CorpCourses'
 import TraineeRefundRequests from "./pages/TraineeRefundRequests";
 import AdminRefundRequest from "./pages/AdminRefundRequests";
 import AdminProblems from "./pages/AdminProblems"
+import InstructorRatingsPage from "./pages/InstructorRatingsPage";
 function App() {
   return (
     <div className="App">
@@ -141,7 +143,7 @@ function App() {
             />
             <Route
               path="/instructorcreate"
-              element={<InstructorCreate />}
+              element={<NewCreateCourse />}
             />
             <Route
               path="/instructorcourse/:courseid"
@@ -159,9 +161,10 @@ function App() {
               path="/corpcourses"
               element={<CorpCourses />}
             />
-
-
-
+            <Route
+              path="/myratings"
+              element={<InstructorRatingsPage />}
+            />
           </Routes>
         </div>
       </BrowserRouter>
