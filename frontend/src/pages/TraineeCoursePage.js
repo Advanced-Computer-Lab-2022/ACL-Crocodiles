@@ -39,6 +39,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import VideoPlayer from "../components/VideoPlayer";
 import NoteTaking from "../components/NoteTaking";
+import RatingAndReviewInstructor from "../components/RatingAndReviewInstructor";
+import ReportProblem from "../components/ReportProblem";
 
 // import rgba from "../functions/rgba";
 
@@ -102,8 +104,40 @@ const TraineeCoursePage = () => {
         setError(json.error);
       }
     };
+    const fetchCourseCorp = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get("courseId");
 
-    fetchCourse();
+      const response = await fetch(`/api/corpTrainee/page/MyCourses/${courseId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
+      if (response.ok) {
+        setCourse(json);
+        setSubtitles(json.Subtitle);
+
+        const response1 = await fetch("/api/corpTrainee/page", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const json1 = await response1.json();
+        if (response.ok) {
+          setTrainee(json1);
+        } else {
+          setError(json.error);
+        }
+      } else {
+        setError(json.error);
+      }
+    };
+    if (user && user.Type === "Trainee") {
+      fetchCourse();
+    } else if (user && user.Type === "Corporate") {
+      fetchCourseCorp();
+    }
   }, [user, change, player]);
 
   return (
@@ -111,7 +145,7 @@ const TraineeCoursePage = () => {
       <Grid container sx={{ height: "110vh" }} alignItems="flex-start">
         {open ? (
           <Grid item xs={1.9}>
-            {trainee && (
+            {trainee && user.Type==="Trainee" && (
               <TraineeDrawer
                 subtitles={Subtitles}
                 arrowHandler={arrowHandler}
@@ -125,7 +159,7 @@ const TraineeCoursePage = () => {
           </Grid>
         ) : (
           <Grid item xs={0.0001}>
-            {trainee && (
+            {trainee && user.Type==="Trainee" && (
               <TraineeDrawer
                 subtitles={Subtitles}
                 arrowHandler={arrowHandler}
@@ -188,7 +222,7 @@ const TraineeCoursePage = () => {
                 </Typography>
 
               </Grid>
-              <Grid
+              { user && <Grid
               container
               item
               xs={3}
@@ -207,8 +241,9 @@ const TraineeCoursePage = () => {
                         <Typography>View All Ratings and Reviews</Typography>
                     </Stack>
             </Button>
-              </Grid>
-              
+            <RatingAndReviewInstructor instructorID={course.InstructorId} />
+              <ReportProblem courseid={courseid1}/>
+              </Grid>}
             </Stack>
 
 
@@ -335,20 +370,20 @@ const TraineeCoursePage = () => {
                       <TakeTestWidget
                         examid={exercise._id}
                         courseid={course._id}
-                        type={"Trainee"}
+                        type={user.Type}
                       />
                     </Grid>
                     <Grid item>
                       <CheckAnswersWidget
                         examid={exercise._id}
                         courseid={course._id}
-                        type={"Trainee"}
+                        type={user.Type}
                       />
                     </Grid>
                     <Grid item>
                       <GradeWidgetHelper
                         ExamId={exercise._id}
-                        type={"Trainee"}
+                        type={user.Type}
                       />
                     </Grid>
                   </Grid>

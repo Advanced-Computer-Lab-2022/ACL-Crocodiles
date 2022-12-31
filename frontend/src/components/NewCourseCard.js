@@ -19,7 +19,7 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 import LinearWithLabel from "./LinearProgressWithLabel";
 import { useEffect, useState } from "react";
-
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const NewCourseCard = ({ user, Course, redirect }) => {
   const DiscountEndDate = new Date(Course.DiscountEndDate);
@@ -127,12 +127,15 @@ const NewCourseCard = ({ user, Course, redirect }) => {
         <CardContent
           sx={{ display: "flex", flexDirection: "column", flex: "1" }}
         >
-          <Stack direction="row" spacing={20}>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" sx={{"background-image":
+                        "linear-gradient(52deg, #A00407, #ff5659)",
+                      "-webkit-background-clip": "text",
+                      "-webkit-text-fill-color": "#ff000000",
+                      fontSize: "2rem",
+                      fontFamily: "Poppins",}}>
             {Course.Title}
           </Typography>
        
-          </Stack>
           <Box
             marginBottom={"1.35em"}
             sx={{ display: "flex", flexDirection: "column", flex: "1" }}
@@ -192,7 +195,8 @@ const NewCourseCard = ({ user, Course, redirect }) => {
     
       </CardActionArea>
 
-      {user && user.Type==="Trainee" && refundrequest && progress <= 50 && <Button  variant="contained"  onClick={requestRefund} sx={{ margin:'auto auto'} }>
+      {refundrequest && progress <= 50 && user && user.Type === "Trainee" && <Button  variant="contained"  
+      onClick={requestRefund} sx={{ margin:'10px', "background-image":"linear-gradient(52deg, #A00407, #ff5659)"}}>
           Request Refund
           </Button>}
     </Card>

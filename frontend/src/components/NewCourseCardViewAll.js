@@ -35,6 +35,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { useAuthContext } from "../hooks/useAuthContext";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -50,7 +51,8 @@ const StyledMenu = styled((props) => (
   />
 ))(({ theme }) => ({
   "& .MuiPaper-root": {
-    borderRadius: 0,
+  
+    borderRadius: '8px',
     maxHeight: "200px ",
     marginTop: theme.spacing(1),
     width: "inherit",
@@ -61,7 +63,7 @@ const StyledMenu = styled((props) => (
     boxShadow:
       "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
     "& .MuiMenu-list": {
-      padding: "4px 0",
+      padding: "0 0",
     },
     "& .MuiMenuItem-root": {
       "& .MuiSvgIcon-root": {
@@ -82,7 +84,7 @@ const StyledMenu = styled((props) => (
 const NewCourseCardViewAll = ({ Course, redirect }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const DiscountEndDate = new Date(Course.DiscountEndDate);
-
+  const { user } = useAuthContext();
   const country = useSelector((state) => state.country.value);
   if (Course.Discount != null && Course.Discount != undefined)
     var discountRate = 1 - Course.Discount / 100;
@@ -112,7 +114,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
     >
       <CardActionArea
         onClick={() => {
-          window.location.href = redirect;
+          if(redirect)window.location.href = redirect;
         }}
       >
         <CardMedia
@@ -130,7 +132,12 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
               variant="h5"
               component="div"
               display="inline"
-            >
+              sx={{"background-image":
+                        "linear-gradient(52deg, #A00407, #ff5659)",
+                      "-webkit-background-clip": "text",
+                      "-webkit-text-fill-color": "#ff000000",
+                      fontSize: "2rem",
+                      fontFamily: "Poppins",}}>
               {Course.Title}
             </Typography>
             <Typography
@@ -197,7 +204,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
             </Grid>
             <Grid item xs={8}>
               <Grid container justifyContent="flex-end">
-                <Grid item xs={12}>
+                { (!user || (user && user.Type !== "Corporate")) && <Grid item xs={12}>
                   {Course.Discount &&
                   Course.Discount != 1 &&
                   Course.Discount != undefined ? (
@@ -251,9 +258,9 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                       )}
                     </Typography>
                   )}
-                </Grid>
+                </Grid>}
 
-                {Course.DiscountEndDate != undefined &&
+                { (!user || (user && user.Type !== "Corporate")) && Course.DiscountEndDate != undefined &&
                 Course.Discount &&
                 Course.Discount != 1 &&
                 Course.Discount != undefined ? (
@@ -274,17 +281,22 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
           </Grid>
         </CardContent>
       </CardActionArea>
-      <Button
+      { (!user || (user && user.Type !== "Corporate")) && <Button
         variant="text"
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
+        endIcon={<KeyboardArrowDownIcon sx={{marginLeft:'opx'}} />}
+        sx={{width:'fit-content',justifyContent:'inherit',fontSize:'0.7rem',"background-image":
+        "linear-gradient(52deg, #A00407, #ff5659)",
+      "-webkit-background-clip": "text",
+      "-webkit-text-fill-color": "#ff000000",
+      fontFamily: "Poppins"}}
       >
         course content
-      </Button>
-      <StyledMenu
+      </Button>}
+      { (!user || (user && user.Type !== "Corporate")) && <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{
           "aria-labelledby": "demo-customized-button",
@@ -292,6 +304,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        
       >
         <MenuItem onClick={handleClose} disabled disableRipple>
           <TocIcon />
@@ -304,6 +317,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                 marginTop: "0px !important",
                 borderRadius: "0px !important",
                 maxHeight: "max-content !important",
+           
               }}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -367,7 +381,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                             </span>
                           </div>
                         </ListSubheader>
-                        {sub.Videos &&
+                        {sub.Exercises &&
                           sub.Exercises.map((ex) => (
                             <ListItem>
                               <ListItemText primary={` ${ex._id}`} />
@@ -380,7 +394,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
               </AccordionDetails>
             </Accordion>
           ))}
-      </StyledMenu>
+      </StyledMenu>}
     </Card>
   );
 };

@@ -37,6 +37,7 @@ app.use('/api/users',usersRoutes)
 app.use('/api/auth',authRoutes)
 
 
+
 const courses = require('./models/courseModel').course
 const schedule = require('node-schedule')
 const checkDiscountsAtMidnight = schedule.scheduleJob('8 0 * * *', function () {

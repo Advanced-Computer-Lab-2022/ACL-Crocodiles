@@ -12,6 +12,7 @@ import priceFilterReducer from "./Features/priceFilter";
 import subjectFilterReducer from "./Features/subjectFilter";
 import SwipableIsOpenReducer from "./Features/swipableIsOpen";
 import sortReducer from "./Features/sort";
+import searchReducer from "./Features/search";
 const store = configureStore({
   reducer: {
     country: countryReducer,
@@ -20,6 +21,7 @@ const store = configureStore({
     subjectFilter: subjectFilterReducer,
     SwipableIsOpen: SwipableIsOpenReducer,
     sort: sortReducer,
+    search: searchReducer,
   },
 });
 

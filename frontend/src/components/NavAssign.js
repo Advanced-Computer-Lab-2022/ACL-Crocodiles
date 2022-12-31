@@ -6,6 +6,8 @@ import Navbar from './Navbar';
 import AdminNav from './AdminNav';
 import InstructorNav from './InstructorNav';
 import CorpNav from './CorpNav';
+import GuestNav from './GuestNav';
+
 const NavAssign = () => {
     const { user } = useAuthContext();
     const [type,setType] = useState('');
@@ -56,7 +58,7 @@ const NavAssign = () => {
 
 
   return(<>  {/*{type?<AdminNav/>:<Navbar/>}*/}
-            {!user && <Navbar/>}
+            {!user && <GuestNav/>}
             {type==='Admin' && <AdminNav/>}
             {type==='Trainee' && <TraineeNavBar/>}
             {type==='Instructor' && <InstructorNav/>}

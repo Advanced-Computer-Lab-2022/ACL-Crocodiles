@@ -8,84 +8,86 @@ const Course = require('../models/courseModel').course
 const CourseRequest = require('../models/courseRequestModel')
 const RefundRequest = require('../models/refundRequestModel')
 const Trainee = require('../models/traineeModel')
-const createAdmin = async (req,res) => {
-    const {Username,Email,Password} = req.body
+const Problem = require('../models/problemModel')
+
+const createAdmin = async (req, res) => {
+    const { Username, Email, Password } = req.body
     const Type = 'Admin'
-        
-    try{
-        let useru = await User.findOne({Username})
+
+    try {
+        let useru = await User.findOne({ Username })
         if (useru)
-            res.status(400).json({error:'User Already exists'})
-        let usere = await User.findOne({Email})
-            if (usere)
-            res.status(400).json({error:'Email Already in use'})
-        else{
+            res.status(400).json({ error: 'User Already exists' })
+        let usere = await User.findOne({ Email })
+        if (usere)
+            res.status(400).json({ error: 'Email Already in use' })
+        else {
             const salt = await bcrypt.genSalt(10)
-            let hash = await bcrypt.hash(Password,salt)
-            const user = await User.create({Username,Email,Password:hash,Type})
-            
+            let hash = await bcrypt.hash(Password, salt)
+            const user = await User.create({ Username, Email, Password: hash, Type })
+
         }
-  } catch (error) {
-      res.status(400).json({error: error.message})
-  }
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 
-const createInstructor = async (req,res) => {
-    
-    const {Username,Email,Password} = req.body
-    const Type = 'Instructor' 
-    try{
-        let useru = await User.findOne({Username})
+const createInstructor = async (req, res) => {
+
+    const { Username, Email, Password } = req.body
+    const Type = 'Instructor'
+    try {
+        let useru = await User.findOne({ Username })
         if (useru)
-            res.status(400).json({error:'User Already exists'})
-        let usere = await User.findOne({Email})
-            if (usere)
-            res.status(400).json({error:'Email Already in use'})
-        else{
+            res.status(400).json({ error: 'User Already exists' })
+        let usere = await User.findOne({ Email })
+        if (usere)
+            res.status(400).json({ error: 'Email Already in use' })
+        else {
             const salt = await bcrypt.genSalt(10)
-            let hash = await bcrypt.hash(Password,salt)
-            const user = await User.create({Username,Email,Password:hash,Type})
+            let hash = await bcrypt.hash(Password, salt)
+            const user = await User.create({ Username, Email, Password: hash, Type })
             console.log(user)
-            const instructor =  await Instructor.create({_id:user._id})
+            const instructor = await Instructor.create({ _id: user._id })
             res.status(200).json(instructor)
         }
-  } catch (error) {
-      res.status(400).json({error: error.message})
-  }
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
-const createCorporateTrainee = async (req,res) => {
-    const {Username,Email,Password} = req.body
+const createCorporateTrainee = async (req, res) => {
+    const { Username, Email, Password } = req.body
     const Type = 'Corporate'
-        
 
-    try{
-        let useru = await User.findOne({Username})
+
+    try {
+        let useru = await User.findOne({ Username })
         if (useru)
-            res.status(400).json({error:'User Already exists'})
-        let usere = await User.findOne({Email})
-            if (usere)
-            res.status(400).json({error:'Email Already in use'})
-        else{
+            res.status(400).json({ error: 'User Already exists' })
+        let usere = await User.findOne({ Email })
+        if (usere)
+            res.status(400).json({ error: 'Email Already in use' })
+        else {
             const salt = await bcrypt.genSalt(10)
-            let hash = await bcrypt.hash(Password,salt)
-            const user = await User.create({Username,Email,Password:hash,Type})
-            const corporatetrainee =  await CorporateTrainee.create({_id:user._id})
+            let hash = await bcrypt.hash(Password, salt)
+            const user = await User.create({ Username, Email, Password: hash, Type })
+            const corporatetrainee = await CorporateTrainee.create({ _id: user._id })
             res.status(200).json(corporatetrainee)
         }
-  } catch (error) {
-      res.status(400).json({error: error.message})
-  }
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
-const setPromotion = async (req,res) => {
-    const {courseid,discount,enddate} = req.body
+const setPromotion = async (req, res) => {
+    const { courseid, discount, enddate } = req.body
     console.log(req.body)
     if (!mongoose.Types.ObjectId.isValid(courseid))
         return res.status(404).json({ error: 'wrong courseid' })
     try {
-        const course = await Course.findByIdAndUpdate(courseid, {$set: { Discount: discount, DiscountEndDate: enddate }})
+        const course = await Course.findByIdAndUpdate(courseid, { $set: { Discount: discount, DiscountEndDate: enddate } })
         if (!course) {
             return res.status(404).json({ error: 'no course found' })
         }
@@ -96,10 +98,10 @@ const setPromotion = async (req,res) => {
     }
 }
 
-const setPromotionAllCourses = async (req,res) => {
-    const {discount,enddate} = req.body
+const setPromotionAllCourses = async (req, res) => {
+    const { discount, enddate } = req.body
     try {
-        const courses = await Course.updateMany({}, {$set: { Discount: discount, EndDate: enddate }})
+        const courses = await Course.updateMany({}, { $set: { Discount: discount, EndDate: enddate } })
         if (!courses) {
             return res.status(404).json({ error: 'no courses found' })
         }
@@ -110,18 +112,18 @@ const setPromotionAllCourses = async (req,res) => {
     }
 }
 
-const getPendingCourseRequests = async (req,res) => {
+const getPendingCourseRequests = async (req, res) => {
     try {
-        const requests = await CourseRequest.find({Status:'Pending'})
+        const requests = await CourseRequest.find({ Status: 'Pending' })
         res.status(200).json(requests)
     }
     catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
-const getPendingRefundRequests = async (req,res) => {
+const getPendingRefundRequests = async (req, res) => {
     try {
-        const requests = await RefundRequest.find({Status:'Pending'})
+        const requests = await RefundRequest.find({ Status: 'Pending' })
         res.status(200).json(requests)
     }
     catch (error) {
@@ -129,34 +131,32 @@ const getPendingRefundRequests = async (req,res) => {
     }
 }
 
-const grantCourseAccess = async (req,res) => {
-    const {CourseID,TraineeID} = req.body
-    console.log(CourseID,TraineeID)
+const grantCourseAccess = async (req, res) => {
+    const { CourseID, TraineeID } = req.body
+    console.log(CourseID, TraineeID)
     try {
-        const trainee = await CorporateTrainee.findById(TraineeID)
-        trainee.My_courses.push(CourseID)
-        await trainee.save()
+        const trainee = await CorporateTrainee.findByIdAndUpdate(TraineeID, {$push: {My_courses: CourseID}})
         console.log(trainee)
         if (!trainee) {
             return res.status(404).json({ error: 'no trainee found' })
         }
-        const request = await CourseRequest.updateOne({CourseID,TraineeID}, {$set: {Status:'Granted'}})
+        const request = await CourseRequest.updateOne({ CourseID, TraineeID }, { $set: { Status: 'Granted' } })
         console.log(request)
         if (!request) {
             return res.status(404).json({ error: 'no request found' })
         }
-        res.status(200).json({trainee,request})
+        res.status(200).json({ trainee, request })
     }
     catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
-const denyCourseAccess = async (req,res) => {
-    const {CourseID,TraineeID} = req.body
-    console.log(CourseID,TraineeID)
+const denyCourseAccess = async (req, res) => {
+    const { CourseID, TraineeID } = req.body
+    console.log(CourseID, TraineeID)
     try {
-        const request = await CourseRequest.updateOne({CourseID,TraineeID}, {$set: {Status:'Denied'}})
+        const request = await CourseRequest.updateOne({ CourseID, TraineeID }, { $set: { Status: 'Denied' } })
         console.log(request)
         if (!request) {
             return res.status(404).json({ error: 'no request found' })
@@ -167,33 +167,33 @@ const denyCourseAccess = async (req,res) => {
         res.status(400).json({ error: error.message })
     }
 }
-const grantRefund = async (req,res) => {
-    const {CourseID,TraineeID,amount} = req.body
-    console.log(CourseID,TraineeID)
+const grantRefund = async (req, res) => {
+    const { CourseID, TraineeID, amount } = req.body
+    console.log(CourseID, TraineeID)
     try {
-        const trainee = await Trainee.updateOne({_id:TraineeID},{Wallet:amount})
+        const trainee = await Trainee.updateOne({ _id: TraineeID }, { Wallet: amount })
         console.log(trainee)
         if (!trainee) {
             return res.status(404).json({ error: 'no trainee found' })
         }
 
-        const request = await RefundRequest.updateOne({CourseID,TraineeID}, {$set: {Status:'Granted'}})
+        const request = await RefundRequest.updateOne({ CourseID, TraineeID }, { $set: { Status: 'Granted' } })
         if (!request) {
             return res.status(404).json({ error: 'no request found' })
         }
 
-        res.status(200).json({trainee,request})
+        res.status(200).json({ trainee, request })
     }
     catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
-const denyRefund = async (req,res) => {
-    const {CourseID,TraineeID} = req.body
-    console.log(CourseID,TraineeID)
+const denyRefund = async (req, res) => {
+    const { CourseID, TraineeID } = req.body
+    console.log(CourseID, TraineeID)
     try {
-        const request = await RefundRequest.updateOne({CourseID,TraineeID}, {$set: {Status:'Denied'}})
+        const request = await RefundRequest.updateOne({ CourseID, TraineeID }, { $set: { Status: 'Denied' } })
         console.log(request)
         if (!request) {
             return res.status(404).json({ error: 'no request found' })
@@ -202,6 +202,44 @@ const denyRefund = async (req,res) => {
     }
     catch (error) {
         res.status(400).json({ error: error.message })
+    }
+}
+
+const viewAllProblems = async (req, res) => {
+    try {
+        const problems = await Problem.find();
+        if (!problems) {
+            return res.status(404).json({ error: "no problems found" });
+        }
+        res.status(200).json(problems);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+const resolveProblem = async (req, res) => {
+    const { problemid } = req.body;
+    try {
+        const problem = await Problem.findByIdAndUpdate(problemid, { $set: { Status: "resolved" } });
+        if (!problem) {
+            return res.status(404).json({ error: "no problem found" });
+        }
+        res.status(200).json(problem);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+const pendProblem = async (req, res) => {
+    const { problemid } = req.body;
+    try {
+        const problem = await Problem.findByIdAndUpdate(problemid, { $set: { Status: "pending" } });
+        if (!problem) {
+            return res.status(404).json({ error: "no problem found" });
+        }
+        res.status(200).json(problem);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -216,5 +254,8 @@ module.exports = {
     grantCourseAccess,
     denyCourseAccess,
     grantRefund,
-    denyRefund
+    denyRefund,
+    viewAllProblems,
+    resolveProblem,
+    pendProblem,
 }

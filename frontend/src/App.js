@@ -14,7 +14,9 @@ import Filter from "./pages/Filter";
 import InstructorCourses from "./pages/InstructorCourses";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
+//import Profile from "./pages/Profile";
+import TraineeProfile from './pages/TraineeProfile'
+import InstructorProfile from './pages/Profile'
 import Contract from "./pages/Contract";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
@@ -38,6 +40,7 @@ import TM from "./pages/TM";
 import AdminPromo from './pages/AdminPromo'
 import AdminAddUser from './pages/AdminAddUser'
 import InstructorCreate from './pages/InstructorCreate'
+import NewCreateCourse from './pages/NewCreateCourse'
 import InstructorCourse from './components/InstructorCourse'
 import ViewRatingsPage from './pages/ViewRatingsPage'
 import Success from "./pages/Success";
@@ -45,6 +48,8 @@ import AdminCorpRequests from './pages/AdminCorpRequests'
 import CorpCourses from './pages/CorpCourses'
 import TraineeRefundRequests from "./pages/TraineeRefundRequests";
 import AdminRefundRequest from "./pages/AdminRefundRequests";
+import AdminProblems from "./pages/AdminProblems"
+import InstructorRatingsPage from "./pages/InstructorRatingsPage";
 function App() {
   return (
     <div className="App">
@@ -71,6 +76,7 @@ function App() {
             <Route path="/corpTraineeCourses" element={<CorpTraineeCourse />} />
             <Route path="/traineerefundrequests" element={<TraineeRefundRequests />} />
             <Route path="/adminrefundrequests" element={<AdminRefundRequest />} />
+            <Route path="/adminproblems" element={<AdminProblems />} />
             <Route
               path="/CorpTraineeMyCourses/course"
               element={<CorpTraineeCoursePage />}
@@ -104,7 +110,6 @@ function App() {
               element={<CorpTraineeMyCourses />}
             />
             <Route path="/createexam" element={<Exam />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/changePassword" element={<ChangePassword />} />{" "}
             <Route path="/viewExamCorp/:examid" element={<ExamCorpTrainee />} />
             <Route
@@ -125,12 +130,20 @@ function App() {
               element={<AdminPromo />}
             />
             <Route
+              path="/instructorprofile"
+              element={<InstructorProfile />}
+            />
+            <Route
+              path="/traineeprofile"
+              element={<TraineeProfile />}
+            />
+            <Route
               path="/adminadduser"
               element={<AdminAddUser />}
             />
             <Route
               path="/instructorcreate"
-              element={<InstructorCreate />}
+              element={<NewCreateCourse />}
             />
             <Route
               path="/instructorcourse/:courseid"
@@ -148,9 +161,10 @@ function App() {
               path="/corpcourses"
               element={<CorpCourses />}
             />
-
-
-
+            <Route
+              path="/myratings"
+              element={<InstructorRatingsPage />}
+            />
           </Routes>
         </div>
       </BrowserRouter>

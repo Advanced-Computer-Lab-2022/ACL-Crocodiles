@@ -1,38 +1,42 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import { createTheme } from '@mui/material';
-import { ThemeProvider } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import logo from '../images/logo.png'
-import { Link, redirect } from 'react-router-dom'
-import NewCountryDD from './NewCountryDD'
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
+import logo from "../images/logo.png";
+import { Link, redirect } from "react-router-dom";
+import NewCountryDD from "./NewCountryDD";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useLogout } from '../hooks/useLogout'
-import PersonIcon from '@mui/icons-material/Person';
+import { useLogout } from "../hooks/useLogout";
+import PersonIcon from "@mui/icons-material/Person";
+import SearchAppBar from "./SearchAppBar";
+import { useDispatch } from "react-redux";
+import { chooseSwipableIsOpen } from "../Features/swipableIsOpen";
 
+const pages = ["Explore", "Filter"];
 
-const pages = ['Explore', 'My Courses', 'Define a Promotion'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const log = ['sign in', 'sign up'];
+const log = ["sign in", "sign up"];
 
-function AdminNav() {
+function GuestNav() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { user } = useAuthContext();
-  const { logout } = useLogout()
+  const dispatch = useDispatch();
+  const { logout } = useLogout();
+
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -40,58 +44,25 @@ function AdminNav() {
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-    console.log(event.currentTarget)
   };
 
   const handleCloseNavMenu = (e) => {
-
-    if (e == 'Explore')
-      navigate('/course');
-    else
-      if (e == 'My Courses' && user)
-        navigate('/MyCourses');
+    if (e == "Explore") navigate("/course");
+    else if (e == "Filter") dispatch(chooseSwipableIsOpen(true));
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (setting) => {
-    console.log(setting)
-    switch(setting){
-        case "Logout": {
-               logout();
-               navigate("/");
-               break;};
-     
-    }
-    setAnchorElUser(null);
-  };
-
-  const promo = () => {
-    navigate('/adminpromo');
-  }
-  const clickUser = () => {
-    navigate('/adminadduser');
-  }
-  const courseRequests = () => {
-    navigate('/admincorprequests');
-  }
-  const refundRequests = () => {
-    navigate('/adminrefundrequests');
-  }
-  const reportedProblems = () => {
-    navigate('/adminproblems');
-  }
 
   const theme = createTheme({
-
     palette: {
       primary: {
-        main: '#ffffff00'
+        main: "#ffffff00",
       },
       secondary: {
-        main: '#A00407'
-      }
-    }
-  })
+        main: "#A00407",
+      },
+    },
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -107,6 +78,7 @@ function AdminNav() {
             <Link to="/">
               <img src={logo} alt="logo" style={{ maxWidth: 160 }} />
             </Link>
+            <SearchAppBar />
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -148,45 +120,12 @@ function AdminNav() {
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <Button
-                onClick={clickUser}
+                onClick={() => handleCloseNavMenu("Explore")}
                 color="secondary"
                 sx={{ my: 2, display: "block" }}
               >
-                {"Create A User"}
+                {"Explore"}
               </Button>
-     
-              
-                <Button
-                  onClick={ promo}
-                  color="secondary"
-                  sx={{ my: 2, display: "block" }}
-                >
-                  {"Define a promotion"}
-                </Button>
-
-                <Button
-                onClick={courseRequests}
-                color='secondary'
-                sx={{ my: 2, display: 'block' }}
-              >
-                {'Course Requests'}
-              </Button>
-              <Button
-                onClick={refundRequests}
-                color='secondary'
-                sx={{ my: 2, display: 'block' }}
-              >
-                {'Refund Requests'}
-              </Button>
-
-              <Button
-                onClick={reportedProblems}
-                color='secondary'
-                sx={{ my: 2, display: 'block' }}
-              >
-                {'Reported Problems'}
-              </Button>
-
 
             </Box>
 
@@ -203,31 +142,7 @@ function AdminNav() {
                     </Avatar>
                   </IconButton>
                 </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem
-                      key={setting}
-                      onClick={() => handleCloseUserMenu(setting)}
-                    >
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
+    
               </Box>
             ) : (
               <Box
@@ -261,4 +176,4 @@ function AdminNav() {
     </ThemeProvider>
   );
 }
-export default AdminNav;
+export default GuestNav;

@@ -14,6 +14,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import Stack from "@mui/material/Stack";
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper';
+import { Alert } from "@mui/material";
 
 
 const AdminNewUserForm = () => {
@@ -23,6 +24,7 @@ const AdminNewUserForm = () => {
     const [Email, setEmail] = useState('')
     const [userType, setUserType] = useState('')
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(null)
     const PaperStyle = {padding:20 ,height:'65vh',width:280,margin:'20px auto'}
 
     const handleSubmit = async (e) => {
@@ -39,8 +41,10 @@ const AdminNewUserForm = () => {
             console.log(json)
             if (!response.ok) {
                 setError(json.error)
+                setSuccess(null)
             }
             if (response.ok) {
+                setSuccess('Admin created successfully')
                 setUsername('')
                 setEmail('')
                 setPassword('')
@@ -59,8 +63,10 @@ const AdminNewUserForm = () => {
             console.log(json)
             if (!response.ok) {
                 setError(json.error)
+                setSuccess(null)
             }
             if (response.ok) {
+                setSuccess('Instructor created successfully')
                 setUsername('')
                 setEmail('')
                 setPassword('')
@@ -79,8 +85,10 @@ const AdminNewUserForm = () => {
             console.log(json)
             if (!response.ok) {
                 setError(json.error)
+                setSuccess(null)
             }
             if (response.ok) {
+                setSuccess('Corporate Trainee created successfully')
                 setUsername('')
                 setEmail('')
                 setPassword('')
@@ -135,6 +143,8 @@ const AdminNewUserForm = () => {
         </Select>
         </FormControl>
         <Button variant="contained" onClick={handleSubmit} >Create User</Button>
+        {error && <Alert severity="error">{error}</Alert>}
+        {success && <Alert severity="success">{success}</Alert>}
         </Stack>
         </Paper>
      </Grid>
