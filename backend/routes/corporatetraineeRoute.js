@@ -19,6 +19,8 @@ const {
     rateInstructor,
     checkRatingCorp,
     checkRatingCorpInstructor,
+    getMyProblems,
+    addProblemComment,
 } = require('../controllers/corporatetraineeController')
 
 
@@ -42,7 +44,8 @@ router.post('/page/rateCourse', rateCourse)
 router.post('/page/rateInstructor', rateInstructor)
 router.get('/page/checkRatingTrainee/:courseID', checkRatingCorp)
 router.get('/page/checkRatingTraineeInstructor/:instructorID', checkRatingCorpInstructor)
-
+router.get('/page/getMyProblems', getMyProblems)
+router.post('/page/addProblemComment', addProblemComment)
 
 
 

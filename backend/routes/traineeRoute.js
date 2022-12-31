@@ -37,7 +37,9 @@ const {
     checkRatingTraineeInstructor,
     requestRefund,
     getrefundrequests,
-    checkRequest
+    checkRequest,
+    getMyProblems,
+    addProblemComment,
 
 } = require("../controllers/traineeController");
 
@@ -90,6 +92,8 @@ router.post("/page/requestrefund", requestRefund)
 router.get("/page/getrefundrequests", getrefundrequests)
 router.post("/page/checkrequest", checkRequest)
 router.get('/page/checkRatingTraineeInstructor/:instructorID', checkRatingTraineeInstructor)
+router.get('/page/getMyProblems', getMyProblems)
+router.post('/page/addProblemComment', addProblemComment)
 
 module.exports = router
 

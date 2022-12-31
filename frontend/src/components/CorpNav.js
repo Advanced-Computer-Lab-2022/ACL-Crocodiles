@@ -27,7 +27,7 @@ import { useDispatch } from "react-redux";
 import { chooseSwipableIsOpen } from "../Features/swipableIsOpen";
 
 const pages = ["Explore", "My Courses", "Filter"];
-const settings = ["Profile", "Account", "Logout"];
+const settings = ["Profile", "Problems", "Logout"];
 const log = ["sign in", "sign up"];
 
 function TraineeNavBar() {
@@ -63,6 +63,10 @@ function TraineeNavBar() {
       case "Profile": {
         if (user.Type === "trainee") navigate("/traineeprofile");
         else navigate("/instructorprofile");
+        break;
+      }
+      case "Problems": {
+        navigate("/myproblems");
         break;
       }
     }

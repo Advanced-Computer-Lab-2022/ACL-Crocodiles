@@ -28,7 +28,7 @@ import { chooseSwipableIsOpen } from "../Features/swipableIsOpen";
 
 
 const pages = ['Explore', 'My Courses','Define a Promotion'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Problems', 'Logout'];
 const log = ['sign in', 'sign up'];
 
 function InstructorNav() {
@@ -63,6 +63,9 @@ function InstructorNav() {
                logout();
                navigate("/");
                break;};
+        case "Problems": {
+            navigate("/myproblems");
+            break;};
      
     }
     setAnchorElUser(null);

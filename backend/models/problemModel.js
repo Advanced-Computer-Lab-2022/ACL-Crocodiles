@@ -38,7 +38,10 @@ const problemSchema = new Schema({
         enum: ['unseen', 'pending', 'resolved'],
         default: 'unseen',
         required: true,
-    }
+    },
+    Comments: [{
+        type: String,
+    }]
 
 
 
