@@ -40,7 +40,7 @@ const ForgotPassword = async (req, res) => {
 
     var mailOptions = {
         from: 'aclcrocodiles@outlook.com',
-        to: 'karimouf00@gmail.com',
+        to: Email,
         subject: 'Changing password',
         text: link
     };

@@ -84,6 +84,7 @@ const Profile = () => {
             })
             const json1 = await response2.json()
             if (response2.ok) {
+                console.log("qw")
                 console.log(json1)
                 setAmount(json1)
 

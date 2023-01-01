@@ -23,6 +23,7 @@ const {
     reportProblem,
     initiateCourse,
     getMyRatings,
+    getFlag
   
 } = require('../controllers/instructorController')
 
@@ -41,6 +42,7 @@ router.get('/insdetails',getInsDetails)
 router.post('/editinsinfo', EditInstructorinfo)
 router.post('/getcoursebyid', searchCourse)
 router.post('/setflag', setFlag)
+router.get('/getflag', getFlag)
 //router.post('/search', Search)
 router.get('/owedpermonth', owedPermonth)
 router.post('/viewExam', viewExams)

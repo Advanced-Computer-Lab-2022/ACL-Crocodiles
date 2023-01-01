@@ -7,6 +7,8 @@ const Problem = require('../models/problemModel')
 const courseRatingModel = require('../models/ratingAndReviewModel').courseRatingModel
 const instructorRatingModel = require('../models/ratingAndReviewModel').instructorRatingModel
 const Instructor = require('../models/instructorModel')
+const User = require('../models/userModel')
+const bcrypt = require('bcrypt')
 
 const viewAllCourses = async (req,res) => {
     try {
@@ -395,6 +397,76 @@ const checkRatingCorpInstructor = async(req,res) => {
     }
   }
 
+  const setFlag = async(req,res) => {
+    const{Flag} = req.body
+    console.log(req.body)
+    const {id} = req.user
+    try{
+        const user = await User.findByIdAndUpdate(id,{Flag})
+        console.log(user)
+        if(!user){
+            res.status(400).json({error: 'no user'})
+        }
+       // res.send(user.Flag) 
+
+    }catch(error){
+        console.log(error)
+    }
+}
+
+const EditCorpinfo = async(req,res) => {
+    const {Firstname,Lastname,Gender,Password,Flag} = req.body
+    const {id} = req.user
+
+    try{
+
+    if(!Firstname){
+        return res.status(400).json({ error: 'must enter Firstname' })
+    }
+    if(!Lastname){
+        return res.status(400).json({ error: 'must enter Lastname' })
+    }
+    if(!Password){
+        return res.status(400).json({ error: 'must change password' })
+    }
+    if(!Gender){
+        return res.status(400).json({ error: 'must enter gender' })
+    }
+    const corp = await CorpTrainee.findByIdAndUpdate(id,{Firstname,Lastname,Gender})
+    if(!corp){
+        return res.status(404).json({ error: 'user not found 1' })
+    }
+    const salt = await bcrypt.genSalt(10)
+    let hash = await bcrypt.hash(Password, salt)
+    const user = await User.updateOne({_id:id},{Password:hash,Flag})
+    if(!user){
+        return res.status(404).json({ error: 'user not found 2' })
+    }
+    console.log(user)
+    res.status(200).json('edited')
+    }catch(error){
+        res.status(401).json({error:error})
+        console.log(error)
+
+    }}
+
+const getFlag = async (req,res) => {
+    const {id} = req.user
+    try {
+        const flag = await User.findOne({_id:id})
+        console.log(flag)   
+        if(flag.Flag === 'true'){
+            return res.status(200).json({flag:true})
+        }
+        else{
+            return res.status(200).json({flag:false})
+        }
+  
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     searchCourse,
     viewAllCourses,
@@ -413,4 +485,7 @@ module.exports = {
     checkRatingCorp,
     rateInstructor,
     checkRatingCorpInstructor,
+    setFlag,
+    getFlag,
+    EditCorpinfo
 }

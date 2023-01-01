@@ -171,12 +171,12 @@ const PreviewCourse = () => {
             {course && course.coursedetails.PreviewVideo && <iframe width= "800px" height= "450px"src={course.coursedetails.PreviewVideo}></iframe>}
             {(!course || !course.coursedetails || !course.coursedetails.PreviewVideo) && <Skeleton variant="rectangular" width="800px" height="450px"/>}
         </Paper>
-        <Typography variant="h5"  sx={{color:'black' ,margin:"50px 50px"}} align='left'>
+        <Typography variant="h5"  sx={{color:'black' , margin:"auto 80px"}} align='left'>
         Course Content
         </Typography>
         <Stack direction='row'>
         
-        <Grid sx={{ width:600 ,margin:"-40px 75px" ,border: "2px solid #a00407"  , borderRadius: '7px'}}>
+        <Grid sx={{ width:600 ,margin:"0px 65px" ,border: "2px solid #a00407"  , borderRadius: '7px'}}>
         
         {course && course.coursedetails.Subtitle && course.coursedetails.Subtitle.map((subtitle) => (
                <Accordion >
