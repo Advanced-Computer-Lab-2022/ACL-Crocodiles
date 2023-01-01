@@ -256,12 +256,11 @@ const NewCourseCard = ({ user, Course, redirect }) => {
         Request Refund
       </Button>}
 
-      <Button variant="contained" onClick={handleOpenProblem} sx={{ margin: 'auto auto' }}>
+      <Button variant="contained" onClick={handleOpenProblem} sx={{ margin: '10px', "background-image": "linear-gradient(52deg, #A00407, #ff5659)" }}>
         Report a Problem
       </Button>
-    </Stack>
-      </Card >
-    </div >
+    </Card>
+
 
   );
 };
