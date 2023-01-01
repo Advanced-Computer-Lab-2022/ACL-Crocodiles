@@ -50,6 +50,7 @@ import TraineeRefundRequests from "./pages/TraineeRefundRequests";
 import AdminRefundRequest from "./pages/AdminRefundRequests";
 import AdminProblems from "./pages/AdminProblems"
 import InstructorRatingsPage from "./pages/InstructorRatingsPage";
+import ViewMyProblems from "./pages/ViewMyProblems";
 function App() {
   return (
     <div className="App">
@@ -164,6 +165,10 @@ function App() {
             <Route
               path="/myratings"
               element={<InstructorRatingsPage />}
+            />
+            <Route
+              path="/myproblems"
+              element={<ViewMyProblems />}
             />
           </Routes>
         </div>

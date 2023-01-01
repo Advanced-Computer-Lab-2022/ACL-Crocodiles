@@ -23,6 +23,8 @@ const {
     reportProblem,
     initiateCourse,
     getMyRatings,
+    getMyProblems,
+    addProblemComment,
     getFlag
   
 } = require('../controllers/instructorController')
@@ -58,6 +60,8 @@ router.get('/getmysubtitles/:courseid', getMySubtitles)
 router.post('/initiateCourse/', initiateCourse)
 router.post('/reportProblem', reportProblem)
 router.get('/getmyratings', getMyRatings)
+router.get('/getMyProblems', getMyProblems)
+router.post('/addProblemComment', addProblemComment)
 
 
 module.exports = router

@@ -13,6 +13,7 @@ const AdminViewProblem = ({Problem}) => {
     const [success, setSuccess] = useState(null);
     const [disabled, setDisabled] = useState(true);
     const [disabled2, setDisabled2] = useState(false);
+    const [problemComments, setProblemComments] = useState(Problem.Comments);
 
     useEffect(() => {
         if (problemStatus === "unseen") {
@@ -90,7 +91,7 @@ const AdminViewProblem = ({Problem}) => {
                       fontFamily: "Poppins",}}>
                 {courseTitle}
             </Typography>
-            <Box sx={{ minHeight:'180px', minWidth:'350px', backgroundColor:"#dddddd", padding:'8px', borderRadius:'2px',
+            <Box sx={{ minHeight:'180px', width:'350px', backgroundColor:"#dddddd", padding:'8px', borderRadius:'2px',
                 display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'column', 
             }}>
             <Typography variant="h5">
@@ -104,6 +105,18 @@ const AdminViewProblem = ({Problem}) => {
                 {problemDescription}
             </Typography>
             </Box>
+            {problemComments && problemComments.length > 0 &&
+                <Stack direction="column" spacing={1} >
+                <Typography variant="h6" > Follow-up comments: </Typography>
+                {problemComments.map((comment) => (
+                    <Box sx={{ minHeight:'50px', minWidth:'350px', backgroundColor:"#d0d0d0", padding:'8px', borderRadius:'2px',
+                    display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'column', 
+                }}> 
+                    <Typography variant="body1"> {comment} </Typography>
+                    </Box>
+                ))}
+            </Stack>
+            }
             {problemStatus!=="resolved" &&
             <Stack direction="row" spacing={3} alignSelf='center'>
                 <Button onClick={handleResolve} variant="contained" disabled={disabled2} sx={{backgroundColor:"#19B125"}}>Mark as resolved</Button>

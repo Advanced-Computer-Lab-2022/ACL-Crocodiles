@@ -27,7 +27,7 @@ import { useDispatch } from "react-redux";
 import { chooseSwipableIsOpen } from "../Features/swipableIsOpen";
 
 const pages = ["Explore", "My Courses", "Filter"];
-const settings = ["Profile", "Account", "Logout"];
+const settings = ["Profile", "Problems", "My Requests","Logout"];
 const log = ["sign in", "sign up"];
 
 function TraineeNavBar() {
@@ -68,8 +68,12 @@ function TraineeNavBar() {
           navigate('/instructorprofile');
         break;
       };
-      case "My Requests":
+      case "My Requests":{
         navigate('/traineerefundrequests');
+        break;};
+      case "Problems":{
+        navigate('/myproblems');
+        break;};
 
     }
     setAnchorElUser(null);

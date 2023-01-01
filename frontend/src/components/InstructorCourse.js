@@ -6,6 +6,7 @@ import InstCourseDetails from "./InstructorCourseComp/InstCourseDetails";
 import InstCourseVideo from "./InstructorCourseComp/InstCourseVideo";
 import NewDefineDiscount from "./InstructorCourseComp/NewDefineDiscount";
 import InstSubtitles from "./InstructorCourseComp/InstSubtitles";
+import ReportProblem from "../components/ReportProblem";
 
 const InstructorCourse = () => {
     const [course, setCourse] = useState(null);
@@ -48,7 +49,10 @@ const InstructorCourse = () => {
         {course && <InstCourseVideo Video={course.PreviewVideo}/>}
         {course && <InstSubtitles Subtitles={course.Subtitle}/>}
         </Stack>
+        <Stack direction="column" spacing={2}>
         {course && <NewDefineDiscount/>}
+        {courseid && <ReportProblem courseid={courseid}/>}
+        </Stack>
         </Stack>
         </Box>
     );

@@ -19,6 +19,8 @@ const {
     rateInstructor,
     checkRatingCorp,
     checkRatingCorpInstructor,
+    getMyProblems,
+    addProblemComment,
     setFlag,
     EditCorpinfo,
     getFlag
@@ -48,7 +50,8 @@ router.get('/page/getflag',getFlag)
 router.post('/page/editcorpinfo',EditCorpinfo)
 router.get('/page/checkRatingTrainee/:courseID', checkRatingCorp)
 router.get('/page/checkRatingTraineeInstructor/:instructorID', checkRatingCorpInstructor)
-
+router.get('/page/getMyProblems', getMyProblems)
+router.post('/page/addProblemComment', addProblemComment)
 
 
 

@@ -467,6 +467,36 @@ const getFlag = async (req,res) => {
     }
 }
 
+  const getMyProblems = async (req, res) => {
+    const id = req.user
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        const problems = await Problem.find({ submitter_id: id })
+        res.status(200).json(problems)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const addProblemComment = async (req, res) => {
+    const { problemID, comment } = req.body
+    const id = req.user
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'no such user id' })
+    }
+    if (!mongoose.Types.ObjectId.isValid(problemID)) {
+        return res.status(404).json({ error: 'no such problem id' })
+    }
+    try {
+        const problem = await Problem.findByIdAndUpdate(problemID,{ $push: { Comments: comment } })
+        res.status(200).json(problem)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 module.exports = {
     searchCourse,
     viewAllCourses,
@@ -487,5 +517,7 @@ module.exports = {
     checkRatingCorpInstructor,
     setFlag,
     getFlag,
-    EditCorpinfo
+    EditCorpinfo,
+    getMyProblems,
+    addProblemComment,
 }

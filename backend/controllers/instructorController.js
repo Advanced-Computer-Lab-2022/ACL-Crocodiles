@@ -504,6 +504,7 @@ const initiateCourse = async(req,res) => {
 
 const getMyRatings = async (req, res) => {
     const id = req.user
+    console.log("Instructor id iss:: ")
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'no such id' })
     }
@@ -511,6 +512,39 @@ const getMyRatings = async (req, res) => {
         const ratings = await instructorRatingModel.find({ InstructorId: id })
         console.log(ratings)
         res.status(200).json(ratings)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const getMyProblems = async (req, res) => {
+    const id = req.user
+    console.log(id)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'no such id' })
+    }
+    try {
+        const problems = await Problem.find({ submitter_id: id })
+        res.status(200).json(problems)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const addProblemComment = async (req, res) => {
+    const { problemID, comment } = req.body
+    const id = req.user
+    console.log(problemID)
+    console.log(comment)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'no such user id' })
+    }
+    if (!mongoose.Types.ObjectId.isValid(problemID)) {
+        return res.status(404).json({ error: 'no such problem id' })
+    }
+    try {
+        const problem = await Problem.findByIdAndUpdate(problemID,{ $push: { Comments: comment }})
+        res.status(200).json(problem)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -539,5 +573,7 @@ module.exports = {
     reportProblem,
     initiateCourse,
     getMyRatings,
+    getMyProblems,
+    addProblemComment,
     getFlag
 }
