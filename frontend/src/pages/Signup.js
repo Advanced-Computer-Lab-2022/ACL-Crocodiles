@@ -11,30 +11,28 @@ import { TextField } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-//import FormControl from '@mui/material/FormControl';
-//import FormLabel from '@mui/material/FormLabel';
 
 const Signup = () => {
-  const [Username, setUsername] = useState('')
-  const [Email, setEmail] = useState('')
-  const [Firstname, setFirstname] = useState('')
-  const [Lastname, setLastname] = useState('')
-  const [Password, setPassword] = useState('')
-  const [Gender, setGender] = useState('')
-  const { signup, error, isLoading } = useSignup()
-  let checkbox = true
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    console.log(Username, Email, Password, Firstname, Lastname, Gender)
-    await signup(Username, Email, Password, Firstname, Lastname, Gender)
-  }
-
-  const Paper1Style = { height: '100vh', width: 400, margin: '20px -200px', padding: 10 }
-  const Paper2Style = { height: '100vh', width: 400, margin: '20px 200px', padding: 10 }
-  const h4 = { margin: '4px' }
-  return (
-
-    <Grid container rowSpacing={0} >
+    const[Username,setUsername] = useState('')
+    const[Email,setEmail] = useState('')
+    const[Firstname,setFirstname] = useState('')
+    const[Lastname,setLastname] = useState('')
+    const[Password,setPassword] = useState('')
+    const[Gender,setGender] = useState('')
+    const {signup,error,isLoading} = useSignup()
+    let checkbox = true
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+       console.log(Username,Email,Password,Firstname,Lastname,Gender)
+        await signup(Username,Email,Password,Firstname,Lastname,Gender)
+    }
+    
+    const Paper1Style={height:'100vh' ,width:400,margin:'20px -200px',padding:10}
+    const Paper2Style={height:'100vh' ,width:400,margin:'20px 200px',padding:10}
+    const h4 ={margin:'4px'}
+        return(
+        
+       <Grid container rowSpacing={0} >
 
       <Paper elevation={5} style={Paper2Style}>
         <h2>Why join us?</h2>

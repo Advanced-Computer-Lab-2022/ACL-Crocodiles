@@ -135,9 +135,7 @@ const grantCourseAccess = async (req, res) => {
     const { CourseID, TraineeID } = req.body
     console.log(CourseID, TraineeID)
     try {
-        const trainee = await CorporateTrainee.findById(TraineeID)
-        trainee.My_courses.push(CourseID)
-        await trainee.save()
+        const trainee = await CorporateTrainee.findByIdAndUpdate(TraineeID, {$push: {My_courses: CourseID}})
         console.log(trainee)
         if (!trainee) {
             return res.status(404).json({ error: 'no trainee found' })
@@ -215,7 +213,33 @@ const viewAllProblems = async (req, res) => {
         }
         res.status(200).json(problems);
     } catch (error) {
-        res.status(400).json({ error: "error" });
+        res.status(400).json({ error: error.message });
+    }
+}
+
+const resolveProblem = async (req, res) => {
+    const { problemid } = req.body;
+    try {
+        const problem = await Problem.findByIdAndUpdate(problemid, { $set: { Status: "resolved" } });
+        if (!problem) {
+            return res.status(404).json({ error: "no problem found" });
+        }
+        res.status(200).json(problem);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+const pendProblem = async (req, res) => {
+    const { problemid } = req.body;
+    try {
+        const problem = await Problem.findByIdAndUpdate(problemid, { $set: { Status: "pending" } });
+        if (!problem) {
+            return res.status(404).json({ error: "no problem found" });
+        }
+        res.status(200).json(problem);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -231,5 +255,7 @@ module.exports = {
     denyCourseAccess,
     grantRefund,
     denyRefund,
-    viewAllProblems
+    viewAllProblems,
+    resolveProblem,
+    pendProblem,
 }

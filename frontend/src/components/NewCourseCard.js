@@ -27,7 +27,7 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 import LinearWithLabel from "./LinearProgressWithLabel";
 import { useEffect, useState } from "react";
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { useAuthContext } from "../hooks/useAuthContext"; import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 
@@ -159,147 +159,109 @@ const NewCourseCard = ({ user, Course, redirect }) => {
   }
 
   return (
-    <div>
-      <Dialog
-        fullWidth
-        fullScreen={fullScreen}
-        open={Open}
-        aria-labelledby="responsive-dialog-title">
-        <Stack spacing={3}>
-          <DialogTitle marginBottom='-5px'>
-            Report Problem
-          </DialogTitle>
-          <DialogContent margin='5px '>
-            <Stack spacing={1} >
-
-              <TextField
-                id="standard-password-input"
-                label="Title"
-                type="text"
-                variant="standard"
-                required
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-              />
-              <TextField
-                id="standard-password-input"
-                label="Desription"
-                type="text"
-                variant="standard"
-                required
-                onChange={(e) => setDescription(e.target.value)}
-                value={description}
-                fullWidth
-              />
-
-              {error && <Alert severity="error">{error}</Alert>}
-            </Stack>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleProblem} autoFocus>
-              Confirm
-            </Button>
-          </DialogActions>
-        </Stack>
-      </Dialog>
-
-      <Card
-        sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          flex: "1",
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        flex: "1",
+      }}
+    >
+      <CardActionArea
+        onClick={() => {
+          window.location.href = redirect;
         }}
       >
-        <CardActionArea
-          onClick={() => {
-            window.location.href = redirect;
-          }}
+        <CardMedia
+          component="img"
+          height="180"
+          image={bgImage}
+          alt="course photo"
+        />
+        <CardContent
+          sx={{ display: "flex", flexDirection: "column", flex: "1" }}
         >
-          <CardMedia
-            component="img"
-            height="180"
-            image={bgImage}
-            alt="course photo"
-          />
-          <CardContent
+          <Typography gutterBottom variant="h5" component="div" sx={{
+            "background-image":
+              "linear-gradient(52deg, #A00407, #ff5659)",
+            "-webkit-background-clip": "text",
+            "-webkit-text-fill-color": "#ff000000",
+            fontSize: "2rem",
+            fontFamily: "Poppins",
+          }}>
+            {Course.Title}
+          </Typography>
+
+          <Box
+            marginBottom={"1.35em"}
             sx={{ display: "flex", flexDirection: "column", flex: "1" }}
           >
-            <Stack direction="row" spacing={20}>
-              <Typography gutterBottom variant="h5" component="div">
-                {Course.Title}
-              </Typography>
-
-            </Stack>
-            <Box
+            <Typography
+              variant="body2"
+              color="text.secondary"
               marginBottom={"1.35em"}
-              sx={{ display: "flex", flexDirection: "column", flex: "1" }}
+              sx={{
+                height: "40px",
+                display: "-webkit-box",
+                wordBreak: "break-word",
+                overflow: "hidden",
+                "-webkit-line-clamp": "2",
+                "-webkit-box-orient": "vertical",
+              }}
             >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                marginBottom={"1.35em"}
-                sx={{
-                  height: "40px",
-                  display: "-webkit-box",
-                  wordBreak: "break-word",
-                  overflow: "hidden",
-                  "-webkit-line-clamp": "2",
-                  "-webkit-box-orient": "vertical",
-                }}
-              >
-                {Course.Summary}
-              </Typography>
-            </Box>
+              {Course.Summary}
+            </Typography>
+          </Box>
 
-            <Grid container alignItems="center">
-              <Grid item xs={4}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center">
-                      <Grid item>
-                        <Typography
-                          sx={{ alignItems: "center", lineHeight: "0.5" }}
-                        >
-                          {<GradeTwoToneIcon sx={{ color: "rgb(233 176 0)" }} />}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography
-                          variant="body2"
-                          color="Black"
-                          fontWeight={700}
-                          sx={{ alignItems: "center" }}
-                        >
-                          &nbsp;{Math.round(Course.Rating * 10) / 10}
-                        </Typography>
-                      </Grid>
+          <Grid container alignItems="center">
+            <Grid item xs={4}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Grid container alignItems="center">
+                    <Grid item>
+                      <Typography
+                        sx={{ alignItems: "center", lineHeight: "0.5" }}
+                      >
+                        {<GradeTwoToneIcon sx={{ color: "rgb(233 176 0)" }} />}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography
+                        variant="body2"
+                        color="Black"
+                        fontWeight={700}
+                        sx={{ alignItems: "center" }}
+                      >
+                        &nbsp;{Math.round(Course.Rating * 10) / 10}
+                      </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="body2" color="text.secondary">
-                      &nbsp;{Course.Hours} hrs
-                    </Typography>
-                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="body2" color="text.secondary">
+                    &nbsp;{Course.Hours} hrs
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
-          </CardContent>
+          </Grid>
+        </CardContent>
 
-          {progressReady && <LinearWithLabel progress={progress} />}
+        {progressReady && <LinearWithLabel progress={progress} />}
 
-        </CardActionArea>
-        <Stack direction={"row"}>
-          {refundrequest && progress <= 50 && <Button variant="contained" onClick={requestRefund} sx={{ margin: 'auto auto' }}>
-            Request Refund
-          </Button>}
+      </CardActionArea>
 
-          <Button variant="contained" onClick={handleOpenProblem} sx={{ margin: 'auto auto' }}>
-            Report a Problem
-          </Button>
-        </Stack>
-      </Card>
-    </div>
+      {refundrequest && progress <= 50 && user && user.Type === "Trainee" && <Button variant="contained"
+        onClick={requestRefund} sx={{ margin: '10px', "background-image": "linear-gradient(52deg, #A00407, #ff5659)" }}>
+        Request Refund
+      </Button>}
+
+      <Button variant="contained" onClick={handleOpenProblem} sx={{ margin: 'auto auto' }}>
+        Report a Problem
+      </Button>
+    </Stack>
+      </Card >
+    </div >
 
   );
 };

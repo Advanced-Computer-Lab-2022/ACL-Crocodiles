@@ -22,7 +22,7 @@ const InstructorCourses = () => {
             )
             
             const json = await response.json()
-           
+           console.log("Instructor courses using /api/Instructor aree :::>>  "+json)
             if(response.ok){
                 setCourses(json)
             }

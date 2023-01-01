@@ -1,20 +1,21 @@
 import { Alert, Box, CircularProgress, Stack } from '@mui/material';
 import {useEffect, useState} from 'react'
-import { useParams } from "react-router-dom";
 import RatingAndReviewCard from '../components/RatingAndReviewCard';
+import { useAuthContext } from '../hooks/useAuthContext';
 
-const ViewRatingsPage = () => {
+const InstructorRatingsPage = () => {
+    const {user} = useAuthContext();
     const [ratings, setRatings] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const {courseid} = useParams();
 
     useEffect(() => {
         const getRatings = async () => {
-            const response = await fetch('/api/guest/viewratingandreviews/' + courseid, {
+            const response = await fetch('/api/instructor/getmyratings', {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
                 }
                 })
             const json = await response.json();
@@ -30,7 +31,7 @@ const ViewRatingsPage = () => {
             setLoading(false);
         }
             getRatings();
-    },[courseid]);
+    },[user]);
 
     return (
         <Box sx={{margin:"16px", padding:"16px", width:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -44,4 +45,4 @@ const ViewRatingsPage = () => {
         </Box>
     );
 }
-export default ViewRatingsPage;
+export default InstructorRatingsPage;

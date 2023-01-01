@@ -1,4 +1,4 @@
-import { Grid, Typography, Link } from "@mui/material";
+import { Grid, Typography, Link, Rating, Stack } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import NewCourseCardViewAll from "../components/NewCourseCardViewAll";
 import NewCourseCard from "../components/NewCourseCard";
 import { Alert, Button } from "@mui/material";
-
+import {useNavigate} from "react-router-dom";
 import { useState, useEffect } from "react";
 var settings = {
   dots: true,
@@ -20,12 +20,27 @@ var settings = {
   autoplay: true,
   autoplaySpeed: 2500,
 };
-const GuestHome = () => {
-  const [alert, setAlert] = useState(null);
-  const [popularCourses, setPopularCourses] = useState(null);
-  const [myCourses, setMyCourses] = useState(null);
+const InstructorHome = () => {
+    const {user} = useAuthContext();
+    const navigate = useNavigate();
+    const [alert, setAlert] = useState(null);
+    const [popularCourses, setPopularCourses] = useState(null);
+    const [rating, setRating] = useState(0);
+    const [ratingCount, setRatingCount] = useState(0);
 
   useEffect(() => {
+    const getRating = async () => {
+        const response = await fetch("/api/instructor/getRating", {
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                'Authorization': `Bearer ${user.token}`
+            },
+        });
+        const json = await response.json();
+        setRating(json.Rating);
+        setRatingCount(json.RatingCount);
+    }
     fetch("/api/guest/getMostPopularCourses", {
       method: "GET",
       headers: {
@@ -38,9 +53,14 @@ const GuestHome = () => {
       .catch((error) => {
         setAlert(error.message);
       });
+    getRating();
 
+  }, [user]);
 
-  }, []);
+  const handleViewRating =(e) => {
+    e.preventDefault();
+    navigate('/myratings');
+  }
 
   return (
     <div style={{ backgroundColor: "white", margin: "-20px" }}>
@@ -64,19 +84,39 @@ const GuestHome = () => {
                     }}
                     variant="h1"
                   >
-                    Join us now!
+                    Welcome Back,
                   </Typography>
-                  <Typography
+                  {user && <Typography
                     sx={{
-                      fontSize: "5rem",
                       textTransform: "capitalize",
                       fontFamily: "Poppins",
                       fontSize: "3rem",
                     }}
                     variant="h2"
                   >
-              
-                  </Typography>
+                    {user.Username}
+                  </Typography>}
+                  <Box sx={{alignItems:'center', justifyContent:'center',display:'flex',flexDirection:'column',width:'140px'}}>
+                  <Button onClick={handleViewRating}>
+                  <Rating name="read-only" value={rating} readOnly precision={0.1}/>
+                    </Button>
+                    <Typography
+                    sx={{
+                      textTransform: "capitalize",
+                      fontFamily: "Poppins",
+                      fontSize: "3rem",
+                    }}
+                    variant="h2"
+                  >
+                    {Math.round(rating * 10) / 10}
+                    </Typography>
+                    <Stack direction="row" spacing={0.5} padding='0px'>
+                    <Typography variant="body1" sx={{fontFamily: "Poppins", fontSize:'0.8rem'}}>
+                        Out of 
+                    </Typography>
+                    <Typography variant="body1" sx={{fontFamily: "Poppins", fontSize:'0.8rem', fontWeight:'bold'}}> {ratingCount} reviews</Typography>
+                    </Stack>
+                    </Box>
                 </Box>
 
             </Grid>
@@ -153,4 +193,4 @@ const GuestHome = () => {
   );
 };
 
-export default GuestHome;
+export default InstructorHome;

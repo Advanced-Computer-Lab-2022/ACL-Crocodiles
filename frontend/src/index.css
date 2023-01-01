@@ -191,3 +191,13 @@ div.error {
 .slick-slider {
   width: 300px !important;
 }
+
+.pgntn {
+  margin-top:50px
+}
+.pgntn ul{
+  justify-content:center;
+}
+.preveiw {
+  width:200px
+}

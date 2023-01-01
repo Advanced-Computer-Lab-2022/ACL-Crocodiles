@@ -12,7 +12,9 @@ const {
    denyCourseAccess,
    grantRefund,
    denyRefund,
-   viewAllProblems
+   viewAllProblems,
+   resolveProblem,
+   pendProblem,
 } = require('../controllers/adminController')
 
 const router = express.Router()
@@ -42,5 +44,9 @@ router.post('/grantcourseaccess', grantCourseAccess)
 router.post('/denycourseaccess', denyCourseAccess)
 
 router.post('/denyrefund', denyRefund)
+
+router.post('/resolveproblem', resolveProblem)
+
+router.post('/pendproblem', pendProblem)
 
 module.exports = router

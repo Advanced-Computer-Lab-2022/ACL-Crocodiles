@@ -1,4 +1,4 @@
-import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,AccordionDetails,Divider,Button, Alert} from "@mui/material"
+import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,AccordionDetails,Divider,Button, Alert, Skeleton} from "@mui/material"
 
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
@@ -47,6 +47,9 @@ const PreviewCourse = () => {
             }
             else {
                 setType(true)
+            }
+            if(user && user.Type === 'Corporate'){
+                setCorp(true)
             }
             
         const fetchCourseDetails = async () => {
@@ -126,6 +129,11 @@ const PreviewCourse = () => {
         }
     }
 
+    const viewRatings = async (e) =>{
+        e.preventDefault()
+        navigate("/viewratings/"+course.coursedetails._id)
+    }
+
 
     return(
         <Box>
@@ -146,17 +154,26 @@ const PreviewCourse = () => {
         </Typography>
         <Stack direction="row">
         <Typography component="legend" variant='body' sx={{color:'yellow'}}>{course && course.Rating} </Typography>
+        <Button variant="text" onClick={viewRatings}>
         <Rating name="read-only" value={course && course.coursedetails.Rating} readOnly /> 
+        </Button>
         </Stack>
         <Typography variant="body" gutterBottom sx={{color:'black' ,margin:"0,200px"}} align='center'>
         Author: {course && course.instructordetails && course.instructordetails.Firstname}  {course && course.instructordetails && course.instructordetails.Lastname}
         </Typography>
         </Grid>
         </Container>
-        <Typography variant="h5"  sx={{color:'black' ,margin:"50px 100px"}} align='left'>
+        <Stack direction="column" spacing = {2}>
+        <Paper elevation={0} sx={{alignItems:"center",display:"flex",flexDirection:'column',alignSelf:"center",width:"900px" ,border: "2px solid #a00407" , borderRadius: '7px', margin:"20px", padding:"20px"}}>
+        <Typography variant="h4">Preview Video</Typography>
+            {course && course.coursedetails.PreviewVideo && <iframe width= "800px" height= "450px"src={course.coursedetails.PreviewVideo}></iframe>}
+            {(!course || !course.coursedetails || !course.coursedetails.PreviewVideo) && <Skeleton variant="rectangular" width="800px" height="450px"/>}
+        </Paper>
+        <Typography variant="h5"  sx={{color:'black' ,margin:"50px 50px"}} align='left'>
         Course Content
         </Typography>
         <Stack direction='row'>
+        
         <Grid sx={{ width:600 ,margin:"-40px 75px" ,border: "2px solid #a00407"  , borderRadius: '7px'}}>
         
         {course && course.coursedetails.Subtitle && course.coursedetails.Subtitle.map((subtitle) => (
@@ -198,18 +215,35 @@ const PreviewCourse = () => {
         </Stack>
       
         </Stack>
+        </Stack>
         <Typography align="left" sx={{mt:"100px" ,ml:"60px"}}variant="h5"  >Other courses by Author</Typography>
         <Grid container
           item spacing={2} columnSpacing={{ xs: 2, sm: 2, md: 3 }} sx={{ margin:"40px 0px "}} >
         <Stack spacing={1.5} direction={'row'}>
             <Grid itemspacing={2} sx={{ml:"80px"}}>
+        {/*{course && course.othercourses && course.othercourses.map((courses) => (
+        {/* <Grid container
+           >
+      
+            <Grid item  xs={3} >
         {course && course.othercourses && course.othercourses.map((courses) => (
             <NewCourseCardViewAll Course={courses} redirect={`/course/previewcourse?courseId=${courses._id}`}/>
-        ))}
+        ))}*/}
         </Grid>
         </Stack>
-        
         </Grid>
+
+        <Grid container item spacing={1}>
+              {course && course.othercourses && course.othercourses.map((courses) => (
+                <Grid item xs={4}  >
+                  <NewCourseCardViewAll
+          
+                    Course={courses}
+                    redirect={`/course/previewcourse?courseId=${courses._id}`}
+                  />
+                </Grid>
+              ))}
+          </Grid>
         </Box>
         
         </Box>

@@ -19,9 +19,12 @@ const {
     getCourse,
     uploadPreview,
     getMySubtitles,
-    owedPermonth
-    
-
+    owedPermonth,
+    reportProblem,
+    initiateCourse,
+    getMyRatings,
+    getMyProblems,
+    addProblemComment,
   
 } = require('../controllers/instructorController')
 
@@ -52,6 +55,11 @@ router.post('/createvideo', createVideo)
 router.get('/getcourse/:courseid', getCourse)
 router.post('/uploadpreview/:courseid', uploadPreview)
 router.get('/getmysubtitles/:courseid', getMySubtitles)
+router.post('/initiateCourse/', initiateCourse)
+router.post('/reportProblem', reportProblem)
+router.get('/getmyratings', getMyRatings)
+router.get('/getMyProblems', getMyProblems)
+router.post('/addProblemComment', addProblemComment)
 
 
 module.exports = router

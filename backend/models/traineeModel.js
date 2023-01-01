@@ -92,16 +92,16 @@ const traineeSchema = new Schema(
       ],
       required: false,
     },
-    My_problems: {
-      type: [{
-        course_id: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Problem',
-          required: true
-        }
-      }],
-      required: false
-    },
+    // My_problems: {
+    //   type: [{
+    //     course_id: {
+    //       type: mongoose.Schema.Types.ObjectId,
+    //       ref: 'Problem',
+    //       required: true
+    //     }
+    //   }],
+    //   required: false
+    // },
     Watched_videos: {
       type: [
         {

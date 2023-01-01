@@ -11,7 +11,16 @@ const {
     calculateGrade,
     viewExam,
     requestCourse,
-    checkRequested
+    checkRequested,
+    getMyCoursesLimited,
+    reportProblem,
+    getCorporateTrainee,
+    rateCourse,
+    rateInstructor,
+    checkRatingCorp,
+    checkRatingCorpInstructor,
+    getMyProblems,
+    addProblemComment,
 } = require('../controllers/corporatetraineeController')
 
 
@@ -28,8 +37,15 @@ router.post('/page/calculateGrade',calculateGrade)
 router.get('/page/viewExam/:examid', viewExam)
 router.post('/page/requestCourse', requestCourse)
 router.get('/page/checkRequested/:CourseID', checkRequested)
-module.exports = router
-
+router.get('/page/getMyCoursesLimited', getMyCoursesLimited)
+router.post('/page/reportProblem', reportProblem)
+router.get('/page',getCorporateTrainee)
+router.post('/page/rateCourse', rateCourse)
+router.post('/page/rateInstructor', rateInstructor)
+router.get('/page/checkRatingTrainee/:courseID', checkRatingCorp)
+router.get('/page/checkRatingTraineeInstructor/:instructorID', checkRatingCorpInstructor)
+router.get('/page/getMyProblems', getMyProblems)
+router.post('/page/addProblemComment', addProblemComment)
 
 
 

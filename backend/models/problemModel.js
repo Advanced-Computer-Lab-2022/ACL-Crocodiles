@@ -7,9 +7,17 @@ const problemSchema = new Schema({
         ref: 'User',
         required: true
     },
+    submitter_username: {
+        type: String,
+        required: true
+    },
     course_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
+        required: true
+    },
+    course_title: {
+        type: String,
         required: true
     },
     Title: {
@@ -29,8 +37,12 @@ const problemSchema = new Schema({
     Status: {
         type: String,
         enum: ['unseen', 'pending', 'resolved'],
+        default: 'unseen',
         required: true,
-    }
+    },
+    Comments: [{
+        type: String,
+    }]
 
 
 
