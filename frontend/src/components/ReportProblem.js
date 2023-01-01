@@ -1,16 +1,19 @@
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material"
+import { Accordion,Grid,DialogContent,Link, AccordionDetails, AccordionSummary, Alert, Box, Button, Dialog, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material"
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import ReportIcon from '@mui/icons-material/Report';
 
 
 const ReportProblem = ({courseid}) => {
     const {user} = useAuthContext();
     const [problemTitle, setProblemTitle] = useState("");
     const [problemDescription, setProblemDescription] = useState("");
+    const [open,setOpen] = useState(false)
     const [problemType, setProblemType] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const body1 = {
@@ -36,6 +39,7 @@ const ReportProblem = ({courseid}) => {
             setProblemTitle("");
             setProblemDescription("");
             setProblemType("");
+            setOpen(false)
         }
         if (!response.ok) {
             setError(json);
@@ -58,6 +62,7 @@ const ReportProblem = ({courseid}) => {
             setProblemTitle("");
             setProblemDescription("");
             setProblemType("");
+            setOpen(false)
         }
         if (!response.ok) {
             setError(json);
@@ -79,6 +84,7 @@ const ReportProblem = ({courseid}) => {
             setProblemTitle("");
             setProblemDescription("");
             setProblemType("");
+            setOpen(false)
         }
         if (!response.ok) {
             setError(json);
@@ -89,18 +95,27 @@ const ReportProblem = ({courseid}) => {
             
     }
     return(
-        <Accordion>
-            <AccordionSummary
-                expandIcon={<ExpandMore />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-            >
-                <Typography variant="body2" color="#ff0000" sx={{textDecoration: "underline"}}>
-                    Report a problem
-                </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
+        <div>
+    
+           <Link
+           sx={{color:"red", margin:"2px 20px"}}
+           component="button"
+           variant="body2"
+           onClick={() => {
+             setOpen(true);
+           }}
+         > <ReportIcon sx={{color:"red"}}></ReportIcon>Report Problem</Link>   
+                
+       <Dialog
+        fullWidth
+         open={open}
+         aria-labelledby="responsive-dialog-title"
+        >
+    <Grid sx = {{ml:"20px"}}>
+      <h2 >Report a problem</h2>
+      </Grid>
                 <Box>
+                <DialogContent >
                     <Stack direction="column" spacing={2} >
                     <TextField label="Problem Title" variant="outlined" 
                         value={problemTitle}
@@ -124,13 +139,18 @@ const ReportProblem = ({courseid}) => {
                         <MenuItem value={"Other"}>Other</MenuItem>
                     </Select>
                     </FormControl>
-                    <Button variant="contained" color="primary" onClick={handleSubmit}>Report</Button>
+                    <Stack direction='row' spacing={1}>
+                    <Button sx={{background:"red"}} variant="contained"onClick={handleSubmit}>Report</Button>
+                    <Button sx={{background:"green"}} variant="contained" onClick={() => setOpen(false)} >cancel</Button>
+                    </Stack>
                     {error && <Alert severity="error">{error}</Alert>}
                     {success && <Alert severity="success">{success}</Alert>}
                     </Stack>
+                    </DialogContent>
+                    
                 </Box>
-            </AccordionDetails>
-        </Accordion>
+        </Dialog>
+        </div>
     )
 }
 export default ReportProblem
