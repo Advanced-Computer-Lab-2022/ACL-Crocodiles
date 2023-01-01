@@ -806,7 +806,7 @@ const getTraineeDetails = async (req, res) => {
 
 const reportProblem = async (req, res) => {
     const id = req.user
-    const { Title, Description, courseId } = req.body
+    const { Title, Description, courseId, Type } = req.body
     //const courseId = req.params.courseid
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'no such id' })
@@ -817,8 +817,8 @@ const reportProblem = async (req, res) => {
         if (!course) {
             return res.status(404).json({ error: 'no such course' })
         }
-        const problem = await Problem.create({ submitter_id: id, course_id: courseId, Title: Title, Description: Description, Status: 'unseen' })
-        const product = await Trainee.updateOne(
+        const problem = await Problem.create({ submitter_id: id, course_id: courseId, Title: Title, Description: Description, Type: Type, Status: 'unseen' })
+        const push = await Trainee.updateOne(
             { _id: id },
             {
                 $push: {

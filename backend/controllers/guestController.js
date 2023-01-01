@@ -110,20 +110,20 @@ const viewAllCourses = async (req, res) => {
   }
 };
 const viewRatingAndReviews = async (req, res) => {
-    const courseid = req.params.courseid
-    // if (!mongoose.Types.ObjectId.isValid(courseid)) {
-    //     return res.status(404).json({ error: 'invalid input' })
-    // }
-    try {
-        const courseRating = await CourseRating.find({CourseId: courseid})
-        if (!courseRating) {
-            return res.status(404).json({ error: 'no course ratings found found' })
-        }
-        console.log(courseRating)
-        res.status(200).json(courseRating)
-    } catch (error) {
-        res.status(400).json({ error: 'error' })
+  const courseid = req.params.courseid
+  // if (!mongoose.Types.ObjectId.isValid(courseid)) {
+  //     return res.status(404).json({ error: 'invalid input' })
+  // }
+  try {
+    const courseRating = await CourseRating.find({ CourseId: courseid })
+    if (!courseRating) {
+      return res.status(404).json({ error: 'no course ratings found found' })
     }
+    console.log(courseRating)
+    res.status(200).json(courseRating)
+  } catch (error) {
+    res.status(400).json({ error: 'error' })
+  }
 }
 
 const sortBy = async (req, res) => {
@@ -175,7 +175,7 @@ const CourseDetails = async (req, res) => {
     if (!coursedetails)
       return res.status(404).json({ error: "no courses found" });
     res.status(200).json({ coursedetails, othercourses, instructordetails });
-  } catch (error) {}
+  } catch (error) { }
 };
 const addCourse = async (req, res) => {
   const { id, token, trainee } = req.params;
@@ -202,5 +202,5 @@ module.exports = {
   CourseDetails,
   addCourse,
   getMostPopularCourses,
-  sortBy,
+  sortBy
 };

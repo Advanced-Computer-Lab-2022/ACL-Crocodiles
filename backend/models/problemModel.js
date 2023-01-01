@@ -20,6 +20,12 @@ const problemSchema = new Schema({
         type: String,
         required: true,
     },
+    Type: {
+        type: String,
+        enum: ['Technical', 'Financial', 'Other'],
+        default: 'Technical',
+        required: true,
+    },
     Status: {
         type: String,
         enum: ['unseen', 'pending', 'resolved'],
