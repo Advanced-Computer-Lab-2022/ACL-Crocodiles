@@ -5,6 +5,7 @@ import { useNavigate } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { useSelector } from "react-redux";
 import {
     autocompleteClasses,
     Avatar,
@@ -51,10 +52,10 @@ const Profile = () => {
     const [success, setSuccess] = useState('')
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const [amount, setAmount] = useState(null)
-    const [Email, setEmail] = useState('')
-    const [Biography, setBiography] = useState('')
-
+    const[amount,setAmount] = useState(null)
+    const[Email,setEmail] = useState('')
+    const[Biography,setBiography] = useState('')
+    const country = useSelector((state) => state.country.value);
     useEffect(() => {
 
         const fetchIns = async () => {
@@ -83,6 +84,7 @@ const Profile = () => {
             })
             const json1 = await response2.json()
             if (response2.ok) {
+                console.log("qw")
                 console.log(json1)
                 setAmount(json1)
 
@@ -433,19 +435,19 @@ const Profile = () => {
                             onClick={handleOpenBio}
                         >
                             Edit Bio
-                        </Button>
-                        <Stack direction='row' spacing={1}>
-                            <AttachMoneyIcon sx={{ color: "green" }}> </AttachMoneyIcon>
-                            <Typography>Amount this month  : {amount}$</Typography>
-
-                        </Stack>
-
-                    </Stack>
-                </Box>
-            </Card>
-
-
-        </div>
+                            </Button>
+                            <Stack direction='row' spacing={1}>
+                             <AttachMoneyIcon sx={{color:"green"}}> </AttachMoneyIcon>
+                            <Typography>Amount this month  : {amount*country.rate} {country.code}</Typography>
+                           
+                            </Stack>
+                           
+                            </Stack>          
+                        </Box>
+                    </Card>
+                    
+                    
+                </div>
 
 
         /*<div className="Profile">

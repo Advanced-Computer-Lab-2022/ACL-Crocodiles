@@ -700,13 +700,14 @@ const addCourse = async (req, res) => {
             }
         );
         var coursecount = await Course.findOne({ _id: course });
+        
         var count = coursecount.Count + 1;
-        console.log(count);
-        const updated = await Course.findByIdAndUpdate({
-            _id: course,
-            Count: count,
-        });
-        console.log(product, updated);
+        
+        const updated = await Course.updateOne(
+        {_id: course},
+        { Count: count},
+        );
+        console.log(updated);
         res.status(200).json("course Added");
     } catch (error) {
         res.status(400).json({ error: error.messsage });

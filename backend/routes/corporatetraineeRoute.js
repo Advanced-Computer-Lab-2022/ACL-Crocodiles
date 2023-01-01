@@ -21,6 +21,9 @@ const {
     checkRatingCorpInstructor,
     getMyProblems,
     addProblemComment,
+    setFlag,
+    EditCorpinfo,
+    getFlag
 } = require('../controllers/corporatetraineeController')
 
 
@@ -42,6 +45,9 @@ router.post('/page/reportProblem', reportProblem)
 router.get('/page',getCorporateTrainee)
 router.post('/page/rateCourse', rateCourse)
 router.post('/page/rateInstructor', rateInstructor)
+router.post('/page/setflag',setFlag)
+router.get('/page/getflag',getFlag)
+router.post('/page/editcorpinfo',EditCorpinfo)
 router.get('/page/checkRatingTrainee/:courseID', checkRatingCorp)
 router.get('/page/checkRatingTraineeInstructor/:instructorID', checkRatingCorpInstructor)
 router.get('/page/getMyProblems', getMyProblems)

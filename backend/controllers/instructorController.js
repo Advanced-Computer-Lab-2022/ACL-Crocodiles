@@ -10,6 +10,7 @@ const Validator = require('validator')
 const Course = require('../models/courseModel').course
 const Problem = require('../models/problemModel')
 const instructorRatingModel = require('../models/ratingAndReviewModel').instructorRatingModel
+const bcrypt = require("bcrypt")
 
 
 
@@ -273,7 +274,7 @@ const setFlag = async(req,res) => {
     console.log(req.body)
     const {id} = req.user
     try{
-        const user = await User.findByIdAndUpdate(id,{Flag:Flag})
+        const user = await User.findByIdAndUpdate(id,{Flag})
         console.log(user)
         if(!user){
             res.status(400).json({error: 'no user'})
@@ -281,6 +282,23 @@ const setFlag = async(req,res) => {
        // res.send(user.Flag) 
 
     }catch(error){
+        console.log(error)
+    }
+}
+
+const getFlag = async (req,res) => {
+    const {id} = req.user
+    try {
+        const flag = await User.findOne({_id:id})
+        console.log(flag)   
+        if(flag.Flag === 'true'){
+            return res.status(200).json({flag:true})
+        }
+        else{
+            return res.status(200).json({flag:false})
+        }
+  
+    } catch (error) {
         console.log(error)
     }
 }
@@ -302,15 +320,39 @@ const getInsDetails = async (req, res) => {
     }
 }
 const EditInstructorinfo = async(req,res) => {
-    const {Firstname,Lastname,Gender} = req.body
+    const {Firstname,Lastname,Gender,Password} = req.body
+    const {id} = req.user
+
     try{
-    const instructor = await Instructor.findByIdAndUpdate(req.user,{Firstname,Lastname,Gender})
+        
+        if(!Firstname){
+            return res.status(400).json({ error: 'must enter Firstname' })
+        }
+        if(!Lastname){
+            return res.status(400).json({ error: 'must enter Lastname' })
+        }
+        if(!Password){
+            return res.status(400).json({ error: 'must change password' })
+        }
+        if(!Gender){
+            return res.status(400).json({ error: 'must enter gender' })
+        }
+
+    const instructor = await Instructor.findByIdAndUpdate(id,{Firstname,Lastname,Gender})
     if(!instructor){
-        return res.status(404).json({ error: 'user not found' })
+        return res.status(404).json({ error: 'user not found 1' })
     }
+    const salt = await bcrypt.genSalt(10)
+    let hash = await bcrypt.hash(Password, salt)
+    const user = await User.updateOne({_id:id},{Password:hash})
+    if(!user){
+        return res.status(404).json({ error: 'user not found 2' })
+    }
+    console.log(user)
     res.status(200).json('edited')
     }catch(error){
-        res.status(400).json({error:error})
+        res.status(401).json({error:error})
+        console.log(error)
 
     }
 }
@@ -391,14 +433,14 @@ const owedPermonth = async(req,res) => {
         for(i=0 ;i<courses.My_Courses.length;i++){
            console.log(courses.My_Courses[i])
            
-           var course = await Course.findOne({_id:courses.My_Courses[i]})
-           console.log(course.Count)
-           console.log(course.Count)
-           
-           price = price + ((course.Price - (course.Price * course.Discount*0.1))*course.Count)
-           console.log(price)     
-        }
 
+            var course = await Course.findOne({_id:courses.My_Courses[i]})
+            console.log(course.Count)
+       
+           price = price + ((course.Price - (course.Price * course.Discount*0.1))*course.Count)
+           
+        }
+        console.log("price"+price)   
         res.status(200).json(price)
     } catch (error) {
         
@@ -446,6 +488,14 @@ const initiateCourse = async(req,res) => {
      
     }
     const c =  await Course.create({Title:course.title,Subject:course.subject, Price:Number(course.price),Hours:course.totalHours,Summary:course.description,InstructorId:instructor_id,InstructorName: instr.Firstname + " " + instr.Lastname,Subtitle:subIds,PreviewVideo:course.previewLink})
+
+    const instructor = await Instructor.updateOne({
+        _id: instructor_id},{
+        $push: { My_Courses: c._id },
+      }
+
+    );
+    console.log(instructor)
     return res.status(200).json(c)
     }catch(e){
         res.status(400).json(e.message)
@@ -525,4 +575,5 @@ module.exports = {
     getMyRatings,
     getMyProblems,
     addProblemComment,
+    getFlag
 }

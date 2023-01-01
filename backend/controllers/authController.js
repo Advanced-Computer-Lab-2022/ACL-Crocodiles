@@ -40,7 +40,7 @@ const ForgotPassword = async (req, res) => {
 
     var mailOptions = {
         from: 'aclcrocodiles@outlook.com',
-        to: 'karimouf00@gmail.com',
+        to: Email,
         subject: 'Changing password',
         text: link
     };
@@ -49,6 +49,7 @@ const ForgotPassword = async (req, res) => {
         if (error) {
             console.log(error);
         } else {
+            res.status(200).json(info)
             console.log('Email sent: ' + info.response);
         }
     });
