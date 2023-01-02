@@ -135,7 +135,7 @@ const grantCourseAccess = async (req, res) => {
     const { CourseID, TraineeID } = req.body
     console.log(CourseID, TraineeID)
     try {
-        const trainee = await CorporateTrainee.findByIdAndUpdate(TraineeID, {$push: {My_courses: CourseID}})
+        const trainee = await CorporateTrainee.findByIdAndUpdate(TraineeID, { $push: { My_courses: CourseID } })
         console.log(trainee)
         if (!trainee) {
             return res.status(404).json({ error: 'no trainee found' })
@@ -171,7 +171,9 @@ const grantRefund = async (req, res) => {
     const { CourseID, TraineeID, amount } = req.body
     console.log(CourseID, TraineeID)
     try {
-        const trainee = await Trainee.updateOne({ _id: TraineeID }, { Wallet: amount })
+        const traineeWallet = await Trainee.findOne({ _id: TraineeID }, { Wallet: amount })
+        var newWallet = traineeWallet.Wallet + amount;
+        const trainee = await Trainee.updateOne({ _id: TraineeID }, { Wallet: newWallet })
         console.log(trainee)
         if (!trainee) {
             return res.status(404).json({ error: 'no trainee found' })

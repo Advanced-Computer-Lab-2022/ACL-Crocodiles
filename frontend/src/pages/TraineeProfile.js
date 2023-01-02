@@ -51,6 +51,7 @@ const TraineeProfile = () => {
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const [Email, setEmail] = useState('')
+    const [Wallet, setWallet] = useState('')
 
 
     useEffect(() => {
@@ -69,6 +70,9 @@ const TraineeProfile = () => {
                 console.log(json)
                 setOldEmail(json.user.Email)
                 setType(json.user.Type)
+                setWallet(json.traineeDetails.Wallet)
+                console.log(Wallet)
+
 
             }
             console.log(Trainee)
@@ -280,6 +284,13 @@ const TraineeProfile = () => {
                             variant="h6"
                         >
                             {OldEmail}
+
+                        </Typography>
+                        <Typography
+                            color="textPrimary"
+                            variant="h6"
+                        >
+                            Wallet {Wallet}
 
                         </Typography>
 
