@@ -841,8 +841,8 @@ if(progress===1){
   var mailOptions = {
       from: 'aclguccrocs@outlook.com',
       to: Email,
-      subject: `Congratulations! Here is your certificate for ${Course.Title}`,
-      text: `Congratulations on receiving your ${Course.Title} certificate! You canv now download your certificate. Your certificate is available in an online format so that you can retrieve it anywhere at any time, and easily share the details of your achievement.`,
+      subject: `Congratulations! Here is your certificate for ${found.Title}`,
+      text: `Congratulations on receiving your ${found.Title} certificate! You canv now download your certificate. Your certificate is available in an online format so that you can retrieve it anywhere at any time, and easily share the details of your achievement.`,
   attachments: [{
     filename: 'certificate.pdf',
     path: '../certificate.pdf',

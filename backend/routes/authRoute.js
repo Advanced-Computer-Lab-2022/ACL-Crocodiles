@@ -19,3 +19,4 @@ router.get('/resetpassword/:id/:token',Resetpassword)
 
 router.post('/resetpassword/',Resetpasswordput)
 module.exports = router
+

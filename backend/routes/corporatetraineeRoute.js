@@ -23,13 +23,23 @@ const {
     addProblemComment,
     setFlag,
     EditCorpinfo,
-    getFlag
+    getFlag,
+    addWatchedVideo,
+    getProgress,
+    addNote,
+    getNotes,
+    deleteNote,
+    getCorp,
+    certificateSendEmail,
+
+
 } = require('../controllers/corporatetraineeController')
 
 
 const router = express.Router()
 
 router.use(requireAuthCorporate)
+router.get("/page", getCorp);
 router.get('/viewall',viewAllCourses)
 router.get('/searchall',searchCourse)
 router.get('/page/MyCourses',getMyCourses)
@@ -52,6 +62,13 @@ router.get('/page/checkRatingTrainee/:courseID', checkRatingCorp)
 router.get('/page/checkRatingTraineeInstructor/:instructorID', checkRatingCorpInstructor)
 router.get('/page/getMyProblems', getMyProblems)
 router.post('/page/addProblemComment', addProblemComment)
+router.post("/page/getProgress/", getProgress);
+router.patch("/page/addWatchedVideo", addWatchedVideo);
+router.patch("/page/addNote", addNote);
+router.post("/page/getNotes", getNotes);
+router.patch("/page/deleteNote", deleteNote);
+router.put('/page/certificateSendEmail',certificateSendEmail)
+
 
 
 

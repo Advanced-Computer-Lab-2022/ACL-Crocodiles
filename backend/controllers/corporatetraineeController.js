@@ -9,6 +9,9 @@ const instructorRatingModel = require('../models/ratingAndReviewModel').instruct
 const Instructor = require('../models/instructorModel')
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
+const Video = require("../models/courseModel").video;
+const nodemailer = require('nodemailer')
+const Validator = require('validator')
 
 const viewAllCourses = async (req,res) => {
     try {
@@ -62,6 +65,20 @@ const getMyCourses = async(req, res)=>{
    return  res.json(courses);
 
 }
+
+const getCorp = async (req, res) => {
+    const { id } = req.user;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "no such trainee" });
+    }
+
+    const trainee = await CorpTrainee.findById(id);
+    if (!trainee) {
+        return res.status(404).json({ error: "no such trainee2" });
+    }
+    res.status(200).json(trainee);
+};
+
 const findCourse = async(req,res)=>{
     const course_id = req.params.id;
  
@@ -94,10 +111,11 @@ const findCourse = async(req,res)=>{
 
 const addAssignment = async (req, res) => {
     try {
-        const corptraineeID = "6391383e89acbda5734e887c"
+        const corptraineeID = req.user
         const examId = req.body.Examid
         const answers = req.body.Answers
         const exam = await Exam.findById(examId)
+        const cid = req.body.cid;
     
         if (!exam) {
             return res.status(404).json({ error: 'not a valid exam id' })
@@ -118,11 +136,15 @@ const addAssignment = async (req, res) => {
 
    
         
+        const x = await CorpTrainee.findById(corptraineeID);
+
+        updateProgressHelper(x, cid);
+
           res.json(corpTrainee)
 
     } catch (error) {
        
-        res.status(400).json({ error: 'error' })
+        res.status(400).json({ error: error.message})
     }
 }
 
@@ -219,7 +241,10 @@ const requestCourse = async (req, res) => {
         trainee.My_course_requests.push(newCourseRequest)
         await trainee.save()
         res.status(200).json(newCourseRequest)
+        console.log('yayyyyyyyyyyyyyyyyyyy')
     } catch (error) {
+        console.log('BOOOOOOOOOOOOOOOOOO!')
+        console.log(error.message)
         res.status(400).json({ error: 'error' })
     }
 }
@@ -497,6 +522,350 @@ const addProblemComment = async (req, res) => {
     }
 }
 
+const addWatchedVideo = async (req, res) => {
+    try {
+        const traineeID = req.user;
+        const Videoid = req.body.Videoid;
+        const cid = req.body.cid;
+        const video = await Video.findById(Videoid);
+        const t = await CorpTrainee.findById(traineeID);
+
+        if (!video) {
+            console.log(video);
+            return res.status(404).json({ error: "not a valid video id" });
+        }
+
+        if (!t) {
+            return res.status(404).json({ error: "not a valid trainee id" });
+        }
+
+        for (let i = 0; i < t.Watched_videos.length; i++) {
+            if (t.Watched_videos[i].video_id.equals(Videoid))
+                return res.status(200).json(t);
+        }
+
+        const trainee = await CorpTrainee.updateOne(
+            { _id: traineeID },
+            { $push: { Watched_videos: { video_id: Videoid, _id: cid } } }
+        );
+
+        if (!trainee) {
+            return res.status(404).json({ error: "trainee not found" });
+        }
+
+        const x = await CorpTrainee.findById(traineeID);
+
+        updateProgressHelper(x, cid);
+
+        return res.json(trainee);
+    } catch (error) {
+        return res.status(400).json({ error: "error" });
+    }
+};
+
+const updateProgressHelper = async (corpTrainee, CourseID) => {
+    console.log("..............................");
+    const course = await Course.findById(CourseID).populate("Subtitle");
+    const sub = course.Subtitle;
+    let totalContent = 0;
+    let seen = 0;
+    let seenVids = 0;
+    let seenEx = 0;
+    for (let i = 0; i < sub.length; i++) {
+        const vid = sub[i].Videos;
+
+        const ex = sub[i].Exercises;
+        for (let j = 0; j < vid.length; j++) {
+            const found = corpTrainee.Watched_videos.find(
+                (watched) =>
+                    watched.video_id.equals(vid[j]) && watched._id.equals(CourseID)
+            );
+
+            if (found != undefined) {
+                seenVids += 1;
+                seen += 1;
+            }
+
+            totalContent += 1;
+            console.log("seen videos:" + seen);
+        }
+        for (let j = 0; j < ex.length; j++) {
+            const found = corpTrainee.My_assignments.find(
+                (solved) => solved.quiz_id.equals(ex[j]) && solved._id.equals(CourseID)
+            );
+
+            if (found != undefined) {
+                seenEx += 1;
+                seen += 1;
+            }
+
+            totalContent += 1;
+            console.log("seen:" + seen);
+        }
+    }
+    console.log("total:" + totalContent);
+    const newProgress = seen / totalContent;
+    const currSeen = [seenVids, seenEx];
+    const t = totalContent;
+    const trainee1 = await CorpTrainee.updateOne(
+        { _id: corpTrainee._id },
+        {
+            $set: {
+                "My_courses.$[i].Progress": {
+                    value: newProgress,
+                    seen: currSeen,
+                    total: t,
+                },
+            },
+        },
+        { arrayFilters: [{ "i._id": CourseID }] }
+    );
+    return newProgress;
+};
+
+const getProgress = async (req, res) => {
+    const traineeID = req.user;
+    const trainee = await CorpTrainee.findById(traineeID);
+    if (!trainee) return res.status(404).json({ error: "trainee not found" });
+
+    const courseid = req.body.cid;
+    const course = Course.findById(courseid);
+
+    if (!course) return res.status(404).json({ error: "trainee not found" });
+
+    const found = trainee.My_courses.find((c) => c._id.equals(courseid));
+    if (found) {
+        const N_Vids = trainee.Watched_videos.length;
+        const N_Ex = trainee.My_assignments.length;
+
+        if (N_Vids != found.Progress.seen[0] || N_Ex != found.Progress.seen[1]) {
+            console.log("OUTDATED");
+            const newProgress = await updateProgressHelper(trainee, courseid);
+            console.log(newProgress);
+            return res.status(200).json({ Progress: newProgress });
+        }
+        console.log("ALL GOOD");
+        return res.status(200).json({ Progress: found.Progress.value });
+    }
+
+    return res.status(200).json({ error: "you do not take this course" });
+};
+
+
+const addNote = async (req, res) => {
+    try {
+        const traineeID = req.user;
+        const video_id = req.body.video_id;
+        const course_id = req.body.course_id;
+        const note = req.body.note;
+
+        const trainee = await CorpTrainee.find({
+            _id: traineeID,
+            My_courses: {
+                $elemMatch: {
+                    _id: course_id,
+                    My_Notes: { $elemMatch: { video_id: video_id } },
+                },
+            },
+        });
+        if (trainee.length != 0) {
+            const trainee1 = await CorpTrainee.updateOne(
+                { _id: traineeID },
+                {
+                    $push: {
+                        "My_courses.$[i].My_Notes.$[j].Notes": note,
+                    },
+                },
+                {
+                    arrayFilters: [{ "i._id": course_id }, { "j.video_id": video_id }],
+                }
+            );
+
+            if (trainee1) {
+                return res.status(200).json(trainee1);
+            }
+        } else {
+            const trainee1 = await CorpTrainee.updateOne(
+                { _id: traineeID },
+                {
+                    $push: {
+                        "My_courses.$[i].My_Notes": { video_id: video_id, Notes: [note] },
+                    },
+                },
+                {
+                    arrayFilters: [{ "i._id": course_id }],
+                }
+            );
+            if (trainee1) {
+                return res.status(200).json(trainee1);
+            }
+        }
+        return res.status(400).json({ error: "Could not update trainee" });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message });
+    }
+};
+
+
+const getNotes = async (req, res) => {
+    try {
+        const traineeID = req.user;
+        const video_id = req.body.video_id;
+        const course_id = req.body.course_id;
+
+        const trainee = await CorpTrainee.findOne({
+            _id: traineeID,
+            My_courses: {
+                $elemMatch: {
+                    _id: course_id,
+                    My_Notes: { $elemMatch: { video_id: video_id } },
+                },
+            },
+        });
+        if (trainee) {
+            const found = trainee.My_courses.find((course) =>
+                course._id.equals(course_id)
+            );
+            if (found != undefined) {
+                return res.status(200).json({
+                    Notes: found.My_Notes.filter((note) =>
+                        note.video_id.equals(video_id)
+                    ).map((t) => t.Notes)[0],
+                });
+            } else {
+                return res.status(400).json({ error: "not found" });
+            }
+        }
+        return res.status(200).json({ Notes: [] });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message });
+    }
+};
+
+
+const deleteNote = async (req, res) => {
+    try {
+        const traineeID = req.user;
+        const video_id = req.body.video_id;
+        const course_id = req.body.course_id;
+        const Note_index = req.body.Note_index;
+        const trainee = await CorpTrainee.findById(traineeID);
+        if (!trainee) return res.status(404).json({ error: "trainee not found" });
+        const found = trainee.My_courses.find((course) =>
+            course._id.equals(course_id)
+        );
+        if (found == undefined) {
+            return res.status(404).json({ error: "course not found" });
+        }
+        const foundNotes = found.My_Notes.find((v) => v.video_id.equals(video_id));
+        if (foundNotes == undefined)
+            return res.status(404).json({ error: "Notes not found" });
+
+        const newArr = foundNotes.Notes;
+        if (Note_index >= newArr.length) {
+            return res.status(400).json({ error: "index out of bound" });
+        }
+        newArr.splice(Note_index, 1);
+
+        const trainee1 = await CorpTrainee.findByIdAndUpdate(
+            traineeID,
+            {
+                $set: {
+                    "My_courses.$[i].My_Notes.$[j].Notes": newArr,
+                },
+            },
+            {
+                arrayFilters: [{ "i._id": course_id }, { "j.video_id": video_id }],
+            }
+        );
+        if (trainee1) {
+            return res.status(200).json(trainee1);
+        }
+        return res.status(400).json({ error: "failed to delete note" });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message });
+    }
+};
+
+const certificateSendEmail = async (req, res) => {
+    const { course_id } = req.body
+    const x = req.user;
+  
+  
+    const user = await User.findById(x._id)
+    
+    if (!user)
+        return res.status(400).json({ error: 'No existing user' })
+    const Email = user.Email;
+    if (!Validator.isEmail(Email))
+    return res.status(400).json({ error: 'Incorrect email format' })
+  
+    const trainee = await CorpTrainee.findById(x._id)
+    if(!trainee){
+      return res.status(400).json({ error: 'No existing user' })
+    }
+  const sentCourses = trainee.finishedandMailed
+  
+    const found = trainee.My_courses.find((course) =>
+      course._id.equals(course_id)
+    );
+  
+    if (found == undefined) {
+      return  res.status(400).json({ error: 'Course not found' })
+    }
+    const progress = found.Progress.value;
+  
+  if(progress===1){
+    const mailedAlready = sentCourses.find((course) =>
+    course._id.equals(course_id))
+    ;
+    if(mailedAlready){
+      return  res.status(200).json('mail already sent');
+    }
+  
+    const t = await CorpTrainee.findByIdAndUpdate(user._id, {$push:{ finishedandMailed: { _id: course_id } }  })
+  
+  
+    var transporter = nodemailer.createTransport({
+        service: 'outlook',
+        auth: {
+            user: 'aclguccrocs@outlook.com',
+            pass: '@CLcr0cs'
+        }
+    });
+  
+    var mailOptions = {
+        from: 'aclguccrocs@outlook.com',
+        to: Email,
+        subject: `Congratulations! Here is your certificate for ${found.Title}`,
+        text: `Congratulations on receiving your ${found.Title} certificate! You canv now download your certificate. Your certificate is available in an online format so that you can retrieve it anywhere at any time, and easily share the details of your achievement.`,
+    attachments: [{
+      filename: 'certificate.pdf',
+      path: '../certificate.pdf',
+      contentType: 'application/pdf'
+    }],
+    };
+  
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            return res.status(400).json(error.message);
+        } else {
+            return res.status(200).json(`Email sent: Email` + info.response);
+        }
+    });
+  
+  }else{
+    console.log(progress)
+    console.log()
+   return  res.status(200).json('course not completed');
+  }
+  
+  
+  }
+
 module.exports = {
     searchCourse,
     viewAllCourses,
@@ -520,4 +889,11 @@ module.exports = {
     EditCorpinfo,
     getMyProblems,
     addProblemComment,
+    addWatchedVideo,
+    getProgress,
+    addNote,
+    getNotes,
+    deleteNote,
+    getCorp,
+    certificateSendEmail,
 }

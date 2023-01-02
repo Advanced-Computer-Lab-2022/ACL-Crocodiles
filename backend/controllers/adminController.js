@@ -135,7 +135,7 @@ const grantCourseAccess = async (req, res) => {
     const { CourseID, TraineeID } = req.body
     console.log(CourseID, TraineeID)
     try {
-        const trainee = await CorporateTrainee.findByIdAndUpdate(TraineeID, { $push: { My_courses: CourseID } })
+        const trainee = await CorporateTrainee.findByIdAndUpdate(TraineeID, { $push: {My_courses: {_id: CourseID, Progress: { value: 0, seen: [0, 0], total: 0 }, }, } })
         console.log(trainee)
         if (!trainee) {
             return res.status(404).json({ error: 'no trainee found' })

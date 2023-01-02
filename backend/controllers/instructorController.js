@@ -85,6 +85,7 @@ const createVideo = async (req, res) => {
         await sub.save()
         res.status(200).json(sub)
     } catch (error) {
+        console.log(error.message)
         res.status(400).json({ error: error.message })
     }
 }
@@ -412,7 +413,7 @@ const getMySubtitles = async (req, res) => {
                 return res.status(404).json({ error: 'no such id' })
             }
             console.log('subid ' + subid)
-            const subtitle = await Sub.findById(subid)
+            const subtitle = await Sub.findById(subid).populate('Videos')
             console.log('subtitle isss ' + subtitle)
             if (!subtitle) {
                 return res.status(500).json({ error: 'subtitle not found' })
