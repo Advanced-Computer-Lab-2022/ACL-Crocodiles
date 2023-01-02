@@ -62,7 +62,8 @@ We have used standardJS code style.
 
 The following are some examples of the functions used in the backend in the controllers:
 - Viewing all courses 
-```
+
+```javascript
 const viewAllCourses = async (req, res) => {
     try {
         const courses = await Course.find()
@@ -76,8 +77,10 @@ const viewAllCourses = async (req, res) => {
     }
 }
 ```
+
 - Instructor uploading a preview video embed link
-```
+
+```javascript
 const uploadPreview = async (req, res) => {
     const courseid = req.params.courseid
     const { videoLink } = req.body
@@ -104,7 +107,7 @@ const uploadPreview = async (req, res) => {
 The following is an example of a frontend return statement. 
 In this particular example it is the component where the instructor defines a promotion for one of his courses.
 
-```
+```javascript
 return (
         <Paper
             elevation={4} style={{padding:20 ,
@@ -228,6 +231,56 @@ For developers, we suggest that you install these packages before you start work
 
 
 ## Tests
+
+- Try inserting an incorrect username or password when logging in
+
+```javascript
+  userSchema.statics.Login = async function (Username, Password) {
+  if (!Username || !Password)
+    throw Error('Must type username or password')
+
+  const user = await this.findOne({ Username })
+  if (!user)
+    throw Error('Incorrect username or password')
+
+  const validpass = await bcrypt.compare(Password, user.Password)
+  if (!validpass)
+    throw Error('incorrect username or password')
+
+  return user
+}
+```
+
+- Try inserting an email of a wrong format when signing up
+    
+```javascript
+userSchema.statics.RegTrainee = async function 
+(Username, Email, Password, Firstname, Lastname, Gender) {
+  const Type = 'Trainee'
+  if (!Email || !Password || !Username)
+    throw Error('Must type email or password or username')
+  if (!Validator.isEmail(Email))
+    throw Error('incorrect email format')
+  if (!Validator.isStrongPassword(Password))
+    throw Error('weak pasword')
+
+  let useru = await this.findOne({ Username })
+  if (useru)
+    throw Error('username already in use')
+  let usere = await this.findOne({ Email })
+  if (usere)
+    throw Error('Email already in use')
+
+
+  const salt = await bcrypt.genSalt(10)
+  let hash = await bcrypt.hash(Password, salt)
+  const user = await this.create({ Username, Email, Password: hash, Type })
+  const trainee = await Trainee.create({ _id: user._id, Firstname: Firstname, Lastname: Lastname, Gender: Gender })
+  if (!trainee)
+    await this.delete({ _id: user._id })
+  return trainee, user
+}
+```
 
 ## How to use
 
