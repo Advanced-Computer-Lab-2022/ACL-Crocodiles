@@ -255,10 +255,6 @@ const NewCourseCard = ({ user, Course, redirect }) => {
         onClick={requestRefund} sx={{ margin: '10px', "background-image": "linear-gradient(52deg, #A00407, #ff5659)" }}>
         Request Refund
       </Button>}
-
-      <Button variant="contained" onClick={handleOpenProblem} sx={{ margin: '10px', "background-image": "linear-gradient(52deg, #A00407, #ff5659)" }}>
-        Report a Problem
-      </Button>
     </Card>
 
 
