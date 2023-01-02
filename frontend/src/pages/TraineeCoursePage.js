@@ -232,15 +232,16 @@ const TraineeCoursePage = () => {
               alignItems="center"
               flexDirection="column"
               >
+              <Button
+              variant="text"
+              onClick={() => {navigate('/viewratings/'+courseid1)}}
+              >
+                  <Stack direction="column" spacing={1} alignItems="center">
+                      <Typography variant="body1" color="#FFD700">View All Ratings and Reviews</Typography>
+                  </Stack>
+          </Button>
                 <RatingAndReview courseID={courseid1} />
-                <Button
-                variant="text"
-                onClick={() => {navigate('/viewratings/'+courseid1)}}
-                >
-                    <Stack direction="column" spacing={1} alignItems="center">
-                        <Typography>View All Ratings and Reviews</Typography>
-                    </Stack>
-            </Button>
+                <br/>
             <RatingAndReviewInstructor instructorID={course.InstructorId} />
               <ReportProblem courseid={courseid1}/>
               </Grid>}

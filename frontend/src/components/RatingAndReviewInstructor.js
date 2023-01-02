@@ -104,7 +104,8 @@ const RatingAndReviewInstructor = ({instructorID}) => {
             }}
         >
         <Stack direction="column" spacing={2}>
-            <Typography variant="h5" sx={{alignSelf:'center'}}>Rating (Instructor): </Typography>
+            {flag && <Typography variant="h6" sx={{alignSelf:'center'}}>Rate the instructor </Typography>}
+            {!flag && <Typography variant="h6" sx={{alignSelf:'center'}}>Your rating for the instructor </Typography>}
             {flag && <Rating
                 name="simple-controlled"
                 value={rating}

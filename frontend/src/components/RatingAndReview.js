@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { renderMatches } from 'react-router-dom';
-import { Alert, Paper, Typography } from '@mui/material';
+import { Alert, Box, Paper, Typography } from '@mui/material';
 
 const RatingAndReview = ({courseID}) => {
     const {user} = useAuthContext();
@@ -102,7 +102,8 @@ const RatingAndReview = ({courseID}) => {
             }}
         >
         <Stack direction="column" spacing={2}>
-            <Typography variant="h5" sx={{alignSelf:'center'}}>Rating (Course): </Typography>
+            {flag && <Typography variant="h6" sx={{alignSelf:'center'}}>Rate the course </Typography>}
+            {!flag && <Typography variant="h6" sx={{alignSelf:'center'}}>Your rating for the course</Typography>}
             {flag && <Rating
                 name="simple-controlled"
                 value={rating}

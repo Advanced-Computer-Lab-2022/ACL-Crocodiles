@@ -2,7 +2,7 @@ import { Grid,Box,Paper, Container,Typography,Stack,Accordion,AccordionSummary,A
 
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
-
+import ReportProblem from "../components/ReportProblem"
 import Rating from "@mui/material/Rating"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -214,6 +214,7 @@ const PreviewCourse = () => {
         <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}} disabled={type || iscourse} variant="contained" onClick={BuyClick} >Buy Now</Button>}
         {corpSuccess && <Alert severity="success">{'Course Requested Successfully'}</Alert>}
         {corpError && <Alert severity="error">{'Course Request Failed'}</Alert>}
+        {user && <ReportProblem courseid={course.coursedetails._id} />}
         </Stack>
       
         </Stack>
