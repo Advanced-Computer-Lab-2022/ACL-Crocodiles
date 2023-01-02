@@ -75,7 +75,7 @@ const CorpHome = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setMyCourses(data))
+      .then((data) => {setMyCourses(data); console.log(data)})
       .catch((error) => {
         setAlert(error.message);
       });

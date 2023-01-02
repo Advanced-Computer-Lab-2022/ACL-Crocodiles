@@ -25,6 +25,7 @@ export default function NoteTaking({ player, video_id, title, course_id }) {
 
   useEffect(() => {
     setNotesReady(false);
+    if(user.Type==="Trainee"){
     fetch("/api/trainee/page/getNotes", {
       method: "POST",
       body: JSON.stringify({
@@ -43,7 +44,28 @@ export default function NoteTaking({ player, video_id, title, course_id }) {
       })
       .catch((error) => {
         setAlert(error.message);
-      });
+      });}
+      else{
+        fetch("/api/corpTrainee/page/getNotes", {
+          method: "POST",
+          body: JSON.stringify({
+            video_id: video_id,
+            course_id: course_id,
+          }),
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setNotes(data.Notes);
+            setNotesReady(true);
+          })
+          .catch((error) => {
+            setAlert(error.message);
+          });
+      }
   }, []);
 
   const handleFocus = () => {
@@ -75,6 +97,7 @@ export default function NoteTaking({ player, video_id, title, course_id }) {
       temp.push(`[${timeString}]: ${newNote}`);
       setNotes(temp);
       setNewNote("");
+      if(user.Type==="Trainee"){
       fetch("/api/trainee/page/addNote", {
         method: "PATCH",
         body: JSON.stringify({
@@ -92,6 +115,26 @@ export default function NoteTaking({ player, video_id, title, course_id }) {
         .catch((error) => {
           setAlert(error.message);
         });
+      }
+      else{
+        fetch("/api/corpTrainee/page/addNote", {
+          method: "PATCH",
+          body: JSON.stringify({
+            video_id: video_id,
+            course_id: course_id,
+            note: `[${timeString}]: ${newNote}`,
+          }),
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => {
+            setAlert(error.message);
+          });
+      }
     }
   };
   const deleteNote = (i) => {
@@ -100,6 +143,7 @@ export default function NoteTaking({ player, video_id, title, course_id }) {
     temp.splice(i, 1);
     setNotes(temp);
 
+    if(user.Type==="Trainee"){
     fetch("/api/trainee/page/deleteNote", {
       method: "PATCH",
       body: JSON.stringify({
@@ -117,6 +161,26 @@ export default function NoteTaking({ player, video_id, title, course_id }) {
       .catch((error) => {
         setAlert(error.message);
       });
+    }
+    else{
+      fetch("/api/corpTrainee/page/deleteNote", {
+        method: "PATCH",
+        body: JSON.stringify({
+          video_id: video_id,
+          course_id: course_id,
+          Note_index: i,
+        }),
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => {
+          setAlert(error.message);
+        });
+    }
   };
   return (
     <Box

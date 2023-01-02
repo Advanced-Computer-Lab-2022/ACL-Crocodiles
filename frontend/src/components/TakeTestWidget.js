@@ -11,11 +11,9 @@ export default function TakeTestWidget({ examid,courseid, type }) {
 
   let navigate = useNavigate()
   async function handleSubmit() {
-    if(type=="Trainee")
+
     navigate('/viewExam/'+ courseid+'/'+ examid)
-    else
-    navigate('/viewExam/'+ courseid+'/'+ examid)
-    
+
   }
 
 

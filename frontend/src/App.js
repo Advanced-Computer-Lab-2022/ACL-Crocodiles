@@ -113,7 +113,7 @@ function App() {
             />
             <Route path="/createexam" element={<Exam />} />
             <Route path="/changePassword" element={<ChangePassword />} />{" "}
-            <Route path="/viewExamCorp/:examid" element={<ExamCorpTrainee />} />
+            <Route path="/viewExamCorp/:courseid/:examid" element={<ExamCorpTrainee />} />
             <Route
               path="/viewSolutionCorp/:examid"
               element={<ExamSolutionCorpTrainee />}

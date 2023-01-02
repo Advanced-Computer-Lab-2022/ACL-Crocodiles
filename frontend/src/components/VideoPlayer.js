@@ -16,12 +16,13 @@ const VideoPlayer = ({ vid, url, cid, setChange, setPlayer }) => {
   const [alert, setAlert] = useState(null);
   const handleChange = async (e) => {
     const percentageDone = e.target.getCurrentTime() / e.target.getDuration();
+    let response;
     if (percentageDone > 0.98) {
       if (!added) {
         setChange(true);
         setAdded(true);
-
-        const response = await fetch("/api/trainee/page/addWatchedVideo/", {
+        if(user.Type==="Trainee"){
+         response = await fetch("/api/trainee/page/addWatchedVideo/", {
           method: "PATCH",
           headers: {
             "content-type": "application/json",
@@ -33,6 +34,21 @@ const VideoPlayer = ({ vid, url, cid, setChange, setPlayer }) => {
             cid: cid,
           }),
         });
+      }
+      else{
+         response = await fetch("/api/corpTrainee/page/addWatchedVideo/", {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+
+          body: JSON.stringify({
+            Videoid: vid,
+            cid: cid,
+          }),
+        });
+      }
         const json = await response.json();
         if (!response.ok) setAlert(json.error.message);
         else {

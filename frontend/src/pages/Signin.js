@@ -24,9 +24,7 @@ const Signin = () => {
     e.preventDefault();
 
     await login(Username, Password);
-    if (!error && !isLoading) {
-      navigate("/");
-    }
+  
   };
   const PaperStyle = {
     padding: 20,

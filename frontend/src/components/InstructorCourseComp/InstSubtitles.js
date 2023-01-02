@@ -86,7 +86,8 @@ const InstSubtitles = ({Subtitles}) => {
                             <Typography variant="h5" >{subtitle.Title}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Typography variant="h5" >{subtitle.Hours}</Typography>
+                        {subtitle.Videos && subtitle.Videos.map((video)=><Typography variant="h5" >{video.url}</Typography>)}
+                            
                         </AccordionDetails>
                     </Accordion>
             ))}

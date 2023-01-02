@@ -48,6 +48,7 @@ const ExamTrainee = () => {
         setErrorSubmit([...notSelected])
         if(canSubmit==true){
             const addAssignment = async () => {
+                if(user.Type=="Trainee"){
                 const response = await fetch('/api/trainee/page/addAssignment/', {
                     method: 'PATCH', headers: {
                         'content-type': 'application/json',
@@ -67,15 +68,36 @@ const ExamTrainee = () => {
                 setText("view Solution")
                 if(text=="view Solution")
                   navigate('/viewSolution/' +courseid+'/' +examid)   
-      
+            }
+            else{
+                const response = await fetch('/api/corpTrainee/page/addAssignment/', {
+                    method: 'PATCH', headers: {
+                        'content-type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+    
+                    },
+                    body:  JSON.stringify({
+                        Examid: examid,
+                        Answers: answers,
+                        cid:courseid })
+                       
+                    
+                })
+                const json = await response.json()
+                if(!response.ok)
+                     setError(json.error) 
+                setText("view Solution")
+                if(text=="view Solution")
+                  navigate('/viewSolution/' +courseid+'/' +examid)   
+            }
         }
         addAssignment();
     }
     }
     useEffect(() => {
-      
-      
-        const fetchExam = async () => {
+        let fetchExam;
+      if(user.Type=="Trainee"){
+         fetchExam = async () => {
             //const response = await fetch('/api/trainee/page/viewExams/' + course._id, {
             const response = await fetch('/api/trainee/page/viewExam/' + examid, {
                 method: 'GET', headers: {
@@ -84,7 +106,20 @@ const ExamTrainee = () => {
 
                 }
             })
+        }
+    }
 
+        else{
+            fetchExam = async () => {
+                //const response = await fetch('/api/trainee/page/viewExams/' + course._id, {
+                const response = await fetch('/api/corpTrainee/page/viewExam/' + examid, {
+                    method: 'GET', headers: {
+                        'content-type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+    
+                    }
+                })
+        
 
             const json = await response.json()
             if (!response.ok) {
@@ -106,7 +141,7 @@ const ExamTrainee = () => {
             }
 
 
-
+        }
         }
         fetchExam()
         console.log(Questions)
