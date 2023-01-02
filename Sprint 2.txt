@@ -1,0 +1,28 @@
+Karim Ouf:
+	- Requirment number: 5
+	- Requirment number: 25
+	- Requirment number: 29
+	- Requirment number: 32
+
+Abdelrahman Ezzat:
+	- Requirment number: 24
+	- Requirment number: 31
+	- Requirment number: 33
+	- Requirment number: 34
+
+Adham ElDeib:
+	- Requirment number: 21
+	- Requirment number: 28
+	- Requirment number: 30
+
+Youssef Bahei:
+	- Requirment number: 26
+	- Requirment number: 27
+	- Requirment number: 35
+	- Requirment number: 36
+
+Nayer Kotry:
+	- Requirment number: 17
+	- Requirment number: 37
+	- Requirment number: 38
+	- Requirment number: 39

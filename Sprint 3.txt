@@ -1,0 +1,37 @@
+Youssef Bahei:
+	- Requirment number: 46
+	- Requirment number: 47
+	- Requirment number: 52
+	- Requirment number: 53
+
+Abdelrahman Ezzat:
+	- Requirment number: 48
+	- Requirment number: 49
+	- Fixed more than two sprint 2 (missing/not working) requirments
+
+Adham ElDeib:
+	- Requirment number: 50
+	- Requirment number: 58
+	- Requirment number: 59
+	- Requirment number: 60
+
+Nayer Kotry:
+	- Requirment number: 14
+	- Requirment number: 40
+	- Requirment number: 41
+	- Requirment number: 42
+	- Requirment number: 43
+	- Requirment number: 44
+
+Karim Ouf:
+	- Requirment number: 1
+	- Requirment number: 2
+	- Requirment number: 3
+	- Requirment number: 4
+	- Requirment number: 13
+	- Requirment number: 15
+	- Requirment number: 16
+	- Requirment number: 22
+	- Requirment number: 45
+	- Requirment number: 51
+	- Requirment number: 54
