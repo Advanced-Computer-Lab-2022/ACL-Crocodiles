@@ -180,6 +180,7 @@ const grantRefund = async (req, res) => {
         }
 
         const request = await RefundRequest.updateOne({ CourseID, TraineeID }, { $set: { Status: 'Granted' } })
+        const t = await Trainee.findByIdAndUpdate(TraineeID,  {$pull: {My_courses:{_id:CourseID}} })
         if (!request) {
             return res.status(404).json({ error: 'no request found' })
         }
