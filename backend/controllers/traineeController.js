@@ -1,5 +1,7 @@
 const Trainee = require('../models/traineeModel')
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer')
+const Validator = require('validator')
 const mongoose = require('mongoose')
 const Instructor = require('../models/instructorModel')
 const Course = require('../models/courseModel').course
@@ -10,8 +12,9 @@ const courseRatingModel = require('../models/ratingAndReviewModel').courseRating
 const instructorRatingModel = require('../models/ratingAndReviewModel').instructorRatingModel
 const { default: isBoolean } = require("validator/lib/isboolean");
 const Video = require("../models/courseModel").video;
-
+const User = require('../models/userModel')
 let course 
+
 
 const createTrainee = async (req, res) => {
   const { Name, Email, Age } = req.body;
@@ -759,6 +762,84 @@ const rateInstructor = async(req,res)=>{
   }
 }
 
+
+
+const certificateSendEmail = async (req, res) => {
+  const { course_id } = req.body
+  const x = req.user;
+
+
+  const user = await User.findById(x._id)
+  
+  if (!user)
+      return res.status(400).json({ error: 'No existing user' })
+  const Email = user.Email;
+  if (!Validator.isEmail(Email))
+  return res.status(400).json({ error: 'Incorrect email format' })
+
+  const trainee = await Trainee.findById(x._id)
+  if(!trainee){
+    return res.status(400).json({ error: 'No existing user' })
+  }
+const sentCourses = trainee.finishedandMailed
+
+  const found = trainee.My_courses.find((course) =>
+    course._id.equals(course_id)
+  );
+
+  if (found == undefined) {
+    return  res.status(400).json({ error: 'Course not found' })
+  }
+  const progress = found.Progress.value;
+
+if(progress===1){
+  const mailedAlready = sentCourses.find((course) =>
+  course._id.equals(course_id))
+  ;
+  if(mailedAlready){
+    return  res.status(200).json('mail already sent');
+  }
+
+  const t = await Trainee.findByIdAndUpdate(user._id, {$push:{ finishedandMailed: { _id: course_id } }  })
+
+
+  var transporter = nodemailer.createTransport({
+      service: 'outlook',
+      auth: {
+          user: 'aclcrocodiles@outlook.com',
+          pass: '@Rmymen12'
+      }
+  });
+
+  var mailOptions = {
+      from: 'aclcrocodiles@outlook.com',
+      to: Email,
+      subject: `Congratulations! Here is your certificate for ${Course.Title}`,
+      text: `Congratulations on receiving your ${Course.Title} certificate! You canv now download your certificate. Your certificate is available in an online format so that you can retrieve it anywhere at any time, and easily share the details of your achievement.`,
+  attachments: [{
+    filename: 'certificate.pdf',
+    path: '../certificate.pdf',
+    contentType: 'application/pdf'
+  }],
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+          return res.status(400).json(error.message);
+      } else {
+          return res.status(200).json(`Email sent: Email` + info.response);
+      }
+  });
+
+}else{
+  console.log(progress)
+  console.log()
+ return  res.status(200).json('course not completed');
+}
+
+
+}
+
 module.exports = {
   getTrainees,
   getTrainee,
@@ -789,4 +870,5 @@ module.exports = {
   addCourse,
   getMyCoursesLimited,
   checkRatingTrainee,
+  certificateSendEmail
 };

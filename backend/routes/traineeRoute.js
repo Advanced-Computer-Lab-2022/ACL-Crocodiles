@@ -31,6 +31,7 @@ const {
   addCourse,
   getMyCoursesLimited,
   checkRatingTrainee,
+  certificateSendEmail
 } = require("../controllers/traineeController");
 
 const router = express.Router();
@@ -75,6 +76,7 @@ router.post('/page/rateInstructor', rateInstructor)
 router.get('/page/checkRatingTrainee/:courseID', checkRatingTrainee)
 router.post("/page/getProgress/", getProgress);
 router.post("/addcourse", addCourse);
+router.put('/page/certificateSendEmail',certificateSendEmail)
 
 
 

@@ -109,7 +109,19 @@ const traineeSchema = new Schema(
       ],
       required: false,
     },
+    finishedandMailed:{
+      type:[
+        {
+          _id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Course",
+            required: true,
+          }
+        }
+      ]
+    }
   },
+  
   { timestamps: true }
 );
 

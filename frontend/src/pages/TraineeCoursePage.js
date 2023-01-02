@@ -10,6 +10,7 @@ import Drawer from "@mui/material/Drawer";
 import { bgcolor, Container } from "@mui/system";
 import { Typography } from "@mui/material";
 import bgImage from "../images/hope.jpg";
+import certImage from "../images/certificate.jpg";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Divider from "@mui/material/Divider";
@@ -39,7 +40,10 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import VideoPlayer from "../components/VideoPlayer";
 import NoteTaking from "../components/NoteTaking";
-
+import Certificate from "../components/certificate";
+import CertificatePDF from "../components/CertificatePDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 // import rgba from "../functions/rgba";
 
 const TraineeCoursePage = () => {
@@ -56,6 +60,8 @@ const TraineeCoursePage = () => {
   const [error, setError] = useState(null);
   const [change, setChange] = useState(false);
   const [player, setPlayer] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [progressReady, setProgressReady] = useState(false);
 
   const menuHandler = () => {
     setOpen(true);
@@ -84,8 +90,12 @@ const TraineeCoursePage = () => {
       });
       const json = await response.json();
       if (response.ok) {
+
+        fetchProgress(json);
+
         setCourse(json);
         setSubtitles(json.Subtitle);
+        certificateSendEmail(json)
 
         const response1 = await fetch("/api/trainee/page", {
           headers: {
@@ -103,7 +113,48 @@ const TraineeCoursePage = () => {
       }
     };
 
+    const fetchProgress = async (Course) => {
+      await fetch("/api/trainee/page/getProgress/", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          cid: Course._id,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          setProgress(data.Progress * 100);
+          setProgressReady(true);
+        });
+    };
+
+    const certificateSendEmail = async (Course) => {
+      await fetch("/api/trainee/page/certificateSendEmail/", {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          course_id: Course._id,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+        });
+    };
+    
     fetchCourse();
+   
   }, [user, change, player]);
 
   return (
@@ -356,12 +407,84 @@ const TraineeCoursePage = () => {
               ) : (
                 <></>
               )}
+              
             </Paper>
           ) : (
-            <></>
+         <></>
           )}
+         {!video && !exercise && progress===100?     <Box>
+            <Paper
+            elevation={3}
+            sx={{
+              margin: "auto",
+              marginTop: "-70px",
+              borderRadius: "16px",
+              alignSelf: "center",
+              width:'fit-content',
+              alignItems: "center",
+              justifyContent: "center",
+              alignContent: "center",
+              paddingLeft:'50px',
+              paddingRight:'50px'
+
+            }}
+          >
+            <Typography sx={{marginBottom: '20px'}} variant="h5" color="Black" textAlign="left">Congratulations,<br></br> you have completed 100% of the course</Typography>
+
+  
+            <Box
+            sx={{
+              backgroundImage: `url(${certImage}) `,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              display: "grid",
+              placeItems: "flex-start",
+              minHeight:'400px'
+              
+            }}
+          ></Box>
+           <PDFDownloadLink
+          style={{ textDecoration: "none" }}
+          document={<CertificatePDF  />}
+          fileName={`certificate`}
+        >
+             {({ loading }) =>
+            loading ? (
+              <Button
+                sx={{
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                  width: "max-content",
+                  maxHeight: "40px",
+                }}
+                variant="contained"
+              >
+                Loading...
+              </Button>
+            ) : (
+              <Button
+                sx={{
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                  width: "max-content",
+                  maxHeight: "40px",
+                }}
+                variant="contained"
+                startIcon={<FileDownloadOutlinedIcon />}
+              >
+                Download PDF
+              </Button>
+            )
+          }
+        </PDFDownloadLink>
+            </Paper>
+            </Box>:<></>}
         </Grid>
       </Grid>
+      <div>          
+     
+      </div>
+ 
     </Box>
   );
 };

@@ -434,6 +434,12 @@ const initiateCourse = async(req,res) => {
      
     }
     const c =  await Course.create({Title:course.title,Subject:course.subject, Price:Number(course.price),Hours:course.totalHours,Summary:course.description,InstructorId:instructor_id,InstructorName: instr.Firstname + " " + instr.Lastname,Subtitle:subIds,PreviewVideo:course.previewLink})
+    
+    const instructor = await Instructor.updateOne({
+        _id: instructor_id,
+        $push: { My_Courses: c._id },
+      });
+
     return res.status(200).json(c)
     }catch(e){
         res.status(400).json(e.message)

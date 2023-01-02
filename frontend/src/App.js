@@ -44,6 +44,7 @@ import ViewRatingsPage from './pages/ViewRatingsPage'
 import Success from "./pages/Success";
 import AdminCorpRequests from './pages/AdminCorpRequests'
 import CorpCourses from './pages/CorpCourses'
+import Certificate from "./components/certificate";
 function App() {
   return (
     <div className="App">
@@ -145,7 +146,11 @@ function App() {
               path="/corpcourses"
               element={<CorpCourses />}
             />
-
+             <Route
+              path="/cert"
+              element={    <Certificate/>  }
+            />
+   
 
 
           </Routes>
