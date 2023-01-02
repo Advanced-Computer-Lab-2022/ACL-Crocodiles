@@ -10,7 +10,7 @@ const GradeWidgetHelper = ({ExamId, type}) => {
     const [percentage,setPercentage] = useState(null)
     
   useEffect(() => {
-    if(type=="Trainee"){
+    if(user.Type=="Trainee"){
     const fetchGrade = async () => {
 
          await fetch('/api/trainee/page/calculateGrade/' , {
@@ -39,6 +39,7 @@ const GradeWidgetHelper = ({ExamId, type}) => {
       await fetch('/api/corpTrainee/page/calculateGrade/' , {
          method: 'POST', headers: {
              'content-type': 'application/json',
+             'Authorization': `Bearer ${user.token}`
 
          },
          body:JSON.stringify({

@@ -39,7 +39,7 @@ const InstructorCourses = () => {
           item spacing={1}>
           {courses && courses.map(course => (
             <Grid item xs={12} sm={6} md={4}>
-                <NewCourseCard Course={course} redirect={`/instructorcourse/${course._id}`}/>
+                <NewCourseCard user={user} Course={course} redirect={`/instructorcourse/${course._id}`}/>
           </Grid>
     
           ))}

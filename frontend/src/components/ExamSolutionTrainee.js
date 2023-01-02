@@ -33,6 +33,7 @@ const ExamTrainee = () => {
     
         const fetchExam = async () => {
 
+            if(user.Type=="Trainee"){
             await fetch('/api/trainee/page/viewExam/' + examid, {
                 method: 'GET', headers: {
                     'content-type': 'application/json',
@@ -59,11 +60,42 @@ const ExamTrainee = () => {
            })
       
        }
+       else{
+        await fetch('/api/corpTrainee/page/viewExam/' + examid, {
+            method: 'GET', headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+               
+
+            }
+        }).then((res) => {
+           return res.json()
+       }).then(data => {
+        setExam(data)
+        Q=[...data.Questions]
+        setQuestions([...data.Questions])
+        setError(null)
+        const temp0 = [];
+        const temp1 = [];
+        for(let i=0;i<data.Questions.length;i++){
+            temp0.push(true);
+            temp1.push(false);
+        }
+        setNotSelected(temp0)
+        setErrorSubmit(temp1)
+        fetchAnswer();
+       })
+  
+       }
+
+       
+       
+    }
        fetchExam();
 
        const fetchAnswer = async () => {
-
-        await fetch('/api/trainee/page/getAssignment/' , {
+        if(user.Type=="Trainee"){
+        await fetch('/api/corpTrainee/page/getAssignment/' , {
             method: 'POST', headers: {
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${user.token}`
@@ -112,6 +144,58 @@ const ExamTrainee = () => {
 
      
        })
+    }
+    else{
+        await fetch('/api/corpTrainee/page/getAssignment/' , {
+            method: 'POST', headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            
+
+            },
+            body:  JSON.stringify({
+                Examid: examid})
+        }).then((res) => {
+           return res.json()
+       }).then(data => {
+        setAnswer(data.Answer)
+        setError(null)
+
+        const a = data.Answer;
+        const t = [];
+        for(let i=0; i<a.length;i++){
+            if(Q[i].correctAnswer==a[i]){
+                for(let j=1; j<=4; j++){
+                    if((j+"")==a[i]){
+                        t.push({color:"success",  colorsx:"",checked:true})
+                    }
+                    else
+                        t.push({color:"default",colorsx:"", checked:false})
+
+                }
+            }
+            else{
+                for(let j=1; j<=4; j++){
+                    if((j+"")==Q[i].correctAnswer){
+                        t.push({color:"success",colorsx:"", checked:true})
+                    }
+                    else{
+                        if((j+"")==a[i]){
+                            t.push({color:"default", colorsx:"red", checked:true})
+                        }
+                        else
+                        t.push({color:"default",colorsx:"",checked:false});
+                    }
+                        
+
+                }
+            }
+        }
+        setControl([...t]);
+
+     
+       })
+    }
   
    }
 

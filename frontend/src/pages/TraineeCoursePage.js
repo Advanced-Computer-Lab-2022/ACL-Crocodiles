@@ -115,6 +115,7 @@ const TraineeCoursePage = () => {
       }
     };
     const fetchProgress = async (Course) => {
+      if(user.Type==="Trainee"){
       await fetch("/api/trainee/page/getProgress/", {
         method: "POST",
         headers: {
@@ -133,9 +134,32 @@ const TraineeCoursePage = () => {
           setProgress(data.Progress * 100);
           setProgressReady(true);
         });
+      }
+      else{
+        await fetch("/api/corpTrainee/page/getProgress/", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({
+            cid: Course._id,
+          }),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setProgress(data.Progress * 100);
+            setProgressReady(true);
+          });
+      }
     };
+    
 
     const certificateSendEmail = async (Course) => {
+      if(user.Type=="Trainee"){
       await fetch("/api/trainee/page/certificateSendEmail/", {
         method: "PUT",
         headers: {
@@ -152,7 +176,26 @@ const TraineeCoursePage = () => {
         .then((data) => {
           console.log(data);
         });
-    };
+    }
+    else{
+      await fetch("/api/corpTrainee/page/certificateSendEmail/", {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          course_id: Course._id,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  }
     
     const fetchCourseCorp = async () => {
       const params = new URLSearchParams(window.location.search);
@@ -165,8 +208,12 @@ const TraineeCoursePage = () => {
       });
       const json = await response.json();
       if (response.ok) {
+   
+        fetchProgress(json);
+
         setCourse(json);
         setSubtitles(json.Subtitle);
+        certificateSendEmail(json)
 
         const response1 = await fetch("/api/corpTrainee/page", {
           headers: {
@@ -176,6 +223,7 @@ const TraineeCoursePage = () => {
         const json1 = await response1.json();
         if (response.ok) {
           setTrainee(json1);
+         
         } else {
           setError(json.error);
         }
@@ -185,7 +233,7 @@ const TraineeCoursePage = () => {
     };
     if (user && user.Type === "Trainee") {
       fetchCourse();
-    } else if (user && user.Type === "Corporate") {
+    } else  {
       fetchCourseCorp();
     }
   }, [user, change, player]);
@@ -195,7 +243,7 @@ const TraineeCoursePage = () => {
       <Grid container sx={{ height: "110vh" }} alignItems="flex-start">
         {open ? (
           <Grid item xs={1.9}>
-            {trainee && user.Type==="Trainee" && (
+            {trainee  && (
               <TraineeDrawer
                 subtitles={Subtitles}
                 arrowHandler={arrowHandler}
@@ -209,7 +257,7 @@ const TraineeCoursePage = () => {
           </Grid>
         ) : (
           <Grid item xs={0.0001}>
-            {trainee && user.Type==="Trainee" && (
+            {trainee  && (
               <TraineeDrawer
                 subtitles={Subtitles}
                 arrowHandler={arrowHandler}

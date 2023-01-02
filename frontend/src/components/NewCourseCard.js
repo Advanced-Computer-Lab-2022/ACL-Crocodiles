@@ -47,8 +47,8 @@ const NewCourseCard = ({ user, Course, redirect }) => {
   const [CourseID, setCourseID] = useState(Course._id)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-
+  let fetchProgress;
+console.log(user)
 
   if (Course.Discount != null && Course.Discount != undefined)
     var discountRate = 1 - Course.Discount / 100;
@@ -59,26 +59,7 @@ const NewCourseCard = ({ user, Course, redirect }) => {
     var newPrice =
       Math.round(Course.Price * country.rate * discountRate * 100) / 100;
   useEffect(() => {
-    const fetchProgress = async () => {
-      await fetch("/api/trainee/page/getProgress/", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({
-          cid: Course._id,
-        }),
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          console.log(data);
-          setProgress(data.Progress * 100);
-          setProgressReady(true);
-        });
-    };
+
     const CheckRequest = async () => {
       const response = await fetch("/api/trainee/page/checkrequest/", {
         method: "POST",
@@ -98,11 +79,68 @@ const NewCourseCard = ({ user, Course, redirect }) => {
         setRefundRequest(true)
       }
       console.log(refundrequest)
-
+  
     }
-    console.log(refundrequest)
+
+    if(user.Type=="Trainee"){
+     fetchProgress = async () => {
+      await fetch("/api/trainee/page/getProgress/", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          cid: Course._id,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          setProgress(data.Progress * 100);
+          setProgressReady(true);
+        });
+    };
     CheckRequest()
-    fetchProgress();
+    
+  fetchProgress();
+
+  }
+
+  else{
+    if(user.Type=="Corporate"){
+     fetchProgress = async () => {
+      await fetch("/api/corpTrainee/page/getProgress/", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          cid: Course._id,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          setProgress(data.Progress * 100);
+          setProgressReady(true);
+        });
+    };
+    
+  fetchProgress();
+
+  }
+
+  }
+
+  console.log(refundrequest)
+
+
   }, [user]);
 
   const requestRefund = async (e) => {
@@ -247,7 +285,7 @@ const NewCourseCard = ({ user, Course, redirect }) => {
           </Grid>
         </CardContent>
 
-        {progressReady && <LinearWithLabel progress={progress} />}
+        {progressReady && user && user.Type!=="Instructor" && <LinearWithLabel progress={progress} />}
 
       </CardActionArea>
 

@@ -56,7 +56,7 @@ const CorpCourses = () => {
           item spacing={1}>
           {courses && courses.map(course => (
             <Grid item xs={12} sm={6} md={4}>
-                <NewCourseCard Course={course} redirect={`/Mycourses/course?courseId=${course._id}`}/>
+                <NewCourseCard user={user}Course={course} redirect={`/Mycourses/course?courseId=${course._id}`}/>
           </Grid>
     
           ))}
