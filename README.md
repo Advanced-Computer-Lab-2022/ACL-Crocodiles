@@ -278,12 +278,9 @@ The first time you open the website you are automatically a guest.
 
 - Explore a variety of our courses by clicking on explore on the top bar
 - Register to a course by following these steps:
-
-``` 
     1. Click on your desired course
     2. Click on **Request Access** button
     3. Wait for an admin to respond to your request
-```
 
 - View and access courses that you have access to by clicking on **My Courses** on the top bar
 
