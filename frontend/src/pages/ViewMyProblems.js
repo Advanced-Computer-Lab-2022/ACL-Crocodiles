@@ -15,7 +15,7 @@ const ViewMyProblems = () => {
 
     useEffect(() => {
         const fetchProblems = async () => {
-        if (user.Type === 'Instructor') {
+        if (user && user.Type === 'Instructor') {
             const response = await fetch('/api/instructor/getMyProblems', {
                 headers: {
                     'content-type': 'application/json',
@@ -46,7 +46,7 @@ const ViewMyProblems = () => {
             }
             setLoading(false)
         }
-        else if (user.Type === 'Trainee') {
+        else if (user && user.Type === 'Trainee') {
             const response = await fetch('/api/trainee/page/getMyProblems', {
                 headers: {
                     'content-type': 'application/json',
@@ -76,7 +76,7 @@ const ViewMyProblems = () => {
             }
             setLoading(false)
         }
-        else if (user.Type === 'Corporate') {
+        else if (user && user.Type === 'Corporate') {
             const response = await fetch('/api/corpTrainee/page/getMyProblems', {
                 headers: {
                     'content-type': 'application/json',

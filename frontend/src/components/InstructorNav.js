@@ -64,6 +64,7 @@ function InstructorNav() {
                break;};
         case "Profile": {
               navigate('/instructorprofile')
+              break;
         }
         case "Problems": {
             navigate("/myproblems");

@@ -1,4 +1,4 @@
-import { Paper, Typography, Stack, TextField, Button } from "@mui/material";
+import { Paper, Typography, Stack, TextField, Button,Alert } from "@mui/material";
 import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
@@ -53,8 +53,8 @@ const NewDefineDiscount = () => {
             <TextField label="Discount Percentage" type="number" min="0" max="100" onChange={(e) => setDiscount(e.target.value)} value={Discount} />
             <TextField label="Discount Expiry Date" type="date" onChange={(e) => setEndDate(e.target.value)} value={EndDate}/>
             <Button variant="contained" onClick={handleSubmit}>Submit</Button>
-            {success && <Typography variant="h6" color="success">{success}</Typography>}
-            {Error && <Typography variant="h6" color="error">{Error}</Typography>}
+            {success && <Alert severity="success">{success}</Alert>}
+            {Error && <Alert severity="error">{Error}</Alert>}
         </Stack>
         </Paper>
     );

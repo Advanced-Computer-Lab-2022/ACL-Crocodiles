@@ -157,7 +157,7 @@ const PreviewCourse = () => {
         <Stack direction="row">
         <Typography component="legend" variant='body' sx={{color:'yellow'}}>{course && course.Rating} </Typography>
         <Button variant="text" onClick={viewRatings}>
-        <Rating name="read-only" value={course && course.coursedetails.Rating} readOnly /> 
+        <Rating name="read-only" value={course && course.coursedetails.Rating} readOnly precision={0.1}/> 
         </Button>
         </Stack>
         <Typography variant="body" gutterBottom sx={{color:'black' ,margin:"0,200px"}} align='center'>

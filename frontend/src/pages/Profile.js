@@ -332,7 +332,7 @@ const Profile = () => {
                             }}
 
                         />
-                        <Rating name="read-only" value={Instructor && Instructor.instructorDetails.Rating} readOnly />
+                        <Rating name="read-only" value={Instructor && Instructor.instructorDetails.Rating} readOnly precision={0.1}/>
                         <Typography
                             color="textPrimary"
                             gutterBottom
