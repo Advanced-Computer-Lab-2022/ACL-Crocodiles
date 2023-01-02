@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { renderMatches } from 'react-router-dom';
-import { Alert, Paper, Typography } from '@mui/material';
+import { Alert, Box, Paper, Typography } from '@mui/material';
 
 const RatingAndReview = ({courseID}) => {
     const {user} = useAuthContext();
@@ -19,7 +19,15 @@ const RatingAndReview = ({courseID}) => {
     console.log('My courseID is : '+courseID);
     useEffect(() => {
         const checkRating = async ()=> {
-            const response = await fetch('/api/trainee/page/checkRatingTrainee/'+courseID, {
+            const response = (user.Type === 'Trainee') ? 
+            
+            await fetch('/api/trainee/page/checkRatingTrainee/'+courseID, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                    'content-type':'application/json',
+                }
+            }) : 
+            await fetch('/api/corpTrainee/page/checkRatingTrainee/'+courseID, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
                     'content-type':'application/json',
@@ -39,7 +47,8 @@ const RatingAndReview = ({courseID}) => {
                 setError(error)
             }
         }
-        checkRating()
+        if (user)
+            checkRating()
     },[user])
 
 
@@ -50,9 +59,18 @@ const RatingAndReview = ({courseID}) => {
             return;
         }
         const Username = user.Username;
-        const body1 = {rating, review, courseID, Username};
+        const body1 = {rating: parseInt(rating), review, courseID, Username};
         console.log(JSON.stringify(body1));
-        const response = await fetch('/api/trainee/page/rateCourse', {
+        const response = (user.Type === 'Trainee') ?
+        await fetch('/api/trainee/page/rateCourse', {
+            method: 'POST',
+            body: JSON.stringify(body1),
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }) :
+        await fetch('/api/corpTrainee/page/rateCourse', {
             method: 'POST',
             body: JSON.stringify(body1),
             headers: {
@@ -84,7 +102,8 @@ const RatingAndReview = ({courseID}) => {
             }}
         >
         <Stack direction="column" spacing={2}>
-            <Typography variant="h5" sx={{alignSelf:'center'}}>Rating: </Typography>
+            {flag && <Typography variant="h6" sx={{alignSelf:'center'}}>Rate the course </Typography>}
+            {!flag && <Typography variant="h6" sx={{alignSelf:'center'}}>Your rating for the course</Typography>}
             {flag && <Rating
                 name="simple-controlled"
                 value={rating}

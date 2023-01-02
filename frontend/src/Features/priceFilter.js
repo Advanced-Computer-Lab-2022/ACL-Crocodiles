@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const priceFilterSlice = createSlice({
     name: "priceFilter",
-    initialState: {value:{range:[0,500]}},
+    initialState: {value:{range:[0,10000]}},
     reducers:{
         choosePriceFilter: (state, action) =>{
             state.value = action.payload;

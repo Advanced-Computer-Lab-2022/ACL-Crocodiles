@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Button, TextField, Dialog, DialogActions, DialogContent, Stack, Alert, DialogTitle } from '@mui/material';
 
-const Exam = () => {
+
+
+const Exam = ({ dialogClose }) => {
 
     const [QuestionHeader, setQuestionHeader] = useState('')
     const [Answer1, setAnswer1] = useState('')
@@ -13,10 +16,6 @@ const Exam = () => {
     const [correctAnswer, setcorrectAnswer] = useState('')
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
-
-
-
-
 
 
     const addQuestion = async (e) => {
@@ -49,60 +48,100 @@ const Exam = () => {
 
     }
 
-    let navigate = useNavigate()
-    async function handleSubmit() {
-        navigate('/instructor')
-    }
+    // let navigate = useNavigate()
+    // async function handleSubmit() {
+    //     navigate('/instructor')
+    // }
 
     return (
-        <form className="createexam" >
-            <h3>Create a new Exam</h3>
-            <label>Question</label>
-            <input
-                type="text"
-                onChange={(e) => setQuestionHeader(e.target.value)}
-                value={QuestionHeader}
-            />
-            <label>First Answer:</label>
-            <input
-                type="text"
-                onChange={(e) => setAnswer1(e.target.value)}
-                value={Answer1}
-            />
-            <label>Second Answer:</label>
-            <input
-                type="text"
-                onChange={(e) => setAnswer2(e.target.value)}
-                value={Answer2}
-            />
-            <label>Third Answer:</label>
-            <input
-                type="text"
-                onChange={(e) => setAnswer3(e.target.value)}
-                value={Answer3}
-            />
-            <label>Fourth Answer:</label>
-            <input
-                type="text"
-                onChange={(e) => setAnswer4(e.target.value)}
-                value={Answer4}
-            />
-            <label>Correct Answer:</label>
-            <input
-                type="text"
-                onChange={(e) => setcorrectAnswer(e.target.value)}
-                value={correctAnswer}
-            />
 
-            <button onClick={addQuestion}>Add Question</button>
-            {error && <div className="error">{error}</div>}
+        <Dialog
+            fullWidth
+            // fullScreen={fullScreen}
+            //open={Open}
+            aria-labelledby="responsive-dialog-title">
+            <Stack spacing={3}>
+                <DialogTitle marginBottom='-5px'>
+                    Add Exam Questions
+                </DialogTitle>
+                <DialogContent margin='5px '>
+                    <Stack spacing={1} >
 
-            <button onClick={handleSubmit}>Create Exam</button>
-            {error && <div className="error">{error}</div>}
+                        <TextField
+                            id="standard-password-input"
+                            label="Question Header"
+                            type="text"
+                            variant="standard"
+                            required
+                            onChange={(e) => setQuestionHeader(e.target.value)}
+                            value={QuestionHeader}
+                        />
+                        <TextField
+                            id="standard-password-input"
+                            label="Answer 1"
+                            type="text"
+                            variant="standard"
+                            required
+                            onChange={(e) => setAnswer1(e.target.value)}
+                            value={Answer1}
+                            fullWidth
+                        />
+                        <TextField
+                            id="standard-password-input"
+                            label="Answer 2"
+                            type="text"
+                            variant="standard"
+                            required
+                            onChange={(e) => setAnswer2(e.target.value)}
+                            value={Answer2}
+                            fullWidth
+                        />
+                        <TextField
+                            id="standard-password-input"
+                            label="Answer 3"
+                            type="text"
+                            variant="standard"
+                            required
+                            onChange={(e) => setAnswer3(e.target.value)}
+                            value={Answer3}
+                            fullWidth
+                        />
+
+                        <TextField
+                            id="standard-password-input"
+                            label="Answer 4"
+                            type="text"
+                            variant="standard"
+                            required
+                            onChange={(e) => setAnswer4(e.target.value)}
+                            value={Answer4}
+                            fullWidth
+                        />
+                        <TextField
+                            id="standard-password-input"
+                            label="Correct Answer"
+                            type="text"
+                            variant="standard"
+                            required
+                            onChange={(e) => setcorrectAnswer(e.target.value)}
+                            value={correctAnswer}
+                            fullWidth
+                        />
+
+                        {error && <Alert severity="error">{error}</Alert>}
+                    </Stack>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={addQuestion}>Next Question</Button>
+                    <Button onClick={dialogClose} autoFocus>
+                        Confirm
+                    </Button>
+                </DialogActions>
+            </Stack>
+        </Dialog>
 
 
 
-        </form>
 
     )
 }

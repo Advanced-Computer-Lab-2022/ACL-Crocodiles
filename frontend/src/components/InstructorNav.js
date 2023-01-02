@@ -28,7 +28,7 @@ import { chooseSwipableIsOpen } from "../Features/swipableIsOpen";
 
 
 const pages = ['Explore', 'My Courses','Define a Promotion'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile',, 'Problems', 'Logout'];
 const log = ['sign in', 'sign up'];
 
 function InstructorNav() {
@@ -57,12 +57,18 @@ function InstructorNav() {
   };
 
   const handleCloseUserMenu = (setting) => {
-    console.log(setting)
     switch(setting){
         case "Logout": {
                logout();
                navigate("/");
                break;};
+        case "Profile": {
+              navigate('/instructorprofile')
+              break;
+        }
+        case "Problems": {
+            navigate("/myproblems");
+            break;};
      
     }
     setAnchorElUser(null);

@@ -32,9 +32,9 @@ const InstCourseDetails = ({Course}) => {
                 variant="text"
                 onClick={() => {navigate('/viewratings/'+Course._id)}}
                 >
-                    <Stack direction="column" spacing={1} alignItems="center">
-                        <Rating name="read-only" value={Course.Rating} readOnly />
-                        <Typography>View All Ratings and Reviews</Typography>
+                    <Stack direction="column" spacing={0.2} alignItems="center">
+                        <Rating name="read-only" value={Course.Rating} readOnly precision={0.1}/>
+                        <Typography variant="body1" color="#FAAF00">View All Ratings and Reviews</Typography>
                     </Stack>
             </Button>
 

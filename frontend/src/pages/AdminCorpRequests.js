@@ -12,7 +12,7 @@ const AdminCorpRequests = () => {
                 method: 'GET',
            });
         const json = await response.json();
-        console.log('fetched requests: '+json);
+        console.log('fetched requests: '+ json);
         if (response.ok) {
             setRequests(json);
             setError(null);

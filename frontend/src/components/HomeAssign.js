@@ -6,6 +6,8 @@ import Home from "../pages/Home";
 import TraineeHome from "../pages/TraineeHome";
 import GuestHome from "../pages/GuestHome";
 import AdminAddUser from "../pages/AdminAddUser"
+import CorpHome from "../pages/CorpHome";
+import InstructorHome from "../pages/InstructorHome";
 
 const HomeAssign = () => {
   const { user } = useAuthContext();
@@ -15,12 +17,12 @@ const HomeAssign = () => {
       case "Trainee":
         return <TraineeHome />;
       case "Instructor":
-        return <Home />;
+        return <InstructorHome />;
 
       case "Admin":
         return <AdminAddUser />;
       case "Corporate":
-        return <TraineeHome />;
+        return <CorpHome />;
     }
   }
 

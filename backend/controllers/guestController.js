@@ -1,7 +1,6 @@
 const Instructor = require("../models/instructorModel.js");
 const Course = require("../models/courseModel.js").course;
 const mongoose = require("mongoose");
-const { findOne } = require('../models/instructorModel.js');
 const CourseRating = require('../models/ratingAndReviewModel.js').courseRatingModel;
 const Trainee = require("../models/traineeModel.js");
 const jwt = require("jsonwebtoken");
@@ -69,7 +68,7 @@ const filterCourse = async (req, res) => {
         ],
       })
       .sort(finalSort)
-      .skip(page*cardsPerPage)
+      .skip(page * cardsPerPage)
       .limit(cardsPerPage)
       .populate({ path: "Subtitle", populate: { path: "Exercises" } })
       .populate({ path: "Subtitle", populate: { path: "Videos" } });
@@ -78,15 +77,15 @@ const filterCourse = async (req, res) => {
       return res.status(404).json({ error: "no such course" });
     }
     count = await Course.find(finalFilter)
-    .and({
-      $or: [
-        { Title: { $regex: search, $options: "i" } },
-        { Subject: { $regex: search, $options: "i" } },
-        { InstructorName: { $regex: search, $options: "i" } },
-      ],
-    }).count();
+      .and({
+        $or: [
+          { Title: { $regex: search, $options: "i" } },
+          { Subject: { $regex: search, $options: "i" } },
+          { InstructorName: { $regex: search, $options: "i" } },
+        ],
+      }).count();
 
-    return res.status(200).json({courses:course,count:count});
+    return res.status(200).json({ courses: course, count: count });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -138,14 +137,14 @@ const viewRatingAndReviews = async (req, res) => {
   //     return res.status(404).json({ error: 'invalid input' })
   // }
   try {
-      const courseRating = await CourseRating.find({CourseId: courseid})
-      if (!courseRating) {
-          return res.status(404).json({ error: 'no course ratings found found' })
-      }
-      console.log(courseRating)
-      res.status(200).json(courseRating)
+    const courseRating = await CourseRating.find({ CourseId: courseid })
+    if (!courseRating) {
+      return res.status(404).json({ error: 'no course ratings found found' })
+    }
+    console.log(courseRating)
+    res.status(200).json(courseRating)
   } catch (error) {
-      res.status(400).json({ error: 'error' })
+    res.status(400).json({ error: 'error' })
   }
 }
 
@@ -191,16 +190,16 @@ const CourseDetails = async (req, res) => {
     const othercourses = await Course.find({
       InstructorId: instructorid.InstructorId,
       _id: { $ne: id },
-    })      .populate({ path: "Subtitle", populate: { path: "Exercises" } })
+    }).populate({ path: "Subtitle", populate: { path: "Exercises" } })
       .populate({ path: "Subtitle", populate: { path: "Videos" } });
-      
+
     const instructordetails = await Instructor.findOne({
       _id: instructorid.InstructorId,
     });
     if (!coursedetails)
       return res.status(404).json({ error: "no courses found" });
     res.status(200).json({ coursedetails, othercourses, instructordetails });
-  } catch (error) {}
+  } catch (error) { }
 };
 const addCourse = async (req, res) => {
   const { id, token, trainee } = req.params;
@@ -218,16 +217,16 @@ const addCourse = async (req, res) => {
 };
 
 const getSubjectsAndPages = async (req, res) => {
-     try {
+  try {
 
-  const subjects = await Course.find().distinct('Subject');
-  if (!subjects) {
-    return res.status(404).json({ error: "no courses found" });
+    const subjects = await Course.find().distinct('Subject');
+    if (!subjects) {
+      return res.status(404).json({ error: "no courses found" });
+    }
+    return res.status(200).json(subjects);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
   }
-  return res.status(200).json(subjects);
-} catch (error) {
-  return res.status(400).json({ error: error.message});
-}
 };
 module.exports = {
   Search,

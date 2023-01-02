@@ -1,11 +1,9 @@
-import { Box, Stack, Typography, TextField, Button } from "@mui/material"
+import { Box, Stack, Typography, TextField, Button, Alert } from "@mui/material"
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material"
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
-import AddIcon from '@mui/icons-material/Add';
 import { useParams } from "react-router-dom";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { width } from "@mui/system";
 
 const InstSubtitles = ({Subtitles}) => {
     const {user} = useAuthContext();
@@ -92,7 +90,7 @@ const InstSubtitles = ({Subtitles}) => {
                         </AccordionDetails>
                     </Accordion>
             ))}
-        <Accordion
+        {/* <Accordion
             >
             <AccordionSummary
             expandIcon={<AddIcon />}
@@ -118,11 +116,11 @@ const InstSubtitles = ({Subtitles}) => {
                 type="number"
                 />
                 <Button variant="contained" color="primary" onClick={handleSubmit}>Add</Button>
-                {error && <Typography variant="h5" color="error">{error}</Typography>}
-                {success && <Typography variant="h5" color="success">{success}</Typography>}
+                {error && <Alert severity="error">{error}</Alert>}
+                {success && <Alert severity="success">{success}</Alert>}
             </Stack>
             </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
             </Stack>
         </Box>
     )

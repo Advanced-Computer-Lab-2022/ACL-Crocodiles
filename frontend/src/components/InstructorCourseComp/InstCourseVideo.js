@@ -1,4 +1,4 @@
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Button, TextField, Box, Stack, Paper } from "@mui/material"
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Button, TextField, Box, Stack, Paper, Alert, Skeleton } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
@@ -51,56 +51,15 @@ const InstCourseVideo = ({Video}) => {
                 minWidth: "853px",
             }}
         >
-        {!embedLink &&
-        <Accordion>
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-            }}
-        >
-        <AccordionSummary
-          expandIcon={<AddIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography variant="h3">Upload Preview Video</Typography>
-        </AccordionSummary>
-        </Box>
         
-        <AccordionDetails>
-        <Stack
-            direction="column"
-            spacing={1}
-            alignItems="center"
-        >
-          <TextField
-            value={videoLink}
-            onChange={(e) => setVideoLink(e.target.value)}
-            label="Upload preview Video Embed Link Here"
-            width="100%"
-            />
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={
-                    handleUpload
-                }
-                >
-                Upload
-            </Button>
-        </Stack>
-        </AccordionDetails>
-      </Accordion>}
-      {embedLink && 
-      <Paper elevation={3} sx={{maxWidth:"900px", borderRadius:"16px", alignItems:"center", display:"flex", flexDirection:"column"}}>
-            <Typography variant="h3">Preview Video</Typography>
-      <Typography>{embedLink}</Typography>
-      </Paper>}
-            {error && <Typography variant="h5" color="error">{error}</Typography>}
-            {success && <Typography variant="h5" color="success">{success}</Typography>}
+       
+      <Paper elevation={3} sx={{maxWidth:"900px", borderRadius:"16px", alignItems:"center", display:"flex", flexDirection:"column", padding:"16px"}}>
+            <Typography variant="h4">Preview Video</Typography>
+            {embedLink && <iframe width= "800px" height= "450px"src={embedLink}></iframe>}
+            {!embedLink && <Skeleton variant="rectangular" width= "800px" height= "450px"/>}
+      </Paper>
+            {error && <Alert severity="error">{error}</Alert>}
+            {success && <Alert severity="success">{success}</Alert>}
       </Box>
     )
 }

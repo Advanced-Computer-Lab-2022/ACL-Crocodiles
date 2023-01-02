@@ -9,7 +9,6 @@ import FilterDrawerSwipable from "../components/FilterDrawerSwipable";
 import { useSelector } from "react-redux";
 import Alert from "@mui/material/Alert";
 import Pagination from "@mui/material/Pagination";
-import { minWidth } from "@mui/system";
 import CoursePagination from './CoursePagination'
 //import NewCourseForm from '../components/NewCourseForm'
 const Course = () => {

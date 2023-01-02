@@ -27,7 +27,7 @@ import { useDispatch } from "react-redux";
 import { chooseSwipableIsOpen } from "../Features/swipableIsOpen";
 
 const pages = ["Explore", "My Courses", "Filter"];
-const settings = ["Profile", "Account", "Logout"];
+const settings = ["Profile", "Problems", "My Requests","Logout"];
 const log = ["sign in", "sign up"];
 
 function TraineeNavBar() {
@@ -54,17 +54,27 @@ function TraineeNavBar() {
   };
 
   const handleCloseUserMenu = (setting) => {
+
     switch (setting) {
       case "Logout": {
         logout();
         navigate("/");
         break;
-      }
+      };
       case "Profile": {
-        if (user.Type === "trainee") navigate("/traineeprofile");
-        else navigate("/instructorprofile");
+        if (user.Type === 'Trainee')
+          navigate('/traineeprofile');
+        else
+          navigate('/instructorprofile');
         break;
-      }
+      };
+      case "My Requests":{
+        navigate('/traineerefundrequests');
+        break;};
+      case "Problems":{
+        navigate('/myproblems');
+        break;};
+
     }
     setAnchorElUser(null);
   };

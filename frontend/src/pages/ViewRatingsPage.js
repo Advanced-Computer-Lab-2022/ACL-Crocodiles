@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Alert, Box, CircularProgress, Stack } from '@mui/material';
 import {useEffect, useState} from 'react'
 import { useParams } from "react-router-dom";
 import RatingAndReviewCard from '../components/RatingAndReviewCard';
@@ -6,6 +6,7 @@ import RatingAndReviewCard from '../components/RatingAndReviewCard';
 const ViewRatingsPage = () => {
     const [ratings, setRatings] = useState(null);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
     const {courseid} = useParams();
 
     useEffect(() => {
@@ -26,16 +27,21 @@ const ViewRatingsPage = () => {
                 setRatings(json);
                 setError(null);
             }
+            setLoading(false);
         }
             getRatings();
     },[courseid]);
 
     return (
-        <Stack spacing={3} direction="column" sx={{margin:"16px", padding:"16px"}}>
+        <Box sx={{margin:"16px", padding:"16px", width:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <Stack spacing={3} direction="column" sx={{margin:"16px", padding:"16px",width:'50%'}}>
             {ratings && ratings.map((rating) => (
                 <RatingAndReviewCard Review={rating}/>
             ))}
+            {loading && <CircularProgress sx={{color:'#A00407', alignSelf:'center'}}/>}
+            {error && <Alert severity="error">{error}</Alert>}
         </Stack>
+        </Box>
     );
 }
 export default ViewRatingsPage;

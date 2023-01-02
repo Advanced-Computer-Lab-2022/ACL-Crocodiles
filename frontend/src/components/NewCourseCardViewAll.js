@@ -35,6 +35,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { useAuthContext } from "../hooks/useAuthContext";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -83,7 +84,7 @@ const StyledMenu = styled((props) => (
 const NewCourseCardViewAll = ({ Course, redirect }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const DiscountEndDate = new Date(Course.DiscountEndDate);
-
+  const { user } = useAuthContext();
   const country = useSelector((state) => state.country.value);
   if (Course.Discount != null && Course.Discount != undefined)
     var discountRate = 1 - Course.Discount / 100;
@@ -131,7 +132,12 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
               variant="h5"
               component="div"
               display="inline"
-            >
+              sx={{"background-image":
+                        "linear-gradient(52deg, #A00407, #ff5659)",
+                      "-webkit-background-clip": "text",
+                      "-webkit-text-fill-color": "#ff000000",
+                      fontSize: "2rem",
+                      fontFamily: "Poppins",}}>
               {Course.Title}
             </Typography>
             <Typography
@@ -198,7 +204,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
             </Grid>
             <Grid item xs={8}>
               <Grid container justifyContent="flex-end">
-                <Grid item xs={12}>
+                { (!user || (user && user.Type !== "Corporate")) && <Grid item xs={12}>
                   {Course.Discount &&
                   Course.Discount != 1 &&
                   Course.Discount != undefined ? (
@@ -252,9 +258,9 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                       )}
                     </Typography>
                   )}
-                </Grid>
+                </Grid>}
 
-                {Course.DiscountEndDate != undefined &&
+                { (!user || (user && user.Type !== "Corporate")) && Course.DiscountEndDate != undefined &&
                 Course.Discount &&
                 Course.Discount != 1 &&
                 Course.Discount != undefined ? (
@@ -275,18 +281,22 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
           </Grid>
         </CardContent>
       </CardActionArea>
-      <Button
+      { (!user || (user && user.Type !== "Corporate")) && <Button
         variant="text"
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon sx={{marginLeft:'opx'}} />}
-        sx={{width:'fit-content',justifyContent:'inherit',fontSize:'0.7rem'}}
+        sx={{width:'fit-content',justifyContent:'inherit',fontSize:'0.7rem',"background-image":
+        "linear-gradient(52deg, #A00407, #ff5659)",
+      "-webkit-background-clip": "text",
+      "-webkit-text-fill-color": "#ff000000",
+      fontFamily: "Poppins"}}
       >
         course content
-      </Button>
-      <StyledMenu
+      </Button>}
+      { (!user || (user && user.Type !== "Corporate")) && <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{
           "aria-labelledby": "demo-customized-button",
@@ -329,7 +339,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                   subheader={<li />}
                 >
                   <li>
-                    {sub.Videos.length != 0 && (
+                    {sub.Videos && sub.Videos.length != 0 && (
                       <ul>
                         <ListSubheader>
                           <div
@@ -353,7 +363,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
                           ))}
                       </ul>
                     )}
-                    {sub.Exercises.length != 0 && (
+                    {sub.Exercises && sub.Exercises.length != 0 && (
                       <ul>
                         <ListSubheader>
                           {" "}
@@ -384,7 +394,7 @@ const NewCourseCardViewAll = ({ Course, redirect }) => {
               </AccordionDetails>
             </Accordion>
           ))}
-      </StyledMenu>
+      </StyledMenu>}
     </Card>
   );
 };

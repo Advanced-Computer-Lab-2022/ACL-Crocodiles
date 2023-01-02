@@ -1,33 +1,52 @@
 const express = require('express')
 const requireAuthAdmin = require('../middleware/requireAuthAdmin')
-const  {
+const {
    createAdmin,
    createInstructor,
    createCorporateTrainee,
    setPromotion,
    setPromotionAllCourses,
    getPendingCourseRequests,
+   getPendingRefundRequests,
    grantCourseAccess,
-   denyCourseAccess
+   denyCourseAccess,
+   grantRefund,
+   denyRefund,
+   viewAllProblems,
+   resolveProblem,
+   pendProblem,
 } = require('../controllers/adminController')
 
 const router = express.Router()
 
 //router.use(requireAuthAdmin)
 
-router.post('/createadmin',createAdmin)
+router.post('/createadmin', createAdmin)
 
-router.post('/createinstructor',createInstructor)
+router.post('/createinstructor', createInstructor)
 
-router.post('/createcorporatetrainee',createCorporateTrainee)
+router.post('/createcorporatetrainee', createCorporateTrainee)
 
-router.put('/setpromotion',setPromotion)
+router.put('/setpromotion', setPromotion)
 
-router.get('/getpendingcourserequests',getPendingCourseRequests)
+router.get('/getpendingcourserequests', getPendingCourseRequests)
+router.get('/problems', viewAllProblems)
 
-router.post('/setpromotionallcourses',setPromotionAllCourses)
+router.get('/getpendingrefundrequests', getPendingRefundRequests)
 
-router.post('/grantcourseaccess',grantCourseAccess)
+//router.post('/setpendingcourserequests',setPendingRefundRequests)
+router.post('/grantrefund', grantRefund)
 
-router.post('/denycourseaccess',denyCourseAccess)
+router.post('/setpromotionallcourses', setPromotionAllCourses)
+
+router.post('/grantcourseaccess', grantCourseAccess)
+
+router.post('/denycourseaccess', denyCourseAccess)
+
+router.post('/denyrefund', denyRefund)
+
+router.post('/resolveproblem', resolveProblem)
+
+router.post('/pendproblem', pendProblem)
+
 module.exports = router

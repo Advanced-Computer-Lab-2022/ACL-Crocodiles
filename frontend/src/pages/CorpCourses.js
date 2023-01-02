@@ -9,6 +9,7 @@ import CourseCard from '../components/CourseCard'
 import Grid from '@mui/material/Grid';
 import NewCourseCard from '../components/NewCourseCard'
 import { useAuthContext } from "../hooks/useAuthContext"
+import { Box, CircularProgress } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -23,6 +24,7 @@ const CorpCourses = () => {
   console.log(user)
   const [courses, setCourses] = useState(null)
   const [clicked, setClicked] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     console.log(clicked)
     const fetchCourses = async () => {
@@ -36,12 +38,16 @@ const CorpCourses = () => {
       if (response.ok) {
         setCourses(json)
       }
+      setLoading(false)
     }
     fetchCourses()
   }, [user])
 
   return (
     <div className="Course">
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width:'100%', alignSelf:'center' }}>
+          {loading && <CircularProgress sx={{color:"#ff5659"}}/>}
+      </Box>
 
 
       <React.Fragment>
