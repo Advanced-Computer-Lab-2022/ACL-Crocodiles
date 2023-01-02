@@ -31,6 +31,7 @@ const problemSchema = new Schema({
     Type: {
         type: String,
         enum: ['Technical', 'Financial', 'Other'],
+        default: 'Technical',
         required: true,
     },
     Status: {

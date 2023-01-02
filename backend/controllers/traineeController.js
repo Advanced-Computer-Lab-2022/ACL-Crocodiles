@@ -763,30 +763,30 @@ const checkRatingTrainee = async (req, res) => {
     }
 }
 
-const rateInstructor = async(req,res)=>{
-  const {rating, review, instructorID, Username} = req.body;
-  const user = req.user;
-  if(!mongoose.Types.ObjectId.isValid(instructorID)){ 
-      return res.status(404).json({error: 'no such course id'})
-  }
-  try {
-      const instructor1 = await Instructor.findById(instructorID);
-      if(!instructor1){
-          return res.status(404).json({error: 'no such course id'})
-      }
-      const oldRating = instructor1.Rating
-      const oldCount = instructor1.RatingCount
-      const newCount = oldCount + 1
-      const newRating = ((oldRating*oldCount) + rating) / (newCount)
-      const instructor2 = await Instructor.findByIdAndUpdate(instructorID , {$set: {Rating:newRating,RatingCount:newCount}})
-      console.log('test mes username isss ' + Username)
-      const ratrev = await instructorRatingModel.create({InstructorId:instructorID,UserId:user._id,Username: Username,Rating:rating,Review:review})
-      res.status(200).json(ratrev)
-  }
-  catch(error){
-      console.log(error)
-      res.status(400).json(error)
-  }
+const rateInstructor = async (req, res) => {
+    const { rating, review, instructorID, Username } = req.body;
+    const user = req.user;
+    if (!mongoose.Types.ObjectId.isValid(instructorID)) {
+        return res.status(404).json({ error: 'no such course id' })
+    }
+    try {
+        const instructor1 = await Instructor.findById(instructorID);
+        if (!instructor1) {
+            return res.status(404).json({ error: 'no such course id' })
+        }
+        const oldRating = instructor1.Rating
+        const oldCount = instructor1.RatingCount
+        const newCount = oldCount + 1
+        const newRating = ((oldRating * oldCount) + rating) / (newCount)
+        const instructor2 = await Instructor.findByIdAndUpdate(instructorID, { $set: { Rating: newRating, RatingCount: newCount } })
+        console.log('test mes username isss ' + Username)
+        const ratrev = await instructorRatingModel.create({ InstructorId: instructorID, UserId: user._id, Username: Username, Rating: rating, Review: review })
+        res.status(200).json(ratrev)
+    }
+    catch (error) {
+        console.log(error)
+        res.status(400).json(error)
+    }
 }
 
 const getTraineeDetails = async (req, res) => {
@@ -826,26 +826,26 @@ const reportProblem = async (req, res) => {
     }
 }
 
-const checkRatingTraineeInstructor = async(req,res) => {
-  const {instructorID} = req.params;
-  const traineeID = req.user;
-  console.log('instructorid: ' + instructorID)
-  console.log('Userid: ' + traineeID._id)
-  if(!mongoose.Types.ObjectId.isValid(instructorID)){ 
-      return res.status(404).json({error: 'no such course id'})
-  }
-  try {
-  const response = await instructorRatingModel.findOne({InstructorId:instructorID,UserId:traineeID})
-  console.log('ratings is: ' + response)
-  if(response){
-      return res.status(200).json({rated: true, rating: response.Rating, review: response.Review})
-  }
-  return res.status(200).json({rated: false})
-  }
-  catch(error){
-      console.log(error)
-      res.status(400).json(error)
-  }
+const checkRatingTraineeInstructor = async (req, res) => {
+    const { instructorID } = req.params;
+    const traineeID = req.user;
+    console.log('instructorid: ' + instructorID)
+    console.log('Userid: ' + traineeID._id)
+    if (!mongoose.Types.ObjectId.isValid(instructorID)) {
+        return res.status(404).json({ error: 'no such course id' })
+    }
+    try {
+        const response = await instructorRatingModel.findOne({ InstructorId: instructorID, UserId: traineeID })
+        console.log('ratings is: ' + response)
+        if (response) {
+            return res.status(200).json({ rated: true, rating: response.Rating, review: response.Review })
+        }
+        return res.status(200).json({ rated: false })
+    }
+    catch (error) {
+        console.log(error)
+        res.status(400).json(error)
+    }
 }
 
 
@@ -919,7 +919,7 @@ const addProblemComment = async (req, res) => {
         return res.status(404).json({ error: 'no such problem id' })
     }
     try {
-        const problem = await Problem.findByIdAndUpdate(problemID,{ $push: { Comments: comment } })
+        const problem = await Problem.findByIdAndUpdate(problemID, { $push: { Comments: comment } })
         res.status(200).json(problem)
     } catch (error) {
         res.status(400).json({ error: error.message })
