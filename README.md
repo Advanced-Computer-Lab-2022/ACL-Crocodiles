@@ -242,10 +242,9 @@ The first time you open the website you are automatically a guest.
 
 - ### Want to become a trainee?
 
-```
     1. Click on sign up button on the right of the top bar
     2. Enter your details and click sign up!
-```
+
 
 - ### Want to become an Admin, Corporate Trainee or Instructor?
 
@@ -266,11 +265,10 @@ The first time you open the website you are automatically a guest.
 - Explore a variety of our courses by clicking on explore on the top bar
 - Register to a course by following these steps:
 
-``` 
     1. Click on your desired course
     2. Click on **Buy Now** button
     3. Enter your credit card details
-```
+
 
 - View and access courses that you bought by clicking on **My Courses** on the top bar
 
@@ -278,6 +276,7 @@ The first time you open the website you are automatically a guest.
 
 - Explore a variety of our courses by clicking on explore on the top bar
 - Register to a course by following these steps:
+
     1. Click on your desired course
     2. Click on **Request Access** button
     3. Wait for an admin to respond to your request
@@ -299,9 +298,6 @@ The first time you open the website you are automatically a guest.
     4. Type in the percentage discount 
     5. Type in the date you would like this promotion to end
     6. Click on **Submit** button
-
-
-
 
 ## Contribute
 
