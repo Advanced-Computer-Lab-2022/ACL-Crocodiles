@@ -214,7 +214,7 @@ const PreviewCourse = () => {
         <Button sx={{ height:100 ,width:400 ,background:"green", margin:"0px auto"}} disabled={type || iscourse} variant="contained" onClick={BuyClick} >Buy Now</Button>}
         {corpSuccess && <Alert severity="success">{'Course Requested Successfully'}</Alert>}
         {corpError && <Alert severity="error">{'Course Request Failed'}</Alert>}
-        {user && <ReportProblem courseid={course.coursedetails._id} />}
+        {user && course && course.coursedetails&& <ReportProblem courseid={course.coursedetails._id} />}
         </Stack>
       
         </Stack>
