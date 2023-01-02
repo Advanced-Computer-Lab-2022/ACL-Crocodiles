@@ -295,14 +295,14 @@ The first time you open the website you are automatically a guest.
 
 - Create a course by clicking on **Create Course** button on the top bar, and then following the steps
 - Define a promotion on one of your courses by following these steps:
-```
-    1. Click on My Courses button on the top bar
+
+    1. Click on **My Courses** button on the top bar
     2. Click on your desired course
     3. You'll find a box titled "Define a promotion"
     4. Type in the percentage discount 
     5. Type in the date you would like this promotion to end
-    6. Click on Submit button
-```
+    6. Click on **Submit** button
+
 
 
 
@@ -314,7 +314,7 @@ You can contribute by adding features to the system.
 
 ## Credits
 
-Thanks to [MUI](https://mui.com/) which our main resource developing the frontend
+Thanks to [MUI](https://mui.com/) which was our main resource developing the frontend
 
 Thanks to all the contributors 
 - [Adham Aldeib](https://github.com/Deiib2)
